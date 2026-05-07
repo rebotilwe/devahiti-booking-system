@@ -2,7 +2,8 @@ import db from "../config/db.js";
 import { sendBookingConfirmation, sendAdminNotification } from "../utils/email.js";
 
 // CREATE BOOKING
-export const createBooking = async (req, res) => {
+// CREATE BOOKING
+export const createBooking = (req, res) => {
   const {
     service_type,
     booking_date,
@@ -22,24 +23,27 @@ export const createBooking = async (req, res) => {
     INSERT INTO bookings 
     (booking_reference, service_type, booking_date, booking_time, participants, total_price,
      customer_name, customer_email, customer_phone, customer_address, notes, payment_status)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'paid')
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'pending')
     RETURNING id
   `;
 
-  try {
-    const result = await db.query(sql, [
-      booking_reference,
-      service_type,
-      booking_date,
-      booking_time,
-      participants || 1,
-      total_price || 0,
-      customer_name,
-      customer_email,
-      customer_phone,
-      customer_address,
-      notes || "",
-    ]);
+  db.query(sql, [
+    booking_reference,
+    service_type,
+    booking_date,
+    booking_time,
+    participants || 1,
+    total_price || 0,
+    customer_name,
+    customer_email,
+    customer_phone,
+    customer_address,
+    notes || "",
+  ], (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ message: "Booking failed", error: err.message });
+    }
 
     const bookingData = {
       id: result.rows[0].id,
@@ -55,23 +59,16 @@ export const createBooking = async (req, res) => {
       customer_address,
     };
 
-    // Send email notifications
-    try {
-      await sendBookingConfirmation(bookingData);
-      await sendAdminNotification(bookingData);
-    } catch (emailError) {
-      console.error("Email error:", emailError);
-    }
+    // Send emails in background - DON'T AWAIT (non-blocking)
+    sendBookingConfirmation(bookingData).catch(err => console.error("Email error:", err));
+    sendAdminNotification(bookingData).catch(err => console.error("Admin email error:", err));
 
     res.status(201).json({
       message: "Booking created successfully",
       bookingId: result.rows[0].id,
       bookingReference: booking_reference,
     });
-  } catch (err) {
-    console.error("Database error:", err);
-    res.status(500).json({ message: "Booking failed", error: err.message });
-  }
+  });
 };
 
 // GET ALL BOOKINGS
