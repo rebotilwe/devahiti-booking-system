@@ -34,54 +34,54 @@ export default function Checkout() {
     return `${displayHour}:${minute} ${ampm}`;
   };
 
-  const handlePayment = async () => {
-    setLoading(true);
+ const handlePayment = async () => {
+  setLoading(true);
 
-    try {
-      // Step 1: Create the booking in database
-      const bookingData = {
-        service_type: booking.service_type,
-        booking_date: booking.booking_date,
-        booking_time: booking.booking_time,
-        participants: booking.participants,
-        total_price: booking.total_price,
-        customer_name: booking.customer_name,
-        customer_email: booking.customer_email,
-        customer_phone: booking.customer_phone,
-        customer_address: booking.customer_address,
-        notes: booking.notes || "",
-      };
+  try {
+    // Step 1: Create the booking in database
+    const bookingData = {
+      service_type: booking.service_type,
+      booking_date: booking.booking_date,
+      booking_time: booking.booking_time,
+      participants: booking.participants,
+      total_price: booking.total_price,
+      customer_name: booking.customer_name,
+      customer_email: booking.customer_email,
+      customer_phone: booking.customer_phone,
+      customer_address: booking.customer_address,
+      notes: booking.notes || "",
+    };
+    
+    const bookingResult = await initiateBooking(bookingData);
+    
+    if (bookingResult.bookingId) {
+      // Step 2: Create Yoco checkout session
+      const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: booking.total_price,
+          bookingId: bookingResult.bookingId,
+          customerName: booking.customer_name,
+          customerEmail: booking.customer_email,
+        }),
+      });
       
-      const bookingResult = await initiateBooking(bookingData);
+      const checkoutData = await checkoutResponse.json();
       
-      if (bookingResult.bookingId) {
-        // Step 2: Create Yoco checkout session
-        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: booking.total_price,
-            bookingId: bookingResult.bookingId,
-            customerName: booking.customer_name,
-            customerEmail: booking.customer_email,
-          }),
-        });
-        
-        const checkoutData = await checkoutResponse.json();
-        
-        if (checkoutData.redirectUrl) {
-          // Step 3: Redirect to Yoco payment page
-          window.location.href = checkoutData.redirectUrl;
-        } else {
-          throw new Error("Failed to create payment session");
-        }
+      if (checkoutData.redirectUrl) {
+        // Step 3: Redirect to Yoco payment page
+        window.location.href = checkoutData.redirectUrl;
+      } else {
+        throw new Error("Failed to create payment session");
       }
-    } catch (err) {
-      console.error("Payment error:", err);
-      alert("Something went wrong. Please try again.");
-      setLoading(false);
     }
-  };
+  } catch (err) {
+    console.error("Payment error:", err);
+    alert("Something went wrong. Please try again.");
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-background">

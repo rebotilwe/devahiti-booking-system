@@ -13,7 +13,7 @@ export default function PaymentSuccess() {
       if (bookingId) {
         try {
           // Update booking status to paid
-          const response = await fetch(`https://devahiti-booking-system.onrender.com/api`, {
+          const response = await fetch(`https://devahiti-booking-system.onrender.com/api/payments/update-booking-status`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
