@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import { sendBookingConfirmation, sendAdminNotification } from "../utils/email.js";
 
 // CREATE BOOKING
 export const createBooking = (req, res) => {
@@ -22,7 +23,7 @@ export const createBooking = (req, res) => {
     INSERT INTO bookings 
     (booking_reference, service_type, booking_date, booking_time, participants, total_price,
      customer_name, customer_email, customer_phone, customer_address, notes, payment_status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'paid')
   `;
 
   db.query(
@@ -33,17 +34,39 @@ export const createBooking = (req, res) => {
       booking_date,
       booking_time,
       participants || 1,
-      total_price || 0,  // ✅ Make sure total_price is included here
+      total_price || 0,
       customer_name,
       customer_email,
       customer_phone,
       customer_address,
       notes || "",
     ],
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         console.error("Database error:", err);
         return res.status(500).json({ message: "Booking failed", error: err.message });
+      }
+
+      const bookingData = {
+        id: result.insertId,
+        booking_reference,
+        service_type,
+        booking_date,
+        booking_time,
+        participants: participants || 1,
+        total_price: total_price || 0,
+        customer_name,
+        customer_email,
+        customer_phone,
+        customer_address,
+      };
+
+      // Send email notifications (don't block response if email fails)
+      try {
+        await sendBookingConfirmation(bookingData);
+        await sendAdminNotification(bookingData);
+      } catch (emailError) {
+        console.error("Email error:", emailError);
       }
 
       res.status(201).json({
@@ -95,6 +118,20 @@ export const updatePaymentStatus = (req, res) => {
         return res.status(500).json({ message: "Error updating payment status", error: err.message });
       }
       res.json({ message: "Payment status updated" });
+    }
+  );
+};
+
+// GET BOOKINGS STATS
+export const getBookingStats = (req, res) => {
+  db.query(
+    "SELECT COUNT(*) as total, SUM(total_price) as revenue, COUNT(DISTINCT customer_email) as customers FROM bookings WHERE payment_status = 'paid'",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching stats:", err);
+        return res.status(500).json({ message: "Error fetching stats", error: err.message });
+      }
+      res.json(results[0]);
     }
   );
 };

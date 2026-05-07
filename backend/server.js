@@ -6,6 +6,7 @@ import bookingRoutes from "./routes/bookings.js";
 import availabilityRoutes from "./routes/availability.js";
 import paymentRoutes from './routes/payments.js';
 import updatePaymentRoutes from './routes/update-payment.js';
+import adminRoutes from './routes/admin.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/availability", availabilityRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/payments', updatePaymentRoutes);
-
+app.use('/api/admin', adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("Devahiti Backend Running 🚀");
