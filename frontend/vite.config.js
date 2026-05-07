@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  base: './',  // ✅ Add this for Netlify compatibility
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -12,5 +13,9 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
   },
 })
