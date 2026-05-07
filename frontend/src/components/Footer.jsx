@@ -35,7 +35,7 @@ export default function Footer() {
                 { label: "Services", path: "/services" },
                 { label: "Upcoming Events", path: "/events" },
                 { label: "Contact", path: "/contact" },
-                { label: "Book Online", path: "/booking" },
+                // { label: "Book Online", path: "/booking" },
               ].map((link) => (
                 <Link
                   key={link.path}

@@ -193,15 +193,15 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-          <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-4">
-  Upcoming Teacher Training
-</h2>
-<p className="text-base text-muted-foreground leading-relaxed mb-6">
-  200-hour training starts <span className="font-medium text-ocean">May 16-17, 2026</span> (until December 2026)
-</p>
-<p className="text-base text-muted-foreground leading-relaxed mb-8">
-  300-hour advanced training starts <span className="font-medium text-ocean">June 13-14, 2026</span> (12-month program)
-</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-4">
+              Upcoming Teacher Training
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed mb-6">
+              200-hour training starts <span className="font-medium text-ocean">May 16-17, 2026</span> (until December 2026)
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed mb-8">
+              300-hour advanced training starts <span className="font-medium text-ocean">June 13-14, 2026</span> (12-month program)
+            </p>
             <Link
               to="/events"
               className="inline-flex items-center gap-2 px-6 py-3 border border-ocean/30 text-ocean text-xs uppercase tracking-widest hover:bg-ocean hover:text-white transition-all rounded-sm"
@@ -212,7 +212,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Free Trial CTA */}
+      {/* Free Trial CTA - UPDATED: goes to Contact page */}
       <section className="py-20 lg:py-28 px-6 bg-ocean">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
@@ -227,7 +227,7 @@ export default function About() {
               Try a free trial class and experience the Devahiti difference for yourself.
             </p>
             <Link
-              to="/booking?type=free"
+              to="/contact"
               className="inline-flex items-center gap-3 px-10 py-4 bg-white text-ocean text-xs font-medium tracking-[0.3em] uppercase hover:bg-white/90 transition-all duration-300 rounded-sm"
             >
               Claim Your Free Class <ArrowRight className="h-4 w-4" />

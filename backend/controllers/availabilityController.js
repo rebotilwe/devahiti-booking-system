@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 
 // GET AVAILABLE TIME SLOTS FOR A SPECIFIC DATE
-export const getAvailableSlots = (req, res) => {
+export const getAvailableSlots = async (req, res) => {
   const { date } = req.query;
   
   if (!date) {
@@ -11,91 +11,83 @@ export const getAvailableSlots = (req, res) => {
   const selectedDate = new Date(date);
   const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' });
 
-  // First, check if date is blocked
-  const checkBlockedSql = "SELECT * FROM blocked_dates WHERE blocked_date = ?";
-  db.query(checkBlockedSql, [date], (err, blockedResults) => {
-    if (err) {
-      console.error("Error checking blocked dates:", err);
-      return res.status(500).json({ message: "Error checking blocked dates", error: err.message });
-    }
+  try {
+    // Check if date is blocked
+    const blockedResult = await db.query(
+      "SELECT * FROM blocked_dates WHERE blocked_date = $1",
+      [date]
+    );
     
-    if (blockedResults.length > 0) {
+    if (blockedResult.rows.length > 0) {
       return res.json({ slots: [], message: "This date is fully booked", date });
     }
 
     // Get time slots for this day of week
-    const getSlotsSql = "SELECT time_slot FROM weekly_schedule WHERE day_of_week = ? ORDER BY time_slot";
-    db.query(getSlotsSql, [dayOfWeek], (err, slotResults) => {
-      if (err) {
-        console.error("Error fetching schedule:", err);
-        return res.status(500).json({ message: "Error fetching schedule", error: err.message });
-      }
+    const slotsResult = await db.query(
+      "SELECT time_slot FROM weekly_schedule WHERE day_of_week = $1 ORDER BY time_slot",
+      [dayOfWeek]
+    );
 
-      // Format time slots from MySQL TIME to HH:MM
-      const allSlots = slotResults.map(row => {
-        const timeStr = row.time_slot;
-        // Handle string format "07:00:00" or Date object
-        if (typeof timeStr === 'string') {
-          return timeStr.substring(0, 5); // Returns "HH:MM"
-        } else if (timeStr instanceof Date) {
-          return `${timeStr.getHours().toString().padStart(2, '0')}:${timeStr.getMinutes().toString().padStart(2, '0')}`;
-        }
-        return timeStr;
-      });
-
-      // Get already booked slots for this date
-      const getBookedSql = "SELECT booking_time FROM bookings WHERE booking_date = ? AND payment_status IN ('paid', 'pending')";
-      db.query(getBookedSql, [date], (err, bookedResults) => {
-        if (err) {
-          console.error("Error checking bookings:", err);
-          return res.status(500).json({ message: "Error checking bookings", error: err.message });
-        }
-
-        const bookedSlots = bookedResults.map(row => {
-          const timeSlot = row.booking_time;
-          if (typeof timeSlot === 'string') {
-            return timeSlot.substring(0, 5);
-          } else if (timeSlot instanceof Date) {
-            return `${timeSlot.getHours().toString().padStart(2, '0')}:${timeSlot.getMinutes().toString().padStart(2, '0')}`;
-          }
-          return timeSlot;
-        });
-        
-        const availableSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
-
-        res.json({ slots: availableSlots, date });
-      });
+    const allSlots = slotsResult.rows.map(row => {
+      const time = row.time_slot;
+      return time.substring(0, 5);
     });
-  });
+
+    // Get already booked slots for this date
+    const bookedResult = await db.query(
+      "SELECT booking_time FROM bookings WHERE booking_date = $1 AND payment_status IN ('paid', 'pending')",
+      [date]
+    );
+
+    const bookedSlots = bookedResult.rows.map(row => {
+      const time = row.booking_time;
+      return time.substring(0, 5);
+    });
+    
+    const availableSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+
+    res.json({ slots: availableSlots, date });
+  } catch (err) {
+    console.error("Error fetching slots:", err);
+    res.status(500).json({ message: "Error fetching availability", error: err.message });
+  }
 };
 
 // GET WEEKLY SCHEDULE
-export const getWeeklySchedule = (req, res) => {
-  const sql = "SELECT day_of_week, time_slot FROM weekly_schedule ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), time_slot";
+export const getWeeklySchedule = async (req, res) => {
+  // PostgreSQL order by using CASE statement (replaces MySQL FIELD)
+  const sql = `
+    SELECT day_of_week, time_slot 
+    FROM weekly_schedule 
+    ORDER BY 
+      CASE day_of_week
+        WHEN 'Monday' THEN 1
+        WHEN 'Tuesday' THEN 2
+        WHEN 'Wednesday' THEN 3
+        WHEN 'Thursday' THEN 4
+        WHEN 'Friday' THEN 5
+        WHEN 'Saturday' THEN 6
+        WHEN 'Sunday' THEN 7
+      END,
+      time_slot
+  `;
   
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error("Error fetching schedule:", err);
-      return res.status(500).json({ message: "Error fetching schedule", error: err.message });
-    }
+  try {
+    const result = await db.query(sql);
     
     // Group by day
     const schedule = {};
-    results.forEach(row => {
+    result.rows.forEach(row => {
       if (!schedule[row.day_of_week]) {
         schedule[row.day_of_week] = [];
       }
-      let timeStr;
-      if (typeof row.time_slot === 'string') {
-        timeStr = row.time_slot.substring(0, 5);
-      } else if (row.time_slot instanceof Date) {
-        timeStr = `${row.time_slot.getHours().toString().padStart(2, '0')}:${row.time_slot.getMinutes().toString().padStart(2, '0')}`;
-      } else {
-        timeStr = row.time_slot;
-      }
+      const timeStr = row.time_slot.substring(0, 5);
       schedule[row.day_of_week].push(timeStr);
     });
     
     res.json(schedule);
-  });
+  } catch (err) {
+    console.error("Error fetching schedule:", err);
+    res.status(500).json({ message: "Error fetching schedule", error: err.message });
+  }
 };

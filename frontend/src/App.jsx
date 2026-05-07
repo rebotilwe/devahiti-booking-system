@@ -13,10 +13,10 @@ import Cancel from "./pages/Cancel";
 import Schedule from './pages/Schedule'
 import Checkout from './pages/Checkout'
 import BookingConfirmation from './pages/BookingConfirmation'
-import Admin from './pages/Admin'  // ✅ Fixed: uppercase A
+import Admin from './pages/Admin'
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancelled from './pages/PaymentCancelled';
-
+import AdminLogin from './pages/AdminLogin';
 
 function App() {
   return (
@@ -35,13 +35,18 @@ function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
 
+            {/* Booking System Routes */}
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-            <Route path="/admin" element={<Admin />} />
-            // Add these routes
+            
+            {/* Payment Routes */}
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
           </Routes>
         </main>
         <Footer />

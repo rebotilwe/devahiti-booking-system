@@ -20,10 +20,7 @@ import {
 import SectionHeading from "../components/SectionHeading";
 
 // Import client image for hero background
-import heroEventsImg from "../assets/images/img10.jpg";  // Events page hero background
-
-// Calendly URL (for non-drop-in bookings only)
-const CALENDLY_URL = "https://calendly.com/cheryl-sayogasafaris";
+import heroEventsImg from "../assets/images/img10.jpg";
 
 // Cheryl's WhatsApp number
 const WHATSAPP_NUMBER = "27840902083";
@@ -146,15 +143,16 @@ const getEventButtonText = (event) => {
 export default function Events() {
   const navigate = useNavigate();
 
-  const handleCalendlyBooking = () => {
-    window.open(CALENDLY_URL, "_blank");
+  // ✅ UPDATED: Navigate to services page instead of Calendly
+  const handleBookingClick = () => {
+    navigate("/services");
   };
 
   const handleEventClick = (bookingType) => {
     if (bookingType === "enquire") {
-      window.location.href = "/contact";
+      navigate("/contact");
     } else {
-      window.open(CALENDLY_URL, "_blank");
+      navigate("/services");
     }
   };
 
@@ -167,7 +165,7 @@ export default function Events() {
   return (
     <div className="min-h-screen bg-background">
 
-      {/* HERO - REPLACED WITH CLIENT IMAGE (img10) */}
+      {/* HERO */}
       <section className="relative h-[50vh] min-h-[350px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -273,7 +271,6 @@ export default function Events() {
             </p>
           </div>
 
-          {/* Why Choose This Training */}
           <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border border-ocean/10">
             <h3 className="font-heading text-xl text-foreground mb-4 flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-ocean" />
@@ -299,7 +296,6 @@ export default function Events() {
             </ul>
           </div>
 
-          {/* Course Modules */}
           <h3 className="font-heading text-xl text-foreground mb-4 text-center">Course Modules</h3>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[500px] bg-white rounded-lg overflow-hidden border border-ocean/10">
@@ -322,7 +318,6 @@ export default function Events() {
             </table>
           </div>
 
-          {/* Schedule Info */}
           <div className="mt-6 bg-ocean/10 border border-ocean/20 rounded-lg p-4 text-center">
             <p className="text-sm text-foreground">
               📍 Both Saturday and Sunday sessions start at <span className="font-medium">9:30am</span> and finish at <span className="font-medium">2:30pm</span> with a short 20-minute break.
@@ -360,7 +355,6 @@ export default function Events() {
             </p>
           </div>
 
-          {/* DROP-IN RATE NOTICE */}
           <div className="bg-ocean/10 border border-ocean/20 rounded-lg p-3 sm:p-4 mb-6 text-center">
             <p className="text-sm text-foreground">
               🧘 <span className="font-semibold">Drop-in Rate:</span> R130 per session
@@ -371,7 +365,6 @@ export default function Events() {
             </p>
           </div>
 
-          {/* SCHEDULE TABLE */}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[500px]">
               <thead>

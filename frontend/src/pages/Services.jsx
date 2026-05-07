@@ -272,14 +272,14 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="py-10 sm:py-12 px-4 sm:px-6 text-center bg-background">
+      {/* <section className="py-10 sm:py-12 px-4 sm:px-6 text-center bg-background">
         <Link
           to="/booking"
           className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-ocean text-white text-[10px] sm:text-xs uppercase tracking-widest hover:bg-ocean-dark transition rounded-sm"
         >
           Ready to book? Choose your session <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
         </Link>
-      </section>
+      </section> */}
     </div>
   );
 }

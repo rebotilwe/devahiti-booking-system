@@ -2,11 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-// Import your logo - adjust the filename to match your actual file
-import logo from "../assets/logo1.png"; // or .svg, .webp, etc.
-
-// Calendly URL
-const CALENDLY_URL = "https://calendly.com/cheryl-sayogasafaris";
+// Import your logo
+import logo from "../assets/logo1.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -31,9 +28,9 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Handle booking click - opens Calendly in new tab
+  // ✅ UPDATED: Navigate to schedule page instead of Calendly
   const handleBookingClick = () => {
-    window.open(CALENDLY_URL, "_blank");
+    window.location.href = "/services";
   };
 
   return (
@@ -46,7 +43,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - Increased size */}
+          {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
               src={logo} 
