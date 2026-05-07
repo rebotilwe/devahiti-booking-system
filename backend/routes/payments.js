@@ -3,11 +3,8 @@ import axios from 'axios';
 
 const router = express.Router();
 
-// ✅ CORRECT Yoco API endpoint for checkouts
 const YOCO_API_URL = 'https://payments.yoco.com/api/checkouts';
-
-// Your Yoco Test Keys
-const YOCO_SECRET_KEY = 'sk_test_8389d986bBKkkx7301b4a2eb070a';
+const YOCO_SECRET_KEY = process.env.YOCO_SECRET_KEY;
 
 // Create a checkout session
 router.post('/create-checkout', async (req, res) => {
@@ -25,11 +22,20 @@ router.post('/create-checkout', async (req, res) => {
     const amountInCents = Math.round(amount * 100);
     console.log(`Amount: R${amount} = ${amountInCents} cents`);
     
+    // Update successUrl and cancelUrl to your Netlify frontend URLs
+    const successUrl = process.env.FRONTEND_URL 
+      ? `${process.env.FRONTEND_URL}/payment-success?bookingId=${bookingId}`
+      : `https://your-netlify-site.netlify.app/payment-success?bookingId=${bookingId}`;
+      
+    const cancelUrl = process.env.FRONTEND_URL
+      ? `${process.env.FRONTEND_URL}/payment-cancelled?bookingId=${bookingId}`
+      : `https://your-netlify-site.netlify.app/payment-cancelled?bookingId=${bookingId}`;
+    
     const payload = {
       amount: amountInCents,
       currency: 'ZAR',
-      successUrl: `http://localhost:5173/payment-success?bookingId=${bookingId}`,
-      cancelUrl: `http://localhost:5173/payment-cancelled?bookingId=${bookingId}`,
+      successUrl: successUrl,
+      cancelUrl: cancelUrl,
       metadata: {
         bookingId: bookingId,
         customerName: customerName,
@@ -39,42 +45,39 @@ router.post('/create-checkout', async (req, res) => {
     
     console.log("Sending to Yoco:", JSON.stringify(payload, null, 2));
     
-    // ✅ CORRECT AUTHENTICATION: Use Bearer token
-    const response = await axios.post(
-      YOCO_API_URL,
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${YOCO_SECRET_KEY}`,  // ✅ Bearer token authentication
-        },
-      }
-    );
+    const response = await axios.post(YOCO_API_URL, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${YOCO_SECRET_KEY}`,
+      },
+    });
 
     console.log("Yoco success! Response:", response.data);
-    res.json({ 
-      redirectUrl: response.data.redirectUrl,
-      checkoutId: response.data.id 
-    });
+    res.json({ redirectUrl: response.data.redirectUrl });
     
   } catch (error) {
-    console.error("=== Yoco ERROR ===");
-    console.error("Status:", error.response?.status);
-    console.error("Data:", error.response?.data);
-    console.error("Message:", error.message);
-    
-    res.status(500).json({ 
-      error: 'Failed to create checkout session',
-      details: error.response?.data || error.message
-    });
+    console.error("Yoco error:", error.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to create checkout session' });
   }
 });
 
-// Verify payment status
-router.get('/verify-payment/:bookingId', (req, res) => {
-  const { bookingId } = req.params;
-  console.log("Verifying payment for booking:", bookingId);
-  res.json({ bookingId, payment_status: 'pending', amount: 0 });
+// Update booking payment status
+router.post('/update-booking-status', async (req, res) => {
+  const { bookingId, paymentStatus, paymentId } = req.body;
+  
+  console.log("Updating booking:", { bookingId, paymentStatus, paymentId });
+  
+  try {
+    const pool = (await import('../config/db.js')).default;
+    await pool.query(
+      "UPDATE bookings SET payment_status = $1, payment_id = $2 WHERE id = $3",
+      [paymentStatus, paymentId, bookingId]
+    );
+    res.json({ success: true, message: "Payment status updated" });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ error: "Failed to update booking status" });
+  }
 });
 
 export default router;
