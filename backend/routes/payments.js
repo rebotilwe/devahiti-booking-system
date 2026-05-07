@@ -1,5 +1,6 @@
 import express from 'express';
 import axios from 'axios';
+import db from '../config/db.js';
 
 const router = express.Router();
 
@@ -22,14 +23,13 @@ router.post('/create-checkout', async (req, res) => {
     const amountInCents = Math.round(amount * 100);
     console.log(`Amount: R${amount} = ${amountInCents} cents`);
     
-    // Update successUrl and cancelUrl to your Netlify frontend URLs
     const successUrl = process.env.FRONTEND_URL 
       ? `${process.env.FRONTEND_URL}/payment-success?bookingId=${bookingId}`
-      : `https://your-netlify-site.netlify.app/payment-success?bookingId=${bookingId}`;
+      : `https://devahiti-wellness.netlify.app/payment-success?bookingId=${bookingId}`;
       
     const cancelUrl = process.env.FRONTEND_URL
       ? `${process.env.FRONTEND_URL}/payment-cancelled?bookingId=${bookingId}`
-      : `https://your-netlify-site.netlify.app/payment-cancelled?bookingId=${bookingId}`;
+      : `https://devahiti-wellness.netlify.app/payment-cancelled?bookingId=${bookingId}`;
     
     const payload = {
       amount: amountInCents,
@@ -57,7 +57,7 @@ router.post('/create-checkout', async (req, res) => {
     
   } catch (error) {
     console.error("Yoco error:", error.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to create checkout session' });
+    res.status(500).json({ error: 'Failed to create checkout session', details: error.response?.data });
   }
 });
 
@@ -67,16 +67,21 @@ router.post('/update-booking-status', async (req, res) => {
   
   console.log("Updating booking:", { bookingId, paymentStatus, paymentId });
   
+  if (!bookingId) {
+    return res.status(400).json({ error: 'Booking ID is required' });
+  }
+  
   try {
-    const pool = (await import('../config/db.js')).default;
-    await pool.query(
+    await db.query(
       "UPDATE bookings SET payment_status = $1, payment_id = $2 WHERE id = $3",
-      [paymentStatus, paymentId, bookingId]
+      [paymentStatus, paymentId || null, bookingId]
     );
-    res.json({ success: true, message: "Payment status updated" });
-  } catch (error) {
-    console.error("Update error:", error);
-    res.status(500).json({ error: "Failed to update booking status" });
+    
+    console.log(`Booking ${bookingId} updated to ${paymentStatus}`);
+    res.json({ success: true, message: `Booking ${bookingId} updated to ${paymentStatus}` });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).json({ error: 'Failed to update booking status' });
   }
 });
 

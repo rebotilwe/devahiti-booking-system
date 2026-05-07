@@ -33,8 +33,7 @@ export default function Checkout() {
     const displayHour = hourNum % 12 || 12;
     return `${displayHour}:${minute} ${ampm}`;
   };
-
- const handlePayment = async () => {
+const handlePayment = async () => {
   setLoading(true);
 
   try {
@@ -53,9 +52,11 @@ export default function Checkout() {
     };
     
     const bookingResult = await initiateBooking(bookingData);
+    console.log("Booking result:", bookingResult);
     
     if (bookingResult.bookingId) {
       // Step 2: Create Yoco checkout session
+      console.log("Creating Yoco checkout...");
       const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,18 +68,20 @@ export default function Checkout() {
         }),
       });
       
+      console.log("Checkout response status:", checkoutResponse.status);
       const checkoutData = await checkoutResponse.json();
+      console.log("Checkout data:", checkoutData);
       
       if (checkoutData.redirectUrl) {
-        // Step 3: Redirect to Yoco payment page
+        console.log("Redirecting to:", checkoutData.redirectUrl);
         window.location.href = checkoutData.redirectUrl;
       } else {
-        throw new Error("Failed to create payment session");
+        throw new Error("Failed to create payment session: No redirectUrl");
       }
     }
   } catch (err) {
     console.error("Payment error:", err);
-    alert("Something went wrong. Please try again.");
+    alert("Something went wrong. Please try again. Error: " + err.message);
     setLoading(false);
   }
 };
