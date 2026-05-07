@@ -56,7 +56,7 @@ export default function Checkout() {
       
       if (bookingResult.bookingId) {
         // Step 2: Create Yoco checkout session
-        const checkoutResponse = await fetch('http://localhost:5000/api/payments/create-checkout', {
+        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
