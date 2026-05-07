@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Ocean Blue Theme - Client Requirement */
+    --ocean-light: 190 65% 75%;    /* #8fc9d1 */
+    --ocean: 190 70% 55%;          /* #4fb4c2 */
+    --ocean-dark: 190 75% 35%;     /* #1a7a87 */
+    --ocean-deep: 200 80% 25%;     /* #0d5a6b */
+    
+    /* Wellness / Earth Tones - From Reference Site */
+    --cream: 40 30% 96%;           /* #faf7f2 */
+    --sand: 35 25% 85%;            /* #e8dece */
+    --sage: 120 10% 58%;           /* #8a9e88 */
+    --sage-dark: 120 12% 40%;      /* #5c7059 */
+    --terracotta: 15 50% 56%;      /* #c47a5a */
+    --brown: 25 35% 25%;           /* #4a3728 */
+    
+    /* Shadcn/ui Defaults (Keep for compatibility) */
+    --background: 0 0% 100%;
+    --foreground: 25 35% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 35% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 35% 15%;
+    --primary: 190 70% 55%;        /* Changed to ocean blue */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 30% 96%;
+    --secondary-foreground: 25 35% 25%;
+    --muted: 40 30% 96%;
+    --muted-foreground: 25 15% 45%;
+    --accent: 190 65% 75%;
+    --accent-foreground: 25 35% 25%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 35 25% 85%;
+    --input: 35 25% 85%;
+    --ring: 190 70% 55%;
+    --radius: 0.5rem;
+    --chart-1: 190 70% 55%;
+    --chart-2: 120 10% 58%;
+    --chart-3: 15 50% 56%;
+    --chart-4: 200 80% 25%;
+    --chart-5: 25 35% 25%;
+  }
+
+  .dark {
+    --background: 200 80% 10%;     /* Deep ocean for dark mode */
+    --foreground: 40 30% 96%;
+    --card: 200 80% 12%;
+    --card-foreground: 40 30% 96%;
+    --popover: 200 80% 12%;
+    --popover-foreground: 40 30% 96%;
+    --primary: 190 70% 55%;
+    --primary-foreground: 200 80% 10%;
+    --secondary: 200 70% 20%;
+    --secondary-foreground: 40 30% 96%;
+    --muted: 200 70% 20%;
+    --muted-foreground: 190 30% 70%;
+    --accent: 190 60% 45%;
+    --accent-foreground: 40 30% 96%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 40 30% 96%;
+    --border: 200 70% 20%;
+    --input: 200 70% 20%;
+    --ring: 190 70% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+  h1, h2, h3, .serif {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+@layer utilities {
+  /* Fade Up Animation - For scroll reveals */
+  .fade-up {
+    animation: fadeUp 0.8s ease both;
+  }
+  .fade-up-delay-1 { animation-delay: 0.15s; }
+  .fade-up-delay-2 { animation-delay: 0.3s; }
+  .fade-up-delay-3 { animation-delay: 0.45s; }
+  .fade-up-delay-4 { animation-delay: 0.6s; }
+  .fade-up-delay-5 { animation-delay: 0.75s; }
+
+  /* Breathing Feature Animations - Client Requirement */
+  .breathing-circle {
+    animation: breatheExpand 8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  
+  .breathing-text-hold {
+    animation: textFade 8s ease-in-out infinite;
+  }
+  
+  .breathing-text-release {
+    animation: textFadeDelay 8s ease-in-out infinite;
+  }
+
+  /* Pulse animation for CTA buttons */
+  .pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  /* Float animation for ocean elements */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Wave animation for decorative elements */
+  .wave {
+    animation: wave 4s ease-in-out infinite;
+  }
+}
+
+/* Keyframes - Fade Up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Keyframes - Breathing Feature (Expand & Contract) */
+@keyframes breatheExpand {
+  0% { transform: scale(0.3); opacity: 0.5; }
+  20% { transform: scale(1); opacity: 1; }
+  40% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(0.3); opacity: 0.5; }
+  100% { transform: scale(0.3); opacity: 0.5; }
+}
+
+/* Keyframes - Breathing Text (Hold) */
+@keyframes textFade {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  30% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Keyframes - Breathing Text (Release) */
+@keyframes textFadeDelay {
+  0% { opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 1; }
+  70% { opacity: 1; }
+  80% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Keyframes - Pulse */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+/* Keyframes - Float */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Keyframes - Wave */
+@keyframes wave {
+  0% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(-5px) translateY(-3px); }
+  100% { transform: translateX(0px) translateY(0px); }
+}
+
+/* Custom Classes for Ocean Theme */
+.bg-ocean {
+  background-color: hsl(var(--primary));
+}
+
+.text-ocean {
+  color: hsl(var(--primary));
+}
+
+.border-ocean {
+  border-color: hsl(var(--primary));
+}
+
+.hover\:bg-ocean-dark:hover {
+  background-color: hsl(var(--ocean-dark));
+}
+
+/* Wellness Card Hover Effect */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection Color (Ocean Theme) */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
