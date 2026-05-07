@@ -96,6 +96,8 @@ router.delete('/schedule/:id', async (req, res) => {
 
 // ========== CUSTOMER MANAGEMENT ==========
 // Get all customers (unique by email)
+// ========== CUSTOMER MANAGEMENT ==========
+// Get all customers (unique by email)
 router.get('/customers', async (req, res) => {
   try {
     const result = await db.query(`
@@ -108,7 +110,7 @@ router.get('/customers', async (req, res) => {
         COUNT(*) as total_bookings 
       FROM bookings 
       GROUP BY customer_name, customer_email, customer_phone, customer_address 
-      ORDER BY created_at DESC
+      ORDER BY MIN(created_at) DESC
     `);
     res.json(result.rows);
   } catch (err) {
