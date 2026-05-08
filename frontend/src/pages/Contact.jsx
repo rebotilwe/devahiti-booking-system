@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Waves, Droplets } from "lucide-react";
+import { Waves, Droplets, CheckCircle } from "lucide-react";
 import SectionHeading from "../components/SectionHeading";
 import { Link, useNavigate } from "react-router-dom";
 
 // Import client image for hero background
-import contactHeroImg from "../assets/images/img11.jpg";  // Contact page hero background
+import contactHeroImg from "../assets/images/img11.jpg";
 
-// ✅ Updated Formspree endpoint
+// Formspree endpoint
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xyklpvwn";
 
 export default function Contact() {
@@ -20,6 +20,7 @@ export default function Contact() {
     message: "",
   });
   const [sending, setSending] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +29,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
+    setMessageSent(false);
 
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -40,8 +42,12 @@ export default function Contact() {
       });
 
       if (response.ok) {
+        setMessageSent(true);
         toast.success("Message sent! We'll be in touch soon.");
         setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        
+        // Clear success message after 5 seconds
+        setTimeout(() => setMessageSent(false), 5000);
       } else {
         const errorData = await response.json();
         console.error("FormSpree error:", errorData);
@@ -57,7 +63,7 @@ export default function Contact() {
 
   return (
     <div>
-      {/* Hero with Ocean Wave Overlay - REPLACED WITH CLIENT IMAGE */}
+      {/* Hero with Ocean Wave Overlay */}
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -208,6 +214,17 @@ export default function Contact() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
+              {/* Success Message - Shows after form submit */}
+              {messageSent && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <div>
+                    <p className="text-green-800 font-medium">Message sent!</p>
+                    <p className="text-green-600 text-sm">We'll be in touch within 24-48 hours.</p>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
