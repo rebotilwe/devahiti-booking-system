@@ -15,7 +15,8 @@ import privateImg from "../assets/images/img13.jpg";
 import soundImg from "../assets/images/img11.jpg";
 import corporateImg from "../assets/images/img1.jpg";
 import trainingCardImg from "../assets/images/img9.jpg";
-import heroBgImg from "../assets/images/img14.jpg";
+// Note: heroBgImg will be replaced with lighter lotus image when client provides it
+import heroBgImg from "../assets/images/img7.jpg";
 
 const services = [
   {
@@ -90,11 +91,11 @@ export default function Home() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}>
 
-      {/* HERO - Simplified */}
+      {/* HERO - Book a Session button fixed to go to /schedule */}
       <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={heroBgImg} className="w-full h-full object-cover" alt="Hero background" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -129,9 +130,9 @@ export default function Home() {
             Ballito, South Africa
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - FIXED: Book a Session goes to /schedule */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Link to="/services" className="px-8 py-3 bg-ocean text-white text-xs uppercase tracking-wider rounded-sm hover:bg-ocean-dark transition">
+            <Link to="/schedule" className="px-8 py-3 bg-ocean text-white text-xs uppercase tracking-wider rounded-sm hover:bg-ocean-dark transition">
               Book a Session
             </Link>
             <Link to="/services" className="px-8 py-3 border border-white/30 text-white text-xs uppercase tracking-wider rounded-sm hover:bg-white/10 transition">
@@ -146,7 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES PREVIEW - Simplified */}
+      {/* SERVICES PREVIEW */}
       <section className="py-20 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -168,7 +169,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PHILOSOPHY - Simplified */}
+      {/* PHILOSOPHY */}
       <section className="py-16 px-6 bg-ocean/5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
@@ -187,7 +188,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TEACHER TRAINING - Simplified */}
+      {/* TEACHER TRAINING */}
       <section className="py-16 px-6 bg-ocean text-white text-center">
         <h2 className="font-heading text-3xl font-light mb-2">Teacher Training</h2>
         <p className="text-white/80 mb-3">200hr & 300hr Advanced Programs</p>

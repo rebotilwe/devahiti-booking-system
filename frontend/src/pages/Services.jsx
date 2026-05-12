@@ -8,12 +8,13 @@ import {
   Music,
   Briefcase,
   Waves,
-  MapPin
+  MapPin,
+  Sparkles
 } from "lucide-react";
 
 import SectionHeading from "../components/SectionHeading";
 
-// Import client image for hero background (using img6)
+// Import client image for hero background
 import heroBg from "../assets/images/img6.jpg";
 
 // Service configurations for the new booking system
@@ -23,12 +24,13 @@ const getServiceConfig = (serviceType) => {
     sound: { id: "sound", title: "Sound Journey", basePrice: 800, extraPersonFee: 150 },
     group: { id: "group", title: "Studio Drop-in Class", basePrice: 130, extraPersonFee: 0 },
     corporate: { id: "corporate", title: "Corporate Yoga", basePrice: 1999, extraPersonFee: 150 },
-    "group-sound": { id: "group-sound", title: "Group Yoga & Sound Journey", basePrice: 1999, extraPersonFee: 150 }
+    "group-sound": { id: "group-sound", title: "Group Yoga & Sound Journey", basePrice: 1999, extraPersonFee: 150 },
+    fascia: { id: "fascial", title: "Fascia Release Therapy", basePrice: 450, extraPersonFee: 0 }
   };
   return configs[serviceType] || configs.private;
 };
 
-// GROUPED SERVICES
+// GROUPED SERVICES - UPDATED with client changes
 const sections = [
   {
     title: "Corporate Yoga",
@@ -40,17 +42,17 @@ const sections = [
         description:
           "Reduce stress, improve focus and bring balance into the workplace through guided yoga and movement.",
         duration: "60 minutes",
-        price: "Custom pricing (Enquire)",
+        price: "R1999 (up to 8 people)",  // ✅ Changed from "Custom pricing" to fixed price
         location: "📍 On Location (Office / Venue)",
         icon: Briefcase,
-        type: "enquire",
+        type: "book",  // ✅ Changed from "enquire" to "book"
         serviceKey: "corporate"
       }
     ]
   },
   {
-    title: "Visitors & Mobile Sessions",
-    description: "Perfect for holidaymakers from Johannesburg visiting Ballito.",
+    title: "Visitors & Ballito Holiday Makers",  // ✅ Renamed
+    description: "Perfect for easing into your relaxing holiday.",  // ✅ Updated description (no Johannesburg mention)
     icon: Heart,
     services: [
       {
@@ -92,6 +94,25 @@ const sections = [
     ]
   },
   {
+    title: "Therapeutic Bodywork",  // ✅ NEW section for Fascia Release
+    description: "Restorative treatments for deep healing and tension release.",
+    icon: Sparkles,
+    services: [
+      {
+        title: "Fascia Release Therapy",
+        description:
+          "Devahiti's signature hands-on fascial release session to relieve tension, improve mobility and restore balance in the body.",
+        duration: "45 - 75 minutes",
+        price: "R450 – R650",
+        location: "📍 In Studio (Ballito)",
+        icon: Heart,
+        type: "book",
+        capacity: "Individual",
+        serviceKey: "fascia"
+      }
+    ]
+  },
+  {
     title: "Studio Classes",
     description: "For local practitioners. Classes are currently performing well with monthly members.",
     icon: Users,
@@ -121,14 +142,14 @@ export default function Services() {
       return;
     }
     
-    // Navigate to the new Schedule page with the selected service
+    // Navigate to the Schedule page with the selected service
     const serviceConfig = getServiceConfig(serviceKey);
     navigate("/schedule", { state: { service: serviceConfig } });
   };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* HERO - REPLACED with img6 */}
+      {/* HERO */}
       <section className="relative h-[50vh] min-h-[350px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -237,21 +258,12 @@ export default function Services() {
                         {service.price}
                       </span>
 
-                      {service.type === "enquire" ? (
-                        <Link
-                          to="/contact"
-                          className="px-4 sm:px-6 py-2 sm:py-3 bg-ocean text-white text-[10px] sm:text-xs uppercase tracking-widest hover:bg-ocean-dark transition rounded-sm whitespace-nowrap"
-                        >
-                          Enquire
-                        </Link>
-                      ) : (
-                        <button
-                          onClick={() => handleBookingClick(service.serviceKey, service.type)}
-                          className="px-4 sm:px-6 py-2 sm:py-3 bg-ocean text-white text-[10px] sm:text-xs uppercase tracking-widest hover:bg-ocean-dark transition rounded-sm whitespace-nowrap cursor-pointer"
-                        >
-                          Book Now
-                        </button>
-                      )}
+                      <button
+                        onClick={() => handleBookingClick(service.serviceKey, service.type)}
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-ocean text-white text-[10px] sm:text-xs uppercase tracking-widest hover:bg-ocean-dark transition rounded-sm whitespace-nowrap cursor-pointer"
+                      >
+                        Book Now
+                      </button>
                     </div>
                   </motion.div>
                 ))}
@@ -271,15 +283,6 @@ export default function Services() {
           </p>
         </div>
       </section>
-
-      {/* <section className="py-10 sm:py-12 px-4 sm:px-6 text-center bg-background">
-        <Link
-          to="/booking"
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-ocean text-white text-[10px] sm:text-xs uppercase tracking-widest hover:bg-ocean-dark transition rounded-sm"
-        >
-          Ready to book? Choose your session <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
-        </Link>
-      </section> */}
     </div>
   );
 }

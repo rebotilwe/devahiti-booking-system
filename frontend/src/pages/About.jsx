@@ -9,7 +9,7 @@ import philosophyImg from "../assets/images/img5.jpg";
 export default function About() {
   return (
     <div>
-      {/* Hero - REPLACED with img7 */}
+      {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -28,7 +28,7 @@ export default function About() {
           >
             <Waves className="h-4 w-4 text-white/60" />
             <span className="text-xs tracking-[0.4em] uppercase text-white/60">
-              Welcome To Devahiti
+              About Devahiti
             </span>
             <Waves className="h-4 w-4 text-white/60" />
           </motion.div>
@@ -39,12 +39,12 @@ export default function About() {
             transition={{ delay: 0.2 }}
             className="font-heading text-4xl md:text-6xl lg:text-7xl font-light text-white"
           >
-            A Beautiful Open-Air Yoga Studio
+            Meet Cheryl
           </motion.h1>
         </div>
       </section>
 
-      {/* Intro Section - Cheryl's Wording */}
+      {/* Intro Section - Updated with client's new wording */}
       <section className="py-20 lg:py-28 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -53,20 +53,22 @@ export default function About() {
             viewport={{ once: true }}
           >
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Welcome to Devahiti, a beautiful open-air yoga and movement studio located in Ballito, South Africa.
+              Hi, I am <span className="font-medium text-foreground">Cheryl Lancellas</span>.
             </p>
-
             <p className="text-base text-muted-foreground leading-relaxed mb-6">
-              Hi, I am <span className="font-medium text-foreground">Cheryl Lancellas</span>. I specialise in private and 
-              corporate group yoga and movement classes, sound journey experiences, and educational workshops, 
-              in our small home studio or in the comfort of your holiday accommodation. All equipment is provided.
+              We currently live in a world where we are receiving in one week the amount of information 
+              our ancestors received in their entire lifetime. Overwhelm and dysfunction are then naturally 
+              to be expected.
             </p>
-
+            <p className="text-base text-muted-foreground leading-relaxed mb-6">
+              I specialise in <span className="font-medium text-foreground">private and corporate yoga</span>, 
+              sound journey experiences, and educational workshops — in our small home studio or in the 
+              comfort of your holiday accommodation. All equipment is provided.
+            </p>
             <p className="text-base text-muted-foreground leading-relaxed">
-              Unwind with family and friends as you reduce stress through mindful movement, followed
-              by a nurturing sound journey, leaving you feeling relaxed and restored.
+              Unwind with family and friends as you restore homeostasis and reduce stress through mindful 
+              movement, followed by a nurturing sound journey, leaving you feeling relaxed and restored.
             </p>
-
             <p className="text-sm text-ocean mt-6 uppercase tracking-widest font-medium">
               Beginners are always welcome ✨
             </p>
@@ -95,7 +97,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Philosophy - REPLACED with img5 */}
+      {/* Philosophy Section */}
       <section className="py-20 lg:py-32 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -212,7 +214,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Free Trial CTA - UPDATED: goes to Contact page */}
+      {/* Free Trial CTA */}
       <section className="py-20 lg:py-28 px-6 bg-ocean">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
