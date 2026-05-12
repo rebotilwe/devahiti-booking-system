@@ -57,7 +57,7 @@ export default function About() {
             </p>
             <p className="text-base text-muted-foreground leading-relaxed mb-6">
               We currently live in a world where we are receiving in one week the amount of information 
-              our ancestors received in their entire lifetime. Overwhelm and dysfunction are then naturally 
+              our ancestors received in their entire lifetime. Overwhelm and dysfunction are naturally 
               to be expected.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed mb-6">
