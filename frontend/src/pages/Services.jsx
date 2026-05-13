@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowRight, Clock, Users, MapPin } from "lucide-react";
-import SectionHeading from "../components/SectionHeading";
+import { Clock, MapPin } from "lucide-react";
 import { services } from "../data/services";
 
-// Group services by category
+// Group services
 const groupedServices = services.reduce((acc, service) => {
-  if (!acc[service.category]) {
-    acc[service.category] = [];
-  }
+  if (!acc[service.category]) acc[service.category] = [];
   acc[service.category].push(service);
   return acc;
 }, {});
@@ -16,48 +12,57 @@ const groupedServices = services.reduce((acc, service) => {
 export default function Services() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-        <div className="relative z-10 text-center px-6">
-          <h1 className="font-heading text-4xl md:text-6xl font-light text-white">Our Services</h1>
-          <p className="text-white/70 mt-3">Find the practice that speaks to you</p>
+
+      {/* HERO */}
+      <section className="relative h-[40vh] flex items-center justify-center bg-black/80">
+        <div className="text-center text-white">
+          <h1 className="font-heading text-4xl md:text-6xl font-light">
+            Our Services
+          </h1>
+          <p className="text-white/70 mt-3">
+            Choose the practice that speaks to you
+          </p>
         </div>
       </section>
 
-      {/* Services by Category */}
-      <section className="py-16 lg:py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          {Object.entries(groupedServices).map(([category, categoryServices]) => (
-            <div key={category} className="mb-16 last:mb-0">
-              <h2 className="font-heading text-2xl md:text-3xl text-foreground mb-8 pb-2 border-b border-ocean/20">
+      {/* SERVICES */}
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto space-y-16">
+
+          {Object.entries(groupedServices).map(([category, items]) => (
+            <div key={category}>
+              <h2 className="text-2xl font-heading mb-6 border-b pb-2">
                 {category}
               </h2>
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {categoryServices.map((service, idx) => (
-                  <Link 
-                    key={idx}
+                {items.map((service) => (
+                  <Link
+                    key={service.id}
                     to={`/services/${service.slug}`}
-                    className="group block bg-card border border-border hover:border-ocean/30 rounded-lg p-6 transition-all duration-300 hover:shadow-md"
+                    className="border p-6 rounded-lg hover:border-ocean transition"
                   >
-                    <h3 className="font-heading text-xl text-foreground mb-2 group-hover:text-ocean transition">
+                    <h3 className="text-lg font-heading mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+
+                    <p className="text-sm text-muted-foreground mb-4">
                       {service.shortDescription}
                     </p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+
+                    <div className="flex items-center gap-4 text-xs mb-3">
                       <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" /> {service.duration}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {service.location.split(" ")[0]}
+                        <Clock size={14} /> {service.duration}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-ocean font-medium">{service.price}</span>
-                      <span className="text-xs uppercase tracking-wider text-ocean group-hover:gap-2 transition-all flex items-center gap-1">
-                        View Details <ArrowRight className="h-3 w-3" />
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-ocean font-medium">
+                        {service.price}
+                      </span>
+
+                      <span className="text-xs text-ocean">
+                        View →
                       </span>
                     </div>
                   </Link>
@@ -65,6 +70,7 @@ export default function Services() {
               </div>
             </div>
           ))}
+
         </div>
       </section>
     </div>
