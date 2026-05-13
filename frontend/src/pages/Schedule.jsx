@@ -1,33 +1,44 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Waves, Calendar as CalendarIcon, Clock, Users, ArrowRight } from "lucide-react";
+import { Waves, ArrowRight } from "lucide-react";
 import Calendar from "../components/Calendar";
 import TimeSlots from "../components/TimeSlots";
 import ParticipantSelector from "../components/ParticipantSelector";
 import BookingForm from "../components/BookingForm";
-import { getAvailableSlots, getWeeklySchedule } from "../services/api";
+import { services } from "../data/services";
 
 const API_BASE_URL = "https://devahiti-booking-system.onrender.com/api";
 
 export default function Schedule() {
+  const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const { service } = location.state || {
-    service: { id: "private", title: "Private Yoga Session", basePrice: 650, extraPersonFee: 150 }
+  
+  const serviceId = searchParams.get("service");
+  
+  // Find pre-selected service from URL param or location state
+  const preselectedService = services.find(s => s.id === serviceId);
+  const stateService = location.state?.service;
+  
+  const initialService = preselectedService || stateService || { 
+    id: "private", 
+    title: "Private Yoga Session", 
+    basePrice: 650, 
+    extraPersonFee: 150 
   };
 
+  const [selectedService] = useState(initialService);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [participants, setParticipants] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(service.basePrice || 650);
+  const [totalPrice, setTotalPrice] = useState(initialService.basePrice || 650);
   const [step, setStep] = useState(1);
   
   // Availability state
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
-  const [blockedDates, setBlockedDates] = useState([]);
+  const [blockedDates] = useState([]);
   const [weeklySchedule, setWeeklySchedule] = useState({});
 
   // Fetch weekly schedule on mount
@@ -85,22 +96,22 @@ export default function Schedule() {
     setTotalPrice(price);
   };
 
-const handleFormSubmit = (userData) => {
-  const booking = {
-    service_type: service.id,
-    booking_date: selectedDate.toISOString().split('T')[0],
-    booking_time: selectedTime,
-    participants: participants,
-    total_price: totalPrice,  // ✅ This must be included
-    customer_name: userData.name,
-    customer_email: userData.email,
-    customer_phone: userData.phone,
-    customer_address: userData.address,
-    notes: userData.notes || "",
-  };
+  const handleFormSubmit = (userData) => {
+    const booking = {
+      service_type: selectedService.id,
+      booking_date: selectedDate.toISOString().split('T')[0],
+      booking_time: selectedTime,
+      participants: participants,
+      total_price: totalPrice,
+      customer_name: userData.name,
+      customer_email: userData.email,
+      customer_phone: userData.phone,
+      customer_address: userData.address,
+      notes: userData.notes || "",
+    };
 
-  navigate("/checkout", { state: { booking, service, participants, totalPrice } });
-};
+    navigate("/checkout", { state: { booking, service: selectedService, participants, totalPrice } });
+  };
 
   const formatPrice = (price) => `R${price}`;
 
@@ -131,10 +142,10 @@ const handleFormSubmit = (userData) => {
             transition={{ delay: 0.2 }}
             className="font-heading text-3xl sm:text-4xl md:text-5xl font-light text-white px-4"
           >
-            {service.title}
+            {selectedService.title}
           </motion.h1>
           <p className="text-white/70 text-sm sm:text-base mt-3">
-            {formatPrice(totalPrice)} • 60 minutes
+            {formatPrice(totalPrice)} • {selectedService.duration || "60 minutes"}
           </p>
         </div>
       </section>
@@ -193,8 +204,8 @@ const handleFormSubmit = (userData) => {
             participants={participants}
             setParticipants={setParticipants}
             onPriceChange={handleParticipantsChange}
-            basePrice={service.basePrice || 650}
-            extraPersonFee={service.extraPersonFee || 150}
+            basePrice={selectedService.basePrice || 650}
+            extraPersonFee={selectedService.extraPersonFee || 150}
           />
           <div className="flex justify-end mt-8 gap-4">
             <button

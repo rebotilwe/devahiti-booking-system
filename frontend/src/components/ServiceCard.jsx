@@ -3,19 +3,38 @@ import { motion } from "framer-motion";
 import { Clock, ArrowRight } from "lucide-react";
 
 export default function ServiceCard({ title, description, duration, price, image, index = 0, bookingType = "group" }) {
-  // Determine if this is an "enquire" type (Teacher Training)
+  // Determine if this is an "enquire" type (Teacher Training only)
   const isEnquire = bookingType === "enquire" || title === "Teacher Training";
   
-  // ✅ UPDATED: All cards go to /services, except Enquire goes to /contact
+  // ✅ UPDATED: Direct booking links for each service (client request)
   const getBookingLink = () => {
     if (isEnquire) return "/contact";
-    return "/services";  // Changed from `/booking?type=${bookingType}` to `/services`
+    
+    // Map each service to its direct booking link
+    const serviceLinks = {
+      "Yoga for Kids": "/schedule?service=kids",
+      "Yoga for Athletes": "/schedule?service=athletes",
+      "Studio Drop-in Class": "/schedule?service=group",
+      "Private Yoga Session": "/schedule?service=private",
+      "Sound Journey": "/schedule?service=sound",
+      "Corporate Yoga": "/schedule?service=corporate",
+      "Group Yoga & Sound Journey": "/schedule?service=group-sound",
+      "Fascia Release Therapy": "/schedule?service=fascia",
+    };
+    
+    // If we have a direct link for this service, use it
+    if (serviceLinks[title]) {
+      return serviceLinks[title];
+    }
+    
+    // Fallback to services page
+    return "/services";
   };
   
   // Determine button text
   const getButtonText = () => {
     if (isEnquire) return "Enquire";
-    return "View Details";  // Changed from "Book Now" to "View Details" since they go to services page
+    return "Book Now";  // Changed back to "Book Now" for direct booking
   };
 
   return (
