@@ -184,7 +184,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="text-white/75 text-base md:text-lg max-w-2xl mx-auto mt-5 leading-relaxed"
           >
-            From private yoga and sound journeys to kids yoga,
+            From private yoga to sound journeys to yoga,
             athlete recovery and corporate wellness — every session
             is designed to help you reconnect, restore and feel your
             best.
