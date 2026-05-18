@@ -9,24 +9,7 @@ import {
 } from "lucide-react";
 
 export const services = [
-  {
-    id: "yoga-for-kids",
-    slug: "yoga-for-kids",
-    title: "Yoga for Kids",
-    category: "Specialty Yoga",
-    description:
-      "Yoga for Kids is a fun, imaginative movement experience designed for children aged 4–12. Every session blends breath, movement, and creativity — because fun is our middle name. Each class runs for 45 minutes and helps build focus, coordination, and emotional balance in a playful environment.",
-    shortDescription:
-      "Fun, engaging yoga for children aged 4–12. Because fun is our middle name!",
-    duration: "45 minutes",
-    price: "R200 per child",
-    priceAmount: 200,
-    location: "In Studio / On Location (Ballito)",
-    capacity: "Ages 4–12",
-    icon: Baby,
-    bookingType: "book",
-    image: "/images/kids-yoga.jpg"
-  },
+
   {
     id: "yoga-for-athletes",
     slug: "yoga-for-athletes",

@@ -24,18 +24,7 @@ import heroBgImg from "../assets/images/img7.jpg";
 
 // Updated services preview - ALL with direct booking links
 const services = [
-  {
-    id: "kids",
-    title: "Yoga for Kids",
-    description:
-      "Fun, playful yoga sessions for children aged 4–12. Fun is our middle name!",
-    duration: "45 min",
-    price: "R200",
-    location: "📍 In Studio / On Location",
-    image: groupImg,
-    bookingType: "book",
-    link: "/services/yoga-for-kids",
-  },
+
   {
     id: "athletes",
     title: "Yoga for Athletes",

@@ -54,8 +54,6 @@ const classSchedule = [
   { day: "Monday", time: "7:00 AM", class: "Gentle Movement", level: "All Levels", duration: "45 min" },
   { day: "Monday", time: "8:00 AM", class: "Intermediate Hatha", level: "Intermediate", duration: "75 min" },
   { day: "Monday", time: "4:00 PM", class: "Gentle Hatha", level: "All Levels", duration: "60 min" },
-  { day: "Tuesday", time: "8:00 AM", class: "Kids Yoga (Ages 4-12)", level: "Kids", duration: "45 min" }, // ✅ Updated for kids
-  { day: "Thursday", time: "8:00 AM", class: "Kids Yoga (Ages 4-12)", level: "Kids", duration: "45 min" }, // ✅ Updated for kids
   { day: "Friday", time: "8:15 AM", class: "Gentle Hatha", level: "All Levels", duration: "60 min" },
   { day: "Saturday", time: "7:30 AM", class: "Yin Yoga", level: "All Levels", duration: "90 min" }
 ];
