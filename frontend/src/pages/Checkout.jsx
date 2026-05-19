@@ -6,12 +6,18 @@ import {
   User, Mail, Phone, CreditCard, ArrowRight, Lock 
 } from "lucide-react";
 import { initiateBooking } from "../api/api";
+import CouponInput from "../components/CouponInput";
 
 export default function Checkout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { booking } = location.state || {};
   const [loading, setLoading] = useState(false);
+  
+  // Coupon state
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [discountedTotal, setDiscountedTotal] = useState(booking?.total_price || 0);
+  const [originalTotal] = useState(booking?.total_price || 0);
 
   if (!booking) {
     navigate("/services");
@@ -33,58 +39,96 @@ export default function Checkout() {
     const displayHour = hourNum % 12 || 12;
     return `${displayHour}:${minute} ${ampm}`;
   };
-const handlePayment = async () => {
-  setLoading(true);
 
-  try {
-    // Step 1: Create the booking in database
-    const bookingData = {
-      service_type: booking.service_type,
-      booking_date: booking.booking_date,
-      booking_time: booking.booking_time,
-      participants: booking.participants,
-      total_price: booking.total_price,
-      customer_name: booking.customer_name,
-      customer_email: booking.customer_email,
-      customer_phone: booking.customer_phone,
-      customer_address: booking.customer_address,
-      notes: booking.notes || "",
-    };
+  // Calculate discount when coupon is applied
+  const handleApplyCoupon = (coupon) => {
+    let discountAmount = 0;
     
-    const bookingResult = await initiateBooking(bookingData);
-    console.log("Booking result:", bookingResult);
-    
-    if (bookingResult.bookingId) {
-      // Step 2: Create Yoco checkout session
-      console.log("Creating Yoco checkout...");
-      const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: booking.total_price,
-          bookingId: bookingResult.bookingId,
-          customerName: booking.customer_name,
-          customerEmail: booking.customer_email,
-        }),
-      });
-      
-      console.log("Checkout response status:", checkoutResponse.status);
-      const checkoutData = await checkoutResponse.json();
-      console.log("Checkout data:", checkoutData);
-      
-      if (checkoutData.redirectUrl) {
-        console.log("Redirecting to:", checkoutData.redirectUrl);
-        window.location.href = checkoutData.redirectUrl;
-      } else {
-        throw new Error("Failed to create payment session: No redirectUrl");
-      }
+    if (coupon.type === "percentage") {
+      discountAmount = (originalTotal * coupon.value) / 100;
+    } else if (coupon.type === "fixed") {
+      discountAmount = coupon.value;
     }
-  } catch (err) {
-    console.error("Payment error:", err);
-    alert("Something went wrong. Please try again. Error: " + err.message);
-    setLoading(false);
-  }
-};
+    
+    // Ensure discount doesn't make total negative
+    const newTotal = Math.max(0, originalTotal - discountAmount);
+    
+    setAppliedCoupon(coupon);
+    setDiscountedTotal(Math.round(newTotal));
+  };
+  
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscountedTotal(originalTotal);
+  };
+
+  const handlePayment = async () => {
+    setLoading(true);
+
+    try {
+      // Step 1: Create the booking in database with coupon info if applied
+      const bookingData = {
+        service_type: booking.service_type,
+        booking_date: booking.booking_date,
+        booking_time: booking.booking_time,
+        participants: booking.participants,
+        total_price: discountedTotal,
+        original_price: originalTotal,
+        customer_name: booking.customer_name,
+        customer_email: booking.customer_email,
+        customer_phone: booking.customer_phone,
+        customer_address: booking.customer_address,
+        notes: booking.notes || "",
+        ...(appliedCoupon && {
+          coupon_code: appliedCoupon.code,
+          discount_amount: originalTotal - discountedTotal,
+          discount_percentage: appliedCoupon.value
+        })
+      };
+      
+      console.log("Booking data with coupon:", bookingData);
+      const bookingResult = await initiateBooking(bookingData);
+      console.log("Booking result:", bookingResult);
+      
+      if (bookingResult.bookingId) {
+        // Step 2: Create Yoco checkout session with discounted amount
+        console.log("Creating Yoco checkout...");
+        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: discountedTotal,
+            originalAmount: originalTotal,
+            bookingId: bookingResult.bookingId,
+            customerName: booking.customer_name,
+            customerEmail: booking.customer_email,
+            ...(appliedCoupon && {
+              couponCode: appliedCoupon.code,
+              discountAmount: originalTotal - discountedTotal
+            })
+          }),
+        });
+        
+        console.log("Checkout response status:", checkoutResponse.status);
+        const checkoutData = await checkoutResponse.json();
+        console.log("Checkout data:", checkoutData);
+        
+        if (checkoutData.redirectUrl) {
+          console.log("Redirecting to:", checkoutData.redirectUrl);
+          window.location.href = checkoutData.redirectUrl;
+        } else {
+          throw new Error("Failed to create payment session: No redirectUrl");
+        }
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      alert("Something went wrong. Please try again. Error: " + err.message);
+      setLoading(false);
+    }
+  };
+
+  // Calculate discount amount for display
+  const discountAmount = originalTotal - discountedTotal;
 
   return (
     <div className="min-h-screen bg-background">
@@ -186,16 +230,47 @@ const handlePayment = async () => {
           {/* Payment Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-ocean/5 border border-ocean/20 rounded-lg p-6 sticky top-24">
-              <h2 className="font-heading text-xl text-foreground mb-4">Total</h2>
-              <div className="text-center mb-6">
-                <p className="text-3xl font-heading text-ocean">R{booking.total_price}</p>
+              <h2 className="font-heading text-xl text-foreground mb-4">Payment Summary</h2>
+              
+              {/* Price breakdown */}
+              <div className="space-y-2 mb-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span>R{originalTotal}</span>
+                </div>
+                
+                {/* Coupon Input */}
+                <CouponInput
+                  onApply={handleApplyCoupon}
+                  onRemove={handleRemoveCoupon}
+                  appliedCoupon={appliedCoupon}
+                />
+                
+                {/* Discount display */}
+                {appliedCoupon && discountAmount > 0 && (
+                  <div className="flex justify-between text-sm text-green-600 pt-2 border-t border-ocean/10">
+                    <span>Discount ({appliedCoupon.value}% off)</span>
+                    <span>-R{discountAmount}</span>
+                  </div>
+                )}
+              </div>
+              
+              {/* Total */}
+              <div className="text-center pt-4 border-t border-ocean/20">
+                <p className="text-xs text-muted-foreground mb-1">Total due</p>
+                <p className="text-3xl font-heading text-ocean">R{discountedTotal}</p>
+                {appliedCoupon && (
+                  <p className="text-xs text-green-600 mt-1">
+                    You saved R{discountAmount}!
+                  </p>
+                )}
                 <p className="text-xs text-muted-foreground mt-1">Including all fees</p>
               </div>
               
               <button
                 onClick={handlePayment}
                 disabled={loading}
-                className="w-full py-3 bg-ocean text-white rounded-lg font-medium hover:bg-ocean-dark transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-3 bg-ocean text-white rounded-lg font-medium hover:bg-ocean-dark transition disabled:opacity-50 flex items-center justify-center gap-2 mt-6"
               >
                 {loading ? (
                   <>
@@ -205,7 +280,7 @@ const handlePayment = async () => {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Pay Securely
+                    Pay R{discountedTotal} Securely
                   </>
                 )}
               </button>
