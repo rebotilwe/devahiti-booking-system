@@ -196,3 +196,14 @@ html {
   background-color: hsl(var(--primary) / 0.2);
   color: hsl(var(--primary));
 }
+section {
+  scroll-margin-top: 100px;
+}
+
+body {
+  letter-spacing: 0.01em;
+}
+
+p {
+  line-height: 1.9;
+}
