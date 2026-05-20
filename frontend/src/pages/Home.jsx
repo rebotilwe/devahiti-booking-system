@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Waves,
   MapPin,
   Calendar,
   Clock,
+  Heart,
+  Star
 } from "lucide-react";
 
 import ServiceCard from "../components/ServiceCard";
@@ -14,7 +16,6 @@ import FreeTrialPopup from "../components/FreeTrialPopup";
 
 // Images
 import philosophyImg from "../assets/images/img2.jpg";
-
 import groupImg from "../assets/images/img5.jpg";
 import privateImg from "../assets/images/img13.jpg";
 import soundImg from "../assets/images/img11.jpg";
@@ -22,38 +23,34 @@ import corporateImg from "../assets/images/img1.jpg";
 import trainingCardImg from "../assets/images/img9.jpg";
 import heroBgImg from "../assets/images/img7.jpg";
 
-// Updated services preview - ALL with direct booking links
+// Services data
 const services = [
-
-  {
-    id: "athletes",
-    title: "Yoga for Athletes",
-    description:
-      "Improve mobility, fascia release, recovery and functional movement to reach peak performance.",
-    duration: "60 min",
-    price: "R650",
-    location: "📍 In Studio / On Location",
-    image: privateImg,
-    bookingType: "book",
-    link: "/services/yoga-for-athletes",
-  },
   {
     id: "private",
-    title: "Private Yoga Session",
-    description:
-      "A personalised yoga experience tailored to your body, goals and energy.",
+    title: "Private Group Yoga & Sound Relaxation",
+    description: "Relax and unwind in the convenience of your own accommodation. All equipment provided!",
     duration: "60 min",
-    price: "R650 (+R150 per extra person)",
+    price: "From R650",
     location: "📍 On Location",
     image: privateImg,
     bookingType: "book",
     link: "/services/private-yoga",
   },
   {
+    id: "athletes",
+    title: "Yoga for Athletes",
+    description: "Fascia release, functional movement & recovery to help you reach peak performance.",
+    duration: "60 min",
+    price: "R650",
+    location: "📍 In Studio / On Location",
+    image: groupImg,
+    bookingType: "book",
+    link: "/services/yoga-for-athletes",
+  },
+  {
     id: "sound",
     title: "Sound Journey",
-    description:
-      "A deeply restorative sound healing experience designed to calm the nervous system.",
+    description: "Relieve stress and tension with a relaxing and restorative sound experience.",
     duration: "60 min",
     price: "From R800",
     location: "📍 On Location / In Studio",
@@ -64,8 +61,7 @@ const services = [
   {
     id: "corporate",
     title: "Corporate Yoga",
-    description:
-      "Wellness sessions for teams and workplaces to reduce stress and restore balance.",
+    description: "Wellness sessions for teams and workplaces to reduce stress and restore balance.",
     duration: "60 min",
     price: "R1500 per session",
     location: "📍 On Location",
@@ -76,8 +72,7 @@ const services = [
   {
     id: "training",
     title: "Teacher Training",
-    description:
-      "200hr & 300hr yoga teacher training programs for aspiring and advanced teachers.",
+    description: "200hr & 300hr yoga teacher training programs for aspiring and advanced teachers.",
     duration: "Multi-month",
     price: "From R28,000",
     location: "📍 In Studio",
@@ -87,144 +82,113 @@ const services = [
   },
 ];
 
-const animatedWords = [
-  "Breathe",
-  "Center",
-  "Align",
-  "Flow",
-  "Release",
-  "Restore",
+// Blog posts data
+const blogPosts = [
+  {
+    title: "Corporate Yoga for Workplace Wellness",
+    excerpt: "Bringing balance and focus to your team with guided workplace sessions...",
+    link: "/events"
+  },
+  {
+    title: "What is Fascia Release? And how does it work?",
+    excerpt: "Fascia release offers a gentle and restorative pathway to help bring your body back into balance...",
+    link: "/events"
+  },
+  {
+    title: "Private Yoga Experiences in Ballito",
+    excerpt: "Relax in the comfort of your own home or accommodation with all equipment provided...",
+    link: "/events"
+  }
 ];
 
 export default function Home() {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
-
-      setTimeout(() => {
-        setCurrentWordIndex(
-          (prev) => (prev + 1) % animatedWords.length
-        );
-        setIsVisible(true);
-      }, 300);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      console.log("Subscribed email:", email);
+      setSubscribed(true);
+      setEmail("");
+      setTimeout(() => setSubscribed(false), 5000);
+    }
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.5 }}
     >
-      {/* HERO */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+      {/* HERO SECTION - Hi I'm Cheryl (Matching Reference Site) */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-16">
         <div className="absolute inset-0">
           <img
             src={heroBgImg}
             className="w-full h-full object-cover"
-            alt="Devahiti Yoga"
+            alt="Devahiti Yoga Ballito"
           />
-
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
         </div>
 
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          {/* Top Label */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-2 mb-6"
-          >
-            <Waves className="h-3 w-3 text-white/60" />
-
-            <span className="text-[10px] tracking-[0.4em] uppercase text-white/70">
-              Devahiti Yoga
-            </span>
-
-            <Waves className="h-3 w-3 text-white/60" />
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="font-heading text-5xl md:text-7xl font-light text-white leading-tight"
           >
-            Yoga, Healing
-            <br />
-            & Functional Movement
-          </motion.h1>
-
-          {/* Animated Word */}
-          <div className="h-10 flex items-center justify-center mt-5">
-            <motion.span
-              key={currentWordIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{
-                opacity: isVisible ? 1 : 0,
-                y: isVisible ? 0 : 10,
-              }}
-              transition={{ duration: 0.3 }}
-              className="text-ocean-light text-xl md:text-2xl font-light"
-            >
-              {animatedWords[currentWordIndex]}
-            </motion.span>
-          </div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-white/75 text-base md:text-lg max-w-2xl mx-auto mt-5 leading-relaxed"
-          >
-            From private yoga to sound journeys to yoga,
-            athlete recovery and corporate wellness — every session
-            is designed to help you reconnect, restore and feel your
-            best.
-          </motion.p>
-
-          {/* Location */}
-          <div className="flex items-center justify-center gap-2 mt-5 text-white/60 text-sm">
-            <MapPin className="h-3 w-3" />
-            Ballito, South Africa
-          </div>
-
-          {/* Availability - Fixed Ballito schedule */}
-          <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-white/70">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-3 w-3" />
-              Tuesday & Thursday
+            {/* Top Label */}
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Waves className="h-4 w-4 text-white/60" />
+              <span className="text-xs tracking-[0.4em] uppercase text-white/60">
+                Devahiti Yoga
+              </span>
+              <Waves className="h-4 w-4 text-white/60" />
             </div>
 
-            <div className="flex items-center gap-2">
-              <Clock className="h-3 w-3" />
-              8:00 AM Sessions (Ballito)
-            </div>
-          </div>
+            <h1 className="font-heading text-4xl md:text-5xl font-light text-white mb-4">
+              Hi, I'm Cheryl
+            </h1>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+            <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4">
+              I specialise in private yoga, sound journeys and functional movement sessions
+              <br />
+              in the comfort of your own home or accommodation, all equipment provided.
+            </p>
+
+            <p className="text-white/80 max-w-2xl mx-auto leading-relaxed mb-8">
+              Unwind as you reduce stress and tension through gentle, mindful movement,
+              followed by restorative sound ~ leaving you feeling relaxed and restored.
+            </p>
+
+            <p className="text-white/70 text-sm mb-8">
+              Sessions are suitable for everyBODY, beginners welcome!
+            </p>
+
             <Link
               to="/schedule"
-              className="px-8 py-3 bg-ocean text-white text-xs uppercase tracking-widest rounded-sm hover:bg-ocean-dark transition"
+              className="inline-block px-8 py-3 bg-ocean text-white text-sm uppercase tracking-widest rounded-sm hover:bg-ocean-dark transition"
             >
-              Book a Session
+              Booking Menu
             </Link>
 
-            <Link
-              to="/services"
-              className="px-8 py-3 border border-white/30 text-white text-xs uppercase tracking-widest rounded-sm hover:bg-white/10 transition"
-            >
-              Explore Services
-            </Link>
-          </div>
+            {/* Location & Availability */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-white/50 text-sm">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-3 w-3" />
+                Ballito, South Africa
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="h-3 w-3" />
+                Tuesday & Thursday
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-3 w-3" />
+                8:00 AM Sessions
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
@@ -233,21 +197,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES */}
+      {/* SERVICES SECTION - 5 cards with BOOK NOW buttons */}
       <section className="py-20 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-xs tracking-[0.3em] uppercase text-ocean mb-2">
-              Our Offerings
+              What I Offer
             </p>
-
             <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground">
               Find Your Practice
             </h2>
-
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Whether you're looking to move, recover, heal or
-              simply breathe deeper — there's a space for you here.
+              Relax and unwind in the convenience of your own space
             </p>
           </div>
 
@@ -273,63 +234,201 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
-      <section className="py-20 px-6 bg-ocean/5">
+      {/* FREE AUDIO DOWNLOAD SECTION - Lead Magnet */}
+      <section className="py-16 px-6 bg-ocean/5">
+        <div className="max-w-2xl mx-auto text-center">
+          <Heart className="h-12 w-12 text-ocean mx-auto mb-4" />
+          <h2 className="font-heading text-2xl md:text-3xl text-foreground mb-3">
+            Sign up for a FREE yoga audio download!
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            A slow and gentle practice for stress and tension relief,<br />
+            listen and feel as you reconnect to your body and breath.
+          </p>
+          
+          {subscribed ? (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <p className="text-green-700">✓ Thanks! Check your email for your free download.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                required
+                className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-ocean"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-ocean text-white text-sm uppercase tracking-widest rounded-lg hover:bg-ocean-dark transition"
+              >
+                SUBSCRIBE
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* ABOUT CHERYL SECTION - Personal Story (Matching Reference Site) */}
+      <section className="py-20 px-6 bg-background">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="md:w-1/2"
+          >
             <img
               src={philosophyImg}
-              alt="Yoga philosophy"
-              className="rounded-lg w-full object-cover"
+              alt="Cheryl Lancellas - Devahiti Yoga Ballito"
+              className="rounded-lg w-full object-cover shadow-lg"
             />
-          </div>
+          </motion.div>
 
-          <div className="md:w-1/2">
-            <p className="text-xs tracking-[0.3em] uppercase text-ocean mb-3">
-              Our Philosophy
-            </p>
-
-            <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-5">
-              Rooted in Science,
-              <br />
-              Guided by Tradition
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="md:w-1/2"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Waves className="h-3 w-3 text-ocean" />
+              <span className="text-xs tracking-[0.3em] uppercase text-ocean">
+                Owner & Founder of Devahiti Yoga Ballito
+              </span>
+              <Waves className="h-3 w-3 text-ocean" />
+            </div>
+            
+            <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-4">
+              Hi, I'm Cheryl
             </h2>
 
-            <p className="text-muted-foreground mb-5 leading-relaxed">
-              Devahiti Yoga combines evidence-based movement,
-              fascia release techniques and mindful practices to
-              create experiences that support healing, mobility,
-              strength and inner calm.
-            </p>
-
-            <div className="border-l-4 border-ocean pl-4">
-              <p className="italic text-ocean text-lg">
-                “If you can breathe, you can do yoga.”
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <p>
+                I know how life can get so full that we forget what it feels like to truly unwind,
+                reconnect and simply breathe again.
+              </p>
+              <p>
+                I learned this the hard way, after years of pushing through tension, stress and fatigue
+                — until I discovered the deeply calming and restorative benefits of gentle yoga,
+                functional movement, and sound relaxation.
+              </p>
+              <p>
+                It honestly changed my life and has become my passion to share with others!
+              </p>
+              <p>
+                I now create private and small-group sessions that invite you to slow down
+                and reconnect to your body and breath, whilst sharing this special experience with friends,
+                family or colleagues.
+              </p>
+              <p>
+                Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound.
+                It's a privilege to share this work and to create a peaceful, safe space where you can
+                ease tension, quiet the mind and leave feeling deeply relaxed, rebalanced and restored.
               </p>
             </div>
+
+            <Link
+              to="/about"
+              className="inline-block mt-6 px-6 py-2 border border-ocean text-ocean text-sm uppercase tracking-widest rounded-sm hover:bg-ocean hover:text-white transition"
+            >
+              MORE ABOUT ME
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* EVENTS & BLOG SECTION */}
+      <section className="py-16 px-6 bg-ocean/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="font-heading text-2xl md:text-3xl text-foreground mb-2">
+              Devahiti Events and Blog
+            </h2>
+            <div className="flex items-center justify-center gap-2">
+              <Waves className="h-3 w-3 text-ocean" />
+              <span className="text-xs tracking-[0.3em] uppercase text-ocean">Stories & Updates</span>
+              <Waves className="h-3 w-3 text-ocean" />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogPosts.map((post, index) => (
+              <div key={index} className="bg-card border border-border rounded-lg p-5 hover:border-ocean/30 transition">
+                <h3 className="font-heading text-lg text-foreground mb-2">
+                  {post.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                  {post.excerpt}
+                </p>
+                <Link to={post.link} className="text-ocean text-sm hover:underline">
+                  Read More →
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link to="/events" className="text-ocean text-sm hover:underline inline-flex items-center gap-1">
+              View All Events & Blog → <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* TEACHER TRAINING - UPDATED: Removed "Enquire Now", using direct booking */}
+      {/* TESTIMONIAL SECTION - Client Gratitude */}
+      <section className="py-16 px-6 bg-ocean text-white text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex justify-center mb-4 gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+            ))}
+          </div>
+          
+          <h2 className="font-heading text-2xl mb-6">Client Gratitude</h2>
+          
+          <p className="text-white/90 text-base md:text-lg italic leading-relaxed mb-6">
+            "I received a truly nurturing and nourishing treatment from Cheryl. She was able to tune into my body
+            and what it needed. Cheryl's experience and confidence made me feel truly safe and in good hands.
+            I would highly recommend Cheryl to anyone looking for a caring and personalized healing experience."
+          </p>
+          
+          <p className="text-white/70 text-sm">
+            — Client, Ballito South Africa
+          </p>
+        </div>
+      </section>
+
+      {/* BRAND MEANING SECTION */}
+      <section className="py-16 px-6 bg-background text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-3">
+            Devahiti
+          </h2>
+          <p className="text-ocean text-sm tracking-widest mb-2">'Day-vah-hee-tee'</p>
+          <p className="text-muted-foreground text-sm">
+            Sanskrit for ~ Divine Order
+          </p>
+        </div>
+      </section>
+
+      {/* TEACHER TRAINING CTA SECTION */}
       <section className="py-20 px-6 bg-ocean text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-white/60 mb-3">
             Advanced Programs
           </p>
-
           <h2 className="font-heading text-3xl md:text-5xl font-light mb-4">
             Teacher Training
           </h2>
-
           <p className="text-white/80 mb-3">
             200hr & 300hr Advanced Yoga Teacher Training Programs
           </p>
-
           <p className="text-white/70 text-sm mb-8">
             Starting May 16–17, 2026 (200hr) & June 13–14, 2026 (300hr)
           </p>
-
           <Link
             to="/schedule?service=teacher-training"
             className="inline-block px-8 py-3 bg-white text-ocean text-xs uppercase tracking-widest rounded-sm hover:bg-white/90 transition"
