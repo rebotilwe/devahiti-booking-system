@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 
 // Images
 import heroBgImg from "../assets/images/home.jpg";
-import cherylPortraitImg from "../assets/images/img2.jpg";
+import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
 import soundImg from "../assets/images/img11.jpg";
 import trainingImg from "../assets/images/img5.jpg";
@@ -60,7 +60,7 @@ export default function Home() {
       </section>
 
       {/* ─── 3. SERVICING — Styled for White Background ─── */}
-      <section className="py-24 px-6 bg-background"> {/* Using your warm off-white background */}
+      <section className="py-24 px-6 bg-background">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           
           {/* Areas I Service */}
@@ -184,23 +184,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. FULL IMAGE + HI I AM CHERYL (Screenshot 410) */}
-      <section className="bg-background">
-        <div className="w-full h-[70vh]">
-          <img src={longPortraitImg} className="w-full h-full object-cover" alt="Cheryl Portrait" />
-        </div>
-        <div className="py-24 px-6 text-center max-w-2xl mx-auto">
-          <h2 className="font-heading text-5xl md:text-7xl mb-8 uppercase tracking-tighter">Hi I Am Cheryl</h2>
-          <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
-            <p>I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.</p>
-            <p>I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.</p>
+      {/* 5. FULL IMAGE + HI I AM CHERYL - SIMPLE FIX */}
+      {/* Instead of a full-width image that might crop poorly, use a smaller, focused image */}
+      <section className="bg-background py-16">
+        <div className="max-w-4xl mx-auto px-6">
+          {/* Use a simpler image display - just show the image centered */}
+          <div className="w-full max-w-2xl mx-auto mb-12">
+            <img 
+              src={cherylPortraitImg} 
+              className="w-full max-h-[500px] object-contain rounded-lg shadow-lg mx-auto" 
+              alt="Cheryl Lancellas - Devahiti Yoga" 
+            />
           </div>
-          <button
-            onClick={() => navigate("/about")}
-            className="mt-12 px-12 py-4 border border-foreground text-foreground text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-foreground hover:text-white transition-all"
-          >
-            More About Me
-          </button>
+          
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-heading text-5xl md:text-7xl mb-8 uppercase tracking-tighter">Hi I Am Cheryl</h2>
+            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
+              <p>I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.</p>
+              <p>I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.</p>
+            </div>
+            <button
+              onClick={() => navigate("/about")}
+              className="mt-12 px-12 py-4 border border-foreground text-foreground text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-foreground hover:text-white transition-all"
+            >
+              More About Me
+            </button>
+          </div>
         </div>
       </section>
 
