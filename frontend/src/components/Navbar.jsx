@@ -14,37 +14,41 @@ const navLinks = [
   { label: "GIFT CARD", path: "/gift-card" },
 ];
 
-// Secondary navigation with dropdown items
+// Secondary navigation with dropdown items - UPDATED to match Home page services
 const secondaryLinks = [
   { 
-    label: "PRIVATE GROUP PACKAGES", 
+    label: "GROUP CLASS", 
+    path: "/services/group-class",
+    hasDropdown: false,
+    dropdownItems: []
+  },
+  { 
+    label: "PRIVATE SESSIONS", 
     path: "/services/private-yoga",
-    hasDropdown: true,
-    dropdownItems: [
-      { label: "Private Group Yoga & Sound", path: "/services/private-yoga" },
-      { label: "Yoga by the Sea", path: "/services/yoga-by-sea" },
-      { label: "Corporate Group Yoga", path: "/services/corporate-yoga" },
-    ]
+    hasDropdown: false,
+    dropdownItems: []
   },
   { 
-    label: "BOWEN THERAPY", 
-    path: "/services/bowen-therapy",
-    hasDropdown: true,
-    dropdownItems: [
-      { label: "What is Bowen Therapy?", path: "/services/bowen-therapy" },
-      { label: "Bowen for Pain Relief", path: "/services/bowen-pain-relief" },
-      { label: "Bowen & Sound Combo", path: "/services/bowen-sound" },
-    ]
+    label: "CORPORATE WELLNESS", 
+    path: "/services/corporate-yoga",
+    hasDropdown: false,
+    dropdownItems: []
   },
   { 
-    label: "SOUND BOWL MASSAGE", 
+    label: "SOUND JOURNEY", 
     path: "/services/sound-journey",
     hasDropdown: false,
     dropdownItems: []
   },
   { 
-    label: "WEEKLY YOGA", 
-    path: "/services/drop-in-class",
+    label: "SPECIALIZED WORKSHOP", 
+    path: "/services/specialized-workshop",
+    hasDropdown: false,
+    dropdownItems: []
+  },
+  { 
+    label: "TEACHER TRAINING", 
+    path: "/schedule?service=teacher-training",
     hasDropdown: false,
     dropdownItems: []
   },
@@ -159,23 +163,13 @@ export default function Navbar() {
                 <div className="pt-3 mt-2 border-t border-gray-100">
                   <p className="text-[9px] text-ocean/40 tracking-[0.15em] uppercase mb-2">SERVICES</p>
                   {secondaryLinks.map((link) => (
-                    <div key={link.path}>
-                      <Link
-                        to={link.path}
-                        className="block text-[10px] text-ocean/60 tracking-[0.1em] uppercase py-1.5 hover:text-ocean transition"
-                      >
-                        {link.label}
-                      </Link>
-                      {link.hasDropdown && link.dropdownItems.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className="block text-[9px] text-ocean/40 tracking-[0.05em] pl-4 py-1 hover:text-ocean/70 transition"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="block text-[10px] text-ocean/60 tracking-[0.1em] uppercase py-1.5 hover:text-ocean transition"
+                    >
+                      {link.label}
+                    </Link>
                   ))}
                 </div>
                 <button
@@ -190,43 +184,21 @@ export default function Navbar() {
         </AnimatePresence>
       </header>
 
-      {/* ─── SECONDARY NAVIGATION BAR (BLUE BACKGROUND, WHITE TEXT) ─── */}
+      {/* ─── SECONDARY NAVIGATION BAR (BLUE BACKGROUND, WHITE TEXT) - UPDATED SERVICES ─── */}
       <div className="fixed top-20 left-0 right-0 z-40 hidden lg:block bg-ocean border-t border-white/10 shadow-md">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-center gap-8 xl:gap-12 py-3">
+          <div className="flex flex-wrap items-center justify-center gap-6 xl:gap-8 py-3">
             {secondaryLinks.map((link) => (
               <div
                 key={link.path}
                 className="relative group"
-                onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
               >
                 <Link
                   to={link.path}
-                  className="flex items-center gap-1 text-[10px] font-medium tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors duration-300"
+                  className="flex items-center gap-1 text-[9px] xl:text-[10px] font-medium tracking-[0.15em] uppercase text-white/80 hover:text-white transition-colors duration-300 whitespace-nowrap"
                 >
                   {link.label}
-                  {link.hasDropdown && (
-                    <ChevronDown className="h-3 w-3 ml-0.5 group-hover:rotate-180 transition-transform duration-300" />
-                  )}
                 </Link>
-                
-                {/* Dropdown Menu - White background, blue text */}
-                {link.hasDropdown && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-sm overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                    <div className="py-2">
-                      {link.dropdownItems.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className="block px-4 py-2 text-[11px] text-ocean/80 hover:bg-ocean/10 hover:text-ocean transition-colors"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>

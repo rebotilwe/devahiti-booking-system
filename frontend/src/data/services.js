@@ -1,40 +1,54 @@
 import {
-  Baby,
-  Activity,
-  Briefcase,
-  Heart,
-  Music,
   Users,
+  Heart,
+  Briefcase,
+  Music,
+  Calendar,
   Award
 } from "lucide-react";
 
 export const services = [
-
   {
-    id: "yoga-for-athletes",
-    slug: "yoga-for-athletes",
-    title: "Yoga for Athletes",
-    category: "Specialty Yoga",
+    id: "group-class",
+    slug: "group-class",
+    title: "Group Class",
+    category: "Group Classes",
     description:
-      "Yoga for Athletes combines fascia release and functional movement to enhance performance, improve mobility, and support recovery. Designed for runners, gym athletes, and active individuals aiming to reach peak performance.",
-    shortDescription:
-      "Fascia release & functional movement for peak performance.",
+      "Join our group yoga classes in Ballito. Perfect for all levels, these sessions combine breath, movement, and mindfulness in a supportive community setting.",
+    shortDescription: "Community yoga classes for all levels.",
     duration: "60 minutes",
-    price: "R650 per session",
-    priceAmount: 650,
-    location: "In Studio / On Location (Ballito)",
-    capacity: "All levels",
-    icon: Activity,
+    price: "R130 per class",
+    priceAmount: 130,
+    location: "In Studio (Ballito)",
+    capacity: "All levels welcome",
+    icon: Users,
     bookingType: "book",
-    image: "/images/athletes-yoga.jpg"
+    image: "/images/group-class.jpg"
   },
   {
-    id: "corporate-yoga",
-    slug: "corporate-yoga",
-    title: "Corporate Yoga",
+    id: "private-sessions",
+    slug: "private-sessions",
+    title: "Private Sessions",
+    category: "Private Yoga",
+    description:
+      "A personalised 1-on-1 session at your home or accommodation tailored to your body and goals. Ideal for beginners or those looking to deepen their practice.",
+    shortDescription: "Personalised session at your home or accommodation.",
+    duration: "60 minutes",
+    price: "R650 for 1 person, +R150 per extra person",
+    priceAmount: 650,
+    location: "On Location (Accommodation / Home)",
+    capacity: "1+ people",
+    icon: Heart,
+    bookingType: "book",
+    image: "/images/private-yoga.jpg"
+  },
+  {
+    id: "corporate-wellness",
+    slug: "corporate-wellness",
+    title: "Corporate Wellness",
     category: "Corporate & Workplace",
     description:
-      "Bring balance and focus to your team with a guided yoga session at your workplace. Reduce stress, improve focus, and boost productivity in a 60-minute session. All equipment provided.",
+      "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
     shortDescription: "Wellness sessions for teams at your workplace.",
     duration: "60 minutes",
     price: "R1500 per session",
@@ -46,29 +60,12 @@ export const services = [
     image: "/images/corporate-yoga.jpg"
   },
   {
-    id: "private-yoga",
-    slug: "private-yoga",
-    title: "Private Yoga Session",
-    category: "Visitors & Holiday Makers",
-    description:
-      "A personalised 1-on-1 session at your home or accommodation tailored to your body and goals. Ideal for beginners or deeper practice refinement.",
-    shortDescription: "Personalised session at your home or accommodation.",
-    duration: "60 minutes",
-    price: "R650 for 1 person, +R150 per extra person",
-    priceAmount: 650,
-    location: "On Location (Accommodation)",
-    capacity: "1+ people",
-    icon: Heart,
-    bookingType: "book",
-    image: "/images/private-yoga.jpg"
-  },
-  {
     id: "sound-journey",
     slug: "sound-journey",
     title: "Sound Journey",
-    category: "Therapeutic Bodywork",
+    category: "Sound Healing",
     description:
-      "Deeply relax and restore with healing frequencies and vibration. This immersive experience calms the nervous system and promotes deep rest.",
+      "Deeply relax and restore with healing frequencies and vibration. This immersive experience uses singing bowls and therapeutic sound to calm the nervous system and promote deep rest.",
     shortDescription: "Immersive sound healing experience.",
     duration: "60 minutes",
     price: "R800 per session",
@@ -80,55 +77,21 @@ export const services = [
     image: "/images/sound-journey.jpg"
   },
   {
-    id: "fascia-release",
-    slug: "fascia-release",
-    title: "Fascia Release Therapy",
-    category: "Therapeutic Bodywork",
+    id: "specialized-workshop",
+    slug: "specialized-workshop",
+    title: "Specialized Workshop",
+    category: "Workshops",
     description:
-      "Hands-on fascial release therapy to relieve tension, improve mobility, and restore balance in the body.",
-    shortDescription: "Hands-on fascia release for deep tension relief.",
-    duration: "45–75 minutes",
-    price: "R450 – R650",
+      "Deepen your practice with our specialized workshops. Topics include fascia release, yin yoga, pranayama, and more. Perfect for those wanting to explore specific aspects of yoga.",
+    shortDescription: "Deepen your practice with focused workshops.",
+    duration: "2-3 hours",
+    price: "R450 – R850",
     priceAmount: 450,
     location: "In Studio (Ballito)",
-    capacity: "Individual",
-    icon: Heart,
+    capacity: "Limited spaces",
+    icon: Calendar,
     bookingType: "book",
-    image: "/images/fascia-release.jpg"
-  },
-  {
-    id: "group-sound",
-    slug: "group-sound",
-    title: "Group Yoga & Sound Journey",
-    category: "Visitors & Holiday Makers",
-    description:
-      "Share mindful movement and healing sound with friends or family — a perfect group wellness experience.",
-    shortDescription: "Yoga + sound journey for groups.",
-    duration: "60 minutes",
-    price: "R1999 (up to 8 people) + R150 per extra person",
-    priceAmount: 1999,
-    location: "On Location (Ballito)",
-    capacity: "Up to 8 people",
-    icon: Users,
-    bookingType: "book",
-    image: "/images/group-sound.jpg"
-  },
-  {
-    id: "drop-in-class",
-    slug: "drop-in-class",
-    title: "Studio Drop-in Class",
-    category: "Studio Classes",
-    description:
-      "Join a studio class whenever it suits you. All levels welcome in our Ballito studio.",
-    shortDescription: "Join a studio class in Ballito.",
-    duration: "60 minutes",
-    price: "R130",
-    priceAmount: 130,
-    location: "In Studio (Ballito)",
-    capacity: "All levels",
-    icon: Users,
-    bookingType: "book",
-    image: "/images/drop-in.jpg"
+    image: "/images/specialized-workshop.jpg"
   },
   {
     id: "teacher-training",
@@ -136,15 +99,15 @@ export const services = [
     title: "Teacher Training",
     category: "Training",
     description:
-      "200hr & 300hr yoga teacher training programs designed to deepen your practice and knowledge.",
+      "200hr & 300hr advanced yoga teacher training programs designed to deepen your practice and knowledge. Become a certified instructor and share the gift of yoga.",
     shortDescription: "200hr & 300hr teacher training programs.",
     duration: "Multi-month",
-    price: "Enquire for pricing",
-    priceAmount: null,
+    price: "From R28,000",
+    priceAmount: 28000,
     location: "In Studio (Ballito)",
     capacity: "Enrolling now",
     icon: Award,
-    bookingType: "enquire",
+    bookingType: "book",
     image: "/images/teacher-training.jpg"
   }
 ];
