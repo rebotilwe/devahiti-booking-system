@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="bg-background">
 
-      {/* 1. HERO BANNER - Updated heading, subheading, CTA removed */}
+      {/* 1. HERO BANNER */}
       <section className="relative h-[90vh] flex items-center justify-center text-center overflow-hidden">
         <img src={heroBgImg} className="absolute inset-0 w-full h-full object-cover" alt="hero" />
         <div className="absolute inset-0 bg-black/20" />
@@ -34,31 +34,45 @@ export default function Home() {
           <p className="mt-6 text-white/90 text-xl tracking-wide">
             In studio or in your own accommodation
           </p>
-          {/* CTA Button Removed as requested */}
         </div>
       </section>
 
-      {/* 2. FIRST "HI, I'M CHERYL" SECTION - Larger image, updated copy, reduced whitespace */}
+      {/* 2. "HI, I'M CHERYL" SECTION - With full story moved up from bottom */}
       <section className="py-16 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          {/* Increased image size - w-80 h-80 (320px) */}
+        <div className="max-w-3xl mx-auto text-center">
+          {/* Larger image - w-80 h-80 (320px) */}
           <div className="w-80 h-80 mx-auto rounded-full overflow-hidden mb-8 shadow-lg border-4 border-white">
             <img src={cherylPortraitImg} className="w-full h-full object-cover" alt="Cheryl" />
           </div>
           <h2 className="font-heading text-4xl mb-4">Hi, I'm Cheryl!</h2>
-          <p className="text-muted-foreground leading-relaxed text-lg">
+          <p className="text-muted-foreground leading-relaxed text-lg mb-6">
             I specialise in private, group, corporate yoga and sound relaxation sessions in studio or in the comfort of your own accommodation.
           </p>
-          <button
-            onClick={() => navigate("/schedule")}
-            className="mt-8 bg-ocean text-white px-10 py-3 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-ocean-dark transition"
-          >
-            Booking Menu
-          </button>
+          
+          {/* Full story content moved from bottom section */}
+          <div className="space-y-4 text-muted-foreground text-base leading-relaxed font-light mt-8 pt-6 border-t border-ocean/20">
+            <p>I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.</p>
+            <p>I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.</p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <button
+              onClick={() => navigate("/schedule")}
+              className="bg-ocean text-white px-8 py-3 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-ocean-dark transition"
+            >
+              Booking Menu
+            </button>
+            <button
+              onClick={() => navigate("/about")}
+              className="border border-ocean text-ocean px-8 py-3 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-ocean hover:text-white transition"
+            >
+              More About Me
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* 3. AREAS / SERVICE LOCATION SECTION - Updated to be less restrictive */}
+      {/* 3. AREAS / SERVICE LOCATION SECTION */}
       <section className="py-20 px-6 bg-background">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           
@@ -80,7 +94,7 @@ export default function Home() {
           {/* Divider */}
           <div className="h-px w-20 bg-ocean/20 mx-auto"></div>
 
-          {/* 4. SPECIALISED SERVICES SECTION - Updated with all services */}
+          {/* 4. SPECIALISED SERVICES SECTION - Updated order */}
           <div>
             <p className="text-ocean text-[11px] tracking-[0.4em] uppercase mb-8 font-bold">
               Our Specialised Services
@@ -94,28 +108,28 @@ export default function Home() {
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
               <span className="hover:text-ocean transition-colors cursor-default">Sound Journey</span>
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
-              <span className="hover:text-ocean transition-colors cursor-default">Specialized Workshop</span>
+              <span className="hover:text-ocean transition-colors cursor-default">Sound Massage</span>
+              <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
+              <span className="hover:text-ocean transition-colors cursor-default">Fascia Release Therapy</span>
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
               <span className="hover:text-ocean transition-colors cursor-default">Teacher Training</span>
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
-              <span className="hover:text-ocean transition-colors cursor-default">Sound Massage</span>
-              <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
               <span className="hover:text-ocean transition-colors cursor-default">Educational Workshops</span>
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
-              <span className="hover:text-ocean transition-colors cursor-default">Retreats</span>
+              <span className="hover:text-ocean transition-colors cursor-default">Specialized Workshop</span>
               <span className="hidden md:inline-block text-ocean/30 text-xl">•</span>
-              <span className="hover:text-ocean transition-colors cursor-default">Fascia Release Therapy</span>
+              <span className="hover:text-ocean transition-colors cursor-default">Retreats</span>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* 5. SERVICES GRID - Updated with all services (matching reference site style) */}
+      {/* 5. SERVICES GRID - Updated order with consistent dimensions */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Row 1 - 4 services */}
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+          {/* Row 1 - Group Class, Private Sessions, Corporate Wellness, Sound Journey */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-10">
             {[{
               img: groupImg,
               title: "Group Class",
@@ -134,11 +148,11 @@ export default function Home() {
               link: "/services/sound-journey"
             }].map((item, i) => (
               <div key={i} className="group cursor-pointer">
-                <div className="aspect-[3/4] overflow-hidden relative rounded-lg shadow-md">
+                <div className="aspect-square w-full overflow-hidden relative rounded-lg shadow-md">
                   <img src={item.img} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt={item.title} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                 </div>
-                <h3 className="mt-4 font-heading text-xl text-center">{item.title}</h3>
+                <h3 className="mt-4 font-heading text-lg md:text-xl text-center">{item.title}</h3>
                 <p 
                   onClick={() => navigate(item.link)}
                   className="mt-2 text-[10px] tracking-[0.3em] uppercase text-ocean font-bold text-center cursor-pointer hover:underline"
@@ -149,31 +163,31 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Row 2 - 4 services */}
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+          {/* Row 2 - Sound Massage, Fascia Release Therapy, Teacher Training, Educational Workshops */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-10">
             {[{
-              img: workshopImg,
-              title: "Specialized Workshop",
-              link: "/services/specialized-workshop"
+              img: soundMassageImg,
+              title: "Sound Massage",
+              link: "/services/sound-massage"
+            }, {
+              img: fasciaReleaseImg,
+              title: "Fascia Release Therapy",
+              link: "/services/fascia-release"
             }, {
               img: trainingImg,
               title: "Teacher Training",
               link: "/schedule?service=teacher-training"
-            }, {
-              img: soundMassageImg,
-              title: "Sound Massage",
-              link: "/services/sound-massage"
             }, {
               img: educationalWorkshopImg,
               title: "Educational Workshops",
               link: "/services/educational-workshops"
             }].map((item, i) => (
               <div key={i} className="group cursor-pointer">
-                <div className="aspect-[3/4] overflow-hidden relative rounded-lg shadow-md">
+                <div className="aspect-square w-full overflow-hidden relative rounded-lg shadow-md">
                   <img src={item.img} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt={item.title} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                 </div>
-                <h3 className="mt-4 font-heading text-xl text-center">{item.title}</h3>
+                <h3 className="mt-4 font-heading text-lg md:text-xl text-center">{item.title}</h3>
                 <p 
                   onClick={() => navigate(item.link)}
                   className="mt-2 text-[10px] tracking-[0.3em] uppercase text-ocean font-bold text-center cursor-pointer hover:underline"
@@ -184,23 +198,23 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Row 3 - 2 services (centered) */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Row 3 - Specialized Workshop, Retreats (centered with 2 columns) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 max-w-2xl mx-auto">
             {[{
+              img: workshopImg,
+              title: "Specialized Workshop",
+              link: "/services/specialized-workshop"
+            }, {
               img: retreatsImg,
               title: "Retreats",
               link: "/services/retreats"
-            }, {
-              img: fasciaReleaseImg,
-              title: "Fascia Release Therapy",
-              link: "/services/fascia-release"
             }].map((item, i) => (
               <div key={i} className="group cursor-pointer">
-                <div className="aspect-[3/4] overflow-hidden relative rounded-lg shadow-md">
+                <div className="aspect-square w-full overflow-hidden relative rounded-lg shadow-md">
                   <img src={item.img} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt={item.title} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                 </div>
-                <h3 className="mt-4 font-heading text-xl text-center">{item.title}</h3>
+                <h3 className="mt-4 font-heading text-lg md:text-xl text-center">{item.title}</h3>
                 <p 
                   onClick={() => navigate(item.link)}
                   className="mt-2 text-[10px] tracking-[0.3em] uppercase text-ocean font-bold text-center cursor-pointer hover:underline"
@@ -213,24 +227,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. LOWER "HI I AM CHERYL" SECTION - Consolidated messaging, no duplication */}
-      <section className="bg-background py-20 px-6">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-heading text-5xl md:text-7xl mb-8 uppercase tracking-tighter">Hi I Am Cheryl</h2>
-            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
-              <p>I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.</p>
-              <p>I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.</p>
-            </div>
-            <button
-              onClick={() => navigate("/about")}
-              className="mt-12 px-12 py-4 border border-foreground text-foreground text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-foreground hover:text-white transition-all"
-            >
-              More About Me
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Bottom "Hi I Am Cheryl" section REMOVED - content moved to top section */}
 
     </div>
   );
