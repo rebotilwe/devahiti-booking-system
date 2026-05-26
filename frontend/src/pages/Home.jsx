@@ -38,11 +38,9 @@ export default function Home() {
 
       {/* 2. "HI, I'M CHERYL" SECTION - BLUE BACKGROUND */}
       <section className="relative py-16 md:py-20 px-6" style={{ backgroundColor: '#1E3A5F' }}>
-        {/* Curved bottom using pseudo-element */}
         <div className="absolute bottom-0 left-0 right-0 h-[50px] md:h-[80px] bg-background rounded-t-[50px] md:rounded-t-[80px]" />
         
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          {/* Image */}
           <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto rounded-full overflow-hidden mb-6 shadow-lg border-4 border-white">
             <img src={cherylPortraitImg} className="w-full h-full object-cover" alt="Cheryl" />
           </div>
@@ -53,15 +51,15 @@ export default function Home() {
             I specialise in private, group, corporate yoga and sound relaxation sessions in studio or in the comfort of your own accommodation.
           </p>
           
-          <p className="text-white/85 leading-relaxed text-sm md:text-base italic mt-4">
+          <p className="text-white/85 leading-relaxed text-base md:text-lg mt-4">
             I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
           </p>
           
-          <p className="text-white/80 leading-relaxed text-sm md:text-base italic mt-2">
+          <p className="text-white/80 leading-relaxed text-base md:text-lg mt-2">
             I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 pb-8">
             <button
               onClick={() => navigate("/schedule")}
               className="bg-white text-[#1E3A5F] px-8 py-3 text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-gray-100 transition shadow-md rounded-sm"
@@ -108,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. SERVICES GRID */}
+      {/* 4. SERVICES GRID - UPDATED LINKS TO MATCH services.js SLUGS */}
       <section className="py-12 md:py-16 px-6 bg-ocean/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
@@ -120,7 +118,7 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Row 1 */}
+          {/* Row 1 - FIXED LINKS */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
             {[{
               img: groupImg,
@@ -129,11 +127,11 @@ export default function Home() {
             }, {
               img: privateImg,
               title: "Private Sessions",
-              link: "/services/private-yoga"
+              link: "/services/private-sessions"  // ✅ Fixed
             }, {
               img: corporateImg,
               title: "Corporate Wellness",
-              link: "/services/corporate-yoga"
+              link: "/services/corporate-wellness"  // ✅ Fixed
             }, {
               img: soundImg,
               title: "Sound Journey",
@@ -155,7 +153,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Row 2 */}
+          {/* Row 2 - FIXED LINKS */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
             {[{
               img: soundMassageImg,
