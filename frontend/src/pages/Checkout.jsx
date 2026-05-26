@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Waves, Calendar, Clock, Users, MapPin, 
-  User, Mail, Phone, CreditCard, ArrowRight, Lock 
+  User, Mail, Phone, Lock 
 } from "lucide-react";
 import { initiateBooking } from "../api/api";
 import CouponInput from "../components/CouponInput";
@@ -50,7 +50,6 @@ export default function Checkout() {
       discountAmount = coupon.value;
     }
     
-    // Ensure discount doesn't make total negative
     const newTotal = Math.max(0, originalTotal - discountAmount);
     
     setAppliedCoupon(coupon);
@@ -66,7 +65,7 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      // Step 1: Create the booking in database with coupon info if applied
+      // Create the booking in database
       const bookingData = {
         service_type: booking.service_type,
         booking_date: booking.booking_date,
@@ -86,14 +85,14 @@ export default function Checkout() {
         })
       };
       
-      console.log("Booking data with coupon:", bookingData);
+      console.log("Creating booking...");
       const bookingResult = await initiateBooking(bookingData);
       console.log("Booking result:", bookingResult);
       
       if (bookingResult.bookingId) {
-        // Step 2: Create Yoco checkout session with discounted amount
-        console.log("Creating Yoco checkout...");
-        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
+        // Optionally create Yoco checkout session in background
+        // (Don't await or redirect - let it happen in background)
+        fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -107,18 +106,10 @@ export default function Checkout() {
               discountAmount: originalTotal - discountedTotal
             })
           }),
-        });
+        }).catch(err => console.log("Background payment creation error:", err));
         
-        console.log("Checkout response status:", checkoutResponse.status);
-        const checkoutData = await checkoutResponse.json();
-        console.log("Checkout data:", checkoutData);
-        
-        if (checkoutData.redirectUrl) {
-          console.log("Redirecting to:", checkoutData.redirectUrl);
-          window.location.href = checkoutData.redirectUrl;
-        } else {
-          throw new Error("Failed to create payment session: No redirectUrl");
-        }
+        // Redirect directly to success page
+        window.location.href = `/payment-success?bookingId=${bookingResult.bookingId}`;
       }
     } catch (err) {
       console.error("Payment error:", err);
@@ -127,7 +118,6 @@ export default function Checkout() {
     }
   };
 
-  // Calculate discount amount for display
   const discountAmount = originalTotal - discountedTotal;
 
   return (
