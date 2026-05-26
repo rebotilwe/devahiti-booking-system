@@ -18,6 +18,8 @@ import Admin from './pages/Admin'
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancelled from './pages/PaymentCancelled';
 import AdminLogin from './pages/AdminLogin';
+import Blog from './pages/Blog';
+import GiftCard from './pages/GiftCard';
 
 function App() {
   return (
@@ -36,6 +38,9 @@ function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
+            <Route path="/blog" element={<Blog />} />
+<Route path="/gift-card" element={<GiftCard />} />
+
 
             {/* Booking System Routes */}
             <Route path="/schedule" element={<Schedule />} />
