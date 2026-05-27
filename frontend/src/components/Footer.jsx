@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
-// Import your logo - adjust the filename to match your actual file
-import logo from "../assets/logo1.png"; // or .svg, .webp, etc.
+import logo from "../assets/logo1.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#4a3728] text-white/80">
+    <footer className="bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
           {/* Brand with Logo */}
@@ -14,33 +13,34 @@ export default function Footer() {
               <img 
                 src={logo} 
                 alt="Devahiti Yoga Logo" 
-                className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+                className="h-12 md:h-14 w-auto object-contain"
               />
             </div>
-            <p className="text-xs tracking-widest uppercase text-white/50 mb-6">
+            <p className="text-xs tracking-widest uppercase text-gray-400 mb-6">
               'Day-vah-hee-tee' — Sanskrit for Divine Order
             </p>
-            <p className="text-sm leading-relaxed text-white/60">
+            <p className="text-sm leading-relaxed text-gray-500">
               Open-air yoga studio in Ballito. Private sessions, group classes, sound journeys, and teacher training.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading text-xl text-white mb-6">Navigate</h4>
+            <h4 className="font-heading text-xl text-gray-800 mb-6">Navigate</h4>
             <nav className="flex flex-col gap-3">
               {[
                 { label: "Home", path: "/" },
                 { label: "About Cheryl", path: "/about" },
                 { label: "Services", path: "/services" },
                 { label: "Upcoming Events", path: "/events" },
+                { label: "Blog", path: "/blog" },
                 { label: "Contact", path: "/contact" },
-                // { label: "Book Online", path: "/booking" },
+                { label: "Gift Card", path: "/gift-card" },
               ].map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-sm text-white/60 hover:text-[#c47a5a] transition-colors duration-300"
+                  className="text-sm text-gray-500 hover:text-[#93C9F9] transition-colors duration-300"
                 >
                   {link.label}
                 </Link>
@@ -50,16 +50,18 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-heading text-xl text-white mb-6">Get in Touch</h4>
-            <div className="space-y-3 text-sm text-white/60 mb-8">
+            <h4 className="font-heading text-xl text-gray-800 mb-6">Get in Touch</h4>
+            <div className="space-y-3 text-sm text-gray-500 mb-8">
               <p>📍 Devahiti Yoga Studio</p>
               <p>Ballito, South Africa</p>
+              <p>📧 cheryl@devahiti.com</p>
+              <p>📞 +27 (0)84 090 2083</p>
             </div>
             <div className="flex gap-4">
               {/* Instagram */}
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#c47a5a] hover:text-[#c47a5a] transition-all"
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:border-[#93C9F9] hover:text-[#93C9F9] transition-all text-gray-400 hover:bg-[#93C9F9]/5"
                 aria-label="Instagram"
               >
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -70,7 +72,7 @@ export default function Footer() {
               {/* Facebook */}
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#c47a5a] hover:text-[#c47a5a] transition-all"
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:border-[#93C9F9] hover:text-[#93C9F9] transition-all text-gray-400 hover:bg-[#93C9F9]/5"
                 aria-label="Facebook"
               >
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -81,7 +83,7 @@ export default function Footer() {
               {/* Email */}
               <a 
                 href="mailto:cheryl@devahiti.com" 
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-[#c47a5a] hover:text-[#c47a5a] transition-all"
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:border-[#93C9F9] hover:text-[#93C9F9] transition-all text-gray-400 hover:bg-[#93C9F9]/5"
                 aria-label="Email"
               >
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -93,17 +95,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/40">
+        <div className="border-t border-gray-100 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-gray-400">
             © {new Date().getFullYear()} Devahiti Yoga. All rights reserved.
           </p>
-          <p className="text-xs text-white/40 flex items-center gap-1">
+          <p className="text-xs text-gray-400 flex items-center gap-1">
             Developed by{" "}
             <a 
               href="https://afribizconnect.co.za" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:text-[#c47a5a] transition-colors inline-flex items-center gap-1"
+              className="hover:text-[#93C9F9] transition-colors inline-flex items-center gap-1"
             >
               Afribiz Connect <ExternalLink className="w-3 h-3" />
             </a>

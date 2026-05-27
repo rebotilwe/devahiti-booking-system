@@ -15,342 +15,6 @@ import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
 import fasciaReleaseImg from "../assets/images/img5.jpg";
 
-/*
-  FONT SETUP — add these two lines to your index.html <head>:
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@500&display=swap"
-    rel="stylesheet"
-  />
-
-  Then in your Tailwind config add:
-    fontFamily: {
-      heading: ['"Cormorant Garamond"', 'serif'],
-      script:  ['"Dancing Script"', 'cursive'],
-      body:    ['Lato', 'sans-serif'],
-    }
-*/
-
-const styles = `
-  /* ── Inline CSS so this file is self-contained ── */
-
-  :root {
-    --cream:   #FAF7F2;
-    --sand:    #EDE8DF;
-    --mist:    #D6CFC4;
-    --sage:    #8A9E8A;
-    --sage-dk: #637563;
-    --ocean:   #1E3A5F;
-    --warm:    #C8A97A;
-    --text:    #3A3530;
-    --text-lt: #7A736C;
-  }
-
-  .dv-home { font-family: 'Lato', sans-serif; color: var(--text); background: var(--cream); }
-
-  /* ── HERO ── */
-  .dv-hero { position:relative; height:90vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
-  .dv-hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .dv-hero-overlay { position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.38) 100%); }
-  .dv-hero-content { position:relative; z-index:10; color:#fff; padding:0 1.5rem; max-width:700px; }
-  .dv-hero-content h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    line-height: 1.1;
-    letter-spacing: 0.02em;
-  }
-  .dv-hero-content h1 em { font-style: italic; }
-  .dv-hero-sub {
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.25em;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
-    margin-top: 1rem;
-  }
-  .dv-hero-btn {
-    display: inline-block;
-    margin-top: 2.2rem;
-    padding: 0.85rem 2.5rem;
-    border: 1.5px solid rgba(255,255,255,0.85);
-    color: #fff;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    background: transparent;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
-  }
-  .dv-hero-btn:hover { background: rgba(255,255,255,0.15); }
-
-  /* ── DIVIDER ORNAMENT ── */
-  .dv-ornament { display:flex; align-items:center; justify-content:center; gap:0.75rem; margin:0 auto; }
-  .dv-ornament span { display:block; height:1px; width:60px; background:var(--mist); }
-  .dv-ornament i { display:block; width:6px; height:6px; border-radius:50%; background:var(--warm); }
-
-  /* ── INTRO / HI I'M CHERYL ── */
-  .dv-intro { background: var(--cream); padding: 5rem 1.5rem; text-align:center; }
-  .dv-intro-portrait {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto 2rem;
-    border: 4px solid var(--sand);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.10);
-  }
-  .dv-intro-portrait img { width:100%; height:100%; object-fit:cover; }
-  .dv-intro-script {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--ocean);
-    margin-bottom: 0.5rem;
-  }
-  .dv-intro-body {
-    max-width: 600px;
-    margin: 0 auto;
-    font-weight: 300;
-    line-height: 1.9;
-    font-size: 1rem;
-    color: var(--text-lt);
-  }
-  .dv-intro-body strong { color: var(--text); font-weight: 400; }
-  .dv-intro-btns { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin-top:2.5rem; }
-  .dv-btn-solid {
-    padding: 0.85rem 2.4rem;
-    background: var(--ocean);
-    color: #fff;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: background 0.25s;
-    font-family: 'Lato', sans-serif;
-  }
-  .dv-btn-solid:hover { background: var(--sage-dk); }
-  .dv-btn-outline {
-    padding: 0.85rem 2.4rem;
-    background: transparent;
-    color: var(--ocean);
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    border: 1.5px solid var(--ocean);
-    cursor: pointer;
-    transition: background 0.25s, color 0.25s;
-    font-family: 'Lato', sans-serif;
-  }
-  .dv-btn-outline:hover { background: var(--ocean); color: #fff; }
-
-  /* ── LOCATION BAND ── */
-  .dv-location { background: var(--sand); padding: 3rem 1.5rem; text-align:center; }
-  .dv-location-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--sage-dk);
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-  .dv-location-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-  .dv-location-sub { font-size: 0.7rem; letter-spacing: 0.25em; text-transform:uppercase; color: var(--text-lt); margin-top:0.35rem; }
-  .dv-location-btn {
-    margin-top: 2rem;
-    padding: 0.8rem 2.2rem;
-    background: var(--sage);
-    color: #fff;
-    font-size: 0.62rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: background 0.25s;
-    font-family: 'Lato', sans-serif;
-  }
-  .dv-location-btn:hover { background: var(--sage-dk); }
-
-  /* ── SERVICES SECTION ── */
-  .dv-services { padding: 5rem 1.5rem; background: var(--cream); }
-  .dv-section-header { text-align:center; margin-bottom: 3rem; }
-  .dv-section-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--sage-dk);
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-  }
-  .dv-section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-  .dv-section-title em { font-style: italic; }
-
-  /* Portrait card grid */
-  .dv-grid { display: grid; gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
-  .dv-grid-4 { grid-template-columns: repeat(4, 1fr); }
-  .dv-grid-2c { grid-template-columns: repeat(2, 280px); justify-content:center; }
-  @media (max-width: 900px) { .dv-grid-4 { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .dv-grid-4 { grid-template-columns: 1fr 1fr; gap:1rem; } .dv-grid-2c { grid-template-columns: repeat(2, 1fr); } }
-
-  .dv-card { cursor: pointer; }
-  .dv-card-img {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 2/3;
-    overflow: hidden;
-    border-radius: 2px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-  }
-  .dv-card-img img {
-    width:100%; height:100%; object-fit:cover;
-    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
-  }
-  .dv-card:hover .dv-card-img img { transform: scale(1.06); }
-  .dv-card-img-overlay {
-    position: absolute; inset:0;
-    background: linear-gradient(to top, rgba(30,58,95,0.55) 0%, transparent 55%);
-    transition: opacity 0.4s;
-  }
-  .dv-card:hover .dv-card-img-overlay { opacity: 0.75; }
-  .dv-card-label {
-    position: absolute; bottom:0; left:0; right:0;
-    padding: 1.2rem 1rem 1rem;
-    color: #fff;
-    text-align: center;
-  }
-  .dv-card-label h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: clamp(0.95rem, 2vw, 1.15rem);
-    letter-spacing: 0.04em;
-    line-height: 1.3;
-    margin-bottom: 0.4rem;
-  }
-  .dv-card-link {
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: rgba(255,255,255,0.8);
-    border-bottom: 1px solid rgba(255,255,255,0.4);
-    padding-bottom: 1px;
-    background: none; border-top:none; border-left:none; border-right:none;
-    cursor:pointer;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .dv-card-link:hover { color:#fff; border-color:#fff; }
-
-  /* ── FULL-BLEED ABOUT STRIP ── */
-  .dv-about-strip {
-    position: relative;
-    padding: 6rem 1.5rem;
-    background: var(--ocean);
-    overflow: hidden;
-    text-align: center;
-  }
-  .dv-about-strip::before {
-    content:'';
-    position:absolute; inset:0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  .dv-about-inner { position:relative; z-index:1; max-width: 640px; margin:0 auto; }
-  .dv-about-portrait {
-    width:180px; height:180px; border-radius:50%;
-    overflow:hidden; margin:0 auto 2rem;
-    border: 3px solid rgba(255,255,255,0.25);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.25);
-  }
-  .dv-about-portrait img { width:100%; height:100%; object-fit:cover; }
-  .dv-about-script {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
-    color: #fff;
-    margin-bottom: 0.25rem;
-  }
-  .dv-about-tagline {
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 2rem;
-    font-weight: 700;
-  }
-  .dv-about-body {
-    font-weight: 300;
-    line-height: 2;
-    font-size: 0.97rem;
-    color: rgba(255,255,255,0.80);
-    margin-bottom: 2.5rem;
-  }
-  .dv-about-btn {
-    padding: 0.85rem 2.4rem;
-    border: 1.5px solid rgba(255,255,255,0.6);
-    color: #fff;
-    font-size: 0.62rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 700;
-    background: transparent;
-    cursor: pointer;
-    transition: background 0.25s;
-    font-family: 'Lato', sans-serif;
-  }
-  .dv-about-btn:hover { background: rgba(255,255,255,0.12); }
-
-  /* ── TESTIMONIAL ── */
-  .dv-testimonial { background: var(--sand); padding: 5rem 1.5rem; text-align:center; }
-  .dv-testimonial-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    color: var(--text);
-    max-width: 680px;
-    margin: 0 auto;
-    line-height: 1.75;
-    position: relative;
-  }
-  .dv-testimonial-quote::before {
-    content: '\u201C';
-    font-size: 5rem;
-    line-height: 0;
-    vertical-align: -1.8rem;
-    color: var(--warm);
-    font-style: normal;
-    margin-right: 0.15em;
-    font-family: 'Cormorant Garamond', serif;
-  }
-  .dv-testimonial-attr {
-    margin-top: 1.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-lt);
-    font-weight: 700;
-  }
-
-  /* grid row gap */
-  .dv-grid-gap { margin-bottom: 2rem; }
-`;
-
 const services = [
   { img: groupImg,              title: "Group Class",             link: "/services/group-class" },
   { img: privateImg,            title: "Private Sessions",        link: "/services/private-sessions" },
@@ -369,13 +33,16 @@ const featuredServices = [
 
 function ServiceCard({ img, title, link, navigate }) {
   return (
-    <div className="dv-card" onClick={() => navigate(link)}>
-      <div className="dv-card-img">
-        <img src={img} alt={title} loading="lazy" />
-        <div className="dv-card-img-overlay" />
-        <div className="dv-card-label">
-          <h3>{title}</h3>
-          <button className="dv-card-link" onClick={e => { e.stopPropagation(); navigate(link); }}>
+    <div className="group cursor-pointer" onClick={() => navigate(link)}>
+      <div className="relative w-full aspect-[3/4] overflow-hidden rounded-sm shadow-md">
+        <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition" />
+        <div className="absolute bottom-6 left-0 right-0 text-center text-white px-4">
+          <h3 className="font-heading text-xl mb-1">{title}</h3>
+          <button 
+            className="text-[10px] uppercase tracking-[0.3em] font-bold border-b border-white/50 pb-0.5 hover:border-white transition"
+            onClick={(e) => { e.stopPropagation(); navigate(link); }}
+          >
             Read More
           </button>
         </div>
@@ -388,133 +55,208 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <style>{styles}</style>
-      <div className="dv-home">
+    <div className="min-h-screen bg-white">
 
-        {/* ── 1. HERO ── */}
-        <section className="dv-hero">
-          <img src={heroBgImg} alt="Yoga hero" />
-          <div className="dv-hero-overlay" />
-          <div className="dv-hero-content">
-            <h1>Private, Group Yoga &amp; <em>Sound Relaxation</em></h1>
-            <p className="dv-hero-sub">In studio or in your own accommodation</p>
-            <button className="dv-hero-btn" onClick={() => navigate("/schedule")}>Book Online</button>
+      {/* 1. HERO - Full screen image with centered text */}
+      <section className="relative h-screen flex items-center justify-center text-center overflow-hidden">
+        <img src={heroBgImg} className="absolute inset-0 w-full h-full object-cover" alt="Devahiti Yoga" />
+        <div className="absolute inset-0 bg-black/30" />
+        
+        <div className="relative z-10 max-w-3xl px-6 text-white">
+          <h1 className="font-heading text-5xl md:text-7xl font-light leading-tight">
+            Private, Group Yoga & <br /> Sound Relaxation
+          </h1>
+          <p className="mt-4 text-white/80 text-lg md:text-xl tracking-wide">
+            In studio or in your own accommodation
+          </p>
+          <button
+            onClick={() => navigate("/schedule")}
+            className="mt-8 px-8 py-3 bg-white text-gray-800 text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-gray-100 transition shadow-md"
+          >
+            Book Online
+          </button>
+        </div>
+      </section>
+
+      {/* 2. HI I'M CHERYL - White background, centered */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-2xl mx-auto text-center">
+          {/* Circular portrait */}
+          <div className="w-40 h-40 mx-auto rounded-full overflow-hidden mb-6 shadow-md border-4 border-white">
+            <img src={cherylPortraitImg} className="w-full h-full object-cover" alt="Cheryl" />
           </div>
-        </section>
-
-        {/* ── 2. HI I'M CHERYL ── */}
-        <section className="dv-intro">
-          <div className="dv-intro-portrait">
-            <img src={cherylPortraitImg} alt="Cheryl" />
+          
+          <h2 className="font-heading text-3xl md:text-4xl text-gray-900 mb-4">Hi, I'm Cheryl!</h2>
+          
+          <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-4">
+            I specialise in private, group, corporate yoga and sound relaxation sessions in studio or in the comfort of your own accommodation.
+          </p>
+          
+          <p className="text-gray-500 leading-relaxed text-sm md:text-base mt-4">
+            I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
+          </p>
+          
+          <p className="text-gray-500 leading-relaxed text-sm md:text-base mt-2">
+            I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation after years of pushing through tension and stress.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <button
+              onClick={() => navigate("/schedule")}
+              className="px-8 py-3 bg-[#93C9F9] text-white text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-[#65AEEA] transition shadow-md rounded-sm"
+            >
+              Booking Menu
+            </button>
+            <button
+              onClick={() => navigate("/about")}
+              className="px-8 py-3 border border-[#93C9F9] text-[#93C9F9] text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-[#93C9F9] hover:text-white transition rounded-sm"
+            >
+              More About Me
+            </button>
           </div>
+        </div>
+      </section>
 
-          <div className="dv-ornament" style={{ marginBottom: '1.5rem' }}>
-            <span /><i /><span />
-          </div>
-
-          <p className="dv-intro-script">Hi, I'm Cheryl!</p>
-
-          <div className="dv-intro-body">
-            <p>
-              I specialise in <strong>private, group, corporate yoga</strong> and sound relaxation sessions —
-              in studio or in the comfort of your own accommodation.
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              I know how life can get so full that we forget what it feels like to truly unwind,
-              reconnect and simply breathe again.
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              I discovered the deeply calming and restorative benefits of gentle yoga and sound relaxation
-              after years of pushing through tension and stress — and it changed my life.
-            </p>
-          </div>
-
-          <div className="dv-intro-btns">
-            <button className="dv-btn-solid" onClick={() => navigate("/schedule")}>Book Online</button>
-            <button className="dv-btn-outline" onClick={() => navigate("/about")}>More About Me</button>
-          </div>
-        </section>
-
-        {/* ── 3. LOCATION BAND ── */}
-        <section className="dv-location">
-          <p className="dv-location-label">Servicing Areas</p>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem', flexWrap:'wrap' }}>
-            <MapPin size={15} style={{ color: 'var(--sage-dk)', flexShrink:0 }} />
-            <p className="dv-location-title">
+      {/* 3. SERVICING AREAS - Light blue/gray background */}
+      <section className="py-16 px-6 bg-[#F9F9FB]">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-[#65AEEA] text-[11px] tracking-[0.4em] uppercase mb-3 font-bold">
+            Servicing Areas
+          </p>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <MapPin className="h-4 w-4 text-[#93C9F9] shrink-0" />
+            <h3 className="font-heading text-xl md:text-2xl lg:text-3xl font-light text-gray-800">
               North Coast · Ballito · Salt Rock · Sheffield · Surrounding Areas
+            </h3>
+          </div>
+          <p className="mt-2 text-gray-500 text-xs tracking-widest uppercase">
+            Including Durban Corporate Wellness
+          </p>
+          
+          <div className="h-px w-16 bg-[#93C9F9]/30 mx-auto my-8"></div>
+
+          <button
+            onClick={() => navigate("/services")}
+            className="bg-[#93C9F9] text-white px-10 py-3 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#65AEEA] transition shadow-md rounded-sm"
+          >
+            View Services
+          </button>
+          <p className="text-gray-500 text-xs mt-3">
+            Click to explore all services with details, pricing, and booking
+          </p>
+        </div>
+      </section>
+
+      {/* 4. SERVICES GRID */}
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[#65AEEA] text-[10px] tracking-[0.4em] uppercase mb-2 font-bold">
+              Our Offerings
             </p>
-          </div>
-          <p className="dv-location-sub">Including Durban Corporate Wellness</p>
-          <br />
-          <button className="dv-location-btn" onClick={() => navigate("/services")}>View All Services</button>
-        </section>
-
-        {/* ── 4. SERVICES GRID ── */}
-        <section className="dv-services">
-          <div className="dv-section-header">
-            <p className="dv-section-label">Our Offerings</p>
-            <h2 className="dv-section-title">Explore Our <em>Services</em></h2>
+            <h2 className="font-heading text-2xl md:text-3xl font-light text-gray-800">
+              Explore Our Services
+            </h2>
           </div>
 
-          {/* Row 1 — 4 cards */}
-          <div className="dv-grid dv-grid-4 dv-grid-gap">
-            {services.slice(0, 4).map((s, i) => (
-              <ServiceCard key={i} {...s} navigate={navigate} />
+          {/* Row 1 - 4 cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+            {services.slice(0, 4).map((item, i) => (
+              <ServiceCard key={i} {...item} navigate={navigate} />
             ))}
           </div>
 
-          {/* Row 2 — 4 cards */}
-          <div className="dv-grid dv-grid-4 dv-grid-gap">
-            {services.slice(4).map((s, i) => (
-              <ServiceCard key={i} {...s} navigate={navigate} />
+          {/* Row 2 - 4 cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+            {services.slice(4, 8).map((item, i) => (
+              <ServiceCard key={i} {...item} navigate={navigate} />
             ))}
           </div>
 
-          {/* Row 3 — 2 centred cards */}
-          <div className="dv-grid dv-grid-2c">
-            {featuredServices.map((s, i) => (
-              <ServiceCard key={i} {...s} navigate={navigate} />
+          {/* Row 3 - 2 centered cards */}
+          <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-md mx-auto">
+            {featuredServices.map((item, i) => (
+              <ServiceCard key={i} {...item} navigate={navigate} />
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── 5. ABOUT STRIP ── */}
-        <section className="dv-about-strip">
-          <div className="dv-about-inner">
-            <div className="dv-about-portrait">
-              <img src={cherylPortraitImg} alt="Cheryl" />
-            </div>
-            <p className="dv-about-script">Cheryl — Founder &amp; Teacher</p>
-            <p className="dv-about-tagline">Yoga · Sound · Wellness · North Coast KZN</p>
-            <p className="dv-about-body">
-              Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound.
-              It's a privilege to create a peaceful, safe space where you can ease tension, quiet the mind
-              and leave feeling deeply relaxed, rebalanced and restored.
-            </p>
-            <button className="dv-about-btn" onClick={() => navigate("/about")}>More About Me</button>
+      {/* 5. ABOUT STRIP - Blue background like reference */}
+      <section className="py-20 px-6 text-center" style={{ backgroundColor: '#93C9F9' }}>
+        <div className="max-w-2xl mx-auto">
+          <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-white shadow-md">
+            <img src={cherylPortraitImg} className="w-full h-full object-cover" alt="Cheryl" />
           </div>
-        </section>
+          <h2 className="font-heading text-3xl md:text-4xl text-white mb-4">Cheryl Lancellas</h2>
+          <p className="text-white/90 text-sm tracking-widest uppercase mb-6">Owner & Founder of Devahiti Yoga Ballito</p>
+          <p className="text-white/85 leading-relaxed text-base md:text-lg">
+            Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound.
+            It's a privilege to create a peaceful, safe space where you can ease tension, quiet the mind
+            and leave feeling deeply relaxed, rebalanced and restored.
+          </p>
+          <button
+            onClick={() => navigate("/about")}
+            className="mt-8 px-8 py-3 bg-white text-[#93C9F9] text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-gray-100 transition rounded-sm"
+          >
+            More About Me
+          </button>
+        </div>
+      </section>
 
-        {/* ── 6. TESTIMONIAL ── */}
-        <section className="dv-testimonial">
-          <div className="dv-ornament" style={{ marginBottom: '2rem' }}>
-            <span /><i /><span />
+      {/* 6. TESTIMONIAL */}
+      <section className="py-16 px-6 bg-[#F9F9FB]">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="flex justify-center gap-1 mb-4">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} className="w-5 h-5 text-[#93C9F9] fill-current" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+            ))}
           </div>
+          
+          <p className="text-gray-600 italic text-base md:text-lg leading-relaxed">
+            "I received a truly nurturing and nourishing treatment from Cheryl. She was able to tune into my body
+            and what it needed. Cheryl's experience and confidence made me feel truly safe and in good hands.
+            I would highly recommend Cheryl to anyone looking for a caring and personalized healing experience."
+          </p>
+          
+          <p className="mt-4 text-gray-400 text-xs tracking-widest uppercase">
+            — Client, Ballito South Africa
+          </p>
+        </div>
+      </section>
 
-          <blockquote className="dv-testimonial-quote">
-            A truly nurturing and nourishing experience. Cheryl was able to tune into
-            exactly what my body needed — her warmth and expertise made me feel completely
-            safe and restored.
-          </blockquote>
-          <p className="dv-testimonial-attr">— Client · Ballito, KZN</p>
+      {/* 7. BRAND MEANING */}
+      <section className="py-16 px-6 bg-white text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-heading text-3xl md:text-4xl font-light text-gray-800 mb-2">
+            Devahiti
+          </h2>
+          <p className="text-[#93C9F9] text-sm tracking-widest mb-2">'Day-vah-hee-tee'</p>
+          <p className="text-gray-500 text-sm">
+            Sanskrit for ~ Divine Order
+          </p>
+        </div>
+      </section>
 
-          <div className="dv-ornament" style={{ marginTop: '2rem' }}>
-            <span /><i /><span />
-          </div>
-        </section>
-
-      </div>
-    </>
+      {/* 8. FINAL CTA */}
+      <section className="py-16 px-6 text-center" style={{ backgroundColor: '#65AEEA' }}>
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-heading text-3xl md:text-4xl text-white mb-3">
+            Book Your Session
+          </h2>
+          <p className="text-white/80 text-sm mb-6">
+            Private sessions available across the North Coast
+          </p>
+          <button
+            onClick={() => navigate("/schedule")}
+            className="px-8 py-3 bg-white text-[#65AEEA] text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-gray-100 transition shadow-md rounded-sm"
+          >
+            Book Now
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }

@@ -18,8 +18,20 @@
     --terracotta: 15 50% 56%;
     --brown: 25 35% 25%;
     
-    /* Background with hint of color (changed from stark white) */
-    --background: 40 30% 98%;  /* Slightly warm off-white, not stark white */
+    /* Custom colors for Home.js */
+    --ocean-solid: #1E3A5F;
+    --ocean-light-solid: #3D5A7A;
+    --ocean-dark-solid: #152C4A;
+    --cream-solid: #FAF7F2;
+    --sand-solid: #EDE8DF;
+    --sage-solid: #8A9E8A;
+    --sage-dk-solid: #637563;
+    --warm-solid: #C8A97A;
+    --text-solid: #3A3530;
+    --text-lt-solid: #7A736C;
+    
+    /* Background with hint of color (slightly warm off-white) */
+    --background: 40 30% 98%;
     --foreground: 25 35% 15%;
     --card: 0 0% 100%;
     --card-foreground: 25 35% 15%;
@@ -46,18 +58,22 @@
     --chart-5: 25 35% 25%;
   }
 
+  * {
+    @apply border-border;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Jost', sans-serif;
-    font-weight: 400;  /* Increased from 300 to 400 for better readability */
-    font-size: 16px;  /* Base font size slightly larger */
-    line-height: 1.6; /* Improved readability */
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
   }
   
-  /* Headings - bolder and larger */
+  /* Headings - using Cormorant Garamond */
   h1, h2, h3, .serif {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;  /* Increased from 300 to 500 */
+    font-weight: 500;
   }
   
   /* Make all text slightly darker/more readable */
@@ -69,6 +85,19 @@
   button, .nav-link {
     font-weight: 500;
     letter-spacing: 0.05em;
+  }
+
+  /* Scroll margin for fixed navbar */
+  section {
+    scroll-margin-top: 100px;
+  }
+
+  body {
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    line-height: 1.9;
   }
 }
 
@@ -196,14 +225,21 @@ html {
   background-color: hsl(var(--primary) / 0.2);
   color: hsl(var(--primary));
 }
-section {
-  scroll-margin-top: 100px;
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-body {
-  letter-spacing: 0.01em;
+::-webkit-scrollbar-track {
+  background: var(--cream-solid);
 }
 
-p {
-  line-height: 1.9;
+::-webkit-scrollbar-thumb {
+  background: var(--sage-solid);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sage-dk-solid);
 }
