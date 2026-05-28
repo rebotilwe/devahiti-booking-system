@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+// import Navbar from './components/Navbar'
+// import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -20,12 +20,14 @@ import PaymentCancelled from './pages/PaymentCancelled';
 import AdminLogin from './pages/AdminLogin';
 import Blog from './pages/Blog';
 import GiftCard from './pages/GiftCard';
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+     <ScrollToTop />
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        {/* <Navbar /> */}
         <main className="flex-grow pt-20">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -56,7 +58,7 @@ function App() {
             <Route path="/admin-login" element={<AdminLogin />} />
           </Routes>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   )

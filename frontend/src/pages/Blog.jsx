@@ -1,92 +1,122 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Calendar, User, ArrowRight, Clock, Tag } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-
-// IMPORT IMAGES PROPERLY (required for React)
-import aboutImg from "../assets/images/about.jpg";
-import img5 from "../assets/images/img5.jpg";
-import groupImg from "../assets/images/group.jpg";
-import img13 from "../assets/images/img13.jpg";
-import img1 from "../assets/images/img1.jpg";
+import heroBgImg from "../assets/images/home.jpg";
+import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
+import soundImg from "../assets/images/img11.jpg";
+import groupImg from "../assets/images/group.jpg";
+import logo from "../assets/logo1.png";
 
-// Blog post data with imported images
+const navLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Events", path: "/events" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+  { label: "Gift Card", path: "/gift-card" },
+];
+
+const subNav = [
+  { label: "Private Group Packages", path: "/services/private-sessions" },
+  { label: "Sound Bowl Massage", path: "/services/sound-massage" },
+  { label: "Bowen Therapy", path: "/services/bowen-therapy" },
+  { label: "Weekly Yoga", path: "/services/group-class" },
+];
+
+const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+
+// Categories for filtering
+const categories = ["All", "Yoga Practice", "Sound Healing", "Wellness", "Personal"];
+
+// Blog posts data
+const featuredPost = {
+  id: 1,
+  title: "The quiet power of slowing down",
+  excerpt: "We live in a culture that worships speed. But the deepest healing — and the most lasting change — almost always happens in stillness. Here's what I've learned about the practice of slowing down.",
+  date: "May 14, 2026",
+  readTime: "6 min read",
+  category: "Yoga Practice",
+  image: heroBgImg,
+};
+
 const blogPosts = [
   {
-    id: 1,
-    title: "What is Bowen Therapy? And how does it work?",
-    excerpt: "Bowen Therapy offers a gentle and restorative pathway to help bring your body, mind and emotions back into balance when stress, anxiety, or chronic tension take hold...",
-    date: "May 15, 2026",
-    author: "Cheryl Lancellas",
-    category: "Therapy",
-    readTime: "5 min read",
-    image: aboutImg,
-    slug: "what-is-bowen-therapy"
-  },
-  {
     id: 2,
-    title: "Bowen Therapy for Pain Relief",
-    excerpt: "A nurturing, non-invasive approach to help ease pain and restore balance. When you're living with pain, whether it's from an old injury, muscle tension, inflammation, or stress...",
-    date: "May 10, 2026",
-    author: "Cheryl Lancellas",
-    category: "Therapy",
-    readTime: "4 min read",
-    image: img5,
-    slug: "bowen-therapy-pain-relief"
+    title: "What a sound bath actually does to your nervous system",
+    excerpt: "The science behind why the tones of crystal and Tibetan bowls leave you feeling so deeply rested.",
+    date: "May 2, 2026",
+    readTime: "5 min read",
+    category: "Sound Healing",
+    image: soundImg,
   },
   {
     id: 3,
-    title: "Private Yoga & Sound Relaxation Experiences in Ballito",
-    excerpt: "Devahiti Yoga offers private yoga and sound relaxation experiences in Ballito, Salt Rock and the surrounding areas of the North Coast. Relax in the comfort of your own accommodation...",
-    date: "May 5, 2026",
-    author: "Cheryl Lancellas",
-    category: "Yoga",
-    readTime: "6 min read",
-    image: groupImg,
-    slug: "private-yoga-ballito"
+    title: "A weekend of stillness in Ballito",
+    excerpt: "Three simple rituals to turn an ordinary weekend away into a true reset for body and mind.",
+    date: "Apr 20, 2026",
+    readTime: "4 min read",
+    category: "Wellness",
+    image: heroBgImg,
   },
   {
     id: 4,
-    title: "The Healing Power of Sound Journeys",
-    excerpt: "Discover how sound vibrations can calm your nervous system, reduce stress, and promote deep healing. Sound journeys use singing bowls and therapeutic frequencies...",
-    date: "April 28, 2026",
-    author: "Cheryl Lancellas",
-    category: "Sound Healing",
-    readTime: "5 min read",
-    image: img13,
-    slug: "healing-power-of-sound"
+    title: "Why your hens, retreat or birthday deserves yoga",
+    excerpt: "Gathering friends is one of life's great joys. A shared, gentle practice makes it unforgettable.",
+    date: "Apr 8, 2026",
+    readTime: "4 min read",
+    category: "Personal",
+    image: groupImg,
   },
   {
     id: 5,
-    title: "Fascia Release: Why It Matters for Athletes",
-    excerpt: "Understanding fascia and how release techniques can improve mobility, reduce injury risk, and enhance athletic performance...",
-    date: "April 20, 2026",
-    author: "Cheryl Lancellas",
-    category: "Wellness",
-    readTime: "4 min read",
-    image: img1,
-    slug: "fascia-release-for-athletes"
+    title: "How yoga found me (not the other way around)",
+    excerpt: "The unexpected season of life that brought me to the mat — and why I never left it.",
+    date: "Mar 26, 2026",
+    readTime: "7 min read",
+    category: "Personal",
+    image: cherylPortraitImg,
   },
   {
     id: 6,
-    title: "Creating a Home Yoga Practice",
-    excerpt: "Tips and guidance for establishing a sustainable and nourishing yoga practice in your own home...",
-    date: "April 12, 2026",
-    author: "Cheryl Lancellas",
-    category: "Yoga",
-    readTime: "5 min read",
+    title: "Three breaths to soften a hard day",
+    excerpt: "Simple, do-anywhere pranayama techniques you can return to whenever the world feels loud.",
+    date: "Mar 12, 2026",
+    readTime: "3 min read",
+    category: "Yoga Practice",
     image: privateImg,
-    slug: "home-yoga-practice"
-  }
+  },
+  {
+    id: 7,
+    title: "Fascia Release: gentle touch, deep release",
+    excerpt: "An introduction to this softly powerful body therapy and what to expect in your first session.",
+    date: "Feb 28, 2026",
+    readTime: "5 min read",
+    category: "Wellness",
+    image: groupImg,
+  },
 ];
 
-// Categories for filtering
-const categories = ["All", "Yoga", "Sound Healing", "Therapy", "Wellness"];
-
 export default function Blog() {
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handlePhoneClick = () => {
+    window.location.href = "tel:+27840902083";
+  };
+
+  const handleShoppingBagClick = () => {
+    window.open(BOOKING_URL, "_blank");
+  };
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
@@ -96,149 +126,297 @@ export default function Blog() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
+      {/* Top Navbar - Fixed with scroll effect */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Devahiti Yoga" className="h-10 w-auto" />
+          </Link>
 
-      {/* HERO */}
-      <section className="relative h-[40vh] flex items-center justify-center bg-gradient-to-br from-ocean-dark to-ocean">
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative z-10 text-center text-white px-6">
-          <h1 className="font-heading text-4xl md:text-6xl font-light">
-            Devahiti Events and Blog
-          </h1>
-          <p className="text-white/80 mt-3 max-w-lg mx-auto">
-            Stories, insights, and updates from Cheryl
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Icons */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handlePhoneClick}
+              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Call us"
+            >
+              <Phone className="h-5 w-5" />
+            </button>
+            
+            <button
+              onClick={handleShoppingBagClick}
+              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Book Online"
+            >
+              <ShoppingBag className="h-5 w-5" />
+            </button>
+            
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Sub Navbar - Second Navigation Bar */}
+        <div style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
+            {subNav.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      {/* Spacer to prevent content hiding under fixed navbar */}
+      <div className="h-28"></div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+          <div className="px-6 py-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100"
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-4 pt-2">
+              <p className="text-[10px] font-bold tracking-wider text-[#93C9F9] uppercase mb-2">Services</p>
+              {subNav.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                handleShoppingBagClick();
+                setMobileOpen(false);
+              }}
+              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+            >
+              Book Online
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Page Hero */}
+      <section className="relative h-[45vh] min-h-[350px] w-full overflow-hidden">
+        <img src={heroBgImg} alt="Devahiti Blog" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Journal</p>
+          <h1 className="text-5xl font-light md:text-6xl text-white">From the mat</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
+            Slow reflections on yoga, sound, breath, and the art of coming home to yourself.
           </p>
+        </div>
+        {/* curved bottom */}
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
+
+      {/* Categories & Search */}
+      <section className="border-b border-gray-100">
+        <div className="mx-auto flex max-w-6xl flex-col md:flex-row items-center justify-between gap-4 px-6 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition ${
+                  selectedCategory === cat
+                    ? "bg-[#93C9F9] text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-[#93C9F9] w-64"
+            />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+          </div>
         </div>
       </section>
 
-      {/* BLOG CONTENT */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-
-          {/* Search and Filter Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-12 pb-6 border-b border-ocean/20">
-            {/* Categories */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 text-xs uppercase tracking-wider rounded-full transition ${
-                    selectedCategory === category
-                      ? "bg-ocean text-white"
-                      : "bg-ocean/10 text-ocean hover:bg-ocean/20"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
-            {/* Search */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="px-4 py-2 pr-10 border border-border rounded-lg focus:outline-none focus:border-ocean w-full md:w-64"
-              />
-              <svg
-                className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
+      {/* Featured Post */}
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#93C9F9] font-semibold">Featured post</p>
+        <article className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div className="overflow-hidden rounded-2xl shadow-lg">
+            <img
+              src={featuredPost.image}
+              alt={featuredPost.title}
+              className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
           </div>
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">
+              {featuredPost.category}
+            </span>
+            <h2 className="mt-4 text-3xl font-light md:text-4xl text-gray-800">{featuredPost.title}</h2>
+            <p className="mt-5 leading-relaxed text-gray-600">{featuredPost.excerpt}</p>
+            <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
+              <span className="inline-flex items-center gap-2">
+                <Calendar className="h-4 w-4" /> {featuredPost.date}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Clock className="h-4 w-4" /> {featuredPost.readTime}
+              </span>
+            </div>
+            {/* <button className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-[#93C9F9] text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+              Read story <ArrowRight className="h-4 w-4" />
+            </button> */}
+          </div>
+        </article>
+      </section>
 
-          {/* Blog Grid */}
+      {/* Blog Grid */}
+      <section className="bg-[#F9F9FB] py-20 px-6">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-3xl font-light md:text-4xl text-gray-800 mb-12">Recent reflections</h2>
+          
           {filteredPosts.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-muted-foreground">No articles found. Try a different search.</p>
+              <p className="text-gray-500">No articles found. Try a different search.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post, index) => (
-                <motion.article
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {filteredPosts.map((post) => (
+                <article
                   key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
+                  className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg"
                 >
-                  {/* Image */}
-                  <Link to={`/blog/${post.slug}`} className="block overflow-hidden h-52">
+                  <div className="overflow-hidden h-56">
                     <img
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                      loading="lazy"
                     />
-                  </Link>
-
-                  {/* Content */}
+                  </div>
                   <div className="p-6">
-                    {/* Category Badge */}
-                    <span className="inline-block px-3 py-1 bg-ocean/10 text-ocean text-[10px] uppercase tracking-wider rounded-full mb-3">
+                    <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">
                       {post.category}
                     </span>
-
-                    <h3 className="font-heading text-xl mb-2 group-hover:text-ocean transition">
-                      <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h3>
-
-                    <p className="text-muted-foreground text-sm mb-4">
-                      {post.excerpt}
-                    </p>
-
-                    {/* Meta Info */}
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={12} /> {post.date}
+                    <h3 className="mt-3 text-xl font-light text-gray-800 leading-snug">{post.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">{post.excerpt}</p>
+                    <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
+                      <span className="inline-flex items-center gap-2">
+                        <Calendar className="h-3.5 w-3.5" /> {post.date}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Clock size={12} /> {post.readTime}
+                      <span className="inline-flex items-center gap-2">
+                        <Clock className="h-3.5 w-3.5" /> {post.readTime}
                       </span>
                     </div>
-
-                    {/* Read More Link */}
-                    <Link
-                      to={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-1 text-ocean text-sm font-medium hover:gap-2 transition-all"
-                    >
-                      Read More <ArrowRight size={14} />
-                    </Link>
+                    {/* <button className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#93C9F9] hover:gap-3 transition-all">
+                      Read more <ArrowRight className="h-3.5 w-3.5" />
+                    </button> */}
                   </div>
-                </motion.article>
+                </article>
               ))}
             </div>
           )}
+
+          <div className="mt-12 text-center">
+            {/* <button className="rounded-full border-2 border-[#93C9F9] px-8 py-3 text-sm font-semibold uppercase tracking-wider text-[#93C9F9] hover:bg-[#93C9F9] hover:text-white transition">
+              Load more
+            </button> */}
+          </div>
         </div>
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-16 px-6 bg-ocean/5">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-heading text-2xl md:text-3xl text-foreground mb-3">
-            Subscribe to Our Newsletter
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            Get the latest articles, wellness tips, and event updates straight to your inbox.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-ocean"
-            />
-            <button className="px-6 py-2 bg-ocean text-white text-sm uppercase tracking-widest rounded-lg hover:bg-ocean-dark transition">
-              Subscribe
-            </button>
-          </form>
-        </div>
+      <section className="px-6 py-20 text-center" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
+        <h2 className="text-3xl font-light md:text-4xl text-white">Slow words, gently delivered</h2>
+        <p className="mx-auto mt-4 max-w-xl leading-relaxed text-white/90">
+          Join the journal list for monthly reflections, free practices and first invitations to retreats.
+        </p>
+        <form className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+          <input
+            type="email"
+            required
+            placeholder="Your email address"
+            className="w-full rounded-full bg-white px-6 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+          />
+          <button
+            type="submit"
+            className="rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-wider text-[#93C9F9] hover:bg-gray-100 transition"
+          >
+            Subscribe
+          </button>
+        </form>
       </section>
+
+      {/* CTA Section */}
+      <section className="mx-auto max-w-4xl px-6 py-20 text-center">
+        <h2 className="text-3xl font-light md:text-4xl text-gray-800">Ready to step off the page and onto the mat?</h2>
+        <p className="mx-auto mt-4 max-w-xl leading-relaxed text-gray-600">
+          Book a private session, a sound journey or a wellness treatment in Ballito.
+        </p>
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-block rounded-full px-8 py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider hover:bg-[#65AEEA] transition"
+        >
+          Book Now
+        </a>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+        <img src={logo} alt="" className="mx-auto h-12 w-auto brightness-0 invert" />
+        <p className="mt-4 text-2xl font-light">Devahiti</p>
+        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+      </footer>
     </div>
   );
 }

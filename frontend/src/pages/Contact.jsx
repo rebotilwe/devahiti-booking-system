@@ -1,338 +1,375 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { toast } from "sonner";
-import { Waves, Droplets, CheckCircle } from "lucide-react";
-import SectionHeading from "../components/SectionHeading";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Phone, ShoppingBag, Menu, X, Mail, MapPin, Clock, Send } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useForm, ValidationError } from "@formspree/react";
+import heroBgImg from "../assets/images/home.jpg";
+import logo from "../assets/logo1.png";
 
-// Import client image for hero background
-import contactHeroImg from "../assets/images/img11.jpg";
+const navLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Events", path: "/events" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+  { label: "Gift Card", path: "/gift-card" },
+];
 
-// Formspree endpoint
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xyklpvwn";
+const subNav = [
+  { label: "Private Group Packages", path: "/services/private-sessions" },
+  { label: "Sound Bowl Massage", path: "/services/sound-massage" },
+  { label: "Bowen Therapy", path: "/services/bowen-therapy" },
+  { label: "Weekly Yoga", path: "/services/group-class" },
+];
+
+const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+const FORMSPREE_ID = "xyklpvwn";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
-  const [sending, setSending] = useState(false);
-  const [messageSent, setMessageSent] = useState(false);
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [state, handleSubmit] = useForm(FORMSPREE_ID);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handlePhoneClick = () => {
+    window.location.href = "tel:+27840902083";
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSending(true);
-    setMessageSent(false);
-
-    try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setMessageSent(true);
-        toast.success("Message sent! We'll be in touch soon.");
-        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-        
-        // Clear success message after 5 seconds
-        setTimeout(() => setMessageSent(false), 5000);
-      } else {
-        const errorData = await response.json();
-        console.error("FormSpree error:", errorData);
-        toast.error("Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-      toast.error("Network error. Please check your connection.");
-    } finally {
-      setSending(false);
-    }
+  const handleShoppingBagClick = () => {
+    window.open(BOOKING_URL, "_blank");
   };
 
   return (
-    <div>
-      {/* Hero with Ocean Wave Overlay */}
-      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={contactHeroImg}
-            alt="Peaceful yoga studio setting"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ocean/20 to-transparent" />
+    <div className="min-h-screen bg-white">
+      {/* Top Navbar - Fixed with scroll effect */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Devahiti Yoga" className="h-10 w-auto" />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Icons */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handlePhoneClick}
+              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Call us"
+            >
+              <Phone className="h-5 w-5" />
+            </button>
+            
+            <button
+              onClick={handleShoppingBagClick}
+              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Book Online"
+            >
+              <ShoppingBag className="h-5 w-5" />
+            </button>
+            
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors"
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
-        <div className="relative z-10 text-center px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-2 mb-4"
-          >
-            <Waves className="h-4 w-4 text-white/60" />
-            <span className="text-xs tracking-[0.4em] uppercase text-white/60">
-              Get in Touch
-            </span>
-            <Waves className="h-4 w-4 text-white/60" />
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="font-heading text-4xl md:text-6xl lg:text-7xl font-light text-white"
-          >
-            Contact Us
-          </motion.h1>
+
+        {/* Sub Navbar - Second Navigation Bar */}
+        <div style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
+            {subNav.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
+      </header>
+
+      {/* Spacer to prevent content hiding under fixed navbar */}
+      <div className="h-28"></div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+          <div className="px-6 py-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100"
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-4 pt-2">
+              <p className="text-[10px] font-bold tracking-wider text-[#93C9F9] uppercase mb-2">Services</p>
+              {subNav.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                handleShoppingBagClick();
+                setMobileOpen(false);
+              }}
+              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+            >
+              Book Online
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Page Hero */}
+      <section className="relative h-[40vh] min-h-[350px] w-full overflow-hidden">
+        <img src={heroBgImg} alt="Devahiti Contact" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Say hello</p>
+          <h1 className="text-5xl font-light md:text-6xl text-white">Get in touch</h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/90 italic">
+            I'd love to hear from you. Let's craft a session that feels just right.
+          </p>
+        </div>
+        {/* curved bottom */}
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
       </section>
 
-      {/* Contact Content */}
-      <section className="py-20 lg:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* Info Side */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-10"
-            >
-              <div>
-                <p className="text-xs tracking-[0.3em] uppercase text-ocean mb-4">
-                  We'd love to hear from you
-                </p>
-                <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-6">
-                  Let's Connect
-                </h2>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  Whether you're ready to book a class, have questions about our teacher training,
-                  or want to learn more about our philosophy — drop us a line. We're here to help
-                  you on your wellness journey.
-                </p>
-              </div>
+      {/* Contact Grid */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid gap-12 md:grid-cols-5">
+          {/* Info Side */}
+          <div className="md:col-span-2">
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Reach out</h2>
+            <p className="mt-4 leading-relaxed text-gray-600">
+              Whether you're planning a group getaway, a private session, or simply wanting a one-on-one treatment — drop me a message and I'll be in touch within 24 hours.
+            </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-ocean/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="h-4 w-4 text-ocean" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground mb-1">Location</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Devahiti Yoga Studio<br />
-                      Ballito, South Africa
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-ocean/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="h-4 w-4 text-ocean" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground mb-1">Email</h4>
-                    <a href="mailto:cheryl@devahiti.com" className="text-sm text-ocean hover:underline">
-                      cheryl@devahiti.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-ocean/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="h-4 w-4 text-ocean" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground mb-1">Phone</h4>
-                    <a href="tel:+27840902083" className="text-sm text-ocean hover:underline">
-                      +27 84 090 2083
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-4">Follow Us</h4>
-                <div className="flex gap-4">
-                  <a 
-                    href="https://instagram.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-ocean hover:text-ocean transition-all"
-                  >
-                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162z"/>
-                    </svg>
-                  </a>
-                  <a 
-                    href="https://facebook.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-ocean hover:text-ocean transition-all"
-                  >
-                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              {/* Quote Section */}
-              <div className="pt-6 border-t border-border">
-                <p className="font-heading text-lg italic text-muted-foreground">
-                  "If you can breathe, you can do yoga!"
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  We welcome all practitioners from beginners through advanced and special needs.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Form Side */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Success Message - Shows after form submit */}
-              {messageSent && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <div>
-                    <p className="text-green-800 font-medium">Message sent!</p>
-                    <p className="text-green-600 text-sm">We'll be in touch within 24-48 hours.</p>
-                  </div>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="text-xs tracking-widest uppercase text-muted-foreground mb-2 block">
-                      Name *
-                    </label>
-                    <input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full border border-border rounded-none h-12 bg-transparent focus:outline-none focus:border-ocean px-4"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs tracking-widest uppercase text-muted-foreground mb-2 block">
-                      Email *
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full border border-border rounded-none h-12 bg-transparent focus:outline-none focus:border-ocean px-4"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="text-xs tracking-widest uppercase text-muted-foreground mb-2 block">
-                      Phone
-                    </label>
-                    <input
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full border border-border rounded-none h-12 bg-transparent focus:outline-none focus:border-ocean px-4"
-                      placeholder="Your phone number"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs tracking-widest uppercase text-muted-foreground mb-2 block">
-                      Subject *
-                    </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full border border-border rounded-none h-12 bg-transparent focus:outline-none focus:border-ocean px-4"
-                    >
-                      <option value="">Select a subject...</option>
-                      <option value="General Enquiry">General Enquiry</option>
-                      <option value="Teacher Training">Teacher Training (200hr/300hr)</option>
-                      <option value="Class Booking">Class Booking</option>
-                      <option value="Private Session">Private Session</option>
-                      <option value="Free Trial">Free Trial Class</option>
-                    </select>
-                  </div>
-                </div>
-
+            <div className="mt-10 space-y-6">
+              <div className="flex items-start gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#93C9F9] text-white">
+                  <Mail className="h-5 w-5" />
+                </span>
                 <div>
-                  <label className="text-xs tracking-widest uppercase text-muted-foreground mb-2 block">
-                    Message *
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="w-full border border-border rounded-none bg-transparent focus:outline-none focus:border-ocean px-4 py-3 resize-none"
-                    placeholder="Tell us about what you're looking for..."
-                  />
+                  <p className="text-xs uppercase tracking-widest text-gray-500">Email</p>
+                  <a href="mailto:cheryl@devahiti.com" className="text-lg text-[#93C9F9] hover:underline">
+                    cheryl@devahiti.com
+                  </a>
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className="w-full h-12 bg-ocean text-white rounded-none text-xs font-medium tracking-[0.3em] uppercase hover:bg-ocean-dark transition disabled:opacity-50"
-                >
-                  {sending ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Sending...
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                      </svg>
-                      Send Message
-                    </span>
-                  )}
-                </button>
+              <div className="flex items-start gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#93C9F9] text-white">
+                  <Phone className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-500">Phone / WhatsApp</p>
+                  <a href="tel:+27840902083" className="text-lg text-[#93C9F9] hover:underline">
+                    084 090 2083
+                  </a>
+                </div>
+              </div>
 
-                <p className="text-xs text-muted-foreground text-center pt-4">
-                  We'll get back to you within 24-48 hours.
-                </p>
-              </form>
-            </motion.div>
+              <div className="flex items-start gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#93C9F9] text-white">
+                  <MapPin className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-500">Service area</p>
+                  <p className="text-lg text-gray-700">
+                    Ballito, Salt Rock, Umhlanga &amp; surrounding North Coast
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#93C9F9] text-white">
+                  <Clock className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
+                  <p className="text-lg text-gray-700">Tuesday & Thursday · 8:00 AM</p>
+                  <p className="text-sm text-gray-500">Other times by appointment</p>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 inline-block rounded-full px-8 py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider hover:bg-[#65AEEA] transition"
+            >
+              Book Now
+            </a>
+          </div>
+
+          {/* Form Side - With Formspree Integration */}
+          <div className="md:col-span-3">
+            <div className="rounded-2xl bg-[#F9F9FB] p-8 shadow-md md:p-10">
+              <h2 className="text-3xl font-light text-gray-800">Send a message</h2>
+              <p className="mt-2 text-sm text-gray-500">
+                Tell me a little about what you're after — group size, dates, what you'd love to experience.
+              </p>
+
+              {state.succeeded ? (
+                <div className="mt-6 rounded-xl border border-[#93C9F9] bg-[#93C9F9]/10 px-5 py-4 text-sm text-[#93C9F9]">
+                  Thank you! Your message has been sent. I'll be in touch soon.
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs uppercase tracking-widest text-gray-500">Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#93C9F9] focus:ring-1 focus:ring-[#93C9F9]"
+                        required
+                      />
+                      <ValidationError 
+                        field="name" 
+                        errors={state.errors} 
+                        className="mt-1 text-xs text-red-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs uppercase tracking-widest text-gray-500">Email *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#93C9F9] focus:ring-1 focus:ring-[#93C9F9]"
+                        required
+                      />
+                      <ValidationError 
+                        field="email" 
+                        errors={state.errors} 
+                        className="mt-1 text-xs text-red-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs uppercase tracking-widest text-gray-500">Phone (optional)</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#93C9F9] focus:ring-1 focus:ring-[#93C9F9]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs uppercase tracking-widest text-gray-500">I'm interested in</label>
+                      <select
+                        name="subject"
+                        className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#93C9F9] focus:ring-1 focus:ring-[#93C9F9]"
+                      >
+                        <option>Private group yoga</option>
+                        <option>Sound journey</option>
+                        <option>Corporate wellness</option>
+                        <option>Teacher training</option>
+                        <option>Workshop / retreat enquiry</option>
+                        <option>Gift card</option>
+                        <option>Something else</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs uppercase tracking-widest text-gray-500">Message *</label>
+                    <textarea
+                      name="message"
+                      rows={5}
+                      className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#93C9F9] focus:ring-1 focus:ring-[#93C9F9]"
+                      required
+                    />
+                    <ValidationError 
+                      field="message" 
+                      errors={state.errors} 
+                      className="mt-1 text-xs text-red-500"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={state.submitting}
+                    className="inline-flex items-center gap-2 rounded-full px-8 py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider hover:bg-[#65AEEA] transition disabled:opacity-50"
+                  >
+                    {state.submitting ? "Sending..." : "Send message"} <Send className="h-4 w-4" />
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <section className="bg-[#F9F9FB] px-6 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-center text-3xl font-light md:text-4xl text-gray-800">A few common questions</h2>
+          <div className="mt-10 space-y-4">
+            {[
+              { q: "Do I need to be flexible or experienced?", a: "Not at all. Every session is gentle and adaptable. Beginners and stiff bodies are warmly welcomed." },
+              { q: "Do you bring all the equipment?", a: "Yes — mats, bolsters, blankets, and sound bowls all travel with me. You just turn up." },
+              { q: "How far do you travel?", a: "Ballito, Salt Rock, Umhlanga and the surrounding North Coast. Reach out for anything further afield." },
+              { q: "What's the minimum group size?", a: "Private groups usually run from 4 up to around 12. Smaller or larger? Just ask." },
+            ].map((faq, i) => (
+              <details key={i} className="group rounded-xl bg-white p-6 shadow-sm">
+                <summary className="cursor-pointer list-none text-lg font-medium text-gray-800">
+                  <span className="text-[#93C9F9] mr-2">+</span> {faq.q}
+                </summary>
+                <p className="mt-3 leading-relaxed text-gray-600 pl-5">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+        <img src={logo} alt="" className="mx-auto h-12 w-auto brightness-0 invert" />
+        <p className="mt-4 text-2xl font-light">Devahiti</p>
+        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+      </footer>
     </div>
   );
 }
