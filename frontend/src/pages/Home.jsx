@@ -180,37 +180,75 @@ export default function Home() {
           </div>
         </div>
       )}
+{/* Hero Section */}
+<section className="relative w-full overflow-hidden">
+  {/* The Image Container */}
+  <div className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] w-full">
+    <img
+      src={heroBgImg}
+      alt="Devahiti Yoga"
+      className="absolute inset-0 h-full w-full object-cover"
+    />
+    
+    {/* DESKTOP ONLY OVERLAY: Hidden on mobile (hidden), visible on medium screens (md:flex) */}
+    <div className="absolute inset-0 hidden items-center justify-center md:flex">
+      <div
+        className="mx-6 max-w-3xl px-8 py-12 text-center text-white shadow-xl"
+        style={{ background: "color-mix(in oklab, #93C9F9 85%, transparent)" }}
+      >
+        <h1 className="text-4xl font-light leading-tight md:text-6xl">
+          Private Group Yoga &amp; <br /> Sound Relaxation
+        </h1>
+        <p className="mt-4 text-xl italic md:text-2xl">In your own accommodation</p>
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800"
+        >
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
 
-      {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[500px] w-full overflow-hidden">
-        <img
-          src={heroBgImg}
-          alt="Devahiti Yoga"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            className="mx-6 max-w-3xl px-8 py-12 text-center text-white"
-            style={{ background: "color-mix(in oklab, #93C9F9 70%, transparent)" }}
-          >
-            <h1 className="text-4xl font-light leading-tight md:text-6xl">
-              Private, Group Yoga &amp; <br /> Sound Relaxation
-            </h1>
-            <p className="mt-4 text-xl italic md:text-2xl">In studio or in your own accommodation</p>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800"
-            >
-              Book Online
-            </a>
-          </div>
-        </div>
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
-      </section>
+  {/* MOBILE ONLY TEXT BOX: Visible on mobile (block), hidden on desktop (md:hidden) */}
+  <div className="block md:hidden">
+    <div 
+      className="px-6 py-12 text-center text-white relative"
+      style={{ backgroundColor: "#93C9F9" }}
+    >
+      <h1 className="text-3xl font-light leading-tight">
+        Private Group Yoga &amp; <br /> Sound Relaxation
+      </h1>
+      <p className="mt-2 text-lg italic">In your own accommodation</p>
+      <a
+        href={BOOKING_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest"
+      >
+        Book Online
+      </a>
+      
+      {/* The Wave SVG - Positioned at the bottom of the blue box on mobile */}
+      <svg 
+        className="absolute bottom-0 left-0 w-full translate-y-[99%]" 
+        viewBox="0 0 1440 120" 
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="white" />
+      </svg>
+    </div>
+    {/* Extra spacer for the wave height on mobile */}
+    <div className="h-12 md:hidden"></div>
+  </div>
+
+  {/* DESKTOP WAVE: Only shows at the bottom of the image on desktop */}
+  <svg className="absolute bottom-0 left-0 hidden w-full md:block" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+  </svg>
+</section>
 
       {/* Intro Section */}
       <section className="mx-auto max-w-3xl px-6 py-16 text-center">
