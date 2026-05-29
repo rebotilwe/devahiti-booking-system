@@ -131,19 +131,21 @@ export default function Home() {
           </div>
         </div>
 
-        <div style={{ backgroundColor: "#93C9F9" }}>
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3">
+        {/* ✅ FIX 1: Blue banner with services - NOW ONE LINE on desktop, hidden on mobile */}
+        <div className="hidden md:block" style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto flex max-w-7xl flex-nowrap items-center justify-center gap-x-6 px-6 py-3 overflow-x-auto">
             {subNav.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
+                className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
               >
                 {link.label}
               </Link>
             ))}
           </div>
         </div>
+        {/* Mobile: REMOVED completely - client said "remove it from that section" */}
       </header>
 
       <div className="h-28"></div>
@@ -183,7 +185,7 @@ export default function Home() {
               <h1 className="text-4xl font-light leading-tight md:text-6xl">
                 Private, Group Yoga &amp; <br /> Sound Relaxation
               </h1>
-              <p className="mt-4 text-xl italic md:text-2xl">In your own accommodation</p>
+              <p className="mt-4 text-xl italic md:text-2xl">In studio or in your own accommodation</p>
               <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800">
                 Book Online
               </a>
@@ -194,8 +196,8 @@ export default function Home() {
         {/* Mobile overlay */}
         <div className="block md:hidden">
           <div className="px-6 py-12 text-center text-white relative" style={{ backgroundColor: "#93C9F9" }}>
-            <h1 className="text-3xl font-light leading-tight">Private Group Yoga &amp; <br /> Sound Relaxation</h1>
-            <p className="mt-2 text-lg italic">In your own accommodation</p>
+            <h1 className="text-3xl font-light leading-tight">Private, Group Yoga &amp; <br /> Sound Relaxation</h1>
+            <p className="mt-2 text-lg italic">In studio or in your own accommodation</p>
             <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest">
               Book Online
             </a>
@@ -211,21 +213,38 @@ export default function Home() {
         </svg>
       </section>
 
-      {/* Intro Section */}
+      {/* ✅ FIX 2: First "Hi, I'm Cheryl" Section - BOTH paragraphs SAME FONT */}
       <section className="mx-auto max-w-3xl px-6 py-16 text-center">
         <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" loading="lazy" />
         <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
-        <p className="mt-6 leading-relaxed text-gray-600">
+        <p className="mt-6 text-base leading-relaxed text-gray-600">
           I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
         </p>
-        <p className="mt-4 leading-relaxed text-gray-500 italic">
+        <p className="mt-4 text-base leading-relaxed text-gray-600">
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
         </p>
-        <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#93C9F9" }}>
-          Booking Menu
-        </a>
+        
+        {/* ✅ FIX 3: Booking Menu + More About Me buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a 
+            href={BOOKING_URL} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            Book Online
+          </a>
+          <Link 
+            to="/about" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+          >
+            More About Cheryl
+          </Link>
+        </div>
+        
         <p className="mt-10 text-sm italic text-gray-500">
-          Servicing Ballito, Salt Rock, Umhlanga and the surrounding North Coast.
+          Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
         </p>
       </section>
 
@@ -284,19 +303,7 @@ export default function Home() {
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
 
-      {/* About Section */}
-      <section className="mx-auto max-w-4xl px-6 py-20 text-center">
-        <p className="text-sm uppercase tracking-[0.3em] text-[#93C9F9]">Owner & Founder of Devahiti Yoga Ballito</p>
-        <h2 className="mt-4 text-3xl md:text-4xl font-light">Hi, I'm Cheryl</h2>
-        <div className="mt-8 space-y-5 leading-relaxed text-gray-600">
-          <p>Life can get so full that we forget what it feels like to truly unwind, reconnect, and simply breathe again.</p>
-          <p>I learned this the hard way — after years of pushing through tension, stress and fatigue — until I discovered the deeply calming benefits of gentle yoga and sound relaxation. It changed my life and has become my passion to share with others.</p>
-          <p>Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound. A peaceful, safe space where you can ease tension, quiet the mind and leave feeling deeply rebalanced and restored.</p>
-        </div>
-        <Link to="/about" className="mt-10 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#93C9F9" }}>
-          More About Me
-        </Link>
-      </section>
+      {/* ✅ FIX 4: REMOVED the last "Hi, I'm Cheryl" section completely */}
 
       {/* Testimonial Section */}
       <section className="bg-[#F9F9FB] px-6 py-20">
