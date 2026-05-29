@@ -9,7 +9,6 @@ import soundImg from "../assets/images/img11.jpg";
 import trainingImg from "../assets/images/img5.jpg";
 import groupImg from "../assets/images/group.jpg";
 import corporateImg from "../assets/images/img1.jpg";
-import workshopImg from "../assets/images/specialize.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
 import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
@@ -34,22 +33,24 @@ const subNav = [
   { label: "Fascia Release", path: "/services/fascia-release" },
   { label: "Teacher Training", path: "/schedule?service=teacher-training" },
   { label: "Educational Workshops", path: "/services/educational-workshops" },
-  { label: "Specialized Workshop", path: "/services/specialized-workshop" },
   { label: "Retreats", path: "/services/retreats" },
 ];
 
-// All 10 services in the correct order
+// ✅ UPDATED: 9 services (removed Specialized Workshop)
+// Grouped into 3 rows of 3 services each
 const allServices = [
+  // ROW 1
   { img: groupImg, title: "Group Class", link: "/services/group-class" },
   { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
   { img: corporateImg, title: "Corporate Wellness", link: "/services/corporate-wellness" },
+  // ROW 2
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
+  // ROW 3
   { img: trainingImg, title: "Teacher Training", link: "/schedule?service=teacher-training" },
   { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
-  { img: workshopImg, title: "Specialized Workshop", link: "/services/specialized-workshop" },
-  { img: retreatsImg, title: "Retreats", link: "/services/retreats" },
+  { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
@@ -103,7 +104,8 @@ export default function Home() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Devahiti Yoga" className="h-10 w-auto" />
+            {/* ✅ Increased logo size */}
+            <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -131,7 +133,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ FIX 1: Blue banner with services - NOW ONE LINE on desktop, hidden on mobile */}
+        {/* ✅ SUBNAV RESTORED - Blue banner with services on desktop only */}
         <div className="hidden md:block" style={{ backgroundColor: "#93C9F9" }}>
           <div className="mx-auto flex max-w-7xl flex-nowrap items-center justify-center gap-x-6 px-6 py-3 overflow-x-auto">
             {subNav.map((link) => (
@@ -145,7 +147,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-        {/* Mobile: REMOVED completely - client said "remove it from that section" */}
       </header>
 
       <div className="h-28"></div>
@@ -181,7 +182,7 @@ export default function Home() {
           
           {/* Desktop overlay */}
           <div className="absolute inset-0 hidden items-center justify-center md:flex">
-            <div className="mx-6 max-w-3xl px-8 py-12 text-center text-white shadow-xl" style={{ background: "color-mix(in oklab, #93C9F9 85%, transparent)" }}>
+            <div className="mx-6 max-w-3xl px-8 py-12 text-center text-white">
               <h1 className="text-4xl font-light leading-tight md:text-6xl">
                 Private, Group Yoga &amp; <br /> Sound Relaxation
               </h1>
@@ -195,60 +196,69 @@ export default function Home() {
 
         {/* Mobile overlay */}
         <div className="block md:hidden">
-          <div className="px-6 py-12 text-center text-white relative" style={{ backgroundColor: "#93C9F9" }}>
+          <div className="px-6 py-12 text-center text-white relative bg-black/40">
             <h1 className="text-3xl font-light leading-tight">Private, Group Yoga &amp; <br /> Sound Relaxation</h1>
             <p className="mt-2 text-lg italic">In studio or in your own accommodation</p>
             <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest">
               Book Online
             </a>
-            <svg className="absolute bottom-0 left-0 w-full translate-y-[99%]" viewBox="0 0 1440 120" preserveAspectRatio="none">
-              <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="white" />
-            </svg>
           </div>
-          <div className="h-12 md:hidden"></div>
         </div>
 
-        <svg className="absolute bottom-0 left-0 hidden w-full md:block" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        {/* White Curved Bottom */}
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
           <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
         </svg>
       </section>
 
-      {/* ✅ FIX 2: First "Hi, I'm Cheryl" Section - BOTH paragraphs SAME FONT */}
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" loading="lazy" />
-        <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
-        <p className="mt-6 text-base leading-relaxed text-gray-600">
-          I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-gray-600">
-          I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
-        </p>
-        
-        {/* ✅ FIX 3: Booking Menu + More About Me buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a 
-            href={BOOKING_URL} 
-            target="_blank" 
-            rel="noreferrer" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-            style={{ backgroundColor: "#93C9F9" }}
-          >
-            Book Online
-          </a>
-          <Link 
-            to="/about" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-          >
-            More About Cheryl
-          </Link>
+      {/* ✅ "Hi, I'm Cheryl" Section - WITH BLUE BORDER/CONTAINER */}
+      <section className="mx-auto max-w-3xl px-6 py-16">
+        <div className="border-2 border-[#93C9F9] rounded-2xl p-8 md:p-10 shadow-lg bg-white">
+          <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg border-4 border-[#93C9F9]/30" loading="lazy" />
+          <h2 className="mt-8 text-3xl md:text-4xl font-light text-center">Hi, I'm Cheryl!</h2>
+          <p className="mt-6 text-base leading-relaxed text-gray-600 text-center">
+            I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-gray-600 text-center">
+            I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
+          </p>
+          
+          {/* Buttons */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              to="/about" 
+              className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+            >
+              More About Cheryl
+            </Link>
+            <a 
+              href={BOOKING_URL} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+              style={{ backgroundColor: "#93C9F9" }}
+            >
+              Booking Menu
+            </a>
+          </div>
+          
+          {/* New text block */}
+          <div className="mt-10 p-6 bg-[#F9F9FB] rounded-lg">
+            <p className="text-base italic text-gray-700 leading-relaxed text-center">
+              "Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated."
+            </p>
+            <p className="mt-4 text-sm font-medium text-[#93C9F9] uppercase tracking-wider text-center">
+              Sessions are for everyBODY, beginners are welcome.
+            </p>
+          </div>
+          
+          <p className="mt-10 text-sm italic text-gray-500 text-center">
+            Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
+          </p>
         </div>
-        
-        <p className="mt-10 text-sm italic text-gray-500">
-          Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
-        </p>
       </section>
 
-      {/* Services Grid - 10 services with consistent square dimensions */}
+      {/* Services Grid - 3 rows of 3 services each */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
@@ -257,23 +267,23 @@ export default function Home() {
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
           </div>
 
-          {/* Row 1 - First 4 services */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-            {allServices.slice(0, 4).map((service, idx) => (
+          {/* ROW 1 - Group Class, Private Sessions, Corporate Wellness */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+            {allServices.slice(0, 3).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* Row 2 - Next 4 services */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-            {allServices.slice(4, 8).map((service, idx) => (
+          {/* ROW 2 - Sound Journey, Sound Massage, Fascia Release Therapy */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+            {allServices.slice(3, 6).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* Row 3 - Last 2 services (centered) */}
-          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
-            {allServices.slice(8, 10).map((service, idx) => (
+          {/* ROW 3 - Teacher Training, Educational Workshops, Retreats/Safaris */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {allServices.slice(6, 9).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
@@ -282,14 +292,14 @@ export default function Home() {
 
       {/* Subscribe Section */}
       <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
-        <h2 className="text-3xl md:text-4xl font-light">Sign up for a FREE yoga audio download!</h2>
+        <h2 className="text-3xl md:text-4xl font-light">Sign up for a free trial class!</h2>
         <p className="mx-auto mt-4 max-w-xl leading-relaxed">
-          A slow and gentle practice for stress and tension relief — listen and feel as you reconnect to your body and breath.
+          Experience the benefits of gentle yoga and sound relaxation. Join us for a complimentary session.
         </p>
         
         {state.succeeded ? (
           <div className="mt-8 max-w-md mx-auto bg-green-500/20 backdrop-blur-sm rounded-lg p-4">
-            <p className="text-white">✓ Thanks! Check your email for your free download link.</p>
+            <p className="text-white">✓ Thanks! We'll contact you to schedule your free trial class.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -302,8 +312,6 @@ export default function Home() {
         )}
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
-
-      {/* ✅ FIX 4: REMOVED the last "Hi, I'm Cheryl" section completely */}
 
       {/* Testimonial Section */}
       <section className="bg-[#F9F9FB] px-6 py-20">
