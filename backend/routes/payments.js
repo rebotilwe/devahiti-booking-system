@@ -7,10 +7,11 @@ const router = express.Router();
 const YOCO_API_URL = 'https://payments.yoco.com/api/checkouts';
 const YOCO_SECRET_KEY = process.env.YOCO_SECRET_KEY;
 
-// Create a checkout session
 router.post('/create-checkout', async (req, res) => {
   console.log("=== Yoco Payment Request ===");
   console.log("Request body:", req.body);
+  console.log("FRONTEND_URL from env:", process.env.FRONTEND_URL);
+  console.log("YOCO_SECRET_KEY prefix:", YOCO_SECRET_KEY?.substring(0, 15) + "...");
   
   const { amount, bookingId, customerName, customerEmail, originalAmount, couponCode, discountAmount } = req.body;
 
@@ -23,7 +24,7 @@ router.post('/create-checkout', async (req, res) => {
     const amountInCents = Math.round(amount * 100);
     console.log(`Amount: R${amount} = ${amountInCents} cents`);
     
-    const frontendUrl = process.env.FRONTEND_URL || 'https://devahiti-wellness.netlify.app';
+    const frontendUrl = process.env.FRONTEND_URL || 'https://devahitibookingsystem.netlify.app';
     
     const successUrl = `${frontendUrl}/payment-success?bookingId=${bookingId}`;
     const cancelUrl = `${frontendUrl}/payment-cancelled?bookingId=${bookingId}`;
@@ -48,7 +49,6 @@ router.post('/create-checkout', async (req, res) => {
     
     console.log("Sending to Yoco:", JSON.stringify(payload, null, 2));
     
-    // ✅ FIX: Use correct Yoco API endpoint with proper secret key format
     const response = await axios.post(YOCO_API_URL, payload, {
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,11 @@ router.post('/create-checkout', async (req, res) => {
     res.json({ redirectUrl: response.data.redirectUrl });
     
   } catch (error) {
-    console.error("Yoco error:", error.response?.data || error.message);
+    console.error("Yoco error details:");
+    console.error("Status:", error.response?.status);
+    console.error("Data:", error.response?.data);
+    console.error("Message:", error.message);
+    
     res.status(500).json({ 
       error: 'Failed to create checkout session', 
       details: error.response?.data || error.message 
@@ -68,7 +72,7 @@ router.post('/create-checkout', async (req, res) => {
   }
 });
 
-// ✅ FIXED: Webhook endpoint for Yoco to confirm payment (PostgreSQL syntax)
+// Webhook endpoint
 router.post('/webhook', async (req, res) => {
   console.log("=== Yoco Webhook Received ===");
   console.log("Webhook body:", req.body);
@@ -77,7 +81,6 @@ router.post('/webhook', async (req, res) => {
   
   if (status === 'successful' && metadata && metadata.bookingId) {
     try {
-      // PostgreSQL syntax using $1, $2, $3
       await db.query(
         `UPDATE bookings 
          SET payment_status = $1, 
@@ -99,7 +102,6 @@ router.post('/webhook', async (req, res) => {
   }
 });
 
-// ✅ FIXED: Update booking status (PostgreSQL syntax)
 router.post('/update-booking-status', async (req, res) => {
   const { bookingId, paymentStatus, paymentId } = req.body;
   
@@ -110,7 +112,6 @@ router.post('/update-booking-status', async (req, res) => {
   }
   
   try {
-    // PostgreSQL syntax using $1, $2, $3
     await db.query(
       `UPDATE bookings 
        SET payment_status = $1, 

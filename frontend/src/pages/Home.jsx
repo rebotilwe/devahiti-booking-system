@@ -5,8 +5,15 @@ import { useForm, ValidationError } from "@formspree/react";
 import heroBgImg from "../assets/images/home.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
-import yogaSeaImg from "../assets/images/img5.jpg";
-import soundBowlImg from "../assets/images/img11.jpg";
+import soundImg from "../assets/images/img11.jpg";
+import trainingImg from "../assets/images/img5.jpg";
+import groupImg from "../assets/images/group.jpg";
+import corporateImg from "../assets/images/img1.jpg";
+import workshopImg from "../assets/images/specialize.jpg";
+import soundMassageImg from "../assets/images/about.jpg";
+import educationalWorkshopImg from "../assets/images/img1.jpg";
+import retreatsImg from "../assets/images/img11.jpg";
+import fasciaReleaseImg from "../assets/images/img5.jpg";
 import logo from "../assets/logo1.png";
 
 const navLinks = [
@@ -19,38 +26,56 @@ const navLinks = [
 ];
 
 const subNav = [
-  { label: "Private Group Packages", path: "/services/private-sessions" },
-  { label: "Sound Bowl Massage", path: "/services/sound-massage" },
-  { label: "Bowen Therapy", path: "/services/bowen-therapy" },
-  { label: "Weekly Yoga", path: "/services/group-class" },
+  { label: "Group Class", path: "/services/group-class" },
+  { label: "Private Sessions", path: "/services/private-sessions" },
+  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
+  { label: "Sound Journey", path: "/services/sound-journey" },
+  { label: "Sound Massage", path: "/services/sound-massage" },
+  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Teacher Training", path: "/schedule?service=teacher-training" },
+  { label: "Educational Workshops", path: "/services/educational-workshops" },
+  { label: "Specialized Workshop", path: "/services/specialized-workshop" },
+  { label: "Retreats", path: "/services/retreats" },
 ];
 
-const offerings = [
-  {
-    img: privateImg,
-    title: "Private Group Yoga & Sound Relaxation",
-    text: "Relax and unwind in the convenience of your own accommodation.",
-    cta: "Book Now",
-    link: "/services/private-sessions",
-  },
-  {
-    img: yogaSeaImg,
-    title: "Yoga by the Sea",
-    text: "Summer holiday offering open to the public. Gentle outdoor yoga with an ocean view.",
-    cta: "Book Now",
-    link: "/services/specialized-workshop",
-  },
-  {
-    img: soundBowlImg,
-    title: "Sound Bowl Massage",
-    text: "Relieve stress and tension with a relaxing and restorative sound bowl massage.",
-    cta: "Book Now",
-    link: "/services/sound-journey",
-  },
+// All 10 services in the correct order
+const allServices = [
+  { img: groupImg, title: "Group Class", link: "/services/group-class" },
+  { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
+  { img: corporateImg, title: "Corporate Wellness", link: "/services/corporate-wellness" },
+  { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
+  { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
+  { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
+  { img: trainingImg, title: "Teacher Training", link: "/schedule?service=teacher-training" },
+  { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
+  { img: workshopImg, title: "Specialized Workshop", link: "/services/specialized-workshop" },
+  { img: retreatsImg, title: "Retreats", link: "/services/retreats" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 const FORMSPREE_ID = "xyklpvwn";
+
+function ServiceCard({ img, title, link, navigate }) {
+  return (
+    <div className="group cursor-pointer" onClick={() => navigate(link)}>
+      <div className="aspect-square w-full overflow-hidden rounded-xl shadow-md">
+        <img
+          src={img}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+      <h3 className="mt-4 text-center text-lg font-light text-gray-800">{title}</h3>
+      <button
+        onClick={(e) => { e.stopPropagation(); navigate(link); }}
+        className="mt-2 w-full text-center text-[10px] font-semibold uppercase tracking-wider text-[#93C9F9] hover:underline"
+      >
+        Read More
+      </button>
+    </div>
+  );
+}
 
 export default function Home() {
   const navigate = useNavigate();
@@ -74,14 +99,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Navbar - Fixed with scroll effect */}
+      {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Devahiti Yoga" className="h-10 w-auto" />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <Link
@@ -94,42 +118,26 @@ export default function Home() {
             ))}
           </nav>
 
-          {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <button
-              onClick={handlePhoneClick}
-              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Call us"
-            >
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Call us">
               <Phone className="h-5 w-5" />
             </button>
-            
-            <button
-              onClick={handleShoppingBagClick}
-              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Book Online"
-            >
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Book Online">
               <ShoppingBag className="h-5 w-5" />
             </button>
-            
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Menu"
-            >
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Menu">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        {/* Sub Navbar - Second Navigation Bar */}
         <div style={{ backgroundColor: "#93C9F9" }}>
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3">
             {subNav.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition"
+                className="text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
               >
                 {link.label}
               </Link>
@@ -138,7 +146,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Spacer to prevent content hiding under fixed navbar */}
       <div className="h-28"></div>
 
       {/* Mobile Menu */}
@@ -146,118 +153,67 @@ export default function Home() {
         <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100"
-                onClick={() => setMobileOpen(false)}
-              >
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
             <div className="mt-4 pt-2">
               <p className="text-[10px] font-bold tracking-wider text-[#93C9F9] uppercase mb-2">Services</p>
               {subNav.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]"
-                  onClick={() => setMobileOpen(false)}
-                >
+                <Link key={link.path} to={link.path} className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]" onClick={() => setMobileOpen(false)}>
                   {link.label}
                 </Link>
               ))}
             </div>
-            <button
-              onClick={() => {
-                handleShoppingBagClick();
-                setMobileOpen(false);
-              }}
-              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
-            >
+            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
               Book Online
             </button>
           </div>
         </div>
       )}
-{/* Hero Section */}
-<section className="relative w-full overflow-hidden">
-  {/* The Image Container */}
-  <div className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] w-full">
-    <img
-      src={heroBgImg}
-      alt="Devahiti Yoga"
-      className="absolute inset-0 h-full w-full object-cover"
-    />
-    
-    {/* DESKTOP ONLY OVERLAY: Hidden on mobile (hidden), visible on medium screens (md:flex) */}
-    <div className="absolute inset-0 hidden items-center justify-center md:flex">
-      <div
-        className="mx-6 max-w-3xl px-8 py-12 text-center text-white shadow-xl"
-        style={{ background: "color-mix(in oklab, #93C9F9 85%, transparent)" }}
-      >
-        <h1 className="text-4xl font-light leading-tight md:text-6xl">
-          Private Group Yoga &amp; <br /> Sound Relaxation
-        </h1>
-        <p className="mt-4 text-xl italic md:text-2xl">In your own accommodation</p>
-        <a
-          href={BOOKING_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800"
-        >
-          Book Online
-        </a>
-      </div>
-    </div>
-  </div>
 
-  {/* MOBILE ONLY TEXT BOX: Visible on mobile (block), hidden on desktop (md:hidden) */}
-  <div className="block md:hidden">
-    <div 
-      className="px-6 py-12 text-center text-white relative"
-      style={{ backgroundColor: "#93C9F9" }}
-    >
-      <h1 className="text-3xl font-light leading-tight">
-        Private Group Yoga &amp; <br /> Sound Relaxation
-      </h1>
-      <p className="mt-2 text-lg italic">In your own accommodation</p>
-      <a
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest"
-      >
-        Book Online
-      </a>
-      
-      {/* The Wave SVG - Positioned at the bottom of the blue box on mobile */}
-      <svg 
-        className="absolute bottom-0 left-0 w-full translate-y-[99%]" 
-        viewBox="0 0 1440 120" 
-        preserveAspectRatio="none"
-      >
-        <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="white" />
-      </svg>
-    </div>
-    {/* Extra spacer for the wave height on mobile */}
-    <div className="h-12 md:hidden"></div>
-  </div>
+      {/* Hero Section */}
+      <section className="relative w-full overflow-hidden">
+        <div className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] w-full">
+          <img src={heroBgImg} alt="Devahiti Yoga" className="absolute inset-0 h-full w-full object-cover" />
+          
+          {/* Desktop overlay */}
+          <div className="absolute inset-0 hidden items-center justify-center md:flex">
+            <div className="mx-6 max-w-3xl px-8 py-12 text-center text-white shadow-xl" style={{ background: "color-mix(in oklab, #93C9F9 85%, transparent)" }}>
+              <h1 className="text-4xl font-light leading-tight md:text-6xl">
+                Private Group Yoga &amp; <br /> Sound Relaxation
+              </h1>
+              <p className="mt-4 text-xl italic md:text-2xl">In your own accommodation</p>
+              <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800">
+                Book Online
+              </a>
+            </div>
+          </div>
+        </div>
 
-  {/* DESKTOP WAVE: Only shows at the bottom of the image on desktop */}
-  <svg className="absolute bottom-0 left-0 hidden w-full md:block" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-  </svg>
-</section>
+        {/* Mobile overlay */}
+        <div className="block md:hidden">
+          <div className="px-6 py-12 text-center text-white relative" style={{ backgroundColor: "#93C9F9" }}>
+            <h1 className="text-3xl font-light leading-tight">Private Group Yoga &amp; <br /> Sound Relaxation</h1>
+            <p className="mt-2 text-lg italic">In your own accommodation</p>
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest">
+              Book Online
+            </a>
+            <svg className="absolute bottom-0 left-0 w-full translate-y-[99%]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+              <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="white" />
+            </svg>
+          </div>
+          <div className="h-12 md:hidden"></div>
+        </div>
+
+        <svg className="absolute bottom-0 left-0 hidden w-full md:block" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
 
       {/* Intro Section */}
       <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <img
-          src={cherylPortraitImg}
-          alt="Portrait of Cheryl"
-          className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg"
-          loading="lazy"
-        />
+        <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" loading="lazy" />
         <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
         <p className="mt-6 leading-relaxed text-gray-600">
           I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
@@ -265,13 +221,7 @@ export default function Home() {
         <p className="mt-4 leading-relaxed text-gray-500 italic">
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
         </p>
-        <a
-          href={BOOKING_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: "#93C9F9" }}
-        >
+        <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#93C9F9" }}>
           Booking Menu
         </a>
         <p className="mt-10 text-sm italic text-gray-500">
@@ -279,38 +229,40 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Offerings Grid */}
-      <section className="bg-[#F9F9FB] py-20">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
-          {offerings.map((o) => (
-            <article key={o.title} className="text-center cursor-pointer group" onClick={() => navigate(o.link)}>
-              <div className="overflow-hidden rounded-2xl shadow-lg">
-                <img
-                  src={o.img}
-                  alt={o.title}
-                  className="h-80 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="mt-6 text-2xl font-light">{o.title}</h3>
-              <p className="mt-3 text-gray-500">{o.text}</p>
-              <button
-                onClick={(e) => { e.stopPropagation(); navigate(o.link); }}
-                className="mt-5 inline-block rounded-full border px-8 py-2.5 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-gray-800 hover:text-white"
-                style={{ borderColor: "#93C9F9", color: "#93C9F9" }}
-              >
-                {o.cta}
-              </button>
-            </article>
-          ))}
+      {/* Services Grid - 10 services with consistent square dimensions */}
+      <section className="bg-[#F9F9FB] py-20 px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Offerings</h2>
+            <p className="text-gray-500 text-sm mt-2">Find the practice that speaks to you</p>
+            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+          </div>
+
+          {/* Row 1 - First 4 services */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+            {allServices.slice(0, 4).map((service, idx) => (
+              <ServiceCard key={idx} {...service} navigate={navigate} />
+            ))}
+          </div>
+
+          {/* Row 2 - Next 4 services */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+            {allServices.slice(4, 8).map((service, idx) => (
+              <ServiceCard key={idx} {...service} navigate={navigate} />
+            ))}
+          </div>
+
+          {/* Row 3 - Last 2 services (centered) */}
+          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+            {allServices.slice(8, 10).map((service, idx) => (
+              <ServiceCard key={idx} {...service} navigate={navigate} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Subscribe Section - NOW WORKING with Formspree */}
-      <section
-        className="px-6 py-20 text-center text-white"
-        style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}
-      >
+      {/* Subscribe Section */}
+      <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
         <h2 className="text-3xl md:text-4xl font-light">Sign up for a FREE yoga audio download!</h2>
         <p className="mx-auto mt-4 max-w-xl leading-relaxed">
           A slow and gentle practice for stress and tension relief — listen and feel as you reconnect to your body and breath.
@@ -322,33 +274,14 @@ export default function Home() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              name="email"
-              placeholder="Your email address"
-              required
-              className="flex-1 px-5 py-3 rounded-full text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
-              disabled={state.submitting}
-            />
-            <ValidationError 
-              field="email" 
-              errors={state.errors} 
-              className="text-xs text-red-200 mt-1"
-            />
-            <button
-              type="submit"
-              disabled={state.submitting}
-              className="px-8 py-3 rounded-full bg-white text-[#93C9F9] text-sm font-semibold uppercase tracking-wider transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-            >
+            <input type="email" name="email" placeholder="Your email address" required className="flex-1 px-5 py-3 rounded-full text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white" disabled={state.submitting} />
+            <ValidationError field="email" errors={state.errors} className="text-xs text-red-200 mt-1" />
+            <button type="submit" disabled={state.submitting} className="px-8 py-3 rounded-full bg-white text-[#93C9F9] text-sm font-semibold uppercase tracking-wider transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100">
               {state.submitting ? "Sending..." : "Subscribe"}
             </button>
           </form>
         )}
-        
-        <ValidationError 
-          errors={state.errors} 
-          className="mt-3 text-sm text-red-200"
-        />
+        <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
 
       {/* About Section */}
@@ -356,21 +289,11 @@ export default function Home() {
         <p className="text-sm uppercase tracking-[0.3em] text-[#93C9F9]">Owner & Founder of Devahiti Yoga Ballito</p>
         <h2 className="mt-4 text-3xl md:text-4xl font-light">Hi, I'm Cheryl</h2>
         <div className="mt-8 space-y-5 leading-relaxed text-gray-600">
-          <p>
-            Life can get so full that we forget what it feels like to truly unwind, reconnect, and simply breathe again.
-          </p>
-          <p>
-            I learned this the hard way — after years of pushing through tension, stress and fatigue — until I discovered the deeply calming benefits of gentle yoga and sound relaxation. It changed my life and has become my passion to share with others.
-          </p>
-          <p>
-            Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound. A peaceful, safe space where you can ease tension, quiet the mind and leave feeling deeply rebalanced and restored.
-          </p>
+          <p>Life can get so full that we forget what it feels like to truly unwind, reconnect, and simply breathe again.</p>
+          <p>I learned this the hard way — after years of pushing through tension, stress and fatigue — until I discovered the deeply calming benefits of gentle yoga and sound relaxation. It changed my life and has become my passion to share with others.</p>
+          <p>Every session is a nurturing blend of slow, mindful movement, rest and therapeutic sound. A peaceful, safe space where you can ease tension, quiet the mind and leave feeling deeply rebalanced and restored.</p>
         </div>
-        <Link
-          to="/about"
-          className="mt-10 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: "#93C9F9" }}
-        >
+        <Link to="/about" className="mt-10 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#93C9F9" }}>
           More About Me
         </Link>
       </section>
@@ -388,9 +311,7 @@ export default function Home() {
           <blockquote className="text-lg italic leading-relaxed text-gray-600">
             "I received a truly nurturing and nourishing treatment from Cheryl. She tuned into my body and what it needed, intuitively offering powerful and helpful messages. Her experience and confidence made me feel safe and in good hands. Highly recommended — not only as a yoga teacher, but for anyone seeking a caring, personalised healing experience."
           </blockquote>
-          <p className="mt-6 text-sm uppercase tracking-widest text-gray-400">
-            — Client, Ballito South Africa
-          </p>
+          <p className="mt-6 text-sm uppercase tracking-widest text-gray-400">— Client, Ballito South Africa</p>
         </div>
       </section>
 

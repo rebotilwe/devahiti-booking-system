@@ -6,7 +6,6 @@ import { getAvailability } from "../api/api";
 // Format time (expects "HH:MM:SS" or "HH:MM")
 const formatTime = (time) => {
   if (!time) return "";
-  // Handle "HH:MM:SS" format from database
   const timeParts = time.split(":");
   const hour = parseInt(timeParts[0]);
   const minute = timeParts[1];
@@ -14,6 +13,9 @@ const formatTime = (time) => {
   const displayHour = hour % 12 || 12;
   return `${displayHour}:${minute} ${ampm}`;
 };
+
+// Mock time slots for testing (remove when backend is ready)
+const MOCK_TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
 
 export default function TimeSlots({
   selectedDate,
@@ -23,6 +25,7 @@ export default function TimeSlots({
 }) {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [useMockData, setUseMockData] = useState(false);
 
   useEffect(() => {
     const fetchSlots = async () => {
@@ -34,16 +37,21 @@ export default function TimeSlots({
         const dateStr = selectedDate.toISOString().split("T")[0];
         const data = await getAvailability(dateStr);
         
-        // Handle both response formats:
-        // If data.slots exists (backend format), use that
-        // Otherwise if data is an array, use that
         const slots = data?.slots || (Array.isArray(data) ? data : []);
         
-        setAvailableSlots(slots);
+        if (slots && slots.length > 0) {
+          setAvailableSlots(slots);
+          setUseMockData(false);
+        } else {
+          // Use mock data for testing
+          setAvailableSlots(MOCK_TIME_SLOTS);
+          setUseMockData(true);
+        }
       } catch (err) {
         console.error("Failed to load slots", err);
-        // Fallback mock data (temporary until backend is fully ready)
-        setAvailableSlots(["07:00", "08:00", "16:00"]);
+        // Use mock data on error
+        setAvailableSlots(MOCK_TIME_SLOTS);
+        setUseMockData(true);
       }
 
       setLoading(false);
@@ -89,6 +97,12 @@ export default function TimeSlots({
           day: 'numeric' 
         })}
       </p>
+
+      {useMockData && (
+        <p className="text-xs text-amber-600 mb-3 italic">
+          ⚡ Demo mode - using test time slots
+        </p>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {availableSlots.length === 0 && (
