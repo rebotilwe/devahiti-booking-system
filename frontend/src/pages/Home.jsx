@@ -13,7 +13,7 @@ import workshopImg from "../assets/images/specialize.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
 import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
-import fasciaReleaseImg from "../assets/images/img5.jpg";
+import fasciaReleaseImg from "../assets/images/img11.jpg";
 import logo from "../assets/logo1.png";
 
 const navLinks = [
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="absolute inset-0 hidden items-center justify-center md:flex">
             <div className="mx-6 max-w-3xl px-8 py-12 text-center text-white shadow-xl" style={{ background: "color-mix(in oklab, #93C9F9 85%, transparent)" }}>
               <h1 className="text-4xl font-light leading-tight md:text-6xl">
-                Private Group Yoga &amp; <br /> Sound Relaxation
+                Private, Group Yoga &amp; <br /> Sound Relaxation
               </h1>
               <p className="mt-4 text-xl italic md:text-2xl">In your own accommodation</p>
               <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800">
