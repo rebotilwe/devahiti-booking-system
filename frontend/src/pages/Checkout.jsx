@@ -65,7 +65,7 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      // Create the booking in database
+      // Step 1: Create the booking in database
       const bookingData = {
         service_type: booking.service_type,
         booking_date: booking.booking_date,
@@ -90,9 +90,8 @@ export default function Checkout() {
       console.log("Booking result:", bookingResult);
       
       if (bookingResult.bookingId) {
-        // Optionally create Yoco checkout session in background
-        // (Don't await or redirect - let it happen in background)
-        fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
+        // Step 2: Create Yoco checkout session and get redirect URL
+        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -106,10 +105,17 @@ export default function Checkout() {
               discountAmount: originalTotal - discountedTotal
             })
           }),
-        }).catch(err => console.log("Background payment creation error:", err));
+        });
         
-        // Redirect directly to success page
-        window.location.href = `/payment-success?bookingId=${bookingResult.bookingId}`;
+        const checkoutData = await checkoutResponse.json();
+        console.log("Checkout response:", checkoutData);
+        
+        if (checkoutData.redirectUrl) {
+          // ✅ Redirect to Yoco's hosted payment page
+          window.location.href = checkoutData.redirectUrl;
+        } else {
+          throw new Error("No redirectUrl from Yoco");
+        }
       }
     } catch (err) {
       console.error("Payment error:", err);
