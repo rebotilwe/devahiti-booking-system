@@ -67,14 +67,14 @@ const testimonials = [
     text: "Cheryl's individualistic and inspiring instructions are what help me connect with my body and mind immediately. She guides from the inside out making her yoga style a sensory experience. Whenever she's offered personal suggestions it's an insight into the depth of her anatomy and movement knowledge.",
     date: "3 months ago"
   },
-  {
-    id: 3,
-    name: "Marrion C.",
-    location: "Ballito",
-    rating: 5,
-    text: "Devahiti studio has become a home away from home. Not just a studio, it's a community of like-minded humans that encourage & lift each other higher with each gathering. There is certainly nothing average about the owner & founder Cheryl Lancellas.",
-    date: "3 months ago"
-  },
+{
+  id: 5,
+  name: "Marrion Clarke",
+  location: "Ballito, South Africa",
+  rating: 5,
+  text: "Devahiti Studio has become a home away from home. As their slogan goes: 'not your average studio' – There is certainly nothing average about the owner & founder Cheryl Lancellas & the wildly passionate teachers she surrounds herself with in this space. Not just a studio, it's a community of like-minded humans that encourage & lift each other higher with each gathering.",
+  date: "Google Review"
+},
   {
     id: 4,
     name: "Cindy C.",
