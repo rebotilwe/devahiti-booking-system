@@ -7,13 +7,13 @@ export default function Footer() {
     <footer className="bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
-          {/* Brand with Logo */}
+          {/* Brand with Logo - INCREASED SIZE */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img 
                 src={logo} 
                 alt="Devahiti Yoga Logo" 
-                className="h-12 md:h-14 w-auto object-contain"
+                className="h-16 md:h-20 w-auto object-contain"
               />
             </div>
             <p className="text-xs tracking-widest uppercase text-gray-400 mb-6">

@@ -36,8 +36,7 @@ const subNav = [
   { label: "Retreats", path: "/services/retreats" },
 ];
 
-// ✅ UPDATED: 9 services (removed Specialized Workshop)
-// Grouped into 3 rows of 3 services each
+// ✅ 9 services (removed Specialized Workshop) - Grouped into 3 rows of 3
 const allServices = [
   // ROW 1
   { img: groupImg, title: "Group Class", link: "/services/group-class" },
@@ -104,7 +103,6 @@ export default function Home() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
-            {/* ✅ Increased logo size */}
             <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
           </Link>
 
@@ -133,7 +131,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ SUBNAV RESTORED - Blue banner with services on desktop only */}
+        {/* Blue banner with services on desktop only */}
         <div className="hidden md:block" style={{ backgroundColor: "#93C9F9" }}>
           <div className="mx-auto flex max-w-7xl flex-nowrap items-center justify-center gap-x-6 px-6 py-3 overflow-x-auto">
             {subNav.map((link) => (
@@ -211,51 +209,49 @@ export default function Home() {
         </svg>
       </section>
 
-      {/* ✅ "Hi, I'm Cheryl" Section - WITH BLUE BORDER/CONTAINER */}
-      <section className="mx-auto max-w-3xl px-6 py-16">
-        <div className="border-2 border-[#93C9F9] rounded-2xl p-8 md:p-10 shadow-lg bg-white">
-          <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg border-4 border-[#93C9F9]/30" loading="lazy" />
-          <h2 className="mt-8 text-3xl md:text-4xl font-light text-center">Hi, I'm Cheryl!</h2>
-          <p className="mt-6 text-base leading-relaxed text-gray-600 text-center">
-            I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+      {/* ✅ "Hi, I'm Cheryl" Section - NO BLUE BORDER (removed) */}
+      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
+        <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" loading="lazy" />
+        <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
+        <p className="mt-6 text-base leading-relaxed text-gray-600">
+          I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+        </p>
+        <p className="mt-4 text-base leading-relaxed text-gray-600">
+          I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
+        </p>
+        
+        {/* Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link 
+            to="/about" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+          >
+            More About Cheryl
+          </Link>
+          <a 
+            href={BOOKING_URL} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            Booking Menu
+          </a>
+        </div>
+        
+        {/* New text block */}
+        <div className="mt-10 p-6 bg-[#F9F9FB] rounded-lg">
+          <p className="text-base italic text-gray-700 leading-relaxed">
+            "Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated."
           </p>
-          <p className="mt-4 text-base leading-relaxed text-gray-600 text-center">
-            I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
-          </p>
-          
-          {/* Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link 
-              to="/about" 
-              className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-            >
-              More About Cheryl
-            </Link>
-            <a 
-              href={BOOKING_URL} 
-              target="_blank" 
-              rel="noreferrer" 
-              className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-              style={{ backgroundColor: "#93C9F9" }}
-            >
-              Booking Menu
-            </a>
-          </div>
-          
-          {/* New text block */}
-          <div className="mt-10 p-6 bg-[#F9F9FB] rounded-lg">
-            <p className="text-base italic text-gray-700 leading-relaxed text-center">
-              "Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated."
-            </p>
-            <p className="mt-4 text-sm font-medium text-[#93C9F9] uppercase tracking-wider text-center">
-              Sessions are for everyBODY, beginners are welcome.
-            </p>
-          </div>
-          
-          <p className="mt-10 text-sm italic text-gray-500 text-center">
-            Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
+          <p className="mt-4 text-sm font-medium text-[#93C9F9] uppercase tracking-wider">
+            Sessions are for everyBODY, beginners are welcome.
           </p>
         </div>
+        
+        <p className="mt-10 text-sm italic text-gray-500">
+          Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
+        </p>
       </section>
 
       {/* Services Grid - 3 rows of 3 services each */}
@@ -267,21 +263,21 @@ export default function Home() {
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
           </div>
 
-          {/* ROW 1 - Group Class, Private Sessions, Corporate Wellness */}
+          {/* ROW 1 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
             {allServices.slice(0, 3).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* ROW 2 - Sound Journey, Sound Massage, Fascia Release Therapy */}
+          {/* ROW 2 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
             {allServices.slice(3, 6).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* ROW 3 - Teacher Training, Educational Workshops, Retreats/Safaris */}
+          {/* ROW 3 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {allServices.slice(6, 9).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
@@ -330,15 +326,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
-        <img src={logo} alt="" className="mx-auto h-12 w-auto brightness-0 invert" />
-        <p className="mt-4 text-2xl font-light">Devahiti</p>
-        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
-          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-        </p>
-      </footer>
+    {/* Footer */}
+<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+  <img src={logo} alt="" className="mx-auto h-20 w-auto brightness-0 invert" />
+  <p className="mt-4 text-2xl font-light">Devahiti</p>
+  <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+  <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
+    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+  </p>
+</footer>
     </div>
   );
 }
