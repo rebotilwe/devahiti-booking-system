@@ -1,11 +1,41 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Users, ArrowRight, Waves } from "lucide-react";
+import { Clock, MapPin, Users, ArrowRight, Waves, Phone, ShoppingBag, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { services } from "../data/services";
+import logo from "../assets/devahiti.png";
+import heroBgImg from "../assets/images/home.jpg"; // ✅ Add this import
+
+const navLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Events", path: "/events" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+  { label: "Gift Card", path: "/gift-card" },
+];
+
+const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 export default function ServiceDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handlePhoneClick = () => {
+    window.location.href = "tel:+27840902083";
+  };
+
+  const handleShoppingBagClick = () => {
+    window.open(BOOKING_URL, "_blank");
+  };
 
   const service = services.find((s) => s.slug === slug);
 
@@ -14,7 +44,7 @@ export default function ServiceDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl mb-4">Service not found</h1>
-          <Link to="/services" className="text-ocean hover:underline">
+          <Link to="/services" className="text-[#93C9F9] hover:underline">
             Back to Services
           </Link>
         </div>
@@ -43,14 +73,90 @@ export default function ServiceDetail() {
     }
   };
 
+  const IconComponent = service.icon;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
+      {/* Top Navbar - Same as Home page */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
+          </Link>
 
-      {/* HERO - Styled like homepage */}
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Call us">
+              <Phone className="h-5 w-5" />
+            </button>
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Book Online">
+              <ShoppingBag className="h-5 w-5" />
+            </button>
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Menu">
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Our Services Button - Same as Home page */}
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+            <button
+              onClick={() => navigate("/services")}
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
+            >
+              Our Services
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="h-28"></div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+          <div className="px-6 py-4">
+            {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+                {link.label}
+              </Link>
+            ))}
+            <button 
+              onClick={() => { navigate("/services"); setMobileOpen(false); }} 
+              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+            >
+              Our Services
+            </button>
+            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+              Book Online
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* HERO - WITH BACKGROUND IMAGE (Fixed) */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ocean/20 to-transparent" />
-
+        {/* Background Image */}
+        <img 
+          src={service.image || heroBgImg} 
+          alt={service.title} 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Blue Overlay */}
+        <div className="absolute inset-0" style={{ backgroundColor: "#93C9F9", opacity: 0.75 }} />
+        
         <div className="relative z-10 text-center px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -74,58 +180,67 @@ export default function ServiceDetail() {
             {service.title}
           </motion.h1>
         </div>
+        
+        {/* White curved bottom */}
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
       </section>
 
       {/* CONTENT */}
       <section className="py-16 lg:py-24 px-6">
         <div className="max-w-4xl mx-auto">
 
-          {/* Description */}
-          <div className="mb-12">
-            <p className="text-lg text-muted-foreground leading-relaxed">
+          {/* Icon & Description */}
+          <div className="text-center mb-12">
+            {IconComponent && (
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#93C9F9]/10 mb-6">
+                <IconComponent className="h-10 w-10 text-[#93C9F9]" />
+              </div>
+            )}
+            <p className="text-lg text-gray-600 leading-relaxed">
               {service.description}
             </p>
           </div>
 
           {/* Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-ocean/5 p-6 rounded-lg text-center">
-              <Clock className="h-8 w-8 text-ocean mx-auto mb-3" />
-              <h3 className="font-heading text-xl text-foreground mb-1">Duration</h3>
-              <p className="text-muted-foreground">{service.duration}</p>
+            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
+              <Clock className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+              <h3 className="font-heading text-xl text-gray-800 mb-1">Duration</h3>
+              <p className="text-gray-500">{service.duration}</p>
             </div>
-            <div className="bg-ocean/5 p-6 rounded-lg text-center">
-              <MapPin className="h-8 w-8 text-ocean mx-auto mb-3" />
-              <h3 className="font-heading text-xl text-foreground mb-1">Location</h3>
-              <p className="text-muted-foreground">{service.location}</p>
+            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
+              <MapPin className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+              <h3 className="font-heading text-xl text-gray-800 mb-1">Location</h3>
+              <p className="text-gray-500">{service.location}</p>
             </div>
-            <div className="bg-ocean/5 p-6 rounded-lg text-center">
-              <Users className="h-8 w-8 text-ocean mx-auto mb-3" />
-              <h3 className="font-heading text-xl text-foreground mb-1">Capacity</h3>
-              <p className="text-muted-foreground">{service.capacity}</p>
+            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
+              <Users className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+              <h3 className="font-heading text-xl text-gray-800 mb-1">Capacity</h3>
+              <p className="text-gray-500">{service.capacity}</p>
             </div>
           </div>
 
           {/* Price and CTA */}
-          <div className="bg-gradient-to-r from-ocean/10 to-ocean/5 p-8 rounded-2xl text-center">
+          <div className="bg-gradient-to-r from-[#93C9F9]/10 to-[#65AEEA]/5 p-8 rounded-2xl text-center">
             <div className="mb-6">
-              <span className="text-4xl font-heading text-ocean">{service.price}</span>
-              {service.priceAmount && (
-                <p className="text-sm text-muted-foreground mt-1">
-                  Includes all equipment
-                </p>
-              )}
+              <span className="text-4xl font-heading text-[#93C9F9]">{service.price}</span>
+              <p className="text-sm text-gray-500 mt-1">
+                {service.bookingType === "enquire" ? "Contact for pricing" : "Includes all equipment"}
+              </p>
             </div>
 
             <button
               onClick={handleBook}
-              className="inline-flex items-center gap-3 px-10 py-4 bg-ocean text-white text-sm font-medium uppercase tracking-[0.3em] hover:bg-ocean-dark transition-all rounded-sm"
+              className="inline-flex items-center gap-3 px-10 py-4 text-white text-sm font-medium uppercase tracking-[0.3em] hover:opacity-90 transition-all rounded-sm"
+              style={{ backgroundColor: "#93C9F9" }}
             >
               {service.bookingType === "enquire" ? "Enquire Now" : "Book Now"}
               <ArrowRight className="h-4 w-4" />
             </button>
 
-            <p className="text-xs text-muted-foreground mt-4">
+            <p className="text-xs text-gray-500 mt-4">
               {service.bookingType === "enquire"
                 ? "Contact us for more information about this program"
                 : "Select your preferred date and time after booking"}
@@ -134,12 +249,22 @@ export default function ServiceDetail() {
 
           {/* Back link */}
           <div className="text-center mt-8">
-            <Link to="/services" className="text-ocean hover:underline text-sm">
+            <Link to="/services" className="text-[#93C9F9] hover:underline text-sm">
               ← Back to all services
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center" style={{ backgroundColor: "#93C9F9" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+      </footer>
     </div>
   );
 }
