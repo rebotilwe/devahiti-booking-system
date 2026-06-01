@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Phone, ShoppingBag, Menu, X } from "lucide-react";
+import { Phone, ShoppingBag, Menu, X, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import heroBgImg from "../assets/images/home.jpg";
@@ -13,7 +13,7 @@ import soundMassageImg from "../assets/images/about.jpg";
 import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
 import fasciaReleaseImg from "../assets/images/img11.jpg";
-import logo from "../assets/logo1.png";
+import logo from "../assets/logo.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -49,6 +49,42 @@ const allServices = [
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
 
+// Testimonials data
+const testimonials = [
+  {
+    id: 1,
+    name: "Noelle van S.",
+    location: "Ballito, South Africa",
+    rating: 5,
+    text: "Wow wow wow! If you're looking for an all in one yoga flow, Devahiti Studio is the place to go! The instructor is so in tune and so present in helping you flow. This was easily my best yoga practice and I highly recommend you give it a go. From yoga, to a gentle meditation and a powerful breath-work session, I left feeling grounded and firmly in my truth.",
+    date: "1 year ago"
+  },
+  {
+    id: 2,
+    name: "Elize R.",
+    location: "North Coast",
+    rating: 5,
+    text: "Cheryl's individualistic and inspiring instructions are what help me connect with my body and mind immediately. She guides from the inside out making her yoga style a sensory experience. Whenever she's offered personal suggestions it's an insight into the depth of her anatomy and movement knowledge.",
+    date: "3 months ago"
+  },
+  {
+    id: 3,
+    name: "Marrion C.",
+    location: "Ballito",
+    rating: 5,
+    text: "Devahiti studio has become a home away from home. Not just a studio, it's a community of like-minded humans that encourage & lift each other higher with each gathering. There is certainly nothing average about the owner & founder Cheryl Lancellas.",
+    date: "3 months ago"
+  },
+  {
+    id: 4,
+    name: "Cindy C.",
+    location: "Salt Rock",
+    rating: 5,
+    text: "Devahiti has changed my life! Cheryl's guidance has literally shifted my entire paradigm to being more mindful, present, strong and at peace. The Therapeutic Movement classes are absolutely incredible resulting in healing.",
+    date: "1 year ago"
+  }
+];
+
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 const FORMSPREE_ID = "xyklpvwn";
 
@@ -74,16 +110,61 @@ function ServiceCard({ img, title, link, navigate }) {
   );
 }
 
+function TestimonialCard({ testimonial, index }) {
+  return (
+    <div 
+      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 ${
+        index === 0 ? "md:col-span-2 lg:col-span-1" : ""
+      }`}
+    >
+      {/* Quote icon */}
+      <div className="mb-4">
+        <Quote className="h-8 w-8 text-[#93C9F9]/30" />
+      </div>
+      
+      {/* Star ratings */}
+      <div className="flex gap-1 mb-4">
+        {[...Array(testimonial.rating)].map((_, i) => (
+          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+        ))}
+      </div>
+      
+      {/* Testimonial text */}
+      <p className="text-gray-600 leading-relaxed mb-5 line-clamp-4">
+        "{testimonial.text}"
+      </p>
+      
+      {/* Client info */}
+      <div className="border-t border-gray-100 pt-4 mt-2">
+        <p className="font-semibold text-gray-800">{testimonial.name}</p>
+        <div className="flex justify-between items-center mt-1">
+          <p className="text-xs text-gray-400">{testimonial.location}</p>
+          <p className="text-xs text-gray-400">{testimonial.date}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [state, handleSubmit] = useForm(FORMSPREE_ID);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Auto-rotate testimonials every 8 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 8000);
+    return () => clearInterval(interval);
   }, []);
 
   const handlePhoneClick = () => {
@@ -128,7 +209,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ Our Services Button - CENTERED with BLUE BACKGROUND */}
+        {/* Our Services Button */}
         <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
           <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button
@@ -165,18 +246,18 @@ export default function Home() {
         </div>
       )}
 
-      {/* ========== OUR SERVICES SECTION (BANNER PIC - NO WORDING) ========== */}
+      {/* Banner Section */}
       <section className="w-full">
         <div className="relative w-full h-[40vh] min-h-[300px] md:h-[50vh]">
           <img 
             src={heroBgImg} 
-            alt="Our Services" 
+            alt="Devahiti Yoga" 
             className="w-full h-full object-cover"
           />
         </div>
       </section>
 
-      {/* ========== HERO / TITLE SECTION - BLUE BACKGROUND ========== */}
+      {/* Hero Title Section */}
       <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl md:text-5xl font-light text-white">
@@ -195,63 +276,60 @@ export default function Home() {
           </a>
         </div>
         
-        {/* Blue line curve below this section */}
         <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
           <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
         </svg>
       </section>
 
-      {/* ========== HI I'M CHERYL SECTION ========== */}
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <img 
-          src={cherylPortraitImg} 
-          alt="Portrait of Cheryl" 
-          className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" 
-          loading="lazy" 
-        />
-        <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
-        <p className="mt-6 text-base leading-relaxed text-gray-600">
-          I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-gray-600">
-          I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
-        </p>
-        
-        {/* Updated text block - same style as About page paragraphs */}
-        <div className="mt-10">
-          <p className="text-base leading-relaxed text-gray-600">
-            Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated.
-          </p>
-          <p className="mt-4 text-base leading-relaxed text-gray-600">
-            Sessions are for everyBODY, beginners are welcome.
-          </p>
-        </div>
-        
-        {/* Buttons - Booking Menu and More About Cheryl */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a 
-            href={BOOKING_URL} 
-            target="_blank" 
-            rel="noreferrer" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-            style={{ backgroundColor: "#93C9F9" }}
-          >
-            Booking Menu
-          </a>
-          <Link 
-            to="/about" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-          >
-            More About Cheryl
-          </Link>
-        </div>
-        
-        <p className="mt-10 text-sm italic text-gray-500">
-          Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
-        </p>
-      </section>
+    {/* Hi I'm Cheryl Section */}
+<section className="mx-auto max-w-3xl px-6 py-16 text-center">
+  <img 
+    src={cherylPortraitImg} 
+    alt="Portrait of Cheryl" 
+    className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" 
+    loading="lazy" 
+  />
+  <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
+  <p className="mt-6 text-base leading-relaxed text-gray-600">
+    I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+  </p>
+  <p className="mt-4 text-base leading-relaxed text-gray-600">
+    I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
+  </p>
+  
+  <div className="mt-10">
+    <p className="text-base leading-relaxed text-gray-600">
+      Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath – leaving you feeling relaxed and rejuvenated.
+    </p>
+    <p className="mt-4 text-base leading-relaxed text-gray-600">
+      Sessions are for every BODY, beginners are welcome.
+    </p>
+  </div>
+  
+  <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a 
+      href={BOOKING_URL} 
+      target="_blank" 
+      rel="noreferrer" 
+      className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+      style={{ backgroundColor: "#93C9F9" }}
+    >
+      BOOKING MENU
+    </a>
+    <Link 
+      to="/about" 
+      className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+    >
+      MORE ABOUT CHERYL
+    </Link>
+  </div>
+  
+  <p className="mt-10 text-sm italic text-gray-500">
+    *Serving North Coast • Ballito • Salt Rock • Sheffield • Surrounding Area*
+  </p>
+</section>
 
-      {/* ========== OUR SERVICES GRID SECTION ========== */}
+      {/* Services Grid Section */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
@@ -259,25 +337,105 @@ export default function Home() {
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
           </div>
 
-          {/* ROW 1 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
             {allServices.slice(0, 3).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* ROW 2 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
             {allServices.slice(3, 6).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
 
-          {/* ROW 3 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {allServices.slice(6, 9).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== NEW TESTIMONIALS SECTION ========== */}
+      <section className="py-20 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="flex justify-center gap-1 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
+              ))}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-light text-gray-800">
+              What Our Clients Say
+            </h2>
+            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              Real stories from real people who have experienced the Devahiti difference
+            </p>
+          </div>
+
+          {/* Desktop Grid View */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((testimonial, idx) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={idx} />
+            ))}
+          </div>
+
+          {/* Mobile Carousel View */}
+          <div className="md:hidden relative">
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+              >
+                {testimonials.map((testimonial) => (
+                  <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
+                    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                      <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 leading-relaxed mb-5 text-sm">
+                        "{testimonial.text.substring(0, 200)}..."
+                      </p>
+                      <div className="border-t border-gray-100 pt-4">
+                        <p className="font-semibold text-gray-800">{testimonial.name}</p>
+                        <p className="text-xs text-gray-400 mt-1">{testimonial.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Carousel Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {testimonials.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveTestimonial(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Google Rating Badge */}
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
+                ))}
+              </div>
+              <span className="text-xs text-gray-600">5.0 rating · 17+ reviews</span>
+            </div>
           </div>
         </div>
       </section>
@@ -300,23 +458,6 @@ export default function Home() {
           </form>
         )}
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
-      </section>
-
-      {/* Testimonial Section */}
-      <section className="bg-[#F9F9FB] px-6 py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="flex justify-center gap-1 mb-4">
-            {[...Array(5)].map((_, i) => (
-              <svg key={i} className="w-5 h-5 text-[#93C9F9] fill-current" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-            ))}
-          </div>
-          <blockquote className="text-lg italic leading-relaxed text-gray-600">
-            "I received a truly nurturing and nourishing treatment from Cheryl. She tuned into my body and what it needed, intuitively offering powerful and helpful messages. Her experience and confidence made me feel safe and in good hands. Highly recommended — not only as a yoga teacher, but for anyone seeking a caring, personalised healing experience."
-          </blockquote>
-          <p className="mt-6 text-sm uppercase tracking-widest text-gray-400">— Client, Ballito South Africa</p>
-        </div>
       </section>
 
       {/* Footer */}
