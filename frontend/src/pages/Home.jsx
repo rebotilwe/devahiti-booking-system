@@ -36,17 +36,14 @@ const subNav = [
   { label: "Retreats", path: "/services/retreats" },
 ];
 
-// ✅ 9 services (removed Specialized Workshop) - Grouped into 3 rows of 3
+// 9 services - Grouped into 3 rows of 3
 const allServices = [
-  // ROW 1
   { img: groupImg, title: "Group Class", link: "/services/group-class" },
   { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
   { img: corporateImg, title: "Corporate Wellness", link: "/services/corporate-wellness" },
-  // ROW 2
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
-  // ROW 3
   { img: trainingImg, title: "Teacher Training", link: "/schedule?service=teacher-training" },
   { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
@@ -130,28 +127,13 @@ export default function Home() {
             </button>
           </div>
         </div>
-
-        {/* Blue banner with services on desktop only */}
-        <div className="hidden md:block" style={{ backgroundColor: "#93C9F9" }}>
-          <div className="mx-auto flex max-w-7xl flex-nowrap items-center justify-center gap-x-6 px-6 py-3 overflow-x-auto">
-            {subNav.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
       </header>
 
-      <div className="h-28"></div>
+      <div className="h-24"></div>
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+        <div className="fixed top-24 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-96px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
@@ -173,45 +155,46 @@ export default function Home() {
         </div>
       )}
 
-      {/* Hero Section */}
-      <section className="relative w-full overflow-hidden">
-        <div className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] w-full">
-          <img src={heroBgImg} alt="Devahiti Yoga" className="absolute inset-0 h-full w-full object-cover" />
-          
-          {/* Desktop overlay */}
-          <div className="absolute inset-0 hidden items-center justify-center md:flex">
-            <div className="mx-6 max-w-3xl px-8 py-12 text-center text-white">
-              <h1 className="text-4xl font-light leading-tight md:text-6xl">
-                Private, Group Yoga &amp; <br /> Sound Relaxation
-              </h1>
-              <p className="mt-4 text-xl italic md:text-2xl">In studio or in your own accommodation</p>
-              <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block rounded-full border-2 border-white px-10 py-3 text-sm font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-gray-800">
-                Book Online
-              </a>
-            </div>
-          </div>
+      {/* ========== OUR SERVICES SECTION (BANNER PIC - NO WORDING) ========== */}
+      <section className="w-full">
+        <div className="relative w-full h-[40vh] min-h-[300px] md:h-[50vh]">
+          <img 
+            src={heroBgImg} 
+            alt="Our Services" 
+            className="w-full h-full object-cover"
+          />
         </div>
-
-        {/* Mobile overlay */}
-        <div className="block md:hidden">
-          <div className="px-6 py-12 text-center text-white relative bg-black/40">
-            <h1 className="text-3xl font-light leading-tight">Private, Group Yoga &amp; <br /> Sound Relaxation</h1>
-            <p className="mt-2 text-lg italic">In studio or in your own accommodation</p>
-            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-6 inline-block rounded-full border-2 border-white px-8 py-2 text-xs font-semibold uppercase tracking-widest">
-              Book Online
-            </a>
-          </div>
-        </div>
-
-        {/* White Curved Bottom */}
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
       </section>
 
-      {/* ✅ "Hi, I'm Cheryl" Section - NO BLUE BORDER (removed) */}
+      {/* ========== HERO / TITLE SECTION ========== */}
+      <section className="py-16 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-800">
+            Private, Group Yoga &amp; Sound Relaxation
+          </h1>
+          <p className="mt-4 text-xl text-gray-500">
+            in Studio or in your own accommodation
+          </p>
+          <a 
+            href={BOOKING_URL} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            Booking Menu
+          </a>
+        </div>
+      </section>
+
+      {/* ========== HI I'M CHERYL SECTION ========== */}
       <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <img src={cherylPortraitImg} alt="Portrait of Cheryl" className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" loading="lazy" />
+        <img 
+          src={cherylPortraitImg} 
+          alt="Portrait of Cheryl" 
+          className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" 
+          loading="lazy" 
+        />
         <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
         <p className="mt-6 text-base leading-relaxed text-gray-600">
           I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
@@ -220,26 +203,7 @@ export default function Home() {
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
         </p>
         
-        {/* Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link 
-            to="/about" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-          >
-            More About Cheryl
-          </Link>
-          <a 
-            href={BOOKING_URL} 
-            target="_blank" 
-            rel="noreferrer" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-            style={{ backgroundColor: "#93C9F9" }}
-          >
-            Booking Menu
-          </a>
-        </div>
-        
-        {/* New text block */}
+        {/* Client's requested text block */}
         <div className="mt-10 p-6 bg-[#F9F9FB] rounded-lg">
           <p className="text-base italic text-gray-700 leading-relaxed">
             "Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated."
@@ -249,17 +213,35 @@ export default function Home() {
           </p>
         </div>
         
+        {/* Buttons - Booking Menu and More About Cheryl */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a 
+            href={BOOKING_URL} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            Booking Menu
+          </a>
+          <Link 
+            to="/about" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+          >
+            More About Cheryl
+          </Link>
+        </div>
+        
         <p className="mt-10 text-sm italic text-gray-500">
           Servicing North Coast • Ballito • Salt Rock • Sheffield • Surrounding Areas
         </p>
       </section>
 
-      {/* Services Grid - 3 rows of 3 services each */}
+      {/* ========== OUR SERVICES GRID SECTION ========== */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Offerings</h2>
-            <p className="text-gray-500 text-sm mt-2">Find the practice that speaks to you</p>
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Services</h2>
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
           </div>
 
@@ -326,15 +308,15 @@ export default function Home() {
         </div>
       </section>
 
-    {/* Footer */}
-<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
-  <img src={logo} alt="" className="mx-auto h-20 w-auto brightness-0 invert" />
-  <p className="mt-4 text-2xl font-light">Devahiti</p>
-  <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-  <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
-    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-  </p>
-</footer>
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+        <img src={logo} alt="" className="mx-auto h-20 w-auto brightness-0 invert" />
+        <p className="mt-4 text-2xl font-light">Devahiti</p>
+        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+      </footer>
     </div>
   );
 }
