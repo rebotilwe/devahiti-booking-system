@@ -127,28 +127,38 @@ export default function Home() {
             </button>
           </div>
         </div>
+
+        {/* ✅ Our Services Button - CENTERED with BLUE BACKGROUND */}
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+            <button
+              onClick={() => navigate("/services")}
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
+            >
+              Our Services
+            </button>
+          </div>
+        </div>
       </header>
 
-      <div className="h-24"></div>
+      <div className="h-28"></div>
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed top-24 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-96px)] overflow-y-auto">
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
-            <div className="mt-4 pt-2">
-              <p className="text-[10px] font-bold tracking-wider text-[#93C9F9] uppercase mb-2">Services</p>
-              {subNav.map((link) => (
-                <Link key={link.path} to={link.path} className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]" onClick={() => setMobileOpen(false)}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+            <button 
+              onClick={() => { navigate("/services"); setMobileOpen(false); }} 
+              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+            >
+              Our Services
+            </button>
+            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -166,25 +176,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== HERO / TITLE SECTION ========== */}
-      <section className="py-16 px-6 text-center bg-white">
+      {/* ========== HERO / TITLE SECTION - BLUE BACKGROUND ========== */}
+      <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-800">
+          <h1 className="text-4xl md:text-5xl font-light text-white">
             Private, Group Yoga &amp; Sound Relaxation
           </h1>
-          <p className="mt-4 text-xl text-gray-500">
+          <p className="mt-4 text-xl text-white/90">
             in Studio or in your own accommodation
           </p>
           <a 
             href={BOOKING_URL} 
             target="_blank" 
             rel="noreferrer" 
-            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-            style={{ backgroundColor: "#93C9F9" }}
+            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
           >
             Booking Menu
           </a>
         </div>
+        
+        {/* Blue line curve below this section */}
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
       </section>
 
       {/* ========== HI I'M CHERYL SECTION ========== */}
@@ -203,12 +217,12 @@ export default function Home() {
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
         </p>
         
-        {/* Client's requested text block */}
-        <div className="mt-10 p-6 bg-[#F9F9FB] rounded-lg">
-          <p className="text-base italic text-gray-700 leading-relaxed">
-            "Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated."
+        {/* Updated text block - same style as About page paragraphs */}
+        <div className="mt-10">
+          <p className="text-base leading-relaxed text-gray-600">
+            Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath ~ leaving you feeling relaxed and rejuvenated.
           </p>
-          <p className="mt-4 text-sm font-medium text-[#93C9F9] uppercase tracking-wider">
+          <p className="mt-4 text-base leading-relaxed text-gray-600">
             Sessions are for everyBODY, beginners are welcome.
           </p>
         </div>
@@ -271,9 +285,6 @@ export default function Home() {
       {/* Subscribe Section */}
       <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
         <h2 className="text-3xl md:text-4xl font-light">Sign up for a free trial class!</h2>
-        <p className="mx-auto mt-4 max-w-xl leading-relaxed">
-          Experience the benefits of gentle yoga and sound relaxation. Join us for a complimentary session.
-        </p>
         
         {state.succeeded ? (
           <div className="mt-8 max-w-md mx-auto bg-green-500/20 backdrop-blur-sm rounded-lg p-4">
