@@ -460,15 +460,16 @@ export default function Home() {
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
-        <img src={logo} alt="" className="mx-auto h-20 w-auto brightness-0 invert" />
-        <p className="mt-4 text-2xl font-light">Devahiti</p>
-        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
-          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-        </p>
-      </footer>
+  {/* Footer - Fixed logo visibility */}
+<footer className="px-6 py-12 text-center" style={{ backgroundColor: "#93C9F9" }}>
+  {/* Removed brightness-0 invert so logo appears normal */}
+  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+  </p>
+</footer>
     </div>
   );
 }
