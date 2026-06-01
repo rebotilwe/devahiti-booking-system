@@ -13,7 +13,7 @@ import soundMassageImg from "../assets/images/about.jpg";
 import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
 import fasciaReleaseImg from "../assets/images/img11.jpg";
-import logo from "../assets/logo.png";
+import logo from "../assets/devahiti.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
