@@ -6,7 +6,7 @@ import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
 import soundImg from "../assets/images/img11.jpg";
 import groupImg from "../assets/images/group.jpg";
-import logo from "../assets/logo1.png";
+import logo from "../assets/devahiti.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -18,10 +18,15 @@ const navLinks = [
 ];
 
 const subNav = [
-  { label: "Private Group Packages", path: "/services/private-sessions" },
-  { label: "Sound Bowl Massage", path: "/services/sound-massage" },
-  { label: "Bowen Therapy", path: "/services/bowen-therapy" },
-  { label: "Weekly Yoga", path: "/services/group-class" },
+  { label: "Group Class", path: "/services/group-class" },
+  { label: "Private Sessions", path: "/services/private-sessions" },
+  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
+  { label: "Sound Journey", path: "/services/sound-journey" },
+  { label: "Sound Massage", path: "/services/sound-massage" },
+  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Teacher Training", path: "/schedule?service=teacher-training" },
+  { label: "Educational Workshops", path: "/services/educational-workshops" },
+  { label: "Retreats", path: "/services/retreats" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
@@ -47,71 +52,51 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Navbar - Fixed with scroll effect */}
+      {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Devahiti Yoga" className="h-10 w-auto" />
+            <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <button
-              onClick={handlePhoneClick}
-              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Call us"
-            >
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Call us">
               <Phone className="h-5 w-5" />
             </button>
-            
-            <button
-              onClick={handleShoppingBagClick}
-              className="text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Book Online"
-            >
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Book Online">
               <ShoppingBag className="h-5 w-5" />
             </button>
-            
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors"
-              aria-label="Menu"
-            >
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Menu">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        {/* Sub Navbar - Second Navigation Bar */}
-        <div style={{ backgroundColor: "#93C9F9" }}>
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
-            {subNav.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition"
-              >
-                {link.label}
-              </Link>
-            ))}
+        {/* Our Services Button */}
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+            <button
+              onClick={() => navigate("/services")}
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
+            >
+              Our Services
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Spacer to prevent content hiding under fixed navbar */}
       <div className="h-28"></div>
 
       {/* Mobile Menu */}
@@ -119,35 +104,17 @@ export default function About() {
         <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100"
-                onClick={() => setMobileOpen(false)}
-              >
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
-            <div className="mt-4 pt-2">
-              <p className="text-[10px] font-bold tracking-wider text-[#93C9F9] uppercase mb-2">Services</p>
-              {subNav.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="block py-2 text-xs text-gray-500 hover:text-[#93C9F9]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <button
-              onClick={() => {
-                handleShoppingBagClick();
-                setMobileOpen(false);
-              }}
-              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+            <button 
+              onClick={() => { navigate("/services"); setMobileOpen(false); }} 
+              className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
             >
+              Our Services
+            </button>
+            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -159,45 +126,59 @@ export default function About() {
         <img src={heroBgImg} alt="Devahiti Yoga" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <h1 className="text-5xl font-light md:text-6xl text-[#93C9F9]">About Devahiti</h1>
+          <h1 className="text-5xl font-light md:text-6xl text-[#65AEEA]">About Devahiti</h1>
           <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white">
-            "I strive to encourage those who think 'they can't do yoga' to become those who can. If you can breathe, you can do yoga!"
+            "If you can breathe, you can do yoga."
           </p>
         </div>
       </section>
 
-      {/* Content Section 1 - Bio with image on right */}
+      {/* ========== ABOUT DEVAHITI SECTION - UPDATED ========== */}
       <section className="py-20 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 md:grid-cols-2 md:items-start">
-            <div>
-              <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">Devahiti Ballito ~ Cheryl Lancellas</h2>
-              <div className="mt-6 space-y-4 text-[#93C9F9] leading-relaxed">
-                <p>Life is busy. We carry tension in our bodies and stress in our minds, often without even noticing. Over time, that weight builds up, and we forget what it feels like to truly let go.</p>
-                <p>My passion is to help you reconnect with yourself through gentle, mindful movement and deeply restorative sound relaxation. I believe that everyBODY can benefit from slowing down, and I strive to create a space where you can feel safe, supported, and free to just be.</p>
-                <p>I was born and raised in South Africa, and I know firsthand how overwhelming life can feel. I also know how transformative it can be when we give ourselves permission to pause, breathe, and heal.</p>
-                <p>My approach is gentle, intuitive, and always welcoming. Whether you're completely new to yoga or returning after a long break, my sessions are designed to meet you exactly where you are.</p>
-              </div>
-              <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block bg-[#93C9F9] text-white px-8 py-3 text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-[#65AEEA] transition">
-                BOOK NOW
-              </a>
-            </div>
-            <img src={cherylPortraitImg} alt="Cheryl Lancellas - Devahiti Yoga" className="w-full rounded-lg shadow-lg object-cover" />
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">About Devahiti</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+          </div>
+          
+          <div className="space-y-5 text-gray-700 leading-relaxed">
+            <p className="text-lg italic text-[#65AEEA] font-medium">
+              "Here at Devahiti, we believe that if you can breathe, you can do Yoga."
+            </p>
+            
+            <p>We understand how busy life is, causing tension and stress in both body and mind. Over time, we ignore this and accept the discomfort as the "norm", we forget how to let go and relax fully.</p>
+            
+            <p>I know firsthand how overwhelming life in South Africa can feel, however, I have personally experienced the deeply transformative aspects of Yoga that provide the necessary tools to navigate life with increased grace and ease.</p>
+            
+            <p>My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
+            
+            <p>My approach, while steeped in science, is also intuitive, gentle, and always ready to meet you exactly where you are in each moment.</p>
+          </div>
+          
+          <div className="text-center mt-8">
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
+              Book Now
+            </a>
           </div>
         </div>
       </section>
 
-      {/* My Journey Into Yoga - Image on left */}
+      {/* ========== MY JOURNEY INTO YOGA / DEVAHITI ORIGIN ========== */}
       <section className="bg-[#F9F9FB] py-20 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <img src={privateImg} alt="Yoga practice" className="w-full rounded-lg shadow-lg object-cover h-80" />
-            <div>
-              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#93C9F9]">My Journey Into Yoga</h3>
-              <p className="text-[#93C9F9] leading-relaxed">
-                My own journey into yoga began as a search for a gentle way to heal and rebuild strength. What I found went far beyond physical recovery. I completed my Yoga Teacher Training and soon discovered a deep love for sharing the practice with others. My teaching style is influenced by Hatha, Yin, and Restorative Yoga, with a strong focus on breath awareness and mindfulness. I love working with beginners and those who feel intimidated by traditional yoga classes, offering a gentle, supportive approach that honours each individual's body and needs.
-              </p>
-            </div>
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-light md:text-3xl text-[#65AEEA]">My Journey Into Yoga</h3>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+          </div>
+          
+          <div className="space-y-5 text-gray-700 leading-relaxed">
+            <p>Devahiti, or "Divine Order," was created out of a deep desire to integrate a lifetime of traditional yoga practice with ongoing research on body alignment techniques. Drawing from a rich foundation in Yoga, Somatic Psychology, Fascial Release, and Ayurveda, Devahiti facilitates balance, health, and homeostasis across the body-mind complex—both on and off the mat.</p>
+            
+            <p>Founded by Cheryl Lancellas, Devahiti is the culmination of her extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, Reiki, and pranic healing. This unique combination of modalities allows Cheryl to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
+            
+            <p>At Devahiti, we believe in the power of scientifically backed intuition—combining ancient wisdom with modern research to achieve lasting transformation.</p>
+            
+            <p className="font-medium text-[#65AEEA]">Devahiti Yoga isn't just a practice—it's a complete system for well-being. Rooted in traditional disciplines, it embraces the latest advancements in yoga and healing arts. Whether you are looking to heal, deepen your personal practice or train to become a teacher, Devahiti provides a transformative space for growth, healing, and self-discovery.</p>
           </div>
         </div>
       </section>
@@ -207,8 +188,8 @@ export default function About() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
-              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#93C9F9]">Discovering Sound Relaxation</h3>
-              <p className="text-[#93C9F9] leading-relaxed">
+              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Discovering Sound Relaxation</h3>
+              <p className="text-gray-700 leading-relaxed">
                 I attended a sound relaxation session and the experience was profoundly moving. I felt tension melt away in ways I had never experienced before, and I knew I had to learn more. I trained in Sound Relaxation and Sound Bath facilitation, learning to work with singing bowls, gongs, and other therapeutic instruments. Combining sound with gentle yoga creates a truly unique and powerful experience that allows deep rest and restoration on every level.
               </p>
             </div>
@@ -223,8 +204,8 @@ export default function About() {
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <img src={groupImg} alt="Bodywork therapy" className="w-full rounded-lg shadow-lg object-cover h-80" />
             <div>
-              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#93C9F9]">Finding Restorative Bodywork</h3>
-              <p className="text-[#93C9F9] leading-relaxed">
+              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
+              <p className="text-gray-700 leading-relaxed">
                 My journey into bodywork began when I discovered Fascia Release Therapy, a gentle technique that helps the body reset and heal itself. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
               </p>
             </div>
@@ -238,44 +219,44 @@ export default function About() {
           <div className="flex justify-center mb-4">
             <img src={logo} alt="Devahiti" className="h-12 w-auto" />
           </div>
-          <div className="w-20 h-px bg-[#93C9F9] mx-auto mb-6"></div>
-          <h2 className="text-center text-3xl font-light md:text-4xl mb-12 text-[#93C9F9]">RESTORATIVE PACKAGES</h2>
+          <div className="w-20 h-px bg-[#65AEEA] mx-auto mb-6"></div>
+          <h2 className="text-center text-3xl font-light md:text-4xl mb-12 text-[#65AEEA]">RESTORATIVE PACKAGES</h2>
           
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="bg-[#93C9F9] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
+            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
               <div className="overflow-hidden">
                 <img src={privateImg} alt="Private Yoga Experiences" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="p-6 text-center">
                 <h3 className="text-xl font-light mb-2 text-white">Private Yoga Experiences</h3>
                 <p className="text-white/90 text-sm mb-4">Group, couples or individual yoga sessions for stress relief.</p>
-                <button className="inline-block bg-white text-[#93C9F9] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
+                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
                   BOOK NOW
                 </button>
               </div>
             </div>
 
-            <div className="bg-[#93C9F9] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
+            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
               <div className="overflow-hidden">
                 <img src={soundImg} alt="Yoga & Sound Relaxation" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="p-6 text-center">
                 <h3 className="text-xl font-light mb-2 text-white">Yoga & Sound Relaxation Sessions</h3>
                 <p className="text-white/90 text-sm mb-4">Gentle hatha yoga and sound relaxation packages.</p>
-                <button className="inline-block bg-white text-[#93C9F9] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
+                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
                   BOOK NOW
                 </button>
               </div>
             </div>
 
-            <div className="bg-[#93C9F9] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/contact")}>
+            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/contact")}>
               <div className="overflow-hidden">
                 <img src={groupImg} alt="Design Your Own Experience" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="p-6 text-center">
                 <h3 className="text-xl font-light mb-2 text-white">Design Your Own Experience</h3>
                 <p className="text-white/90 text-sm mb-4">Work with me to create your own session to enhance your experience.</p>
-                <button className="inline-block bg-white text-[#93C9F9] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
+                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
                   ENQUIRE
                 </button>
               </div>
@@ -285,7 +266,7 @@ export default function About() {
       </section>
 
       {/* Testimonial */}
-      <section className="bg-[#93C9F9] py-20 px-6">
+      <section className="py-20 px-6" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-light md:text-4xl mb-8 text-white">Client Gratitude</h2>
           <div className="flex justify-center gap-1 mb-6">
@@ -303,11 +284,11 @@ export default function About() {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
-        <img src={logo} alt="" className="mx-auto h-12 w-auto brightness-0 invert" />
-        <p className="mt-4 text-2xl font-light">Devahiti</p>
-        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
+      <footer className="px-6 py-12 text-center" style={{ backgroundColor: "#65AEEA" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
           © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
         </p>
       </footer>

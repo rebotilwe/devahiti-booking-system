@@ -357,88 +357,120 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== NEW TESTIMONIALS SECTION ========== */}
-      <section className="py-20 px-6 bg-white">
-        <div className="mx-auto max-w-6xl">
-          {/* Section Header */}
-          <div className="text-center mb-12">
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
-              ))}
-            </div>
-            <h2 className="text-3xl md:text-4xl font-light text-gray-800">
-              What Our Clients Say
-            </h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Real stories from real people who have experienced the Devahiti difference
-            </p>
-          </div>
+  {/* ========== TESTIMONIALS SECTION ========== */}
+<section className="py-20 px-6 bg-white">
+  <div className="mx-auto max-w-6xl">
+    {/* Section Header */}
+    <div className="text-center mb-12">
+      <div className="flex justify-center gap-1 mb-4">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
+        ))}
+      </div>
+      <h2 className="text-3xl md:text-4xl font-light text-gray-800">
+        What Our Clients Say
+      </h2>
+      <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
+      <p className="text-gray-500 max-w-2xl mx-auto">
+        Real stories from real people who have experienced the Devahiti difference
+      </p>
+    </div>
 
-          {/* Desktop Grid View */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial, idx) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={idx} />
+    {/* Desktop Grid View - Full Text */}
+    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {testimonials.map((testimonial, idx) => (
+        <div 
+          key={testimonial.id}
+          className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 h-full flex flex-col ${
+            idx === 0 ? "md:col-span-2 lg:col-span-1" : ""
+          }`}
+        >
+          {/* Quote icon */}
+          <div className="mb-4">
+            <Quote className="h-8 w-8 text-[#93C9F9]/30" />
+          </div>
+          
+          {/* Star ratings */}
+          <div className="flex gap-1 mb-4">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
             ))}
           </div>
-
-          {/* Mobile Carousel View */}
-          <div className="md:hidden relative">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
-              >
-                {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                      <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
-                      <div className="flex gap-1 mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
-                        ))}
-                      </div>
-                      <p className="text-gray-600 leading-relaxed mb-5 text-sm">
-                        "{testimonial.text.substring(0, 200)}..."
-                      </p>
-                      <div className="border-t border-gray-100 pt-4">
-                        <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                        <p className="text-xs text-gray-400 mt-1">{testimonial.location}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Carousel Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTestimonial(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Google Rating Badge */}
-          <div className="text-center mt-12">
-            <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
-                ))}
-              </div>
-              <span className="text-xs text-gray-600">5.0 rating · 17+ reviews</span>
+          
+          {/* Testimonial text - FULL TEXT, no truncation */}
+          <p className="text-gray-600 leading-relaxed mb-5 flex-grow">
+            "{testimonial.text}"
+          </p>
+          
+          {/* Client info */}
+          <div className="border-t border-gray-100 pt-4 mt-2">
+            <p className="font-semibold text-gray-800">{testimonial.name}</p>
+            <div className="flex justify-between items-center mt-1">
+              <p className="text-xs text-gray-400">{testimonial.location}</p>
+              <p className="text-xs text-gray-400">{testimonial.date}</p>
             </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* Mobile Carousel View - Full Text */}
+    <div className="md:hidden relative">
+      <div className="overflow-hidden">
+        <div 
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+        >
+          {testimonials.map((testimonial) => (
+            <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+                  ))}
+                </div>
+                {/* FULL TEXT - no substring truncation */}
+                <p className="text-gray-600 leading-relaxed mb-5 text-sm">
+                  "{testimonial.text}"
+                </p>
+                <div className="border-t border-gray-100 pt-4">
+                  <p className="font-semibold text-gray-800">{testimonial.name}</p>
+                  <p className="text-xs text-gray-400 mt-1">{testimonial.location}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Carousel Dots */}
+      <div className="flex justify-center gap-2 mt-6">
+        {testimonials.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveTestimonial(idx)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+
+    {/* Google Rating Badge */}
+    <div className="text-center mt-12">
+      <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
+        <div className="flex gap-0.5">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
+          ))}
+        </div>
+        <span className="text-xs text-gray-600">5.0 rating · 19+ reviews</span>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Subscribe Section */}
       <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
