@@ -133,7 +133,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ========== ABOUT DEVAHITI SECTION - UPDATED ========== */}
+      {/* ========== ABOUT DEVAHITI SECTION ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-10">
@@ -174,7 +174,8 @@ export default function About() {
           <div className="space-y-5 text-gray-700 leading-relaxed">
             <p>Devahiti, or "Divine Order," was created out of a deep desire to integrate a lifetime of traditional yoga practice with ongoing research on body alignment techniques. Drawing from a rich foundation in Yoga, Somatic Psychology, Fascial Release, and Ayurveda, Devahiti facilitates balance, health, and homeostasis across the body-mind complex—both on and off the mat.</p>
             
-            <p>Founded by Cheryl Lancellas, Devahiti is the culmination of her extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, Reiki, and pranic healing. This unique combination of modalities allows Cheryl to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
+            {/* ✅ UPDATED: Added Ena During */}
+            <p>Founded by Cheryl Lancellas and the late Ena During, Devahiti is the culmination of extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, Reiki, and pranic healing. This unique combination of modalities allows us to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
             
             <p>At Devahiti, we believe in the power of scientifically backed intuition—combining ancient wisdom with modern research to achieve lasting transformation.</p>
             
@@ -183,14 +184,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* Discovering Sound Relaxation - Image on right */}
+      {/* ========== DISCOVERING SOUND RELAXATION - REPHRASED ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
               <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Discovering Sound Relaxation</h3>
               <p className="text-gray-700 leading-relaxed">
-                I attended a sound relaxation session and the experience was profoundly moving. I felt tension melt away in ways I had never experienced before, and I knew I had to learn more. I trained in Sound Relaxation and Sound Bath facilitation, learning to work with singing bowls, gongs, and other therapeutic instruments. Combining sound with gentle yoga creates a truly unique and powerful experience that allows deep rest and restoration on every level.
+                My first sound relaxation session was a revelation. The vibrations of the singing bowls seemed to reach places deep within me that words could not access. I left feeling lighter, calmer, and more connected to myself. Compelled to understand this healing modality more deeply, I trained in Sound Relaxation and Sound Bath facilitation, learning to work with singing bowls, gongs, and other therapeutic instruments. Now, I love sharing this powerful practice with others. When combined with gentle, mindful yoga, the experience becomes a truly immersive journey into deep rest and restoration—allowing the body and mind to release what they no longer need to carry.
               </p>
             </div>
             <img src={soundImg} alt="Sound healing" className="w-full rounded-lg shadow-lg object-cover h-80" />
@@ -265,7 +266,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Testimonial */}
+      {/* ========== TESTIMONIAL / CLIENT GRATITUDE - UPDATED ========== */}
       <section className="py-20 px-6" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-light md:text-4xl mb-8 text-white">Client Gratitude</h2>
@@ -276,8 +277,9 @@ export default function About() {
               </svg>
             ))}
           </div>
+          {/* ✅ UPDATED: Changed "smells" to "essential oils" */}
           <p className="text-lg italic leading-relaxed text-white">
-            "I had the AMAZING experience of taking class with Cheryl while staying in Ballito and I can't say enough good things about it! One of Cheryl's strengths is curating a full experience within her classes by using relaxing sounds and smells. After each practice I felt fully relaxed and calm. Cheryl takes great care and keeps everyone safe and protected against injury or strain in her classes while still getting a good stretch in. This is such a refreshing approach and helped me recover from many stressful days. Thanks Cheryl for a great experience!"
+            "I had the AMAZING experience of taking class with Cheryl while staying in Ballito and I can't say enough good things about it! One of Cheryl's strengths is curating a full experience within her classes by using relaxing sounds and essential oils. After each practice I felt fully relaxed and calm. Cheryl takes great care and keeps everyone safe and protected against injury or strain in her classes while still getting a good stretch in. This is such a refreshing approach and helped me recover from many stressful days. Thanks Cheryl for a great experience!"
           </p>
           <p className="mt-6 text-sm uppercase tracking-widest text-white/80">~ Eva Peterson</p>
         </div>

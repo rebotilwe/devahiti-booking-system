@@ -44,7 +44,7 @@ const allServices = [
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
-  { img: trainingImg, title: "Teacher Training", link: "/schedule?service=teacher-training" },
+   { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
   { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
