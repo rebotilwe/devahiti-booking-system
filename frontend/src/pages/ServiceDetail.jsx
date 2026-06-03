@@ -1,10 +1,10 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Users, ArrowRight, Waves, Phone, ShoppingBag, Menu, X } from "lucide-react";
+import { Clock, MapPin, Users, ArrowRight, Waves, Phone, ShoppingBag, Menu, X, Calendar, CheckCircle, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { services } from "../data/services";
 import logo from "../assets/devahiti.png";
-import heroBgImg from "../assets/images/home.jpg"; // ✅ Add this import
+import heroBgImg from "../assets/images/home.jpg";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -16,6 +16,31 @@ const navLinks = [
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+
+// Teacher Training specific data
+const teacherTrainingData = {
+  startDate: "June 13th and 14th, 2026",
+  schedule: "Both Saturday and Sunday: 9:30am - 2:30pm (with 20 min break)",
+  whyChoose: [
+    "New Research – Explore the latest research in anatomy of energy, fascia, pain management, skeletal alignment, and therapeutic practices",
+    "Comprehensive Course Material – Gain an advanced understanding of yoga, from philosophy to functional anatomy, somatic psychology to advanced Ayurveda",
+    "Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique for pain management, fascial release, and skeletal alignment",
+    "Affordable & Accessible – No exams, no large upfront costs. Weekend Module fee of R2,800"
+  ],
+  modules: [
+    { name: "Anatomy of Energy", dates: "June 13th and 14th", description: "The relationship between energy and health, quantum physics, koshas" },
+    { name: "Advanced Anatomy & Physiology", dates: "July 18th and 19th", description: "Functional fitness, digestive health, intermittent fasting, ketosis & autophagy" },
+    { name: "Advanced Fascia Studies", dates: "August 1st and 2nd", description: "The latest research and applications in yoga" },
+    { name: "Yoga & Somatic Psychology", dates: "September 5th and 6th", description: "Intention setting, working within the framework of the Eight Limbs of Yoga, Samkhya" },
+    { name: "Advanced Pranayama and Activational breathing techniques", dates: "October 10th and 11th", description: "Mudras, bandhas, kumbhaka, chakras, mantras & meditation" },
+    { name: "Advanced Philosophy", dates: "November 14th and 15th", description: "Deep dive into yogic philosophy" },
+    { name: "Advanced Ayurveda", dates: "December 5th and 6th, PLUS January 16th", description: "The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy" },
+    { name: "Specialized Training", dates: "February 19th and 20th", description: "Yin, prenatal yoga, yoga for children and special needs groups, and the art of retreating" },
+    { name: "Devahiti Hands-On Bodywork", dates: "March 12th, 13th, 19th and 20th", description: "Learn hands-on techniques to supplement your income (optional extra, in-person only)" },
+    { name: "Trauma Sensitive Yoga", dates: "April 16th and 17th", description: "Specialized training for trauma-informed teaching" }
+  ],
+  requirements: "Expect written assignments after each module. You will be required to do some research and be consistent with your attendance."
+};
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -38,13 +63,14 @@ export default function ServiceDetail() {
   };
 
   const service = services.find((s) => s.slug === slug);
+  const isTeacherTraining = slug === "teacher-training";
 
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl mb-4">Service not found</h1>
-          <Link to="/services" className="text-[#93C9F9] hover:underline">
+          <Link to="/services" className="text-[#65AEEA] hover:underline">
             Back to Services
           </Link>
         </div>
@@ -77,7 +103,7 @@ export default function ServiceDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Navbar - Same as Home page */}
+      {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
@@ -89,7 +115,7 @@ export default function ServiceDetail() {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]"
               >
                 {link.label}
               </Link>
@@ -97,20 +123,19 @@ export default function ServiceDetail() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Call us">
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Call us">
               <Phone className="h-5 w-5" />
             </button>
-            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Book Online">
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Book Online">
               <ShoppingBag className="h-5 w-5" />
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Menu">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Menu">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        {/* Our Services Button - Same as Home page */}
-        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
           <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button
               onClick={() => navigate("/services")}
@@ -129,33 +154,31 @@ export default function ServiceDetail() {
         <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
             <button 
               onClick={() => { navigate("/services"); setMobileOpen(false); }} 
-              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+              className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
             >
               Our Services
             </button>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
         </div>
       )}
 
-      {/* HERO - WITH BACKGROUND IMAGE (Fixed) */}
+      {/* HERO */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
         <img 
           src={service.image || heroBgImg} 
           alt={service.title} 
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Blue Overlay */}
-        <div className="absolute inset-0" style={{ backgroundColor: "#93C9F9", opacity: 0.75 }} />
+        <div className="absolute inset-0" style={{ backgroundColor: "#65AEEA", opacity: 0.85 }} />
         
         <div className="relative z-10 text-center px-4 sm:px-6">
           <motion.div
@@ -179,9 +202,19 @@ export default function ServiceDetail() {
           >
             {service.title}
           </motion.h1>
+          
+          {isTeacherTraining && (
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-4 text-xl text-white/90"
+            >
+              Next Training Starts: {teacherTrainingData.startDate}
+            </motion.p>
+          )}
         </div>
         
-        {/* White curved bottom */}
         <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
           <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
         </svg>
@@ -194,8 +227,8 @@ export default function ServiceDetail() {
           {/* Icon & Description */}
           <div className="text-center mb-12">
             {IconComponent && (
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#93C9F9]/10 mb-6">
-                <IconComponent className="h-10 w-10 text-[#93C9F9]" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#65AEEA]/10 mb-6">
+                <IconComponent className="h-10 w-10 text-[#65AEEA]" />
               </div>
             )}
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -205,51 +238,105 @@ export default function ServiceDetail() {
 
           {/* Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
-              <Clock className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+            <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
+              <Clock className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
               <h3 className="font-heading text-xl text-gray-800 mb-1">Duration</h3>
               <p className="text-gray-500">{service.duration}</p>
             </div>
-            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
-              <MapPin className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+            <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
+              <MapPin className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
               <h3 className="font-heading text-xl text-gray-800 mb-1">Location</h3>
               <p className="text-gray-500">{service.location}</p>
             </div>
-            <div className="bg-[#93C9F9]/10 p-6 rounded-lg text-center">
-              <Users className="h-8 w-8 text-[#93C9F9] mx-auto mb-3" />
+            <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
+              <Users className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
               <h3 className="font-heading text-xl text-gray-800 mb-1">Capacity</h3>
               <p className="text-gray-500">{service.capacity}</p>
             </div>
           </div>
 
+          {/* TEACHER TRAINING SPECIFIC CONTENT */}
+          {isTeacherTraining && (
+            <>
+              {/* Why Choose This Training */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-light md:text-3xl text-[#65AEEA] mb-6 text-center">Why Choose This Training?</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {teacherTrainingData.whyChoose.map((reason, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-4 bg-[#65AEEA]/5 rounded-lg">
+                      <CheckCircle className="h-5 w-5 text-[#65AEEA] mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-600 text-sm">{reason}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Course Modules */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-light md:text-3xl text-[#65AEEA] mb-6 text-center">300 Hour Course Content</h3>
+                <div className="space-y-3">
+                  {teacherTrainingData.modules.map((module, idx) => (
+                    <div key={idx} className="border border-gray-100 rounded-lg p-4 hover:border-[#65AEEA]/30 transition-all">
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        <div>
+                          <h4 className="font-semibold text-gray-800">{module.name}</h4>
+                          <p className="text-sm text-gray-500">{module.description}</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-[#65AEEA] whitespace-nowrap">
+                          <Calendar className="h-4 w-4" />
+                          <span>{module.dates}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Schedule & Requirements */}
+              <div className="mb-12 p-6 bg-[#65AEEA]/5 rounded-xl text-center">
+                <BookOpen className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
+                <p className="text-gray-600">
+                  <strong>Schedule:</strong> {teacherTrainingData.schedule}
+                </p>
+                <p className="text-gray-600 mt-2">
+                  <strong>Requirements:</strong> {teacherTrainingData.requirements}
+                </p>
+              </div>
+            </>
+          )}
+
           {/* Price and CTA */}
-          <div className="bg-gradient-to-r from-[#93C9F9]/10 to-[#65AEEA]/5 p-8 rounded-2xl text-center">
+          <div className="bg-gradient-to-r from-[#65AEEA]/10 to-[#4A9FD9]/5 p-8 rounded-2xl text-center">
             <div className="mb-6">
-              <span className="text-4xl font-heading text-[#93C9F9]">{service.price}</span>
-              <p className="text-sm text-gray-500 mt-1">
-                {service.bookingType === "enquire" ? "Contact for pricing" : "Includes all equipment"}
-              </p>
+              <span className="text-4xl font-heading text-[#65AEEA]">{service.price}</span>
+              {isTeacherTraining && (
+                <p className="text-sm text-gray-500 mt-1">
+                  Weekend Module fee of R2,800 | No large upfront costs
+                </p>
+              )}
             </div>
 
             <button
               onClick={handleBook}
               className="inline-flex items-center gap-3 px-10 py-4 text-white text-sm font-medium uppercase tracking-[0.3em] hover:opacity-90 transition-all rounded-sm"
-              style={{ backgroundColor: "#93C9F9" }}
+              style={{ backgroundColor: "#65AEEA" }}
             >
-              {service.bookingType === "enquire" ? "Enquire Now" : "Book Now"}
+              {service.bookingType === "enquire" ? "Enquire Now" : isTeacherTraining ? "Register Interest" : "Book Now"}
               <ArrowRight className="h-4 w-4" />
             </button>
 
             <p className="text-xs text-gray-500 mt-4">
               {service.bookingType === "enquire"
                 ? "Contact us for more information about this program"
-                : "Select your preferred date and time after booking"}
+                : isTeacherTraining 
+                  ? "Submit your interest and we'll send you the full training brochure"
+                  : "Select your preferred date and time after booking"}
             </p>
           </div>
 
           {/* Back link */}
           <div className="text-center mt-8">
-            <Link to="/services" className="text-[#93C9F9] hover:underline text-sm">
+            <Link to="/services" className="text-[#65AEEA] hover:underline text-sm">
               ← Back to all services
             </Link>
           </div>
@@ -257,7 +344,7 @@ export default function ServiceDetail() {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 text-center" style={{ backgroundColor: "#93C9F9" }}>
+      <footer className="px-6 py-12 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
         <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
         <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
