@@ -257,29 +257,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hero Title Section */}
-      <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
-        <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-light text-white">
-            Private, Group Yoga &amp; Sound Relaxation
-          </h1>
-          <p className="mt-4 text-xl text-white/90">
-            in Studio or in your own accommodation
-          </p>
-          <a 
-            href={BOOKING_URL} 
-            target="_blank" 
-            rel="noreferrer" 
-            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
-          >
-            Booking Menu
-          </a>
-        </div>
-        
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
-      </section>
+    {/* Hero Title Section */}
+<section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
+  <div className="mx-auto max-w-3xl">
+    <h1 className="text-4xl md:text-5xl font-light text-white">
+      Private, Group Yoga &amp; Sound Relaxation
+    </h1>
+    <p className="mt-4 text-xl text-white/90">
+      in Studio or in your own accommodation
+    </p>
+    <Link 
+      to="/services"
+      className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
+    >
+      Booking Menu
+    </Link>
+  </div>
+  
+  <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+  </svg>
+</section>
 
     {/* Hi I'm Cheryl Section */}
 <section className="mx-auto max-w-3xl px-6 py-16 text-center">
@@ -305,24 +303,21 @@ export default function Home() {
       Sessions are for every BODY, beginners are welcome.
     </p>
   </div>
-  
-  <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a 
-      href={BOOKING_URL} 
-      target="_blank" 
-      rel="noreferrer" 
-      className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-      style={{ backgroundColor: "#93C9F9" }}
-    >
-      BOOKING MENU
-    </a>
-    <Link 
-      to="/about" 
-      className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-    >
-      MORE ABOUT CHERYL
-    </Link>
-  </div>
+ <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+  <Link 
+    to="/services"
+    className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+    style={{ backgroundColor: "#93C9F9" }}
+  >
+    BOOKING MENU
+  </Link>
+  <Link 
+    to="/about" 
+    className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+  >
+    MORE ABOUT CHERYL
+  </Link>
+</div>
   
   <p className="mt-10 text-sm italic text-gray-500">
     *Serving North Coast • Ballito • Salt Rock • Sheffield • Surrounding Area*
