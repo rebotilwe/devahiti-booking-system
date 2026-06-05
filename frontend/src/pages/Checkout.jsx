@@ -13,6 +13,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { booking } = location.state || {};
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(""); // Track which step we're on
   
   // Coupon state
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -40,7 +41,6 @@ export default function Checkout() {
     return `${displayHour}:${minute} ${ampm}`;
   };
 
-  // Calculate discount when coupon is applied
   const handleApplyCoupon = (coupon) => {
     let discountAmount = 0;
     
@@ -63,6 +63,7 @@ export default function Checkout() {
 
   const handlePayment = async () => {
     setLoading(true);
+    setLoadingStep("Creating your booking...");
 
     try {
       // Step 1: Create the booking in database
@@ -90,6 +91,8 @@ export default function Checkout() {
       console.log("Booking result:", bookingResult);
       
       if (bookingResult.bookingId) {
+        setLoadingStep("Preparing secure payment...");
+        
         // Step 2: Create Yoco checkout session and get redirect URL
         const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
           method: 'POST',
@@ -111,8 +114,11 @@ export default function Checkout() {
         console.log("Checkout response:", checkoutData);
         
         if (checkoutData.redirectUrl) {
-          // ✅ Redirect to Yoco's hosted payment page
-          window.location.href = checkoutData.redirectUrl;
+          setLoadingStep("Redirecting to payment page...");
+          // Small delay to show the message before redirect
+          setTimeout(() => {
+            window.location.href = checkoutData.redirectUrl;
+          }, 500);
         } else {
           throw new Error("No redirectUrl from Yoco");
         }
@@ -121,6 +127,7 @@ export default function Checkout() {
       console.error("Payment error:", err);
       alert("Something went wrong. Please try again. Error: " + err.message);
       setLoading(false);
+      setLoadingStep("");
     }
   };
 
@@ -271,7 +278,7 @@ export default function Checkout() {
                 {loading ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Processing...
+                    <span className="text-sm">{loadingStep || "Processing..."}</span>
                   </>
                 ) : (
                   <>
