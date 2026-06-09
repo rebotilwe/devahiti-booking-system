@@ -6,20 +6,28 @@ import heroBgImg from "../assets/images/home.jpg";
 import soundImg from "../assets/images/img11.jpg";
 import logo from "../assets/logo1.png";
 
+// ✅ UPDATED NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Events", path: "/events" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
+  { label: "Class Schedule", path: "/schedule" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
   { label: "Gift Card", path: "/gift-card" },
 ];
 
 const subNav = [
-  { label: "Private Group Packages", path: "/services/private-sessions" },
-  { label: "Sound Bowl Massage", path: "/services/sound-massage" },
-  { label: "Bowen Therapy", path: "/services/bowen-therapy" },
-  { label: "Weekly Yoga", path: "/services/group-class" },
+  { label: "Group Class", path: "/services/group-class" },
+  { label: "Private Sessions", path: "/services/private-sessions" },
+  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
+  { label: "Sound Journey", path: "/services/sound-journey" },
+  { label: "Sound Massage", path: "/services/sound-massage" },
+  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Teacher Training", path: "/services/teacher-training" },
+  { label: "Educational Workshops", path: "/services/educational-workshops" },
+  { label: "Retreats", path: "/services/retreats" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";

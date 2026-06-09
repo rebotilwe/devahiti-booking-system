@@ -6,10 +6,13 @@ import { services } from "../data/services";
 import logo from "../assets/devahiti.png";
 import heroBgImg from "../assets/images/home.jpg";
 
+// ✅ UPDATED NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Events", path: "/events" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
+  { label: "Class Schedule", path: "/schedule" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
   { label: "Gift Card", path: "/gift-card" },
@@ -17,29 +20,31 @@ const navLinks = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// Teacher Training specific data
+// ✅ UPDATED TEACHER TRAINING DATA (from client's website)
 const teacherTrainingData = {
-  startDate: "June 13th and 14th, 2026",
-  schedule: "Both Saturday and Sunday: 9:30am - 2:30pm (with 20 min break)",
+  startDate: "May 2026",
+  schedule: "One full weekend per month | Saturdays & Sundays 9:30am - 2:30pm",
+  duration: "12 months | 11 Modules",
+  investment: "R2,800 per month (for 12 months)",
+  maxStudents: "Maximum 10 participants",
   whyChoose: [
-    "New Research – Explore the latest research in anatomy of energy, fascia, pain management, skeletal alignment, and therapeutic practices",
-    "Comprehensive Course Material – Gain an advanced understanding of yoga, from philosophy to functional anatomy, somatic psychology to advanced Ayurveda",
+    "New Research – Explore the latest research in fascia, pain management, skeletal alignment, and therapeutic practices",
+    "Comprehensive Course Material – Gain an advanced understanding of yoga, from philosophy to functional anatomy, somatic psychology to Ayurveda",
     "Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique for pain management, fascial release, and skeletal alignment",
-    "Affordable & Accessible – No exams, no large upfront costs. Weekend Module fee of R2,800"
+    "Affordable & Accessible – No exams, no large upfront costs. Monthly workshop fee of R2,800 for 12 months"
   ],
   modules: [
-    { name: "Anatomy of Energy", dates: "June 13th and 14th", description: "The relationship between energy and health, quantum physics, koshas" },
-    { name: "Advanced Anatomy & Physiology", dates: "July 18th and 19th", description: "Functional fitness, digestive health, intermittent fasting, ketosis & autophagy" },
-    { name: "Advanced Fascia Studies", dates: "August 1st and 2nd", description: "The latest research and applications in yoga" },
-    { name: "Yoga & Somatic Psychology", dates: "September 5th and 6th", description: "Intention setting, working within the framework of the Eight Limbs of Yoga, Samkhya" },
-    { name: "Advanced Pranayama and Activational breathing techniques", dates: "October 10th and 11th", description: "Mudras, bandhas, kumbhaka, chakras, mantras & meditation" },
-    { name: "Advanced Philosophy", dates: "November 14th and 15th", description: "Deep dive into yogic philosophy" },
-    { name: "Advanced Ayurveda", dates: "December 5th and 6th, PLUS January 16th", description: "The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy" },
-    { name: "Specialized Training", dates: "February 19th and 20th", description: "Yin, prenatal yoga, yoga for children and special needs groups, and the art of retreating" },
-    { name: "Devahiti Hands-On Bodywork", dates: "March 12th, 13th, 19th and 20th", description: "Learn hands-on techniques to supplement your income (optional extra, in-person only)" },
-    { name: "Trauma Sensitive Yoga", dates: "April 16th and 17th", description: "Specialized training for trauma-informed teaching" }
+    { name: "Anatomy of Energy", description: "The relationship between energy and health, quantum physics, koshas" },
+    { name: "Yoga & Somatic Psychology", description: "Intention setting, working within the framework of the Eight Limbs of Yoga, Samkhya" },
+    { name: "Advanced Anatomy & Physiology", description: "Functional fitness, digestive health, intermittent fasting, ketosis & autophagy" },
+    { name: "Advanced Fascia Studies", description: "The latest research and applications in yoga" },
+    { name: "Advanced Pranayama and Activational breathing techniques", description: "Mudras, bandhas, kumbhaka, chakras, mantras & meditation" },
+    { name: "Advanced Ayurveda", description: "The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy" },
+    { name: "Specialized Training", description: "Yin, prenatal yoga, yoga for children and special needs groups" },
+    { name: "The art of retreating", description: "Learn how to plan and host transformative retreats" },
+    { name: "Devahiti Hands-On Bodywork", description: "Learn hands-on techniques to supplement your income" }
   ],
-  requirements: "Expect written assignments after each module. You will be required to do some research and be consistent with your attendance."
+  requirements: "Valid 200-hour yoga teacher training certification required. All workshops need to be attended for certification and all assignments must be completed within the allocated time."
 };
 
 export default function ServiceDetail() {
@@ -241,7 +246,7 @@ export default function ServiceDetail() {
             <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
               <Clock className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
               <h3 className="font-heading text-xl text-gray-800 mb-1">Duration</h3>
-              <p className="text-gray-500">{service.duration}</p>
+              <p className="text-gray-500">{isTeacherTraining ? teacherTrainingData.duration : service.duration}</p>
             </div>
             <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
               <MapPin className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
@@ -251,7 +256,7 @@ export default function ServiceDetail() {
             <div className="bg-[#65AEEA]/10 p-6 rounded-lg text-center">
               <Users className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
               <h3 className="font-heading text-xl text-gray-800 mb-1">Capacity</h3>
-              <p className="text-gray-500">{service.capacity}</p>
+              <p className="text-gray-500">{isTeacherTraining ? teacherTrainingData.maxStudents : service.capacity}</p>
             </div>
           </div>
 
@@ -282,23 +287,26 @@ export default function ServiceDetail() {
                           <h4 className="font-semibold text-gray-800">{module.name}</h4>
                           <p className="text-sm text-gray-500">{module.description}</p>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-[#65AEEA] whitespace-nowrap">
-                          <Calendar className="h-4 w-4" />
-                          <span>{module.dates}</span>
-                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Schedule & Requirements */}
-              <div className="mb-12 p-6 bg-[#65AEEA]/5 rounded-xl text-center">
+              {/* Training Details */}
+              <div className="mb-12 grid md:grid-cols-2 gap-4">
+                <div className="p-4 bg-[#65AEEA]/5 rounded-lg text-center">
+                  <p className="text-gray-600"><strong>Schedule:</strong> {teacherTrainingData.schedule}</p>
+                </div>
+                <div className="p-4 bg-[#65AEEA]/5 rounded-lg text-center">
+                  <p className="text-gray-600"><strong>Investment:</strong> {teacherTrainingData.investment}</p>
+                </div>
+              </div>
+
+              {/* Requirements */}
+              <div className="mb-12 p-6 bg-[#65AEEA]/5 rounded-xl">
                 <BookOpen className="h-8 w-8 text-[#65AEEA] mx-auto mb-3" />
-                <p className="text-gray-600">
-                  <strong>Schedule:</strong> {teacherTrainingData.schedule}
-                </p>
-                <p className="text-gray-600 mt-2">
+                <p className="text-gray-600 text-center">
                   <strong>Requirements:</strong> {teacherTrainingData.requirements}
                 </p>
               </div>
@@ -311,7 +319,7 @@ export default function ServiceDetail() {
               <span className="text-4xl font-heading text-[#65AEEA]">{service.price}</span>
               {isTeacherTraining && (
                 <p className="text-sm text-gray-500 mt-1">
-                  Weekend Module fee of R2,800 | No large upfront costs
+                  {teacherTrainingData.investment} | No large upfront costs
                 </p>
               )}
             </div>

@@ -15,10 +15,13 @@ import retreatsImg from "../assets/images/img11.jpg";
 import fasciaReleaseImg from "../assets/images/img11.jpg";
 import logo from "../assets/devahiti.png";
 
+// ✅ UPDATED NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Events", path: "/events" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
+  { label: "Class Schedule", path: "/schedule" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
   { label: "Gift Card", path: "/gift-card" },
@@ -31,7 +34,7 @@ const subNav = [
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
   { label: "Fascia Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/schedule?service=teacher-training" },
+  { label: "Teacher Training", path: "/services/teacher-training" },
   { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
@@ -44,7 +47,7 @@ const allServices = [
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
-   { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
+  { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
   { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
@@ -113,28 +116,21 @@ function ServiceCard({ img, title, link, navigate }) {
 function TestimonialCard({ testimonial, index }) {
   return (
     <div 
-      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 ${
+      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 h-full flex flex-col ${
         index === 0 ? "md:col-span-2 lg:col-span-1" : ""
       }`}
     >
-      {/* Quote icon */}
       <div className="mb-4">
         <Quote className="h-8 w-8 text-[#93C9F9]/30" />
       </div>
-      
-      {/* Star ratings */}
       <div className="flex gap-1 mb-4">
         {[...Array(testimonial.rating)].map((_, i) => (
           <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
         ))}
       </div>
-      
-      {/* Testimonial text */}
-      <p className="text-gray-600 leading-relaxed mb-5 line-clamp-4">
+      <p className="text-gray-600 leading-relaxed mb-5 flex-grow">
         "{testimonial.text}"
       </p>
-      
-      {/* Client info */}
       <div className="border-t border-gray-100 pt-4 mt-2">
         <p className="font-semibold text-gray-800">{testimonial.name}</p>
         <div className="flex justify-between items-center mt-1">
@@ -159,7 +155,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Auto-rotate testimonials every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -172,7 +167,7 @@ export default function Home() {
   };
 
   const handleShoppingBagClick = () => {
-    window.open(BOOKING_URL, "_blank");
+    navigate("/services"); // ✅ CHANGED: Now goes to Services page instead of external booking URL
   };
 
   return (
@@ -239,7 +234,7 @@ export default function Home() {
             >
               Our Services
             </button>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -257,78 +252,97 @@ export default function Home() {
         </div>
       </section>
 
-    {/* Hero Title Section */}
-<section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
-  <div className="mx-auto max-w-3xl">
-    <h1 className="text-4xl md:text-5xl font-light text-white">
-      Private, Group Yoga &amp; Sound Relaxation
-    </h1>
-    <p className="mt-4 text-xl text-white/90">
-      in Studio or in your own accommodation
-    </p>
-    <Link 
-      to="/services"
-      className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
-    >
-      Booking Menu
-    </Link>
-  </div>
-  
-  <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-  </svg>
-</section>
+      {/* Hero Title Section */}
+      <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl md:text-5xl font-light text-white">
+            Private, Group Yoga &amp; Sound Relaxation
+          </h1>
+          <p className="mt-4 text-xl text-white/90">
+            Your space or ours
+          </p>
+          <Link 
+            to="/services"
+            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
+          >
+            Booking Menu
+          </Link>
+        </div>
+        
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
 
-    {/* Hi I'm Cheryl Section */}
-<section className="mx-auto max-w-3xl px-6 py-16 text-center">
-  <img 
-    src={cherylPortraitImg} 
-    alt="Portrait of Cheryl" 
-    className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" 
-    loading="lazy" 
-  />
-  <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
-  <p className="mt-6 text-base leading-relaxed text-gray-600">
-    I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
-  </p>
-  <p className="mt-4 text-base leading-relaxed text-gray-600">
-    I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
-  </p>
-  
-  <div className="mt-10">
-    <p className="text-base leading-relaxed text-gray-600">
-      Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath – leaving you feeling relaxed and rejuvenated.
-    </p>
-    <p className="mt-4 text-base leading-relaxed text-gray-600">
-      Sessions are for every BODY, beginners are welcome.
-    </p>
-  </div>
- <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-  <Link 
-    to="/services"
-    className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-    style={{ backgroundColor: "#93C9F9" }}
-  >
-    BOOKING MENU
-  </Link>
-  <Link 
-    to="/about" 
-    className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
-  >
-    MORE ABOUT CHERYL
-  </Link>
-</div>
-  
-  <p className="mt-10 text-sm italic text-gray-500">
-    *Serving North Coast • Ballito • Salt Rock • Sheffield • Surrounding Area*
-  </p>
-</section>
+      {/* Hi I'm Cheryl Section */}
+      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
+        <img 
+          src={cherylPortraitImg} 
+          alt="Portrait of Cheryl" 
+          className="mx-auto h-40 w-40 rounded-full object-cover shadow-lg" 
+          loading="lazy" 
+        />
+        <h2 className="mt-8 text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
+        <p className="mt-6 text-base leading-relaxed text-gray-600">
+          I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+        </p>
+        <p className="mt-4 text-base leading-relaxed text-gray-600">
+          I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
+        </p>
+        
+        <div className="mt-10">
+          <p className="text-base leading-relaxed text-gray-600">
+            Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath – leaving you feeling relaxed and rejuvenated.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-gray-600">
+            Sessions are for every BODY, beginners are welcome.
+          </p>
+        </div>
+        
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link 
+            to="/services"
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            BOOKING MENU
+          </Link>
+          <Link 
+            to="/about" 
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+          >
+            MORE ABOUT CHERYL
+          </Link>
+        </div>
+        
+        <p className="mt-10 text-sm italic text-gray-500">
+          *Serving North Coast • Ballito • Salt Rock • Sheffield • Surrounding Area*
+        </p>
+      </section>
+
+      {/* Our Services CTA Section */}
+      <section className="py-16 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Services</h2>
+          <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-6"></div>
+          <p className="text-gray-600 mb-8">
+            Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training — find the practice that speaks to you.
+          </p>
+          <Link 
+            to="/services"
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-all hover:scale-105"
+            style={{ backgroundColor: "#93C9F9" }}
+          >
+            View All Services
+          </Link>
+        </div>
+      </section>
 
       {/* Services Grid Section */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Services</h2>
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Offerings</h2>
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
           </div>
 
@@ -352,120 +366,83 @@ export default function Home() {
         </div>
       </section>
 
-  {/* ========== TESTIMONIALS SECTION ========== */}
-<section className="py-20 px-6 bg-white">
-  <div className="mx-auto max-w-6xl">
-    {/* Section Header */}
-    <div className="text-center mb-12">
-      <div className="flex justify-center gap-1 mb-4">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
-        ))}
-      </div>
-      <h2 className="text-3xl md:text-4xl font-light text-gray-800">
-        What Our Clients Say
-      </h2>
-      <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
-      <p className="text-gray-500 max-w-2xl mx-auto">
-        Real stories from real people who have experienced the Devahiti difference
-      </p>
-    </div>
-
-    {/* Desktop Grid View - Full Text */}
-    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {testimonials.map((testimonial, idx) => (
-        <div 
-          key={testimonial.id}
-          className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 h-full flex flex-col ${
-            idx === 0 ? "md:col-span-2 lg:col-span-1" : ""
-          }`}
-        >
-          {/* Quote icon */}
-          <div className="mb-4">
-            <Quote className="h-8 w-8 text-[#93C9F9]/30" />
+      {/* Testimonials Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <div className="flex justify-center gap-1 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
+              ))}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-light text-gray-800">
+              What Our Clients Say
+            </h2>
+            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              Real stories from real people who have experienced the Devahiti difference
+            </p>
           </div>
-          
-          {/* Star ratings */}
-          <div className="flex gap-1 mb-4">
-            {[...Array(testimonial.rating)].map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((testimonial, idx) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={idx} />
             ))}
           </div>
-          
-          {/* Testimonial text - FULL TEXT, no truncation */}
-          <p className="text-gray-600 leading-relaxed mb-5 flex-grow">
-            "{testimonial.text}"
-          </p>
-          
-          {/* Client info */}
-          <div className="border-t border-gray-100 pt-4 mt-2">
-            <p className="font-semibold text-gray-800">{testimonial.name}</p>
-            <div className="flex justify-between items-center mt-1">
-              <p className="text-xs text-gray-400">{testimonial.location}</p>
-              <p className="text-xs text-gray-400">{testimonial.date}</p>
+
+          <div className="md:hidden relative">
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+              >
+                {testimonials.map((testimonial) => (
+                  <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
+                    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                      <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 leading-relaxed mb-5 text-sm">
+                        "{testimonial.text}"
+                      </p>
+                      <div className="border-t border-gray-100 pt-4">
+                        <p className="font-semibold text-gray-800">{testimonial.name}</p>
+                        <p className="text-xs text-gray-400 mt-1">{testimonial.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="flex justify-center gap-2 mt-6">
+              {testimonials.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveTestimonial(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
+                ))}
+              </div>
+              <span className="text-xs text-gray-600">5.0 rating · 19+ reviews</span>
             </div>
           </div>
         </div>
-      ))}
-    </div>
-
-    {/* Mobile Carousel View - Full Text */}
-    <div className="md:hidden relative">
-      <div className="overflow-hidden">
-        <div 
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
-        >
-          {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
-                  ))}
-                </div>
-                {/* FULL TEXT - no substring truncation */}
-                <p className="text-gray-600 leading-relaxed mb-5 text-sm">
-                  "{testimonial.text}"
-                </p>
-                <div className="border-t border-gray-100 pt-4">
-                  <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                  <p className="text-xs text-gray-400 mt-1">{testimonial.location}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Carousel Dots */}
-      <div className="flex justify-center gap-2 mt-6">
-        {testimonials.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveTestimonial(idx)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-
-    {/* Google Rating Badge */}
-    <div className="text-center mt-12">
-      <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
-        <div className="flex gap-0.5">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
-          ))}
-        </div>
-        <span className="text-xs text-gray-600">5.0 rating · 19+ reviews</span>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Subscribe Section */}
       <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
@@ -487,16 +464,15 @@ export default function Home() {
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
 
-  {/* Footer - Fixed logo visibility */}
-<footer className="px-6 py-12 text-center" style={{ backgroundColor: "#93C9F9" }}>
-  {/* Removed brightness-0 invert so logo appears normal */}
-  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-  </p>
-</footer>
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center" style={{ backgroundColor: "#93C9F9" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+      </footer>
     </div>
   );
 }

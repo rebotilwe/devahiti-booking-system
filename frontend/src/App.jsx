@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
-import ServiceDetail from './pages/ServiceDetail'  // ✅ ADD THIS IMPORT
+import ServiceDetail from './pages/ServiceDetail'
 import Events from './pages/Events'
 import Booking from './pages/Booking'
 import Contact from './pages/Contact'
@@ -22,6 +22,10 @@ import Blog from './pages/Blog';
 import GiftCard from './pages/GiftCard';
 import ScrollToTop from "./components/ScrollToTop";
 
+// ✅ IMPORT NEW PAGES
+import TeacherTraining from './pages/TeacherTraining';
+import Retreats from './pages/Retreats';
+
 function App() {
   return (
     <BrowserRouter>
@@ -33,16 +37,22 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<ServiceDetail />} />  {/* ✅ ADD THIS ROUTE */}
+            <Route path="/services/:slug" element={<ServiceDetail />} />
+            
+            {/* ✅ NEW ROUTES - Split from Events */}
+            <Route path="/teacher-training" element={<TeacherTraining />} />
+            <Route path="/retreats" element={<Retreats />} />
+            
+            {/* Old events route - can keep or remove */}
             <Route path="/events" element={<Events />} />
+            
             <Route path="/booking" element={<Booking />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/blog" element={<Blog />} />
-<Route path="/gift-card" element={<GiftCard />} />
-
+            <Route path="/gift-card" element={<GiftCard />} />
 
             {/* Booking System Routes */}
             <Route path="/schedule" element={<Schedule />} />

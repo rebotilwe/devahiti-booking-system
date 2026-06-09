@@ -8,10 +8,13 @@ import soundImg from "../assets/images/img11.jpg";
 import groupImg from "../assets/images/group.jpg";
 import logo from "../assets/devahiti.png";
 
+// ✅ UPDATED NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Events", path: "/events" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
+  { label: "Class Schedule", path: "/schedule" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
   { label: "Gift Card", path: "/gift-card" },
@@ -24,11 +27,10 @@ const subNav = [
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
   { label: "Fascia Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/schedule?service=teacher-training" },
+  { label: "Teacher Training", path: "/services/teacher-training" },
   { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
-
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 export default function About() {
@@ -47,7 +49,7 @@ export default function About() {
   };
 
   const handleShoppingBagClick = () => {
-    window.open(BOOKING_URL, "_blank");
+    navigate("/services"); // ✅ CHANGED: Now goes to Services page
   };
 
   return (
@@ -114,7 +116,7 @@ export default function About() {
             >
               Our Services
             </button>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -156,9 +158,12 @@ export default function About() {
           </div>
           
           <div className="text-center mt-8">
-            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
+            <Link 
+              to="/services"
+              className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+            >
               Book Now
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -174,7 +179,6 @@ export default function About() {
           <div className="space-y-5 text-gray-700 leading-relaxed">
             <p>Devahiti, or "Divine Order," was created out of a deep desire to integrate a lifetime of traditional yoga practice with ongoing research on body alignment techniques. Drawing from a rich foundation in Yoga, Somatic Psychology, Fascial Release, and Ayurveda, Devahiti facilitates balance, health, and homeostasis across the body-mind complex—both on and off the mat.</p>
             
-            {/* ✅ UPDATED: Added Ena During */}
             <p>Founded by Cheryl Lancellas and the late Ena During, Devahiti is the culmination of extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, Reiki, and pranic healing. This unique combination of modalities allows us to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
             
             <p>At Devahiti, we believe in the power of scientifically backed intuition—combining ancient wisdom with modern research to achieve lasting transformation.</p>
@@ -184,7 +188,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ========== DISCOVERING SOUND RELAXATION - REPHRASED ========== */}
+      {/* ========== DISCOVERING SOUND RELAXATION ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
@@ -199,7 +203,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Finding Restorative Bodywork - Image on left */}
+      {/* Finding Restorative Bodywork */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
@@ -224,7 +228,7 @@ export default function About() {
           <h2 className="text-center text-3xl font-light md:text-4xl mb-12 text-[#65AEEA]">RESTORATIVE PACKAGES</h2>
           
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
+            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/services")}>
               <div className="overflow-hidden">
                 <img src={privateImg} alt="Private Yoga Experiences" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
@@ -237,7 +241,7 @@ export default function About() {
               </div>
             </div>
 
-            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => window.open(BOOKING_URL, "_blank")}>
+            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/services")}>
               <div className="overflow-hidden">
                 <img src={soundImg} alt="Yoga & Sound Relaxation" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
@@ -266,7 +270,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ========== TESTIMONIAL / CLIENT GRATITUDE - UPDATED ========== */}
+      {/* Testimonial / Client Gratitude */}
       <section className="py-20 px-6" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-light md:text-4xl mb-8 text-white">Client Gratitude</h2>
@@ -277,7 +281,6 @@ export default function About() {
               </svg>
             ))}
           </div>
-          {/* ✅ UPDATED: Changed "smells" to "essential oils" */}
           <p className="text-lg italic leading-relaxed text-white">
             "I had the AMAZING experience of taking class with Cheryl while staying in Ballito and I can't say enough good things about it! One of Cheryl's strengths is curating a full experience within her classes by using relaxing sounds and essential oils. After each practice I felt fully relaxed and calm. Cheryl takes great care and keeps everyone safe and protected against injury or strain in her classes while still getting a good stretch in. This is such a refreshing approach and helped me recover from many stressful days. Thanks Cheryl for a great experience!"
           </p>
