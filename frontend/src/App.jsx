@@ -21,7 +21,8 @@ import AdminLogin from './pages/AdminLogin';
 import Blog from './pages/Blog';
 import GiftCard from './pages/GiftCard';
 import ScrollToTop from "./components/ScrollToTop";
-
+import ClassSchedule from './pages/ClassSchedule';
+import BlogPost from './pages/BlogPost';  // ✅ NEW: Individual blog post component
 // ✅ IMPORT NEW PAGES
 import TeacherTraining from './pages/TeacherTraining';
 import Retreats from './pages/Retreats';
@@ -42,6 +43,7 @@ function App() {
             {/* ✅ NEW ROUTES - Split from Events */}
             <Route path="/teacher-training" element={<TeacherTraining />} />
             <Route path="/retreats" element={<Retreats />} />
+            <Route path="/class-schedule" element={<ClassSchedule />} />
             
             {/* Old events route - can keep or remove */}
             <Route path="/events" element={<Events />} />
@@ -52,6 +54,7 @@ function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} /> {/* ✅ NEW: Individual blog post route */}
             <Route path="/gift-card" element={<GiftCard />} />
 
             {/* Booking System Routes */}

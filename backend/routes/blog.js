@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const result = await db.query(
-      'SELECT * FROM blog_posts ORDER BY created_at DESC'
+      'SELECT id, title, slug, excerpt, category, image_url, read_time, created_at FROM blog_posts ORDER BY created_at DESC'
     );
     res.json(result.rows);
   } catch (error) {
@@ -42,17 +42,26 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Title, content, and slug are required' });
   }
 
+  // Truncate image_url if it's too long (for base64, you need TEXT column)
+  // or just pass it as is after altering column to TEXT
+  let finalImageUrl = image_url || '';
+  
+  // If image_url is base64 and extremely long, warn but still save
+  if (finalImageUrl.length > 1000000) {
+    console.warn(`Large image detected: ${Math.round(finalImageUrl.length / 1024)}KB`);
+  }
+
   try {
     const result = await db.query(
       `INSERT INTO blog_posts (title, excerpt, content, category, image_url, slug, read_time, status, created_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
        RETURNING *`,
-      [title, excerpt || '', content, category || 'General', image_url || '', slug, read_time || '5 min read', 'published']
+      [title, excerpt || '', content, category || 'General', finalImageUrl, slug, read_time || '5 min read', 'published']
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating blog post:', error);
-    res.status(500).json({ error: 'Failed to create blog post' });
+    res.status(500).json({ error: 'Failed to create blog post: ' + error.message });
   }
 });
 
@@ -76,7 +85,7 @@ router.put('/:id', async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error updating blog post:', error);
-    res.status(500).json({ error: 'Failed to update blog post' });
+    res.status(500).json({ error: 'Failed to update blog post: ' + error.message });
   }
 });
 

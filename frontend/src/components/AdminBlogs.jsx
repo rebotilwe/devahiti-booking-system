@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Pencil, Trash2, Plus, X, Eye } from "lucide-react";
+import { Pencil, Trash2, Plus, X, Eye, Upload } from "lucide-react";
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
@@ -8,6 +8,9 @@ export default function AdminBlogs() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -47,14 +50,91 @@ export default function AdminBlogs() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     
-    // Auto-generate slug from title
     if (name === "title") {
       setFormData((prev) => ({ ...prev, slug: generateSlug(value) }));
     }
   };
 
+  // Compress image function
+  const compressImage = (file, maxWidth = 800, quality = 0.7) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve(compressedDataUrl);
+        };
+        img.onerror = reject;
+      };
+      reader.onerror = reject;
+    });
+  };
+
+  // Handle image file selection with compression
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // Check file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image size should be less than 5MB");
+      return;
+    }
+    
+    // Check file type
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file");
+      return;
+    }
+    
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+    setUploadingImage(true);
+    
+    try {
+      // Compress image before converting to base64
+      const compressedImage = await compressImage(file, 800, 0.7);
+      setFormData(prev => ({ ...prev, image_url: compressedImage }));
+      console.log("Image compressed and ready to save");
+    } catch (error) {
+      console.error("Error compressing image:", error);
+      alert("Failed to process image");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  // Clear selected image
+  const clearImage = () => {
+    setImageFile(null);
+    setImagePreview("");
+    setFormData(prev => ({ ...prev, image_url: "" }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.title || !formData.content || !formData.slug) {
+      alert("Please fill in all required fields (Title, Content, Slug)");
+      return;
+    }
     
     try {
       const url = editingPost 
@@ -73,6 +153,8 @@ export default function AdminBlogs() {
         fetchPosts();
         setShowForm(false);
         setEditingPost(null);
+        setImageFile(null);
+        setImagePreview("");
         setFormData({
           title: "",
           slug: "",
@@ -84,11 +166,12 @@ export default function AdminBlogs() {
         });
         alert(editingPost ? "Post updated!" : "Post created!");
       } else {
-        alert("Failed to save post");
+        const error = await response.json();
+        alert(`Failed to save post: ${error.error || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error saving post:", error);
-      alert("Error saving post");
+      alert("Error saving post. Please try again.");
     }
   };
 
@@ -103,18 +186,24 @@ export default function AdminBlogs() {
       image_url: post.image_url || "",
       read_time: post.read_time || "5 min read",
     });
+    if (post.image_url && post.image_url.startsWith("data:image")) {
+      setImagePreview(post.image_url);
+    } else {
+      setImagePreview("");
+    }
+    setImageFile(null);
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this blog post?")) {
+    if (window.confirm("Are you sure you want to delete this blog post? This action cannot be undone.")) {
       try {
         const response = await fetch(`${API_URL}/blog/${id}`, {
           method: "DELETE",
         });
         if (response.ok) {
           fetchPosts();
-          alert("Post deleted");
+          alert("Post deleted successfully");
         } else {
           alert("Failed to delete post");
         }
@@ -138,6 +227,8 @@ export default function AdminBlogs() {
         <button
           onClick={() => {
             setEditingPost(null);
+            setImageFile(null);
+            setImagePreview("");
             setFormData({
               title: "",
               slug: "",
@@ -172,6 +263,7 @@ export default function AdminBlogs() {
             </div>
             
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {/* Title */}
               <div>
                 <label className="block text-sm font-medium mb-1">Title *</label>
                 <input
@@ -184,6 +276,7 @@ export default function AdminBlogs() {
                 />
               </div>
               
+              {/* Slug */}
               <div>
                 <label className="block text-sm font-medium mb-1">Slug *</label>
                 <input
@@ -197,6 +290,7 @@ export default function AdminBlogs() {
                 <p className="text-xs text-gray-500 mt-1">URL-friendly identifier (auto-generated from title)</p>
               </div>
               
+              {/* Category */}
               <div>
                 <label className="block text-sm font-medium mb-1">Category</label>
                 <select
@@ -215,6 +309,7 @@ export default function AdminBlogs() {
                 </select>
               </div>
               
+              {/* Excerpt */}
               <div>
                 <label className="block text-sm font-medium mb-1">Excerpt (Short Description)</label>
                 <textarea
@@ -223,9 +318,77 @@ export default function AdminBlogs() {
                   onChange={handleInputChange}
                   rows={2}
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#65AEEA]"
+                  placeholder="A brief summary of the post..."
                 />
               </div>
               
+              {/* Image Upload */}
+              <div>
+                <label className="block text-sm font-medium mb-1">Featured Image</label>
+                <div className="mt-1 flex items-center gap-4">
+                  <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition ${imagePreview ? 'border-[#65AEEA] bg-[#65AEEA]/5' : 'border-gray-300'}`}>
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      {uploadingImage ? (
+                        <div className="w-8 h-8 border-2 border-[#65AEEA] border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                          <p className="text-xs text-gray-500">Click to upload image</p>
+                          <p className="text-xs text-gray-400">PNG, JPG, GIF up to 5MB</p>
+                          <p className="text-xs text-green-600 mt-1">Image will be compressed automatically</p>
+                        </>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  {imagePreview && (
+                    <div className="relative">
+                      <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover rounded-lg border" />
+                      <button
+                        type="button"
+                        onClick={clearImage}
+                        className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* Image URL (alternative) */}
+              <div>
+                <label className="block text-sm font-medium mb-1">Image URL (alternative)</label>
+                <input
+                  type="text"
+                  name="image_url"
+                  value={formData.image_url}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#65AEEA]"
+                  placeholder="https://example.com/image.jpg"
+                />
+                <p className="text-xs text-gray-500 mt-1">Use a URL instead of uploading (optional)</p>
+              </div>
+              
+              {/* Read Time */}
+              <div>
+                <label className="block text-sm font-medium mb-1">Read Time</label>
+                <input
+                  type="text"
+                  name="read_time"
+                  value={formData.read_time}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#65AEEA]"
+                  placeholder="5 min read"
+                />
+              </div>
+              
+              {/* Content */}
               <div>
                 <label className="block text-sm font-medium mb-1">Content (HTML) *</label>
                 <textarea
@@ -240,35 +403,12 @@ export default function AdminBlogs() {
                 <p className="text-xs text-gray-500 mt-1">HTML formatting allowed (e.g., &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;h3&gt;)</p>
               </div>
               
-              <div>
-                <label className="block text-sm font-medium mb-1">Image URL</label>
-                <input
-                  type="text"
-                  name="image_url"
-                  value={formData.image_url}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#65AEEA]"
-                  placeholder="/images/your-image.jpg"
-                />
-                <p className="text-xs text-gray-500 mt-1">Path to image in assets folder or external URL</p>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium mb-1">Read Time</label>
-                <input
-                  type="text"
-                  name="read_time"
-                  value={formData.read_time}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#65AEEA]"
-                  placeholder="5 min read"
-                />
-              </div>
-              
+              {/* Buttons */}
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-[#65AEEA] text-white rounded-lg hover:bg-[#4A9FD9] transition"
+                  disabled={uploadingImage}
+                  className="flex-1 py-2 bg-[#65AEEA] text-white rounded-lg hover:bg-[#4A9FD9] transition disabled:opacity-50"
                 >
                   {editingPost ? "Update Post" : "Publish Post"}
                 </button>
@@ -294,7 +434,16 @@ export default function AdminBlogs() {
         ) : (
           posts.map((post) => (
             <div key={post.id} className="bg-white border rounded-lg p-4 hover:shadow-md transition">
-              <div className="flex justify-between items-start">
+              <div className="flex gap-4">
+                {(post.image_url) && (
+                  <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-100">
+                    <img 
+                      src={post.image_url} 
+                      alt={post.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs px-2 py-0.5 bg-[#65AEEA]/10 text-[#65AEEA] rounded-full">

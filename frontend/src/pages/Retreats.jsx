@@ -12,7 +12,7 @@ const navLinks = [
   { label: "About", path: "/about" },
   { label: "Teacher Training", path: "/teacher-training" },
   { label: "Retreats", path: "/retreats" },
-  { label: "Class Schedule", path: "/schedule" },
+  { label: "Class Schedule", path: "/class-schedule" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
   { label: "Gift Card", path: "/gift-card" },
