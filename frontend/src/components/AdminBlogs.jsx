@@ -55,71 +55,73 @@ export default function AdminBlogs() {
     }
   };
 
-  // Compress image function
-  const compressImage = (file, maxWidth = 800, quality = 0.7) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-          
-          if (width > maxWidth) {
-            height = (height * maxWidth) / width;
-            width = maxWidth;
-          }
-          
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-          resolve(compressedDataUrl);
-        };
-        img.onerror = reject;
+// More aggressive compression for blog images
+const compressImage = (file, maxWidth = 600, quality = 0.5) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        // Reduce max width to 600px (smaller = less base64 size)
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Use lower quality (0.5 = 50% quality)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressedDataUrl);
       };
-      reader.onerror = reject;
-    });
-  };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+};
 
-  // Handle image file selection with compression
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    // Check file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert("Image size should be less than 5MB");
-      return;
-    }
-    
-    // Check file type
-    if (!file.type.startsWith("image/")) {
-      alert("Please select an image file");
-      return;
-    }
-    
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
-    setUploadingImage(true);
-    
-    try {
-      // Compress image before converting to base64
-      const compressedImage = await compressImage(file, 800, 0.7);
-      setFormData(prev => ({ ...prev, image_url: compressedImage }));
-      console.log("Image compressed and ready to save");
-    } catch (error) {
-      console.error("Error compressing image:", error);
-      alert("Failed to process image");
-    } finally {
-      setUploadingImage(false);
-    }
-  };
+// Handle image file selection with compression
+const handleImageUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  // Check file size (max 3MB - reduced from 5MB)
+  if (file.size > 3 * 1024 * 1024) {
+    alert("Image size should be less than 3MB");
+    return;
+  }
+  
+  // Check file type
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file");
+    return;
+  }
+  
+  setImageFile(file);
+  setImagePreview(URL.createObjectURL(file));
+  setUploadingImage(true);
+  
+  try {
+    // Compress image with smaller dimensions and lower quality
+    const compressedImage = await compressImage(file, 600, 0.5);
+    setFormData(prev => ({ ...prev, image_url: compressedImage }));
+    console.log("Image compressed and ready to save");
+  } catch (error) {
+    console.error("Error compressing image:", error);
+    alert("Failed to process image");
+  } finally {
+    setUploadingImage(false);
+  }
+};
 
   // Clear selected image
   const clearImage = () => {

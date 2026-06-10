@@ -12,6 +12,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ✅ INCREASE BODY SIZE LIMIT - IMPORTANT FOR IMAGE UPLOADS
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
 // ✅ ONLY THE CORRECT FRONTEND URL
 const allowedOrigins = [
   'https://devahitibookingsystem.netlify.app',
@@ -31,8 +35,6 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
-app.use(express.json());
 
 // Routes
 app.use('/api/availability', availabilityRoutes);
