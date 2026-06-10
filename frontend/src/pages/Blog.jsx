@@ -30,7 +30,7 @@ const subNav = [
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
-// Categories for filtering (from database)
+// Categories for filtering
 const categories = ["All", "Philosophy", "Stress Management", "Teacher Training", "Wellness", "Reflections", "Personal"];
 
 export default function Blog() {
@@ -73,8 +73,20 @@ export default function Blog() {
     navigate("/services");
   };
 
-  const handleReadMore = (post) => {
-    setSelectedPost(post);
+  // ✅ FIXED: Fetch full post content when clicking "Read more"
+  const handleReadMore = async (post) => {
+    try {
+      const response = await fetch(`${API_URL}/blog/${post.slug}`);
+      if (response.ok) {
+        const fullPost = await response.json();
+        setSelectedPost(fullPost);
+      } else {
+        setSelectedPost(post);
+      }
+    } catch (error) {
+      console.error("Error fetching full post:", error);
+      setSelectedPost(post);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -92,7 +104,6 @@ export default function Blog() {
   // Featured post is the most recent
   const featuredPost = blogPosts[0];
 
-  // Helper function to get image
   const getImage = (post) => {
     if (post.image_url) return post.image_url;
     return heroBgImg;
@@ -153,19 +164,34 @@ export default function Blog() {
             ← Back to all posts
           </button>
           
-          <div className="overflow-hidden rounded-2xl mb-8">
-            <img src={getImage(selectedPost)} alt={selectedPost.title} className="h-[400px] w-full object-cover" />
-          </div>
+          {getImage(selectedPost) && (
+            <div className="overflow-hidden rounded-2xl mb-8">
+              <img src={getImage(selectedPost)} alt={selectedPost.title} className="h-[400px] w-full object-cover" />
+            </div>
+          )}
           
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{selectedPost.category || "General"}</span>
           <h1 className="mt-4 text-4xl md:text-5xl font-light text-gray-800">{selectedPost.title}</h1>
           
           <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-            <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {new Date(selectedPost.created_at).toLocaleDateString()}</span>
-            <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {selectedPost.read_time || "5 min read"}</span>
+            <span className="inline-flex items-center gap-2">
+              <Calendar className="h-4 w-4" /> 
+              {selectedPost.created_at ? new Date(selectedPost.created_at).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }) : "Date unknown"}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Clock className="h-4 w-4" /> {selectedPost.read_time || "5 min read"}
+            </span>
           </div>
           
-          <div className="mt-10 prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: selectedPost.content }} />
+          {/* ✅ This displays the full content */}
+          <div 
+            className="mt-10 prose prose-lg max-w-none"
+            dangerouslySetInnerHTML={{ __html: selectedPost.content || "<p>No content available for this post.</p>" }} 
+          />
         </article>
 
         <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
