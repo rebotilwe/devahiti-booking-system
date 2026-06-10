@@ -4,28 +4,16 @@ import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/home.jpg";
 import logo from "../assets/devahiti.png";
 
-// ✅ UPDATED NAVIGATION
+// ✅ UPDATED NAVIGATION - MATCHING HOME PAGE
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Teacher Training", path: "/teacher-training" },
-  { label: "Teacher Workshops", path: "/services/educational-workshops" },
-  { label: "Fascial Release Therapy", path: "/services/fascia-release" },
-  { label: "Yoga Retreats", path: "/services/retreats" },
-  { label: "Blog", path: "/blog" },
+  { label: "Retreats", path: "/retreats" },
   { label: "Class Schedule", path: "/class-schedule" },
-];
-
-const subNav = [
-  { label: "Group Class", path: "/services/group-class" },
-  { label: "Private Sessions", path: "/services/private-sessions" },
-  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
-  { label: "Sound Journey", path: "/services/sound-journey" },
-  { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascia Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Educational Workshops", path: "/services/educational-workshops" },
-  { label: "Retreats", path: "/services/retreats" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+  { label: "Gift Card", path: "/gift-card" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
@@ -122,10 +110,7 @@ export default function ClassSchedule() {
                 {link.label}
               </Link>
             ))}
-            <button 
-              onClick={() => { navigate("/services"); setMobileOpen(false); }} 
-              className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-            >
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
               Our Services
             </button>
             <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
