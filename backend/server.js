@@ -5,6 +5,7 @@ import availabilityRoutes from './routes/availability.js';
 import bookingRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
 import paymentRoutes from './routes/payments.js';
+import blogRoutes from './routes/blog.js';
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use('/api/availability', availabilityRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/blog', blogRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ 

@@ -390,15 +390,26 @@ export default function Retreats() {
         </button>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
-        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-        <p className="mt-4 text-2xl font-light">Devahiti</p>
-        <p className="mt-2 text-sm italic opacity-90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-        <p className="mt-6 text-xs uppercase tracking-widest opacity-80">
-          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-        </p>
-      </footer>
+   {/* Footer */}
+<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+  </p>
+  <p className="mt-4 text-xs text-white/60">
+    Developed by{' '}
+    <a 
+      href="https://afribizconnect.co.za/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+    >
+      Afribiz Connect
+    </a>
+  </p>
+</footer>
     </div>
   );
 }

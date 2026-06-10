@@ -33,12 +33,13 @@ const subNav = [
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
 // Categories for filtering
 const categories = ["All", "Philosophy", "Stress Management", "Teacher Training", "Wellness", "Reflections", "Personal"];
 
-// COMPLETE BLOG POSTS with full content from devahiti.com
-const blogPosts = [
+// ✅ KEEP ALL EXISTING BLOG POSTS (from client's website)
+const existingBlogPosts = [
   {
     id: 1,
     title: "The Human Cloud: Remembering the Conscious Field",
@@ -239,9 +240,6 @@ const blogPosts = [
   }
 ];
 
-// Featured post is the most recent/important one
-const featuredPost = blogPosts[0];
-
 export default function Blog() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -249,6 +247,37 @@ export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPost, setSelectedPost] = useState(null);
+  const [dbPosts, setDbPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch additional posts from database (posts added via admin)
+  useEffect(() => {
+    const fetchDbPosts = async () => {
+      try {
+        const response = await fetch(`${API_URL}/blog`);
+        const data = await response.json();
+        setDbPosts(data);
+      } catch (error) {
+        console.error("Error fetching blog posts from database:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDbPosts();
+  }, []);
+
+  // Combine existing posts with database posts
+  const allPosts = [...existingBlogPosts, ...dbPosts];
+
+  // Sort by date (newest first)
+  const sortedPosts = [...allPosts].sort((a, b) => {
+    const dateA = new Date(a.date || a.created_at);
+    const dateB = new Date(b.date || b.created_at);
+    return dateB - dateA;
+  });
+
+  // Featured post is the most recent
+  const featuredPost = sortedPosts[0] || existingBlogPosts[0];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -261,7 +290,7 @@ export default function Blog() {
   };
 
   const handleShoppingBagClick = () => {
-    navigate("/services"); // ✅ CHANGED: Now goes to Services page
+    navigate("/services");
   };
 
   const handleReadMore = (post) => {
@@ -273,12 +302,26 @@ export default function Blog() {
     setSelectedPost(null);
   };
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = sortedPosts.filter((post) => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+                          (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
+
+  // Helper function to format date
+  const formatDate = (post) => {
+    if (post.date) return post.date;
+    if (post.created_at) return new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    return "Recent";
+  };
+
+  // Helper function to get image
+  const getImage = (post) => {
+    if (post.image) return post.image;
+    if (post.image_url) return post.image_url;
+    return heroBgImg;
+  };
 
   // If a post is selected, show the full blog post view
   if (selectedPost) {
@@ -308,13 +351,11 @@ export default function Blog() {
               </button>
             </div>
           </div>
-          <div style={{ backgroundColor: "#93C9F9" }}>
-            <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
-              {subNav.map((link) => (
-                <Link key={link.path} to={link.path} className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition">
-                  {link.label}
-                </Link>
-              ))}
+          <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+            <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+              <button onClick={() => navigate("/services")} className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity">
+                Our Services
+              </button>
             </div>
           </div>
         </header>
@@ -327,26 +368,45 @@ export default function Blog() {
           </button>
           
           <div className="overflow-hidden rounded-2xl mb-8">
-            <img src={selectedPost.image} alt={selectedPost.title} className="h-[400px] w-full object-cover" />
+            <img src={getImage(selectedPost)} alt={selectedPost.title} className="h-[400px] w-full object-cover" />
           </div>
           
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{selectedPost.category}</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{selectedPost.category || "General"}</span>
           <h1 className="mt-4 text-4xl md:text-5xl font-light text-gray-800">{selectedPost.title}</h1>
           
           <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-            <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {selectedPost.date}</span>
-            <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {selectedPost.readTime}</span>
+            <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {formatDate(selectedPost)}</span>
+            <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {selectedPost.readTime || "5 min read"}</span>
           </div>
           
-          <div className="mt-10 prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: selectedPost.fullContent }} />
+          <div className="mt-10 prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: selectedPost.fullContent || selectedPost.content || "<p>Content coming soon...</p>" }} />
         </article>
 
-        <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+        <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
           <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
           <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
           <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-          <p className="mt-6 text-xs uppercase tracking-widest text-white/80">© {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa</p>
+          <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+            © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+          </p>
+          <p className="mt-4 text-xs text-white/60">
+            Developed by{' '}
+            <a href="https://afribizconnect.co.za/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors underline underline-offset-2">
+              Afribiz Connect
+            </a>
+          </p>
         </footer>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#93C9F9] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading stories...</p>
+        </div>
       </div>
     );
   }
@@ -378,13 +438,11 @@ export default function Blog() {
             </button>
           </div>
         </div>
-        <div style={{ backgroundColor: "#93C9F9" }}>
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-3">
-            {subNav.map((link) => (
-              <Link key={link.path} to={link.path} className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/90 hover:text-white transition">
-                {link.label}
-              </Link>
-            ))}
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+            <button onClick={() => navigate("/services")} className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity">
+              Our Services
+            </button>
           </div>
         </div>
       </header>
@@ -461,26 +519,28 @@ export default function Blog() {
       </section>
 
       {/* Featured Post */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#93C9F9] font-semibold">Featured post</p>
-        <article className="grid gap-10 md:grid-cols-2 md:items-center">
-          <div className="overflow-hidden rounded-2xl shadow-lg">
-            <img src={featuredPost.image} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
-          </div>
-          <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{featuredPost.category}</span>
-            <h2 className="mt-4 text-3xl font-light md:text-4xl text-gray-800">{featuredPost.title}</h2>
-            <p className="mt-5 leading-relaxed text-gray-600">{featuredPost.excerpt}</p>
-            <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-              <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {featuredPost.date}</span>
-              <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {featuredPost.readTime}</span>
+      {featuredPost && (
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#93C9F9] font-semibold">Featured post</p>
+          <article className="grid gap-10 md:grid-cols-2 md:items-center">
+            <div className="overflow-hidden rounded-2xl shadow-lg">
+              <img src={getImage(featuredPost)} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
-            <button onClick={() => handleReadMore(featuredPost)} className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-[#93C9F9] text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
-              Read story <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </article>
-      </section>
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{featuredPost.category || "General"}</span>
+              <h2 className="mt-4 text-3xl font-light md:text-4xl text-gray-800">{featuredPost.title}</h2>
+              <p className="mt-5 leading-relaxed text-gray-600">{featuredPost.excerpt || (featuredPost.content && featuredPost.content.substring(0, 200))}</p>
+              <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
+                <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {formatDate(featuredPost)}</span>
+                <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {featuredPost.readTime || "5 min read"}</span>
+              </div>
+              <button onClick={() => handleReadMore(featuredPost)} className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-[#93C9F9] text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+                Read story <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </article>
+        </section>
+      )}
 
       {/* Blog Grid */}
       <section className="bg-[#F9F9FB] py-20 px-6">
@@ -493,18 +553,18 @@ export default function Blog() {
             </div>
           ) : (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {filteredPosts.map((post) => (
-                <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+              {filteredPosts.map((post, index) => (
+                <article key={post.id || index} className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
                   <div className="overflow-hidden h-56">
-                    <img src={post.image} alt={post.title} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
+                    <img src={getImage(post)} alt={post.title} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
                   </div>
                   <div className="p-6">
-                    <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{post.category}</span>
+                    <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#93C9F9]">{post.category || "General"}</span>
                     <h3 className="mt-3 text-xl font-light text-gray-800 leading-snug">{post.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-600 line-clamp-3">{post.excerpt}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600 line-clamp-3">{post.excerpt || (post.content && post.content.substring(0, 150))}</p>
                     <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
-                      <span className="inline-flex items-center gap-2"><Calendar className="h-3.5 w-3.5" /> {post.date}</span>
-                      <span className="inline-flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {post.readTime}</span>
+                      <span className="inline-flex items-center gap-2"><Calendar className="h-3.5 w-3.5" /> {formatDate(post)}</span>
+                      <span className="inline-flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {post.readTime || "5 min read"}</span>
                     </div>
                     <button onClick={() => handleReadMore(post)} className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#93C9F9] hover:gap-3 transition-all">
                       Read more <ArrowRight className="h-3.5 w-3.5" />
@@ -543,12 +603,18 @@ export default function Blog() {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#93C9F9" }}>
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
         <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
         <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
         <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
         <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
           © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+        <p className="mt-4 text-xs text-white/60">
+          Developed by{' '}
+          <a href="https://afribizconnect.co.za/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors underline underline-offset-2">
+            Afribiz Connect
+          </a>
         </p>
       </footer>
     </div>

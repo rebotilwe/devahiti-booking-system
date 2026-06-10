@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getBookings } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import AdminBlogs from "../components/AdminBlogs";
 
 export default function Admin() {
   const [bookings, setBookings] = useState([]);
@@ -143,7 +144,7 @@ export default function Admin() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <h1 className="text-3xl font-heading mb-2">Admin Dashboard</h1>
-      <p className="text-muted-foreground mb-6">Manage bookings, schedule, and customers</p>
+      <p className="text-muted-foreground mb-6">Manage bookings, schedule, customers, and blog posts</p>
 
       {analytics && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -166,11 +167,24 @@ export default function Admin() {
         </div>
       )}
 
+      {/* Tab Buttons */}
       <div className="flex flex-wrap gap-2 border-b mb-6">
-        <button onClick={() => setActiveTab("bookings")} className={`px-4 py-2 ${activeTab === "bookings" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>Bookings</button>
-        <button onClick={() => setActiveTab("blocked-dates")} className={`px-4 py-2 ${activeTab === "blocked-dates" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>Blocked Dates</button>
-        <button onClick={() => setActiveTab("schedule")} className={`px-4 py-2 ${activeTab === "schedule" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>Weekly Schedule</button>
-        <button onClick={() => setActiveTab("customers")} className={`px-4 py-2 ${activeTab === "customers" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>Customers</button>
+        <button onClick={() => setActiveTab("bookings")} className={`px-4 py-2 ${activeTab === "bookings" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+          Bookings
+        </button>
+        <button onClick={() => setActiveTab("blocked-dates")} className={`px-4 py-2 ${activeTab === "blocked-dates" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+          Blocked Dates
+        </button>
+        <button onClick={() => setActiveTab("schedule")} className={`px-4 py-2 ${activeTab === "schedule" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+          Weekly Schedule
+        </button>
+        <button onClick={() => setActiveTab("customers")} className={`px-4 py-2 ${activeTab === "customers" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+          Customers
+        </button>
+        {/* ✅ NEW BLOG TAB */}
+        <button onClick={() => setActiveTab("blog")} className={`px-4 py-2 ${activeTab === "blog" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+          Blog Posts
+        </button>
       </div>
 
       {/* Bookings Tab */}
@@ -313,6 +327,9 @@ export default function Admin() {
           </table>
         </div>
       )}
+
+      {/* ✅ Blog Tab */}
+      {activeTab === "blog" && <AdminBlogs />}
     </div>
   );
 }

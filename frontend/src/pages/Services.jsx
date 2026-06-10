@@ -64,8 +64,9 @@ export default function Services() {
     window.location.href = "tel:+27840902083";
   };
 
+  // ✅ FIXED: Shopping bag now navigates to services page
   const handleShoppingBagClick = () => {
-    window.open(BOOKING_URL, "_blank");
+    navigate("/services");
   };
 
   return (
@@ -102,6 +103,7 @@ export default function Services() {
           </div>
         </div>
 
+        {/* Our Services Button */}
         <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
           <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button
@@ -131,7 +133,8 @@ export default function Services() {
             >
               Our Services
             </button>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
+            {/* ✅ FIXED: Mobile menu Book Online button now navigates to services */}
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -264,15 +267,26 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
-        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-        </p>
-      </footer>
+   {/* Footer */}
+<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+  </p>
+  <p className="mt-4 text-xs text-white/60">
+    Developed by{' '}
+    <a 
+      href="https://afribizconnect.co.za/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+    >
+      Afribiz Connect
+    </a>
+  </p>
+</footer>
     </div>
   );
 }
