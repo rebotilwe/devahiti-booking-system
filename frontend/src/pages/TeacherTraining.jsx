@@ -28,19 +28,79 @@ const subNav = [
   { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
+
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// 300 Hour Course Modules
+// ✅ UPDATED: 10 Modules with correct dates
 const courseModules = [
-  "Anatomy of Energy – The relationship between energy and health, quantum physics, koshas",
-  "Yoga & Somatic Psychology – Intention setting, working within the framework of the Eight Limbs of Yoga, Samkhya",
-  "Advanced Anatomy & Physiology – Functional fitness, digestive health, intermittent fasting, ketosis & autophagy",
-  "Advanced Fascia Studies – The latest research and applications in yoga",
-  "Advanced Pranayama and Activational breathing techniques – Mudras, bandhas, kumbhaka, chakras, mantras & meditation",
-  "Advanced Ayurveda – The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy",
-  "Specialized Training – Yin, prenatal yoga, yoga for children and special needs groups",
-  "The art of retreating",
-  "Devahiti Hands-On Bodywork – Learn hands-on techniques to supplement your income"
+  {
+    id: 1,
+    title: "Anatomy of Energy",
+    description: "The relationship between energy and health, quantum physics, koshas",
+    dates: "June 13th and 14th"
+  },
+  {
+    id: 2,
+    title: "Advanced Anatomy & Physiology",
+    description: "Functional fitness, digestive health, intermittent fasting, ketosis & autophagy",
+    dates: "July 18th and 19th"
+  },
+  {
+    id: 3,
+    title: "Advanced Fascia Studies",
+    description: "The latest research and applications in yoga",
+    dates: "August 1st and 2nd"
+  },
+  {
+    id: 4,
+    title: "Yoga & Somatic Psychology",
+    description: "Intention setting, working within the framework of the Eight Limbs of Yoga, Samkhya",
+    dates: "September 5th and 6th"
+  },
+  {
+    id: 5,
+    title: "Advanced Pranayama and Activational breathing techniques",
+    description: "Mudras, bandhas, kumbhaka, chakras, mantras & meditation",
+    dates: "October 10th and 11th"
+  },
+  {
+    id: 6,
+    title: "Advanced Philosophy",
+    description: "Deep dive into yogic philosophy and ancient wisdom",
+    dates: "November 14th and 15th"
+  },
+  {
+    id: 7,
+    title: "Advanced Ayurveda",
+    description: "The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy (usually needs 3-4 days for this one)",
+    dates: "December 5th and 6th, PLUS January 16th"
+  },
+  {
+    id: 8,
+    title: "Specialized Training",
+    description: "Yin, prenatal yoga, yoga for children and special needs groups, and the art of retreating",
+    dates: "February 19th and 20th"
+  },
+  {
+    id: 9,
+    title: "Devahiti Hands-On Bodywork",
+    description: "Learn hands-on techniques to supplement your income (optional extra, in-person only, over 2 weekends)",
+    dates: "March 12th and 13th PLUS March 19th and 20th"
+  },
+  {
+    id: 10,
+    title: "Trauma Sensitive Yoga",
+    description: "Specialized training for trauma-informed teaching practices",
+    dates: "April 16th and 17th"
+  }
+];
+
+// Why Choose This Training - Updated
+const whyChoose = [
+  "New Research – Explore the latest research in anatomy of energy, fascia, pain management, skeletal alignment, and therapeutic practices",
+  "Comprehensive Course Material – Gain an advanced understanding of yoga, from philosophy to functional anatomy, somatic psychology to advanced Ayurveda",
+  "Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique for pain management, fascial release, and skeletal alignment",
+  "Affordable & Accessible – No exams, no large upfront costs. Weekend Module fee of R2,800.00"
 ];
 
 // Testimonials from past students
@@ -95,7 +155,7 @@ export default function TeacherTraining() {
   };
 
   const handleShoppingBagClick = () => {
-    window.open(BOOKING_URL, "_blank");
+    navigate("/services");
   };
 
   return (
@@ -155,7 +215,7 @@ export default function TeacherTraining() {
             <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
               Our Services
             </button>
-            <button onClick={() => { handleShoppingBagClick(); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -231,18 +291,18 @@ export default function TeacherTraining() {
                   <Award className="h-8 w-8 text-[#93C9F9]" />
                 </div>
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
-                <p className="text-[#93C9F9] font-semibold text-xl mt-2">Next Training Starting May 2026</p>
-                <p className="text-gray-500 text-sm mt-2">For certified 200-hour yoga teachers</p>
+                <p className="text-[#93C9F9] font-semibold text-xl mt-2">10 Modules | R2,800 per module</p>
+                <p className="text-gray-500 text-sm mt-2">Flexible – complete in 1 or 2 years</p>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
-                    Designed for certified 200-hour yoga teachers looking to expand their knowledge and elevate their practice.
+                    Designed for certified 200-hour yoga teachers looking to expand their knowledge and elevate their practice. Students can attend all 10 modules in one year or spread them over 2 years.
                   </p>
                 </div>
                 <ul className="mt-6 text-left space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Duration: 12 months</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> 11 Modules | One full weekend a month</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Starts: May 17th</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Space limited to 10 participants</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> 10 Modules over 12 weekends</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> One full weekend per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> R2,800 per module</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Complete in 1 or 2 years</li>
                 </ul>
                 <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
                   Enquire Now
@@ -262,44 +322,54 @@ export default function TeacherTraining() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
-              <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
-              <p className="text-gray-600">New Research – Explore the latest research in fascia, pain management, skeletal alignment, and therapeutic practices</p>
-            </div>
-            <div className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
-              <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
-              <p className="text-gray-600">Comprehensive Course Material – Advanced understanding from philosophy to functional anatomy, somatic psychology to Ayurveda</p>
-            </div>
-            <div className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
-              <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
-              <p className="text-gray-600">Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique for pain management, fascial release, and skeletal alignment</p>
-            </div>
-            <div className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
-              <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
-              <p className="text-gray-600">Affordable & Accessible – No exams, no large upfront costs. Monthly workshop fee of R2800 for 12 months</p>
-            </div>
+            {whyChoose.map((reason, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
+                <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
+                <p className="text-gray-600">{reason}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Course Content */}
+      {/* Course Content - 10 Modules */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">300 Hour Course Content</h2>
             <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4">11 comprehensive modules designed for deep learning</p>
+            <p className="text-gray-500 mt-4">10 comprehensive modules designed for deep learning</p>
           </div>
 
-          <div className="space-y-3">
-            {courseModules.map((module, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-4 bg-white border border-gray-100 rounded-lg hover:border-[#93C9F9]/30 transition-all">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#93C9F9]/20 flex items-center justify-center mt-0.5">
-                  <span className="text-xs font-semibold text-[#93C9F9]">{idx + 1}</span>
+          <div className="space-y-4">
+            {courseModules.map((module) => (
+              <div key={module.id} className="bg-white border border-gray-100 rounded-xl p-5 hover:border-[#93C9F9]/30 transition-all hover:shadow-md">
+                <div className="flex flex-col md:flex-row md:items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-[#93C9F9]/20 flex items-center justify-center">
+                      <span className="text-sm font-bold text-[#93C9F9]">{module.id}</span>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-lg font-semibold text-gray-800">{module.title}</h4>
+                    <p className="text-gray-600 text-sm mt-1">{module.description}</p>
+                  </div>
+                  <div className="flex-shrink-0 mt-2 md:mt-0">
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#93C9F9] bg-[#93C9F9]/10 px-3 py-1.5 rounded-full whitespace-nowrap">
+                      <Calendar className="h-4 w-4" />
+                      {module.dates}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-gray-700">{module}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 p-4 bg-[#93C9F9]/10 rounded-xl text-center">
+            <p className="text-sm text-gray-600">
+              <strong>Flexible Learning:</strong> Complete all 10 modules in one year or spread them over 2 years. 
+              R2,800 per module. 10 modules over 12 weekends.
+            </p>
           </div>
         </div>
       </section>
@@ -316,8 +386,8 @@ export default function TeacherTraining() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <Clock className="h-8 w-8 text-[#93C9F9] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Duration</h3>
-              <p className="text-gray-600">12 months | 11 Modules | One full weekend a month</p>
-              <p className="text-gray-500 text-sm mt-2">Course starts on May 17th</p>
+              <p className="text-gray-600">10 Modules | 12 Weekends</p>
+              <p className="text-gray-500 text-sm mt-2">Complete in 1 or 2 years</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <MapPin className="h-8 w-8 text-[#93C9F9] mb-3" />
@@ -328,7 +398,7 @@ export default function TeacherTraining() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <Award className="h-8 w-8 text-[#93C9F9] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Investment</h3>
-              <p className="text-gray-600">R2,800 per month (for 12 months)</p>
+              <p className="text-gray-600">R2,800 per module</p>
               <p className="text-gray-500 text-sm mt-2">No large upfront costs</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">
@@ -419,26 +489,27 @@ export default function TeacherTraining() {
           Enquire Now
         </button>
       </section>
-{/* Footer */}
-<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
-  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-  </p>
-  <p className="mt-4 text-xs text-white/60">
-    Developed by{' '}
-    <a 
-      href="https://afribizconnect.co.za/" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
-    >
-      Afribiz Connect
-    </a>
-  </p>
-</footer>
+
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+        <p className="mt-4 text-xs text-white/60">
+          Developed by{' '}
+          <a 
+            href="https://afribizconnect.co.za/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+          >
+            Afribiz Connect
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

@@ -40,6 +40,7 @@ const subNav = [
 ];
 
 // 9 services - Grouped into 3 rows of 3
+// 8 services - Removed Educational Workshops
 const allServices = [
   { img: groupImg, title: "Group Class", link: "/services/group-class" },
   { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
@@ -48,7 +49,7 @@ const allServices = [
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
   { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
-  { img: educationalWorkshopImg, title: "Educational Workshops", link: "/services/educational-workshops" },
+  // ✅ REMOVED: Educational Workshops
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
 

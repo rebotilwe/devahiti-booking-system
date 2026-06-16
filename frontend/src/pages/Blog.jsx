@@ -33,6 +33,33 @@ const API_URL = "https://devahiti-booking-system.onrender.com/api";
 // Categories for filtering
 const categories = ["All", "Philosophy", "Stress Management", "Teacher Training", "Wellness", "Reflections", "Personal"];
 
+// ✅ ADDED: Ageing Strong post at the top
+const ageingStrongPost = {
+  id: 999,
+  title: "Ageing Strong",
+  excerpt: "Embracing the wisdom and strength that comes with age. A reflection on growing older with grace, vitality, and purpose.",
+  category: "Wellness",
+  image: heroBgImg,
+  slug: "ageing-strong",
+  read_time: "5 min read",
+  created_at: new Date().toISOString(),
+  content: `
+    <p><strong>A Reflection on Ageing Strong</strong></p>
+    <p>Ageing is not a decline—it is an evolution. Each year brings not just more candles on the cake, but more wisdom, more depth, and more clarity about what truly matters.</p>
+    <p>We live in a world that often glorifies youth, but the truth is that some of the most vibrant, powerful, and impactful people are those who have lived long enough to know themselves deeply.</p>
+    <p>Ageing strong means:</p>
+    <ul>
+      <li>Moving your body daily—not to look young, but to feel alive</li>
+      <li>Nourishing yourself with whole, vibrant foods</li>
+      <li>Staying connected to community and purpose</li>
+      <li>Embracing rest as much as activity</li>
+      <li>Letting go of what no longer serves you</li>
+    </ul>
+    <p>The yoga mat is a powerful place to explore this journey. It reminds us that we are not the same person we were a decade ago—and that's a beautiful thing.</p>
+    <p>Whether you are 25 or 75, the invitation is the same: show up for yourself, honour where you are, and keep growing. Because ageing isn't about getting older—it's about getting stronger.</p>
+  `
+};
+
 export default function Blog() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -49,9 +76,12 @@ export default function Blog() {
       try {
         const response = await fetch(`${API_URL}/blog`);
         const data = await response.json();
-        setBlogPosts(data);
+        // ✅ Combine Ageing Strong at the top, then the rest
+        setBlogPosts([ageingStrongPost, ...data]);
       } catch (error) {
         console.error("Error fetching blog posts:", error);
+        // Fallback: show Ageing Strong only
+        setBlogPosts([ageingStrongPost]);
       } finally {
         setLoading(false);
       }
@@ -73,8 +103,14 @@ export default function Blog() {
     navigate("/services");
   };
 
-  // ✅ FIXED: Fetch full post content when clicking "Read more"
   const handleReadMore = async (post) => {
+    // If it's the Ageing Strong post, use the local content
+    if (post.id === 999) {
+      setSelectedPost(post);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    
     try {
       const response = await fetch(`${API_URL}/blog/${post.slug}`);
       if (response.ok) {
@@ -101,8 +137,8 @@ export default function Blog() {
     return matchesCategory && matchesSearch;
   });
 
-  // Featured post is the most recent
-  const featuredPost = blogPosts[0];
+  // Featured post is Ageing Strong (always at top)
+  const featuredPost = blogPosts[0] || ageingStrongPost;
 
   const getImage = (post) => {
     if (post.image_url) return post.image_url;
@@ -180,14 +216,13 @@ export default function Blog() {
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
-              }) : "Date unknown"}
+              }) : "Recent"}
             </span>
             <span className="inline-flex items-center gap-2">
               <Clock className="h-4 w-4" /> {selectedPost.read_time || "5 min read"}
             </span>
           </div>
           
-          {/* ✅ This displays the full content */}
           <div 
             className="mt-10 prose prose-lg max-w-none"
             dangerouslySetInnerHTML={{ __html: selectedPost.content || "<p>No content available for this post.</p>" }} 
@@ -319,7 +354,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Featured Post */}
+      {/* Featured Post - Ageing Strong */}
       {featuredPost && (
         <section className="mx-auto max-w-6xl px-6 py-16">
           <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Featured post</p>
@@ -332,7 +367,7 @@ export default function Blog() {
               <h2 className="mt-4 text-3xl font-light md:text-4xl text-gray-800">{featuredPost.title}</h2>
               <p className="mt-5 leading-relaxed text-gray-600 line-clamp-3">{featuredPost.excerpt}</p>
               <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-                <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {new Date(featuredPost.created_at).toLocaleDateString()}</span>
+                <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> Recent</span>
                 <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {featuredPost.read_time || "5 min read"}</span>
               </div>
               <button onClick={() => handleReadMore(featuredPost)} className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-[#65AEEA] text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
@@ -364,7 +399,9 @@ export default function Blog() {
                     <h3 className="mt-3 text-xl font-light text-gray-800 leading-snug">{post.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600 line-clamp-3">{post.excerpt}</p>
                     <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
-                      <span className="inline-flex items-center gap-2"><Calendar className="h-3.5 w-3.5" /> {new Date(post.created_at).toLocaleDateString()}</span>
+                      <span className="inline-flex items-center gap-2"><Calendar className="h-3.5 w-3.5" /> 
+                        {post.id === 999 ? "Recent" : new Date(post.created_at).toLocaleDateString()}
+                      </span>
                       <span className="inline-flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {post.read_time || "5 min read"}</span>
                     </div>
                     <button onClick={() => handleReadMore(post)} className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#65AEEA] hover:gap-3 transition-all">
