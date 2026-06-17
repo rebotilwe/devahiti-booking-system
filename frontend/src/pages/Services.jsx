@@ -1,222 +1,326 @@
-import {
-  Users,
-  Heart,
-  Briefcase,
-  Music,
-  Calendar,
-  Award,
-  Sparkles,
-  Waves,
-  BookOpen,
-  Flower2,
-  Gem
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Phone, ShoppingBag, Menu, X, Clock, MapPin, Sparkles, Calendar, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { services } from "../data/services";
+import logo from "../assets/devahiti.png";
 
-// Import actual images from your assets folder
-import groupImg from "../assets/images/group.jpg";
-import privateImg from "../assets/images/private.jpg";
-import corporateImg from "../assets/images/img1.jpg";
-import soundImg from "../assets/images/img11.jpg";
-import soundMassageImg from "../assets/images/about.jpg";
-import fasciaReleaseImg from "../assets/images/img11.jpg";
-import trainingImg from "../assets/images/img5.jpg";
-import educationalWorkshopImg from "../assets/images/img1.jpg";
-import specializedImg from "../assets/images/specialize.jpg";
-import retreatsImg from "../assets/images/img11.jpg";
-import bowenImg from "../assets/images/img3.jpg";
-
-export const services = [
-  {
-    id: "group-class",
-    slug: "group-class",
-    title: "Group Class",
-    category: "Group Classes",
-    description: "Join our group yoga classes in Ballito. Perfect for all levels, these sessions combine breath, movement, and mindfulness in a supportive community setting.",
-    shortDescription: "Community yoga classes for all levels.",
-    duration: "45 – 90 minutes", // ✅ UPDATED
-    price: "R130 per class",
-    priceAmount: 130,
-    location: "In Studio (Ballito)",
-    capacity: "All levels welcome",
-    icon: Users,
-    bookingType: "book",
-    image: groupImg
-  },
-  {
-    id: "private-sessions",
-    slug: "private-sessions",
-    title: "Private Sessions",
-    category: "Private Yoga",
-    description: "A personalised 1-on-1 session at your home or accommodation tailored to your body and goals. Ideal for beginners or those looking to deepen their practice.",
-    shortDescription: "Personalised session at your home or accommodation.",
-    duration: "60 minutes",
-    price: "R550 for 1 person, +R150 per extra person", // ✅ UPDATED
-    priceAmount: 550, // ✅ UPDATED
-    location: "On Location (Accommodation / Home)",
-    capacity: "1+ people",
-    icon: Heart,
-    bookingType: "book",
-    image: privateImg
-  },
-  {
-    id: "corporate-wellness",
-    slug: "corporate-wellness",
-    title: "Corporate Wellness",
-    category: "Corporate & Workplace",
-    description: "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
-    shortDescription: "Wellness sessions for teams at your workplace.",
-    duration: "60 minutes",
-    price: "R1500 per session (up to 8 people, +R50pp thereafter)", // ✅ UPDATED
-    priceAmount: 1500,
-    location: "On Location (Office / Venue)",
-    capacity: "Unlimited", // ✅ UPDATED
-    icon: Briefcase,
-    bookingType: "book",
-    image: corporateImg
-  },
-  {
-    id: "sound-journey",
-    slug: "sound-journey",
-    title: "Sound Journey",
-    category: "Sound Healing",
-    description: "Deeply relax and restore with healing frequencies and vibration. This immersive experience uses singing bowls and therapeutic sound to calm the nervous system and promote deep rest.",
-    shortDescription: "Immersive sound healing experience.",
-    duration: "60 minutes",
-    price: "R800 per session; +R150 per extra person", // ✅ UPDATED
-    priceAmount: 800,
-    location: "On Location / In Studio (Ballito)",
-    capacity: "1+ people",
-    icon: Music,
-    bookingType: "book",
-    image: soundImg
-  },
-  {
-    id: "sound-massage",
-    slug: "sound-massage",
-    title: "Sound Massage",
-    category: "Sound Healing",
-    description: "Experience the therapeutic benefits of sound massage. Using singing bowls placed directly on and around the body, this treatment creates deep vibrational healing, releasing tension and promoting cellular restoration.",
-    shortDescription: "Therapeutic sound healing with singing bowls.",
-    duration: "60 minutes",
-    price: "R800 per session", // ✅ UNCHANGED
-    priceAmount: 800,
-    location: "In Studio / On Location",
-    capacity: "1 person",
-    icon: Waves,
-    bookingType: "book",
-    image: soundMassageImg
-  },
-  {
-    id: "fascia-release",
-    slug: "fascia-release",
-    title: "Fascial Release Therapy",
-    category: "Therapeutic Bodywork",
-    description: "Hands-on fascial release therapy to relieve tension, improve mobility, and restore balance in the body. This gentle but effective technique targets the connective tissue to release chronic tension patterns.",
-    shortDescription: "Hands-on fascia release for deep tension relief.",
-    duration: "45 – 60 minutes", // ✅ UPDATED
-    price: "R450", // ✅ UPDATED
-    priceAmount: 450,
-    location: "In Studio (Ballito)",
-    capacity: "Individual",
-    icon: Sparkles,
-    bookingType: "book",
-    image: fasciaReleaseImg
-  },
-  {
-    id: "teacher-training",
-    slug: "teacher-training",
-    title: "Teacher Training",
-    category: "Training",
-    description: "200hr & 300hr advanced yoga teacher training programs designed to deepen your practice and knowledge. Become a certified instructor and share the gift of yoga.",
-    shortDescription: "200hr & 300hr teacher training programs.",
-    duration: "Multi-month",
-    price: "From R28,000 (200hr) / R32,000 (300hr)", // ✅ UPDATED to show both
-    priceAmount: 28000,
-    location: "In Studio (Ballito)",
-    capacity: "Enrolling now",
-    icon: Award,
-    bookingType: "enquire", // ✅ Changed to enquire since training requires consultation
-    image: trainingImg,
-    // ✅ Added separate training details
-    trainingDetails: {
-      "200 Hour": {
-        price: "R28,000",
-        duration: "Part-time, weekend modules",
-        description: "Foundational training rooted in science and evidence-based movement practices."
-      },
-      "300 Hour Advanced": {
-        price: "R32,000",
-        duration: "12 months | 11 Modules | One full weekend a month",
-        description: "Advanced training for certified 200-hour yoga teachers focused on refinement and mastery."
-      }
-    }
-  },
-  {
-    id: "educational-workshops",
-    slug: "educational-workshops",
-    title: "Educational Workshops",
-    category: "Workshops",
-    description: "Deepen your understanding of yoga philosophy, anatomy, and teaching methodology. These educational workshops are perfect for practitioners and aspiring teachers alike.",
-    shortDescription: "Deepen your yoga knowledge and understanding.",
-    duration: "2-3 hours",
-    price: "R350 – R650",
-    priceAmount: 350,
-    location: "In Studio (Ballito)",
-    capacity: "Limited spaces",
-    icon: BookOpen,
-    bookingType: "book",
-    image: educationalWorkshopImg
-    // ⚠️ TO BE REMOVED - Client requested removal
-  },
-  {
-    id: "specialized-workshop",
-    slug: "specialized-workshop",
-    title: "Specialized Workshop",
-    category: "Workshops",
-    description: "Deepen your practice with our specialized workshops. Topics include fascia release, yin yoga, pranayama, and more. Perfect for those wanting to explore specific aspects of yoga.",
-    shortDescription: "Focused workshops on specific yoga topics.",
-    duration: "2-3 hours",
-    price: "R450 – R850",
-    priceAmount: 450,
-    location: "In Studio (Ballito)",
-    capacity: "Limited spaces",
-    icon: Calendar,
-    bookingType: "book",
-    image: specializedImg
-  },
-  {
-    id: "retreats",
-    slug: "retreats",
-    title: "Retreats",
-    category: "Retreats",
-    description: "Immerse yourself in a transformative retreat experience. Combining yoga, sound healing, meditation, and wellness activities, our retreats offer a complete reset for mind, body, and spirit.",
-    shortDescription: "Transformative wellness retreat experiences.",
-    duration: "Retreat Specific", // ✅ UPDATED
-    price: "Retreat Specific", // ✅ UPDATED
-    priceAmount: null, // ✅ UPDATED - removed fixed price
-    location: "Various Locations",
-    capacity: "Retreat Specific", // ✅ UPDATED
-    icon: Flower2,
-    bookingType: "enquire", // ✅ Changed to enquire since retreats vary
-    image: retreatsImg
-  },
-  {
-    id: "bowen-therapy",
-    slug: "bowen-therapy",
-    title: "Bowen Therapy",
-    category: "Therapeutic Bodywork",
-    description: "A gentle, non-invasive therapy that stimulates the body's natural healing response. Bowen Therapy addresses pain, stress, and tension by making precise, gentle rolling movements over muscles and connective tissue.",
-    shortDescription: "Gentle, non-invasive therapy for pain relief.",
-    duration: "45–60 minutes",
-    price: "R550 – R750",
-    priceAmount: 550,
-    location: "In Studio (Ballito)",
-    capacity: "Individual",
-    icon: Gem,
-    bookingType: "book",
-    image: bowenImg
-  }
+// ✅ UPDATED NAVIGATION
+const navLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
+  { label: "Class Schedule", path: "/class-schedule" },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+  { label: "Gift Card", path: "/gift-card" },
 ];
 
-// ✅ Export filtered services (excluding educational workshops if removed)
-export const activeServices = services.filter(service => service.id !== "educational-workshops");
+// ✅ UPDATED SUBNAV - Removed Educational Workshops
+const subNav = [
+  { label: "Group Class", path: "/services/group-class" },
+  { label: "Private Sessions", path: "/services/private-sessions" },
+  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
+  { label: "Sound Journey", path: "/services/sound-journey" },
+  { label: "Sound Massage", path: "/services/sound-massage" },
+  { label: "Fascial Release", path: "/services/fascia-release" },
+  { label: "Teacher Training", path: "/services/teacher-training" },
+  // ✅ REMOVED: Educational Workshops
+  { label: "Retreats", path: "/services/retreats" },
+];
+
+// Group services by category
+const groupedServices = services.reduce((acc, service) => {
+  if (!acc[service.category]) acc[service.category] = [];
+  acc[service.category].push(service);
+  return acc;
+}, {});
+
+// Order of categories for display
+const categoryOrder = [
+  "Group Classes",
+  "Private Yoga",
+  "Corporate & Workplace",
+  "Sound Healing",
+  "Therapeutic Bodywork",
+  "Workshops",
+  "Training",
+  "Retreats"
+];
+
+// Category icons and descriptions
+const categoryInfo = {
+  "Group Classes": { icon: Users, description: "Connect with others in a supportive group environment" },
+  "Private Yoga": { icon: Sparkles, description: "Personalized one-on-one sessions tailored to you" },
+  "Corporate & Workplace": { icon: Calendar, description: "Wellness programs for your team" },
+  "Sound Healing": { icon: Sparkles, description: "Restorative sound bath experiences" },
+  "Therapeutic Bodywork": { icon: Sparkles, description: "Healing hands-on therapy sessions" },
+  "Workshops": { icon: Calendar, description: "Deep dive into specific practices" },
+  "Training": { icon: Users, description: "Comprehensive teacher training programs" },
+  "Retreats": { icon: Calendar, description: "Immersive wellness getaways" }
+};
+
+const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+
+export default function Services() {
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handlePhoneClick = () => {
+    window.location.href = "tel:+27840902083";
+  };
+
+  const handleShoppingBagClick = () => {
+    navigate("/services");
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Top Navbar */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
+          </Link>
+
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Call us">
+              <Phone className="h-5 w-5" />
+            </button>
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Book Online">
+              <ShoppingBag className="h-5 w-5" />
+            </button>
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Menu">
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Our Services Button */}
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
+            <button
+              onClick={() => navigate("/services")}
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
+            >
+              Our Services
+            </button>
+          </div>
+        </div>
+
+        {/* Sub Navbar */}
+        <div style={{ backgroundColor: "#65AEEA" }}>
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3">
+            {subNav.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <div className="h-28"></div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+          <div className="px-6 py-4">
+            {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-4 pt-2">
+              <p className="text-[10px] font-bold tracking-wider text-[#65AEEA] uppercase mb-2">Services</p>
+              {subNav.map((link) => (
+                <Link key={link.path} to={link.path} className="block py-2 text-xs text-gray-500 hover:text-[#65AEEA]" onClick={() => setMobileOpen(false)}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <button 
+              onClick={() => { navigate("/services"); setMobileOpen(false); }} 
+              className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+            >
+              Our Services
+            </button>
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
+              Book Online
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* HERO */}
+      <section className="relative h-[45vh] flex items-center justify-center bg-gradient-to-br from-[#65AEEA] to-[#93C9F9]">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
+        <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-white/10 blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-white/5 blur-3xl" />
+        
+        <div className="relative z-10 text-center text-white px-6">
+          <div className="inline-block mb-4 px-4 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+            <span className="text-xs font-semibold uppercase tracking-wider">Find Your Practice</span>
+          </div>
+          <h1 className="font-heading text-4xl md:text-6xl font-light">
+            Our Services
+          </h1>
+          <div className="w-20 h-px bg-white/50 mx-auto my-4" />
+          <p className="text-white/90 mt-3 max-w-lg mx-auto text-lg">
+            Choose the practice that speaks to you
+          </p>
+        </div>
+        
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
+
+      {/* SERVICES */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto space-y-20">
+
+          {categoryOrder.map((category) => {
+            const items = groupedServices[category];
+            if (!items || items.length === 0) return null;
+            
+            const CategoryIcon = categoryInfo[category]?.icon || Sparkles;
+            const categoryDesc = categoryInfo[category]?.description || "";
+            
+            return (
+              <div key={category}>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="p-2 rounded-lg bg-[#65AEEA]/10">
+                    <CategoryIcon className="h-6 w-6 text-[#65AEEA]" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-heading text-gray-800">
+                      {category}
+                    </h2>
+                    {categoryDesc && (
+                      <p className="text-sm text-gray-500 mt-1">{categoryDesc}</p>
+                    )}
+                  </div>
+                  <div className="flex-1 h-px bg-gradient-to-r from-[#65AEEA]/30 to-transparent ml-4" />
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {items.map((service, index) => (
+                    <Link
+                      key={service.id}
+                      to={`/services/${service.slug}`}
+                      className="group relative bg-white border border-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:border-[#65AEEA]/30 hover:-translate-y-1"
+                    >
+                      <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-[#65AEEA] to-[#4A9FD9] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                      <div className="absolute top-4 right-4 text-xs font-bold text-[#65AEEA]/30 group-hover:text-[#65AEEA]/50 transition-colors">
+                        {(index + 1).toString().padStart(2, '0')}
+                      </div>
+                      <h3 className="text-xl font-heading mb-3 text-gray-800 group-hover:text-[#65AEEA] transition-colors pr-8">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                        {service.shortDescription}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400 mb-4">
+                        <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
+                          <Clock size={12} className="text-[#65AEEA]" /> {service.duration}
+                        </span>
+                        <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
+                          <MapPin size={12} className="text-[#65AEEA]" /> {service.location.split(" ")[0]}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center pt-3 border-t border-gray-50">
+                        <span className="text-[#65AEEA] font-semibold text-lg">
+                          {service.price}
+                        </span>
+                        <span className="text-xs text-gray-400 group-hover:text-[#65AEEA] group-hover:gap-2 transition-all flex items-center gap-1">
+                          View Details 
+                          <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-6 bg-gradient-to-r from-[#65AEEA] to-[#4A9FD9]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block mb-4 px-4 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+            <span className="text-xs font-semibold uppercase tracking-wider text-white">Not sure where to start?</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+            Let's find the right practice for you
+          </h2>
+          <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+            Every journey begins with a single step. Contact us for a personalized recommendation.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              to="/contact" 
+              className="px-8 py-3 rounded-full bg-white text-[#65AEEA] font-semibold hover:shadow-lg transition-all hover:scale-105"
+            >
+              Contact Us
+            </Link>
+            <Link 
+              to="/class-schedule"
+              className="px-8 py-3 rounded-full border-2 border-white text-white font-semibold hover:bg-white/10 transition-all"
+            >
+              View Class Schedule
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+        <p className="mt-4 text-xs text-white/60">
+          Developed by{' '}
+          <a 
+            href="https://afribizconnect.co.za/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+          >
+            Afribiz Connect
+          </a>
+        </p>
+      </footer>
+    </div>
+  );
+}

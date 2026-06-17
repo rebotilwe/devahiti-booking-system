@@ -18,18 +18,18 @@ const navLinks = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// Class Schedule Data from client's existing website
+// ✅ UPDATED Class Schedule Data from Instagram
 const classSchedule = [
   { days: "MONDAY AND THURSDAY", times: [
-    { time: "7:00 AM", class: "Yoga Therapy" },
-    { time: "8:00 AM", class: "Intermediate Class" },
-    { time: "5:15 PM", class: "Gentle Beginners Hatha" }
+    { time: "7:00 AM", class: "Therapeutic Movement" },
+    { time: "8:00 AM", class: "Intermediate Hatha" },
+    { time: "4:00 PM", class: "Beginners Gentle Hatha" }
   ]},
   { days: "TUESDAY AND FRIDAY", times: [
-    { time: "8:15 AM", class: "Gentle Hatha" }
+    { time: "8:15 AM", class: "Gentle Hatha Holistic Flow" }
   ]},
   { days: "SATURDAY", times: [
-    { time: "7:30 AM – 9:00 AM", class: "YIN/YAN/YOGA ESSENTIAL OILS Mix" }
+    { time: "7:30 AM", class: "90 min Yin / Breathwork / Meditation / Sound Blend" }
   ]}
 ];
 
@@ -146,7 +146,7 @@ export default function ClassSchedule() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Weekly Classes</h2>
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4">Drop-in rate: R130 per class</p>
+            <p className="text-gray-500 mt-4">R700 per month – unlimited sessions</p>
           </div>
 
           <div className="space-y-8">
@@ -171,6 +171,13 @@ export default function ClassSchedule() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* ✅ Drop-in classes note */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-600 text-sm">
+              Drop-in classes: <strong>R130 per person</strong>
+            </p>
           </div>
         </div>
       </section>
