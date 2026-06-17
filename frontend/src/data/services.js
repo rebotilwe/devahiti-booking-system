@@ -58,22 +58,22 @@ export const services = [
     bookingType: "book",
     image: privateImg
   },
-  {
-    id: "corporate-wellness",
-    slug: "corporate-wellness",
-    title: "Corporate Wellness",
-    category: "Corporate & Workplace",
-    description: "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
-    shortDescription: "Wellness sessions for teams at your workplace.",
-    duration: "60 minutes",
-    price: "R1500 per session (up to 8 people, +R50pp thereafter)", // ✅ UPDATED
-    priceAmount: 1500,
-    location: "On Location (Office / Venue)",
-    capacity: "Unlimited", // ✅ UPDATED
-    icon: Briefcase,
-    bookingType: "book",
-    image: corporateImg
-  },
+{
+  id: "corporate-wellness",
+  slug: "corporate-wellness",
+  title: "Corporate Wellness",
+  category: "Corporate & Workplace",
+  description: "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
+  shortDescription: "Wellness sessions for teams at your workplace.",
+  duration: "60 minutes",
+  price: "R1500 per session (This covers up to 8 people, thereafter an additional fee of R50pp)", // ✅ UPDATED
+  priceAmount: 1500,
+  location: "On Location (Office / Venue)",
+  capacity: "Unlimited", // ✅ UPDATED
+  icon: Briefcase,
+  bookingType: "book",
+  image: corporateImg
+},
   {
     id: "sound-journey",
     slug: "sound-journey",
@@ -183,20 +183,20 @@ export const services = [
     bookingType: "enquire", // ✅ UPDATED
     image: retreatsImg
   },
-  {
-    id: "bowen-therapy",
-    slug: "bowen-therapy",
-    title: "Bowen Therapy",
-    category: "Therapeutic Bodywork",
-    description: "A gentle, non-invasive therapy that stimulates the body's natural healing response. Bowen Therapy addresses pain, stress, and tension by making precise, gentle rolling movements over muscles and connective tissue.",
-    shortDescription: "Gentle, non-invasive therapy for pain relief.",
-    duration: "45–60 minutes",
-    price: "R550 – R750",
-    priceAmount: 550,
-    location: "In Studio (Ballito)",
-    capacity: "Individual",
-    icon: Gem,
-    bookingType: "book",
-    image: bowenImg
-  }
+  // {
+  //   id: "bowen-therapy",
+  //   slug: "bowen-therapy",
+  //   title: "Bowen Therapy",
+  //   category: "Therapeutic Bodywork",
+  //   description: "A gentle, non-invasive therapy that stimulates the body's natural healing response. Bowen Therapy addresses pain, stress, and tension by making precise, gentle rolling movements over muscles and connective tissue.",
+  //   shortDescription: "Gentle, non-invasive therapy for pain relief.",
+  //   duration: "45–60 minutes",
+  //   price: "R550 – R750",
+  //   priceAmount: 550,
+  //   location: "In Studio (Ballito)",
+  //   capacity: "Individual",
+  //   icon: Gem,
+  //   bookingType: "book",
+  //   image: bowenImg
+  // }
 ];

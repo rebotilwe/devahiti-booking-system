@@ -16,19 +16,6 @@ const navLinks = [
   { label: "Gift Card", path: "/gift-card" },
 ];
 
-// ✅ UPDATED SUBNAV - Removed Educational Workshops
-const subNav = [
-  { label: "Group Class", path: "/services/group-class" },
-  { label: "Private Sessions", path: "/services/private-sessions" },
-  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
-  { label: "Sound Journey", path: "/services/sound-journey" },
-  { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascial Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
-  // ✅ REMOVED: Educational Workshops
-  { label: "Retreats", path: "/services/retreats" },
-];
-
 // Group services by category
 const groupedServices = services.reduce((acc, service) => {
   if (!acc[service.category]) acc[service.category] = [];
@@ -81,6 +68,20 @@ export default function Services() {
     navigate("/services");
   };
 
+  // ✅ Helper function to get the correct link for each service
+  const getServiceLink = (service) => {
+    // If it's Teacher Training, go to the dedicated page
+    if (service.slug === "teacher-training") {
+      return "/teacher-training";
+    }
+    // If it's Retreats, go to the dedicated page
+    if (service.slug === "retreats") {
+      return "/retreats";
+    }
+    // All other services go to the service detail page
+    return `/services/${service.slug}`;
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Top Navbar */}
@@ -126,21 +127,6 @@ export default function Services() {
             </button>
           </div>
         </div>
-
-        {/* Sub Navbar */}
-        <div style={{ backgroundColor: "#65AEEA" }}>
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3">
-            {subNav.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
       </header>
 
       <div className="h-28"></div>
@@ -154,14 +140,6 @@ export default function Services() {
                 {link.label}
               </Link>
             ))}
-            <div className="mt-4 pt-2">
-              <p className="text-[10px] font-bold tracking-wider text-[#65AEEA] uppercase mb-2">Services</p>
-              {subNav.map((link) => (
-                <Link key={link.path} to={link.path} className="block py-2 text-xs text-gray-500 hover:text-[#65AEEA]" onClick={() => setMobileOpen(false)}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
             <button 
               onClick={() => { navigate("/services"); setMobileOpen(false); }} 
               className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
@@ -229,41 +207,44 @@ export default function Services() {
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {items.map((service, index) => (
-                    <Link
-                      key={service.id}
-                      to={`/services/${service.slug}`}
-                      className="group relative bg-white border border-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:border-[#65AEEA]/30 hover:-translate-y-1"
-                    >
-                      <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-[#65AEEA] to-[#4A9FD9] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                      <div className="absolute top-4 right-4 text-xs font-bold text-[#65AEEA]/30 group-hover:text-[#65AEEA]/50 transition-colors">
-                        {(index + 1).toString().padStart(2, '0')}
-                      </div>
-                      <h3 className="text-xl font-heading mb-3 text-gray-800 group-hover:text-[#65AEEA] transition-colors pr-8">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                        {service.shortDescription}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400 mb-4">
-                        <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
-                          <Clock size={12} className="text-[#65AEEA]" /> {service.duration}
-                        </span>
-                        <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
-                          <MapPin size={12} className="text-[#65AEEA]" /> {service.location.split(" ")[0]}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center pt-3 border-t border-gray-50">
-                        <span className="text-[#65AEEA] font-semibold text-lg">
-                          {service.price}
-                        </span>
-                        <span className="text-xs text-gray-400 group-hover:text-[#65AEEA] group-hover:gap-2 transition-all flex items-center gap-1">
-                          View Details 
-                          <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+                  {items.map((service, index) => {
+                    const link = getServiceLink(service);
+                    return (
+                      <Link
+                        key={service.id}
+                        to={link}
+                        className="group relative bg-white border border-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:border-[#65AEEA]/30 hover:-translate-y-1"
+                      >
+                        <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-[#65AEEA] to-[#4A9FD9] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                        <div className="absolute top-4 right-4 text-xs font-bold text-[#65AEEA]/30 group-hover:text-[#65AEEA]/50 transition-colors">
+                          {(index + 1).toString().padStart(2, '0')}
+                        </div>
+                        <h3 className="text-xl font-heading mb-3 text-gray-800 group-hover:text-[#65AEEA] transition-colors pr-8">
+                          {service.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                          {service.shortDescription}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400 mb-4">
+                          <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
+                            <Clock size={12} className="text-[#65AEEA]" /> {service.duration}
+                          </span>
+                          <span className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-full">
+                            <MapPin size={12} className="text-[#65AEEA]" /> {service.location.split(" ")[0]}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center pt-3 border-t border-gray-50">
+                          <span className="text-[#65AEEA] font-semibold text-lg">
+                            {service.price}
+                          </span>
+                          <span className="text-xs text-gray-400 group-hover:text-[#65AEEA] group-hover:gap-2 transition-all flex items-center gap-1">
+                            View Details 
+                            <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             );

@@ -17,16 +17,7 @@ const navLinks = [
   { label: "Gift Card", path: "/gift-card" },
 ];
 
-const subNav = [
-  { label: "Group Class", path: "/services/group-class" },
-  { label: "Private Sessions", path: "/services/private-sessions" },
-  { label: "Corporate Wellness", path: "/services/corporate-wellness" },
-  { label: "Sound Journey", path: "/services/sound-journey" },
-  { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascial Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Retreats", path: "/services/retreats" },
-];
+// ✅ UPDATED: Removed subNav - not needed on Teacher Training page
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
@@ -229,6 +220,7 @@ export default function TeacherTraining() {
             </button>
           </div>
         </div>
+        {/* ✅ SUBNAV REMOVED */}
       </header>
 
       <div className="h-28"></div>
@@ -285,7 +277,7 @@ export default function TeacherTraining() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* ✅ 200 Hour - UPDATED */}
+            {/* 200 Hour */}
             <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#65AEEA]/10 mb-4">
@@ -311,7 +303,7 @@ export default function TeacherTraining() {
               </div>
             </div>
 
-            {/* ✅ 300 Hour Advanced - UPDATED */}
+            {/* 300 Hour Advanced */}
             <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8 shadow-lg hover:shadow-xl transition relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#65AEEA] text-white text-xs font-bold px-4 py-1 rounded-full">
                 Advanced
@@ -321,7 +313,7 @@ export default function TeacherTraining() {
                   <Award className="h-8 w-8 text-[#65AEEA]" />
                 </div>
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
-                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts June 2027</p>
+                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts July 2026</p>
                 <p className="text-gray-500 text-sm mt-2">300 Hours Over 12 Months | 10 Modules</p>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
@@ -343,7 +335,7 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* ✅ UPDATED: Why Choose This Training - Split for 200hr and 300hr */}
+      {/* Why Choose This Training */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
@@ -352,7 +344,7 @@ export default function TeacherTraining() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {/* First Two - 200 Hour Training */}
+            {/* 200 Hour Training */}
             <div className="md:col-span-2">
               <h3 className="text-xl font-semibold text-[#65AEEA] mb-4 text-center">200-Hour Teacher Training</h3>
               <div className="grid md:grid-cols-2 gap-4">
@@ -365,7 +357,7 @@ export default function TeacherTraining() {
               </div>
             </div>
 
-            {/* Bottom Two - 300 Hour Training */}
+            {/* 300 Hour Training */}
             <div className="md:col-span-2 mt-6">
               <h3 className="text-xl font-semibold text-[#65AEEA] mb-4 text-center">Advanced 300-Hour Teacher Training</h3>
               <div className="grid md:grid-cols-2 gap-4">
@@ -381,7 +373,7 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* ✅ NEW: 200 Hour Course Content */}
+      {/* ✅ 200 Hour Course Content - All 4 modules displayed */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
@@ -410,7 +402,7 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* ✅ UPDATED: 300 Hour Course Content */}
+      {/* ✅ 300 Hour Course Content - All 10 modules displayed */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">

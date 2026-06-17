@@ -314,7 +314,7 @@ export default function Contact() {
               { q: "Do I need to be flexible or experienced?", a: "Not at all. Every session is gentle and adaptable. Beginners and stiff bodies are warmly welcomed." },
               { q: "Do you bring all the equipment?", a: "Yes — mats, bolsters, blankets, and sound bowls all travel with me. You just turn up." },
               { q: "How far do you travel?", a: "There are no limitations to how far we travel. However, for locations outside of Ballito, Salt Rock, Umhlanga, and the surrounding North Coast areas, an additional travel fee may apply." },
-              { q: "What's the minimum group size?", a: "There is no minimum group size requirement. However, a minimum/basic fee will apply regardless of group size." },
+              { q: "What's the minimum group size?", a: "There is no minimum group size requirement. " }
             ].map((faq, i) => (
               <details key={i} className="group rounded-xl bg-white p-6 shadow-sm">
                 <summary className="cursor-pointer list-none text-lg font-medium text-gray-800">
