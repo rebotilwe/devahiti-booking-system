@@ -23,9 +23,8 @@ const subNav = [
   { label: "Corporate Wellness", path: "/services/corporate-wellness" },
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Fascial Release", path: "/services/fascia-release" },
   { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
 
@@ -306,7 +305,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* ✅ UPDATED FAQ Section */}
       <section className="bg-[#F9F9FB] px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-center text-3xl font-light md:text-4xl text-gray-800">A few common questions</h2>
@@ -314,8 +313,8 @@ export default function Contact() {
             {[
               { q: "Do I need to be flexible or experienced?", a: "Not at all. Every session is gentle and adaptable. Beginners and stiff bodies are warmly welcomed." },
               { q: "Do you bring all the equipment?", a: "Yes — mats, bolsters, blankets, and sound bowls all travel with me. You just turn up." },
-              { q: "How far do you travel?", a: "Ballito, Salt Rock, Umhlanga and the surrounding North Coast. Reach out for anything further afield." },
-              { q: "What's the minimum group size?", a: "Private groups usually run from 4 up to around 12. Smaller or larger? Just ask." },
+              { q: "How far do you travel?", a: "There are no limitations to how far we travel. However, for locations outside of Ballito, Salt Rock, Umhlanga, and the surrounding North Coast areas, an additional travel fee may apply." },
+              { q: "What's the minimum group size?", a: "There is no minimum group size requirement. However, a minimum/basic fee will apply regardless of group size." },
             ].map((faq, i) => (
               <details key={i} className="group rounded-xl bg-white p-6 shadow-sm">
                 <summary className="cursor-pointer list-none text-lg font-medium text-gray-800">

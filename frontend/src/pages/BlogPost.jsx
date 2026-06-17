@@ -17,15 +17,15 @@ const navLinks = [
   { label: "Gift Card", path: "/gift-card" },
 ];
 
+// ✅ UPDATED SUBNAV - Removed Educational Workshops
 const subNav = [
   { label: "Group Class", path: "/services/group-class" },
   { label: "Private Sessions", path: "/services/private-sessions" },
   { label: "Corporate Wellness", path: "/services/corporate-wellness" },
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Fascial Release", path: "/services/fascia-release" },
   { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
 
@@ -128,9 +128,50 @@ export default function BlogPost() {
             </button>
           </div>
         </div>
+        {/* Sub Navbar */}
+        <div style={{ backgroundColor: "#65AEEA" }}>
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3">
+            {subNav.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.1em] text-white/90 hover:text-white transition whitespace-nowrap"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </header>
 
       <div className="h-28"></div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+          <div className="px-6 py-4">
+            {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-4 pt-2">
+              <p className="text-[10px] font-bold tracking-wider text-[#65AEEA] uppercase mb-2">Services</p>
+              {subNav.map((link) => (
+                <Link key={link.path} to={link.path} className="block py-2 text-xs text-gray-500 hover:text-[#65AEEA]" onClick={() => setMobileOpen(false)}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
+              Our Services
+            </button>
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
+              Book Online
+            </button>
+          </div>
+        </div>
+      )}
 
       <article className="mx-auto max-w-4xl px-6 py-16">
         <Link to="/blog" className="inline-flex items-center gap-2 text-[#65AEEA] hover:underline mb-8">

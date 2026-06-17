@@ -10,7 +10,6 @@ import trainingImg from "../assets/images/img5.jpg";
 import groupImg from "../assets/images/group.jpg";
 import corporateImg from "../assets/images/img1.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
-import educationalWorkshopImg from "../assets/images/img1.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
 import fasciaReleaseImg from "../assets/images/img11.jpg";
 import logo from "../assets/devahiti.png";
@@ -27,19 +26,18 @@ const navLinks = [
   { label: "Gift Card", path: "/gift-card" },
 ];
 
+// ✅ UPDATED SUBNAV - Removed Educational Workshops
 const subNav = [
   { label: "Group Class", path: "/services/group-class" },
   { label: "Private Sessions", path: "/services/private-sessions" },
   { label: "Corporate Wellness", path: "/services/corporate-wellness" },
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Fascial Release", path: "/services/fascia-release" },
   { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
 
-// 9 services - Grouped into 3 rows of 3
 // 8 services - Removed Educational Workshops
 const allServices = [
   { img: groupImg, title: "Group Class", link: "/services/group-class" },
@@ -47,9 +45,8 @@ const allServices = [
   { img: corporateImg, title: "Corporate Wellness", link: "/services/corporate-wellness" },
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
-  { img: fasciaReleaseImg, title: "Fascia Release Therapy", link: "/services/fascia-release" },
+  { img: fasciaReleaseImg, title: "Fascial Release Therapy", link: "/services/fascia-release" },
   { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
-  // ✅ REMOVED: Educational Workshops
   { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
 ];
 
@@ -106,7 +103,7 @@ function ServiceCard({ img, title, link, navigate }) {
       <h3 className="mt-4 text-center text-lg font-light text-gray-800">{title}</h3>
       <button
         onClick={(e) => { e.stopPropagation(); navigate(link); }}
-        className="mt-2 w-full text-center text-[10px] font-semibold uppercase tracking-wider text-[#93C9F9] hover:underline"
+        className="mt-2 w-full text-center text-[10px] font-semibold uppercase tracking-wider text-[#65AEEA] hover:underline"
       >
         Read More
       </button>
@@ -117,16 +114,16 @@ function ServiceCard({ img, title, link, navigate }) {
 function TestimonialCard({ testimonial, index }) {
   return (
     <div 
-      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#93C9F9]/30 h-full flex flex-col ${
+      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#65AEEA]/30 h-full flex flex-col ${
         index === 0 ? "md:col-span-2 lg:col-span-1" : ""
       }`}
     >
       <div className="mb-4">
-        <Quote className="h-8 w-8 text-[#93C9F9]/30" />
+        <Quote className="h-8 w-8 text-[#65AEEA]/30" />
       </div>
       <div className="flex gap-1 mb-4">
         {[...Array(testimonial.rating)].map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+          <Star key={i} className="h-4 w-4 fill-[#65AEEA] text-[#65AEEA]" />
         ))}
       </div>
       <p className="text-gray-600 leading-relaxed mb-5 flex-grow">
@@ -168,7 +165,7 @@ export default function Home() {
   };
 
   const handleShoppingBagClick = () => {
-    navigate("/services"); // ✅ CHANGED: Now goes to Services page instead of external booking URL
+    navigate("/services");
   };
 
   return (
@@ -185,7 +182,7 @@ export default function Home() {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]"
               >
                 {link.label}
               </Link>
@@ -193,20 +190,20 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Call us">
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Call us">
               <Phone className="h-5 w-5" />
             </button>
-            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Book Online">
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Book Online">
               <ShoppingBag className="h-5 w-5" />
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors" aria-label="Menu">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Menu">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
         {/* Our Services Button */}
-        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
           <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button
               onClick={() => navigate("/services")}
@@ -225,17 +222,17 @@ export default function Home() {
         <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
             <button 
               onClick={() => { navigate("/services"); setMobileOpen(false); }} 
-              className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition"
+              className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
             >
               Our Services
             </button>
-            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -254,7 +251,7 @@ export default function Home() {
       </section>
 
       {/* Hero Title Section */}
-      <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
+      <section className="relative py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl md:text-5xl font-light text-white">
             Private, Group Yoga &amp; Sound Relaxation
@@ -264,7 +261,7 @@ export default function Home() {
           </p>
           <Link 
             to="/services"
-            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] bg-white transition-all hover:scale-105"
+            className="mt-8 inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#65AEEA] bg-white transition-all hover:scale-105"
           >
             Booking Menu
           </Link>
@@ -304,13 +301,13 @@ export default function Home() {
           <Link 
             to="/services"
             className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-opacity hover:opacity-90" 
-            style={{ backgroundColor: "#93C9F9" }}
+            style={{ backgroundColor: "#65AEEA" }}
           >
             BOOKING MENU
           </Link>
           <Link 
             to="/about" 
-            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#93C9F9] border-2 border-[#93C9F9] bg-white transition-all hover:bg-[#93C9F9] hover:text-white"
+            className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-[#65AEEA] border-2 border-[#65AEEA] bg-white transition-all hover:bg-[#65AEEA] hover:text-white"
           >
             MORE ABOUT CHERYL
           </Link>
@@ -325,14 +322,14 @@ export default function Home() {
       <section className="py-16 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Services</h2>
-          <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-6"></div>
+          <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4 mb-6"></div>
           <p className="text-gray-600 mb-8">
             Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training — find the practice that speaks to you.
           </p>
           <Link 
             to="/services"
             className="inline-block rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-all hover:scale-105"
-            style={{ backgroundColor: "#93C9F9" }}
+            style={{ backgroundColor: "#65AEEA" }}
           >
             View All Services
           </Link>
@@ -344,7 +341,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light md:text-4xl text-gray-800">Our Offerings</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
@@ -360,7 +357,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {allServices.slice(6, 9).map((service, idx) => (
+            {allServices.slice(6, 8).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
@@ -373,13 +370,13 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="flex justify-center gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-[#93C9F9] text-[#93C9F9]" />
+                <Star key={i} className="h-5 w-5 fill-[#65AEEA] text-[#65AEEA]" />
               ))}
             </div>
             <h2 className="text-3xl md:text-4xl font-light text-gray-800">
               What Our Clients Say
             </h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4 mb-4" />
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4 mb-4" />
             <p className="text-gray-500 max-w-2xl mx-auto">
               Real stories from real people who have experienced the Devahiti difference
             </p>
@@ -400,10 +397,10 @@ export default function Home() {
                 {testimonials.map((testimonial) => (
                   <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                      <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                      <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
                       <div className="flex gap-1 mb-4">
                         {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-[#93C9F9] text-[#93C9F9]" />
+                          <Star key={i} className="h-4 w-4 fill-[#65AEEA] text-[#65AEEA]" />
                         ))}
                       </div>
                       <p className="text-gray-600 leading-relaxed mb-5 text-sm">
@@ -425,7 +422,7 @@ export default function Home() {
                   key={idx}
                   onClick={() => setActiveTestimonial(idx)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"
+                    activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"
                   }`}
                 />
               ))}
@@ -436,7 +433,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-[#F9F9FB] rounded-full px-4 py-2">
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-[#93C9F9] text-[#93C9F9]" />
+                  <Star key={i} className="h-3 w-3 fill-[#65AEEA] text-[#65AEEA]" />
                 ))}
               </div>
               <span className="text-xs text-gray-600">5.0 rating · 19+ reviews</span>
@@ -446,7 +443,7 @@ export default function Home() {
       </section>
 
       {/* Subscribe Section */}
-      <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #93C9F9 0%, #65AEEA 100%)" }}>
+      <section className="px-6 py-20 text-center text-white" style={{ background: "linear-gradient(135deg, #65AEEA 0%, #4A9FD9 100%)" }}>
         <h2 className="text-3xl md:text-4xl font-light">Sign up for a free trial class!</h2>
         
         {state.succeeded ? (
@@ -457,7 +454,7 @@ export default function Home() {
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input type="email" name="email" placeholder="Your email address" required className="flex-1 px-5 py-3 rounded-full text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white" disabled={state.submitting} />
             <ValidationError field="email" errors={state.errors} className="text-xs text-red-200 mt-1" />
-            <button type="submit" disabled={state.submitting} className="px-8 py-3 rounded-full bg-white text-[#93C9F9] text-sm font-semibold uppercase tracking-wider transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100">
+            <button type="submit" disabled={state.submitting} className="px-8 py-3 rounded-full bg-white text-[#65AEEA] text-sm font-semibold uppercase tracking-wider transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100">
               {state.submitting ? "Sending..." : "Subscribe"}
             </button>
           </form>
@@ -465,26 +462,26 @@ export default function Home() {
         <ValidationError errors={state.errors} className="mt-3 text-sm text-red-200" />
       </section>
 
-  {/* Footer */}
-<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
-  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-  </p>
-  <p className="mt-4 text-xs text-white/60">
-    Developed by{' '}
-    <a 
-      href="https://afribizconnect.co.za/" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
-    >
-      Afribiz Connect
-    </a>
-  </p>
-</footer>
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+        <p className="mt-4 text-xs text-white/60">
+          Developed by{' '}
+          <a 
+            href="https://afribizconnect.co.za/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+          >
+            Afribiz Connect
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

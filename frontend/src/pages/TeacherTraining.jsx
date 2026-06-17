@@ -23,16 +23,15 @@ const subNav = [
   { label: "Corporate Wellness", path: "/services/corporate-wellness" },
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
-  { label: "Fascia Release", path: "/services/fascia-release" },
+  { label: "Fascial Release", path: "/services/fascia-release" },
   { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Educational Workshops", path: "/services/educational-workshops" },
   { label: "Retreats", path: "/services/retreats" },
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 // ✅ UPDATED: 10 Modules with correct dates
-const courseModules = [
+const courseModules300 = [
   {
     id: 1,
     title: "Anatomy of Energy",
@@ -95,12 +94,43 @@ const courseModules = [
   }
 ];
 
-// Why Choose This Training - Updated
-const whyChoose = [
-  "New Research – Explore the latest research in anatomy of energy, fascia, pain management, skeletal alignment, and therapeutic practices",
-  "Comprehensive Course Material – Gain an advanced understanding of yoga, from philosophy to functional anatomy, somatic psychology to advanced Ayurveda",
-  "Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique for pain management, fascial release, and skeletal alignment",
-  "Affordable & Accessible – No exams, no large upfront costs. Weekend Module fee of R2,800.00"
+// ✅ NEW: 200 Hour Modules (4 modules)
+const courseModules200 = [
+  {
+    id: 1,
+    title: "Foundations of Yoga",
+    description: "History, philosophy, and the eight limbs of yoga"
+  },
+  {
+    id: 2,
+    title: "Anatomy & Physiology",
+    description: "Understanding the body's systems and how they relate to yoga practice"
+  },
+  {
+    id: 3,
+    title: "Teaching Methodology",
+    description: "Class sequencing, verbal cues, and hands-on adjustments"
+  },
+  {
+    id: 4,
+    title: "Practicum & Integration",
+    description: "Practice teaching, feedback, and integration of all learned skills"
+  }
+];
+
+// ✅ UPDATED: Why Choose - Split for 200hr and 300hr
+const whyChoose200 = [
+  "Foundational Training – Build a strong, safe, and sustainable teaching practice",
+  "Comprehensive Curriculum – Study philosophy, anatomy, teaching methodology, and more",
+  "Small Groups – Maximum 10 students for personalized attention",
+  "Internationally Recognized – Course content approved by Yoga Alliance"
+];
+
+const whyChoose300 = [
+  "Advanced Research – Explore the latest research in fascia, pain management, skeletal alignment, and therapeutic practices",
+  "Comprehensive Course Material – Gain an advanced understanding from philosophy to functional anatomy, somatic psychology to Ayurveda",
+  "Hands-On Learning – Master the exclusive Devahiti hands-on bodywork technique",
+  "Affordable & Accessible – No exams, no large upfront costs. R2,800 per module"
 ];
 
 // Testimonials from past students
@@ -172,7 +202,7 @@ export default function TeacherTraining() {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#93C9F9]"
+                className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]"
               >
                 {link.label}
               </Link>
@@ -180,19 +210,19 @@ export default function TeacherTraining() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors">
+            <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
               <Phone className="h-5 w-5" />
             </button>
-            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#93C9F9] transition-colors">
+            <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
               <ShoppingBag className="h-5 w-5" />
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#93C9F9] transition-colors">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#93C9F9" }}>
+        <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
           <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button onClick={() => navigate("/services")} className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity">
               Our Services
@@ -208,14 +238,14 @@ export default function TeacherTraining() {
         <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#93C9F9] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
+              <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                 {link.label}
               </Link>
             ))}
-            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-4 w-full bg-[#93C9F9] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-4 w-full bg-[#65AEEA] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
               Our Services
             </button>
-            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#93C9F9] text-[#93C9F9] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#93C9F9] hover:text-white transition">
+            <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
           </div>
@@ -246,65 +276,65 @@ export default function TeacherTraining() {
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#93C9F9] font-semibold">Transform Your Life</p>
+            <p className="text-sm uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Transform Your Life</p>
             <h2 className="text-3xl font-light md:text-4xl text-gray-800 mt-2">Choose Your Path</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
             <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
               Dive deeper into something that brings you peace and happiness. Expand your knowledge of what you are passionate about and share that passion with others!
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* 200 Hour */}
+            {/* ✅ 200 Hour - UPDATED */}
             <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#93C9F9]/10 mb-4">
-                  <BookOpen className="h-8 w-8 text-[#93C9F9]" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#65AEEA]/10 mb-4">
+                  <BookOpen className="h-8 w-8 text-[#65AEEA]" />
                 </div>
                 <h3 className="text-2xl font-light text-gray-800">200 Hour Teacher Training</h3>
-                <p className="text-[#93C9F9] font-semibold text-xl mt-2">Next Training Starting May 2026</p>
-                <p className="text-gray-500 text-sm mt-2">International Certificate</p>
+                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts November 2026</p>
+                <p className="text-gray-500 text-sm mt-2">200 Hours Over 10 Months | 4 Modules</p>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
                     Increase your understanding of the body, mind and Spirit connection, deepen your own practice, turn your PASSION into your PROFESSION and teach Yoga to others.
                   </p>
                 </div>
                 <ul className="mt-6 text-left space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Part-time training</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Small groups (maximum 10 students)</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Personalised feedback</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Course content approved by Yoga Alliance</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Part-time training</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Small groups (maximum 10 students)</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Personalised feedback</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Course content approved by Yoga Alliance</li>
                 </ul>
-                <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+                <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
                   Enquire Now
                 </button>
               </div>
             </div>
 
-            {/* 300 Hour Advanced */}
-            <div className="bg-white border-2 border-[#93C9F9] rounded-2xl p-8 shadow-lg hover:shadow-xl transition relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#93C9F9] text-white text-xs font-bold px-4 py-1 rounded-full">
+            {/* ✅ 300 Hour Advanced - UPDATED */}
+            <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8 shadow-lg hover:shadow-xl transition relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#65AEEA] text-white text-xs font-bold px-4 py-1 rounded-full">
                 Advanced
               </div>
               <div className="text-center mt-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#93C9F9]/10 mb-4">
-                  <Award className="h-8 w-8 text-[#93C9F9]" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#65AEEA]/10 mb-4">
+                  <Award className="h-8 w-8 text-[#65AEEA]" />
                 </div>
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
-                <p className="text-[#93C9F9] font-semibold text-xl mt-2">10 Modules | R2,800 per module</p>
-                <p className="text-gray-500 text-sm mt-2">Flexible – complete in 1 or 2 years</p>
+                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts June 2027</p>
+                <p className="text-gray-500 text-sm mt-2">300 Hours Over 12 Months | 10 Modules</p>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
                     Designed for certified 200-hour yoga teachers looking to expand their knowledge and elevate their practice. Students can attend all 10 modules in one year or spread them over 2 years.
                   </p>
                 </div>
                 <ul className="mt-6 text-left space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> 10 Modules over 12 weekends</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> One full weekend per month</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> R2,800 per module</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#93C9F9]" /> Complete in 1 or 2 years</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> 10 Modules over 12 weekends</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> One full weekend per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> R2,800 per module</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Complete in 1 or 2 years</li>
                 </ul>
-                <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#93C9F9] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] transition">
+                <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
                   Enquire Now
                 </button>
               </div>
@@ -313,41 +343,89 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* Why Choose This Training */}
+      {/* ✅ UPDATED: Why Choose This Training - Split for 200hr and 300hr */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">Why Choose This Training?</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Why Choose This Training?</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {whyChoose.map((reason, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
-                <CheckCircle className="h-5 w-5 text-[#93C9F9] mt-0.5 flex-shrink-0" />
-                <p className="text-gray-600">{reason}</p>
+            {/* First Two - 200 Hour Training */}
+            <div className="md:col-span-2">
+              <h3 className="text-xl font-semibold text-[#65AEEA] mb-4 text-center">200-Hour Teacher Training</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {whyChoose200.map((reason, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
+                    <CheckCircle className="h-5 w-5 text-[#65AEEA] mt-0.5 flex-shrink-0" />
+                    <p className="text-gray-600">{reason}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Two - 300 Hour Training */}
+            <div className="md:col-span-2 mt-6">
+              <h3 className="text-xl font-semibold text-[#65AEEA] mb-4 text-center">Advanced 300-Hour Teacher Training</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {whyChoose300.map((reason, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm">
+                    <CheckCircle className="h-5 w-5 text-[#65AEEA] mt-0.5 flex-shrink-0" />
+                    <p className="text-gray-600">{reason}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ✅ NEW: 200 Hour Course Content */}
+      <section className="py-20 px-6">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">200 Hour Course Content</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+            <p className="text-gray-500 mt-4">4 comprehensive modules designed for foundational learning</p>
+          </div>
+
+          <div className="space-y-4">
+            {courseModules200.map((module) => (
+              <div key={module.id} className="bg-white border border-gray-100 rounded-xl p-5 hover:border-[#65AEEA]/30 transition-all hover:shadow-md">
+                <div className="flex flex-col md:flex-row md:items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-[#65AEEA]/20 flex items-center justify-center">
+                      <span className="text-sm font-bold text-[#65AEEA]">{module.id}</span>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-lg font-semibold text-gray-800">{module.title}</h4>
+                    <p className="text-gray-600 text-sm mt-1">{module.description}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Course Content - 10 Modules */}
-      <section className="py-20 px-6">
+      {/* ✅ UPDATED: 300 Hour Course Content */}
+      <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">300 Hour Course Content</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4">10 comprehensive modules designed for deep learning</p>
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">300 Hour Course Content</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+            <p className="text-gray-500 mt-4">10 comprehensive modules designed for advanced learning</p>
           </div>
 
           <div className="space-y-4">
-            {courseModules.map((module) => (
-              <div key={module.id} className="bg-white border border-gray-100 rounded-xl p-5 hover:border-[#93C9F9]/30 transition-all hover:shadow-md">
+            {courseModules300.map((module) => (
+              <div key={module.id} className="bg-white border border-gray-100 rounded-xl p-5 hover:border-[#65AEEA]/30 transition-all hover:shadow-md">
                 <div className="flex flex-col md:flex-row md:items-start gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-[#93C9F9]/20 flex items-center justify-center">
-                      <span className="text-sm font-bold text-[#93C9F9]">{module.id}</span>
+                    <div className="w-10 h-10 rounded-full bg-[#65AEEA]/20 flex items-center justify-center">
+                      <span className="text-sm font-bold text-[#65AEEA]">{module.id}</span>
                     </div>
                   </div>
                   <div className="flex-1">
@@ -355,7 +433,7 @@ export default function TeacherTraining() {
                     <p className="text-gray-600 text-sm mt-1">{module.description}</p>
                   </div>
                   <div className="flex-shrink-0 mt-2 md:mt-0">
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#93C9F9] bg-[#93C9F9]/10 px-3 py-1.5 rounded-full whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#65AEEA] bg-[#65AEEA]/10 px-3 py-1.5 rounded-full whitespace-nowrap">
                       <Calendar className="h-4 w-4" />
                       {module.dates}
                     </span>
@@ -365,7 +443,7 @@ export default function TeacherTraining() {
             ))}
           </div>
 
-          <div className="mt-8 p-4 bg-[#93C9F9]/10 rounded-xl text-center">
+          <div className="mt-8 p-4 bg-[#65AEEA]/10 rounded-xl text-center">
             <p className="text-sm text-gray-600">
               <strong>Flexible Learning:</strong> Complete all 10 modules in one year or spread them over 2 years. 
               R2,800 per module. 10 modules over 12 weekends.
@@ -375,34 +453,34 @@ export default function TeacherTraining() {
       </section>
 
       {/* Training Details */}
-      <section className="bg-[#F9F9FB] py-20 px-6">
+      <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">Training Details</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Training Details</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <Clock className="h-8 w-8 text-[#93C9F9] mb-3" />
+              <Clock className="h-8 w-8 text-[#65AEEA] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Duration</h3>
-              <p className="text-gray-600">10 Modules | 12 Weekends</p>
-              <p className="text-gray-500 text-sm mt-2">Complete in 1 or 2 years</p>
+              <p className="text-gray-600">200 Hours Over 10 Months</p>
+              <p className="text-gray-500 text-sm mt-2">4 Modules</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <MapPin className="h-8 w-8 text-[#93C9F9] mb-3" />
+              <MapPin className="h-8 w-8 text-[#65AEEA] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Location</h3>
               <p className="text-gray-600">Devahiti Studio, Ballito</p>
               <p className="text-gray-500 text-sm mt-2">In-person training only</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <Award className="h-8 w-8 text-[#93C9F9] mb-3" />
+              <Award className="h-8 w-8 text-[#65AEEA] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Investment</h3>
-              <p className="text-gray-600">R2,800 per module</p>
-              <p className="text-gray-500 text-sm mt-2">No large upfront costs</p>
+              <p className="text-gray-600">Contact for pricing</p>
+              <p className="text-gray-500 text-sm mt-2">Payment plans available</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <Users className="h-8 w-8 text-[#93C9F9] mb-3" />
+              <Users className="h-8 w-8 text-[#65AEEA] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Small Groups</h3>
               <p className="text-gray-600">Maximum 10 participants</p>
               <p className="text-gray-500 text-sm mt-2">Personalised attention guaranteed</p>
@@ -412,10 +490,10 @@ export default function TeacherTraining() {
       </section>
 
       {/* Terms & Conditions */}
-      <section className="py-20 px-6">
+      <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-light md:text-3xl text-[#93C9F9] mb-6">Terms & Conditions</h2>
-          <div className="bg-[#F9F9FB] p-6 rounded-xl text-left space-y-3">
+          <h2 className="text-2xl font-light md:text-3xl text-[#65AEEA] mb-6">Terms & Conditions</h2>
+          <div className="bg-white p-6 rounded-xl text-left space-y-3 shadow-sm">
             <p className="text-sm text-gray-600">✓ To participate a valid 200 hour certificate is necessary.</p>
             <p className="text-sm text-gray-600">✓ All workshops need to be attended for certification and all assignments must be completed within the allocated time.</p>
             <p className="text-sm text-gray-600">✓ The monthly payment needs to reflect a minimum of 5 days before the monthly workshop.</p>
@@ -431,15 +509,14 @@ export default function TeacherTraining() {
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#93C9F9]">What Our Students Say</h2>
-            <div className="w-20 h-px bg-[#93C9F9] mx-auto mt-4"></div>
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">What Our Students Say</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 
-          {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-2 gap-6">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="bg-white rounded-2xl p-6 shadow-lg">
-                <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
                 <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text}"</p>
                 <div className="border-t border-gray-100 pt-4">
                   <p className="font-semibold text-gray-800">{testimonial.name}</p>
@@ -449,14 +526,13 @@ export default function TeacherTraining() {
             ))}
           </div>
 
-          {/* Mobile Carousel */}
           <div className="md:hidden relative">
             <div className="overflow-hidden">
               <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
                 {testimonials.map((testimonial) => (
                   <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
                     <div className="bg-white rounded-2xl p-6 shadow-lg">
-                      <Quote className="h-8 w-8 text-[#93C9F9]/30 mb-4" />
+                      <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
                       <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text.substring(0, 200)}..."</p>
                       <div className="border-t border-gray-100 pt-4">
                         <p className="font-semibold text-gray-800">{testimonial.name}</p>
@@ -469,7 +545,7 @@ export default function TeacherTraining() {
             </div>
             <div className="flex justify-center gap-2 mt-6">
               {testimonials.map((_, idx) => (
-                <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#93C9F9]" : "w-2 bg-gray-300"}`} />
+                <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"}`} />
               ))}
             </div>
           </div>
@@ -477,7 +553,7 @@ export default function TeacherTraining() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 text-center" style={{ backgroundColor: "#93C9F9" }}>
+      <section className="py-20 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <h2 className="text-3xl font-light md:text-4xl text-white">Ready to Transform Your Life?</h2>
         <p className="text-white/90 text-sm mt-2 max-w-xl mx-auto">
           The bonds that are created during teacher training last a lifetime. Only a few places left!
@@ -485,7 +561,7 @@ export default function TeacherTraining() {
         <p className="text-white/80 text-sm mt-4">
           Email <a href="mailto:cheryl@devahiti.com" className="underline font-semibold">cheryl@devahiti.com</a> for registration forms and course content
         </p>
-        <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 px-8 py-3 bg-white text-[#93C9F9] text-sm font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
+        <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 px-8 py-3 bg-white text-[#65AEEA] text-sm font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
           Enquire Now
         </button>
       </section>
