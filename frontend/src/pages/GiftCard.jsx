@@ -91,30 +91,34 @@ export default function GiftCard() {
   };
 
   // ✅ NEW: Handle gift card purchase - goes directly to payment
-  const handlePurchase = (giftOption) => {
-    // Navigate to checkout/payment with gift card details
-    navigate("/checkout", { 
-      state: { 
-        giftCard: true,
-        service: {
-          id: giftOption.serviceId,
-          title: giftOption.title,
-          price: giftOption.price,
-          description: giftOption.description
-        },
-        booking: {
-          service_type: giftOption.serviceId,
-          total_price: parseInt(giftOption.price.replace('R', '')),
-          participants: 1,
-          customer_name: "",
-          customer_email: "",
-          customer_phone: "",
-          customer_address: "",
-          notes: `Gift Card: ${giftOption.title}`
-        }
-      } 
-    });
-  };
+// ✅ FIXED: Handle gift card purchase with correct price
+const handlePurchase = (giftOption) => {
+  // Extract the numeric price (remove 'R' and any spaces)
+  const priceAmount = parseInt(giftOption.price.replace('R', '').trim());
+  
+  navigate("/checkout", { 
+    state: { 
+      giftCard: true,
+      service: {
+        id: giftOption.serviceId,
+        title: giftOption.title,
+        price: giftOption.price,
+        priceAmount: priceAmount,
+        description: giftOption.description
+      },
+      booking: {
+        service_type: giftOption.serviceId,
+        total_price: priceAmount, // ✅ Use the correct extracted price
+        participants: 1,
+        customer_name: "",
+        customer_email: "",
+        customer_phone: "",
+        customer_address: "",
+        notes: `Gift Card: ${giftOption.title}`
+      }
+    } 
+  });
+};
 
   return (
     <div className="min-h-screen bg-white">

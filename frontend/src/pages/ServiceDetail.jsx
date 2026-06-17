@@ -21,11 +21,12 @@ const navLinks = [
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 // ✅ UPDATED TEACHER TRAINING DATA (from client's website)
+// ✅ UPDATED TEACHER TRAINING DATA (matching TeacherTraining.jsx)
 const teacherTrainingData = {
-  startDate: "May 2026",
+  startDate: "June 2027", // ✅ Updated from "May 2026"
   schedule: "One full weekend per month | Saturdays & Sundays 9:30am - 2:30pm",
-  duration: "12 months | 11 Modules",
-  investment: "R2,800 per month (for 12 months)",
+  duration: "12 months | 10 Modules", // ✅ Updated from "11 Modules"
+  investment: "R2,800 per module (10 modules over 12 weekends)",
   maxStudents: "Maximum 10 participants",
   whyChoose: [
     "New Research – Explore the latest research in fascia, pain management, skeletal alignment, and therapeutic practices",
@@ -42,11 +43,11 @@ const teacherTrainingData = {
     { name: "Advanced Ayurveda", description: "The impact of doshas, gunas, five pranas, 14 major nadis, and the secrets of alchemy" },
     { name: "Specialized Training", description: "Yin, prenatal yoga, yoga for children and special needs groups" },
     { name: "The art of retreating", description: "Learn how to plan and host transformative retreats" },
-    { name: "Devahiti Hands-On Bodywork", description: "Learn hands-on techniques to supplement your income" }
+    { name: "Devahiti Hands-On Bodywork", description: "Learn hands-on techniques to supplement your income" },
+    { name: "Advanced Philosophy", description: "Deep dive into yogic philosophy and ancient wisdom" } // ✅ Added 10th module
   ],
   requirements: "Valid 200-hour yoga teacher training certification required. All workshops need to be attended for certification and all assignments must be completed within the allocated time."
 };
-
 export default function ServiceDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();

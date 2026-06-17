@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Waves, Calendar, Clock, Users, MapPin, 
-  User, Mail, Phone, Lock 
+  User, Mail, Phone, Lock, ArrowLeft 
 } from "lucide-react";
 import { initiateBooking } from "../api/api";
 import CouponInput from "../components/CouponInput";
@@ -13,9 +13,8 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { booking } = location.state || {};
   const [loading, setLoading] = useState(false);
-  const [loadingStep, setLoadingStep] = useState(""); // Track which step we're on
+  const [loadingStep, setLoadingStep] = useState("");
   
-  // Coupon state
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [discountedTotal, setDiscountedTotal] = useState(booking?.total_price || 0);
   const [originalTotal] = useState(booking?.total_price || 0);
@@ -66,7 +65,6 @@ export default function Checkout() {
     setLoadingStep("Creating your booking...");
 
     try {
-      // Step 1: Create the booking in database
       const bookingData = {
         service_type: booking.service_type,
         booking_date: booking.booking_date,
@@ -93,7 +91,6 @@ export default function Checkout() {
       if (bookingResult.bookingId) {
         setLoadingStep("Preparing secure payment...");
         
-        // Step 2: Create Yoco checkout session and get redirect URL
         const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -115,7 +112,6 @@ export default function Checkout() {
         
         if (checkoutData.redirectUrl) {
           setLoadingStep("Redirecting to payment page...");
-          // Small delay to show the message before redirect
           setTimeout(() => {
             window.location.href = checkoutData.redirectUrl;
           }, 500);
@@ -170,6 +166,16 @@ export default function Checkout() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Booking Summary */}
           <div className="lg:col-span-2 space-y-6">
+            {/* ✅ BACK BUTTON ADDED */}
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => navigate(-1)}
+                className="text-sm text-gray-500 hover:text-[#65AEEA] transition flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" /> Back
+              </button>
+            </div>
+
             <div className="bg-white rounded-lg shadow-sm border border-ocean/10 p-6">
               <h2 className="font-heading text-xl text-foreground mb-4">Booking Summary</h2>
               <div className="space-y-3">
@@ -235,21 +241,18 @@ export default function Checkout() {
             <div className="bg-ocean/5 border border-ocean/20 rounded-lg p-6 sticky top-24">
               <h2 className="font-heading text-xl text-foreground mb-4">Payment Summary</h2>
               
-              {/* Price breakdown */}
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span>R{originalTotal}</span>
                 </div>
                 
-                {/* Coupon Input */}
                 <CouponInput
                   onApply={handleApplyCoupon}
                   onRemove={handleRemoveCoupon}
                   appliedCoupon={appliedCoupon}
                 />
                 
-                {/* Discount display */}
                 {appliedCoupon && discountAmount > 0 && (
                   <div className="flex justify-between text-sm text-green-600 pt-2 border-t border-ocean/10">
                     <span>Discount ({appliedCoupon.value}% off)</span>
@@ -258,7 +261,6 @@ export default function Checkout() {
                 )}
               </div>
               
-              {/* Total */}
               <div className="text-center pt-4 border-t border-ocean/20">
                 <p className="text-xs text-muted-foreground mb-1">Total due</p>
                 <p className="text-3xl font-heading text-ocean">R{discountedTotal}</p>
