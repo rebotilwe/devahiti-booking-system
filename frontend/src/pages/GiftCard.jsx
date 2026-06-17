@@ -31,12 +31,14 @@ const subNav = [
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 // ✅ Gift Card Options - Service Based
+// ✅ Gift Card Options - Service Based with correct prices
 const giftCardOptions = [
   {
     id: "private-session",
     title: "Private Yoga Session",
     description: "A personalised 1-on-1 yoga session tailored to the recipient's body and goals.",
-    price: "R650",
+    price: "R550", // ✅ Updated from R650 to R550
+    priceAmount: 550, // ✅ Added explicit price amount
     icon: Heart,
     popular: true,
     serviceId: "private-sessions"
@@ -46,6 +48,7 @@ const giftCardOptions = [
     title: "Sound Massage",
     description: "Therapeutic sound healing with singing bowls placed directly on and around the body.",
     price: "R800",
+    priceAmount: 800,
     icon: Waves,
     popular: false,
     serviceId: "sound-massage"
@@ -55,6 +58,7 @@ const giftCardOptions = [
     title: "Sound Journey",
     description: "Immersive sound healing experience using singing bowls and therapeutic sound.",
     price: "R800",
+    priceAmount: 800,
     icon: Music,
     popular: false,
     serviceId: "sound-journey"
@@ -64,6 +68,7 @@ const giftCardOptions = [
     title: "Group Class Package",
     description: "5 x Group Yoga Classes. Perfect for someone who loves community practice.",
     price: "R650",
+    priceAmount: 650,
     icon: Users,
     popular: false,
     serviceId: "group-class"

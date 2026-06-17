@@ -25,6 +25,34 @@ const navLinks = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
+// ✅ Helper function to get price from service
+const getServicePrice = (service) => {
+  if (!service) return 650;
+  // Check for priceAmount first
+  if (service.priceAmount) return service.priceAmount;
+  // Check for basePrice
+  if (service.basePrice) return service.basePrice;
+  // Parse from price string if needed
+  if (service.price) {
+    const match = service.price.match(/\d+/);
+    if (match) return parseInt(match[0]);
+  }
+  return 650; // Default fallback
+};
+
+// ✅ Helper function to get extra person fee
+const getExtraPersonFee = (service) => {
+  if (!service) return 150;
+  // Check for explicit extraPersonFee
+  if (service.extraPersonFee) return service.extraPersonFee;
+  // Check for price string that includes extra person info
+  if (service.price && service.price.includes('+R')) {
+    const match = service.price.match(/\+R(\d+)/);
+    if (match) return parseInt(match[1]);
+  }
+  return 150; // Default fallback
+};
+
 export default function Schedule() {
   const [searchParams] = useSearchParams();
   const location = useLocation();
@@ -34,14 +62,31 @@ export default function Schedule() {
   
   const serviceId = searchParams.get("service");
   
+  // ✅ Find service from services data or use state from navigation
   const preselectedService = services.find(s => s.id === serviceId);
   const stateService = location.state?.service;
   
-  const initialService = preselectedService || stateService || { 
+  // ✅ Determine the service with correct pricing
+  const resolvedService = preselectedService || stateService;
+  
+  const initialService = resolvedService ? {
+    id: resolvedService.id,
+    title: resolvedService.title,
+    basePrice: getServicePrice(resolvedService),
+    extraPersonFee: getExtraPersonFee(resolvedService),
+    duration: resolvedService.duration || "60 minutes",
+    price: resolvedService.price,
+    priceAmount: resolvedService.priceAmount,
+    location: resolvedService.location,
+    capacity: resolvedService.capacity,
+    bookingType: resolvedService.bookingType,
+    slug: resolvedService.slug,
+  } : { 
     id: "private", 
     title: "Private Yoga Session", 
     basePrice: 650, 
-    extraPersonFee: 150 
+    extraPersonFee: 150,
+    duration: "60 minutes",
   };
 
   const [selectedService] = useState(initialService);

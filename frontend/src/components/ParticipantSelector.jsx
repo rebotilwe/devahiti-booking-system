@@ -1,16 +1,19 @@
 import { motion } from "framer-motion";
 import { Users, Minus, Plus } from "lucide-react";
+import { useEffect } from "react";
 
-// Pricing configuration
-const BASE_PRICE = 650;
-const EXTRA_PERSON_FEE = 150;
+export default function ParticipantSelector({ 
+  participants, 
+  setParticipants, 
+  onPriceChange,
+  basePrice = 650, // ✅ Now accepts dynamic base price
+  extraPersonFee = 150 // ✅ Now accepts dynamic extra fee
+}) {
+  const calculatePrice = (count) => {
+    if (count === 1) return basePrice;
+    return basePrice + (count - 1) * extraPersonFee;
+  };
 
-const calculatePrice = (participants) => {
-  if (participants === 1) return BASE_PRICE;
-  return BASE_PRICE + (participants - 1) * EXTRA_PERSON_FEE;
-};
-
-export default function ParticipantSelector({ participants, setParticipants, onPriceChange }) {
   const increment = () => {
     if (participants < 10) {
       const newCount = participants + 1;
@@ -28,6 +31,11 @@ export default function ParticipantSelector({ participants, setParticipants, onP
   };
 
   const price = calculatePrice(participants);
+
+  // ✅ Update price when basePrice or extraPersonFee changes
+  useEffect(() => {
+    onPriceChange(calculatePrice(participants));
+  }, [basePrice, extraPersonFee]);
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-ocean/10 p-4 sm:p-6">
@@ -64,7 +72,7 @@ export default function ParticipantSelector({ participants, setParticipants, onP
       </div>
       
       <p className="text-xs text-muted-foreground mt-4">
-        Base price: R{BASE_PRICE} for 1 person | +R{EXTRA_PERSON_FEE} per extra person
+        Base price: R{basePrice} for 1 person | +R{extraPersonFee} per extra person
       </p>
     </div>
   );
