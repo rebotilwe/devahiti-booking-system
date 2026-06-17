@@ -292,9 +292,9 @@ export default function TeacherTraining() {
                   </p>
                 </div>
                 <ul className="mt-6 text-left space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Part-time training</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> 4 Modules Over 10 Months</li>
                   <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Small groups (maximum 10 students)</li>
-                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Personalised feedback</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Part-time training</li>
                   <li className="flex items-center gap-2 text-sm text-gray-600"><CheckCircle className="h-4 w-4 text-[#65AEEA]" /> Course content approved by Yoga Alliance</li>
                 </ul>
                 <button onClick={() => window.location.href = "mailto:cheryl@devahiti.com"} className="mt-6 w-full py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
