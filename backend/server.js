@@ -66,7 +66,7 @@ app.get('/api/test-email', async (req, res) => {
     const testBooking = {
       id: 9999,
       customer_name: 'Test User',
-      customer_email: 'rebotilwemokiba@gmail.com', // Change to your test email
+      customer_email: 'rebotilwemokiba@gmail.com',
       customer_phone: '0821234567',
       service_type: 'Yoga Class',
       booking_date: new Date().toISOString(),
