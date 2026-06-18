@@ -1,6 +1,7 @@
 import express from 'express';
 import axios from 'axios';
 import db from '../config/db.js';
+import { sendAllBookingEmails } from '../services/emailService.js';
 
 const router = express.Router();
 
@@ -72,7 +73,7 @@ router.post('/create-checkout', async (req, res) => {
   }
 });
 
-// Webhook endpoint
+// Webhook endpoint - Updated to send email notifications
 router.post('/webhook', async (req, res) => {
   console.log("=== Yoco Webhook Received ===");
   console.log("Webhook body:", req.body);
@@ -81,16 +82,34 @@ router.post('/webhook', async (req, res) => {
   
   if (status === 'successful' && metadata && metadata.bookingId) {
     try {
-      await db.query(
+      // Update booking status
+      const result = await db.query(
         `UPDATE bookings 
          SET payment_status = $1, 
              payment_id = $2, 
              updated_at = NOW() 
-         WHERE id = $3`,
+         WHERE id = $3
+         RETURNING *`,
         ['paid', id, metadata.bookingId]
       );
       
-      console.log(`✅ Booking ${metadata.bookingId} marked as paid`);
+      const booking = result.rows[0];
+      
+      if (booking) {
+        console.log(`✅ Booking ${metadata.bookingId} marked as paid`);
+        
+        // Send payment confirmation emails
+        const paymentDetails = {
+          amount: booking.total_price,
+          method: 'Card',
+          transactionId: id
+        };
+        
+        sendAllBookingEmails(booking, paymentDetails).catch(err => {
+          console.error('Background payment email sending failed:', err);
+        });
+      }
+      
       res.json({ received: true });
     } catch (err) {
       console.error("Webhook database error:", err);
@@ -102,6 +121,7 @@ router.post('/webhook', async (req, res) => {
   }
 });
 
+// Update booking status manually - Updated to send emails
 router.post('/update-booking-status', async (req, res) => {
   const { bookingId, paymentStatus, paymentId } = req.body;
   
@@ -112,16 +132,33 @@ router.post('/update-booking-status', async (req, res) => {
   }
   
   try {
-    await db.query(
+    const result = await db.query(
       `UPDATE bookings 
        SET payment_status = $1, 
            payment_id = $2, 
            updated_at = NOW() 
-       WHERE id = $3`,
+       WHERE id = $3
+       RETURNING *`,
       [paymentStatus, paymentId || null, bookingId]
     );
     
-    console.log(`✅ Booking ${bookingId} updated to ${paymentStatus}`);
+    const booking = result.rows[0];
+    
+    if (booking && paymentStatus === 'paid') {
+      console.log(`✅ Booking ${bookingId} updated to paid`);
+      
+      // Send payment confirmation emails
+      const paymentDetails = {
+        amount: booking.total_price,
+        method: 'Manual',
+        transactionId: paymentId || 'N/A'
+      };
+      
+      sendAllBookingEmails(booking, paymentDetails).catch(err => {
+        console.error('Background payment email sending failed:', err);
+      });
+    }
+    
     res.json({ 
       success: true, 
       message: `Booking ${bookingId} updated to ${paymentStatus}` 

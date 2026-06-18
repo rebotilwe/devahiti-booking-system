@@ -56,7 +56,55 @@ app.get('/', (req, res) => {
   res.json({ message: 'Devahiti Yoga API is running' });
 });
 
+// ✅ TEST EMAIL ENDPOINT
+app.get('/api/test-email', async (req, res) => {
+  try {
+    // Import the email service
+    const { sendAllBookingEmails } = await import('./services/emailService.js');
+    
+    // Create a test booking
+    const testBooking = {
+      id: 9999,
+      customer_name: 'Test User',
+      customer_email: 'rebotilwemokiba@gmail.com', // Change to your test email
+      customer_phone: '0821234567',
+      service_type: 'Yoga Class',
+      booking_date: new Date().toISOString(),
+      booking_time: '10:00:00',
+      participants: 2,
+      total_price: 650,
+      customer_address: '123 Test Street',
+      notes: 'This is a test booking for email verification'
+    };
+
+    console.log('Sending test emails...');
+    const result = await sendAllBookingEmails(testBooking);
+    
+    if (result.success) {
+      res.json({ 
+        success: true, 
+        message: 'Test emails sent successfully! Check your inbox.',
+        details: result
+      });
+    } else {
+      res.status(500).json({ 
+        success: false, 
+        error: result.error 
+      });
+    }
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.status(500).json({ 
+      error: error.message,
+      stack: error.stack 
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`FRONTEND_URL: ${process.env.FRONTEND_URL}`);
+  console.log(`ADMIN_EMAIL: ${process.env.ADMIN_EMAIL}`);
+  console.log(`EMAIL_USER: ${process.env.EMAIL_USER}`);
+  console.log(`✅ Email notifications are enabled`);
 });

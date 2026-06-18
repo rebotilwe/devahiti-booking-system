@@ -3,6 +3,26 @@ import { getBookings } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import AdminBlogs from "../components/AdminBlogs";
 
+// Helper functions for date formatting
+const formatDate = (dateString) => {
+  if (!dateString) return '-';
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '-';
+    return date.toISOString().split('T')[0];
+  } catch (e) {
+    return '-';
+  }
+};
+
+const formatTime = (timeString) => {
+  if (!timeString) return '-';
+  if (typeof timeString === 'string' && timeString.includes(':')) {
+    return timeString.substring(0, 5);
+  }
+  return timeString;
+};
+
 export default function Admin() {
   const [bookings, setBookings] = useState([]);
   const [blockedDates, setBlockedDates] = useState([]);
@@ -169,20 +189,34 @@ export default function Admin() {
 
       {/* Tab Buttons */}
       <div className="flex flex-wrap gap-2 border-b mb-6">
-        <button onClick={() => setActiveTab("bookings")} className={`px-4 py-2 ${activeTab === "bookings" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+        <button 
+          onClick={() => setActiveTab("bookings")} 
+          className={`px-4 py-2 ${activeTab === "bookings" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
           Bookings
         </button>
-        <button onClick={() => setActiveTab("blocked-dates")} className={`px-4 py-2 ${activeTab === "blocked-dates" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+        <button 
+          onClick={() => setActiveTab("blocked-dates")} 
+          className={`px-4 py-2 ${activeTab === "blocked-dates" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
           Blocked Dates
         </button>
-        <button onClick={() => setActiveTab("schedule")} className={`px-4 py-2 ${activeTab === "schedule" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+        <button 
+          onClick={() => setActiveTab("schedule")} 
+          className={`px-4 py-2 ${activeTab === "schedule" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
           Weekly Schedule
         </button>
-        <button onClick={() => setActiveTab("customers")} className={`px-4 py-2 ${activeTab === "customers" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+        <button 
+          onClick={() => setActiveTab("customers")} 
+          className={`px-4 py-2 ${activeTab === "customers" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
           Customers
         </button>
-        {/* ✅ NEW BLOG TAB */}
-        <button onClick={() => setActiveTab("blog")} className={`px-4 py-2 ${activeTab === "blog" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}>
+        <button 
+          onClick={() => setActiveTab("blog")} 
+          className={`px-4 py-2 ${activeTab === "blog" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
           Blog Posts
         </button>
       </div>
@@ -192,7 +226,10 @@ export default function Admin() {
         <div>
           <div className="flex justify-between items-center mb-4">
             <div className="text-sm text-muted-foreground">Total: {bookings.length} bookings</div>
-            <button onClick={deleteOldBookings} className="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600">
+            <button 
+              onClick={deleteOldBookings} 
+              className="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600"
+            >
               Delete Bookings Older Than 30 Days
             </button>
           </div>
@@ -200,32 +237,41 @@ export default function Admin() {
             <table className="w-full border">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-2">ID</th>
-                  <th className="p-2">Date</th>
-                  <th className="p-2">Time</th>
-                  <th className="p-2">Customer</th>
-                  <th className="p-2">Service</th>
-                  <th className="p-2">Amount</th>
-                  <th className="p-2">Status</th>
-                  <th className="p-2">Actions</th>
+                  <th className="p-2 text-left">ID</th>
+                  <th className="p-2 text-left">Date</th>
+                  <th className="p-2 text-left">Time</th>
+                  <th className="p-2 text-left">Customer</th>
+                  <th className="p-2 text-left">Service</th>
+                  <th className="p-2 text-left">Amount</th>
+                  <th className="p-2 text-left">Status</th>
+                  <th className="p-2 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {bookings.map((booking) => (
                   <tr key={booking.id} className="border-t">
                     <td className="p-2">{booking.id}</td>
-                    <td className="p-2">{booking.booking_date}</td>
-                    <td className="p-2">{booking.booking_time}</td>
+                    <td className="p-2">{formatDate(booking.booking_date)}</td>
+                    <td className="p-2">{formatTime(booking.booking_time)}</td>
                     <td className="p-2">{booking.customer_name}</td>
                     <td className="p-2">{booking.service_type}</td>
                     <td className="p-2">R{booking.total_price || 0}</td>
                     <td className="p-2">
-                      <span className={`px-2 py-1 rounded text-xs ${booking.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        booking.payment_status === 'paid' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
                         {booking.payment_status}
                       </span>
                     </td>
                     <td className="p-2">
-                      <button onClick={() => deleteBooking(booking.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                      <button 
+                        onClick={() => deleteBooking(booking.id)} 
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -241,16 +287,40 @@ export default function Admin() {
           <div className="bg-ocean/5 p-4 rounded-lg mb-6">
             <h3 className="font-heading text-lg mb-3">Block a Date</h3>
             <div className="flex gap-3 flex-wrap">
-              <input type="date" value={newBlockedDate} onChange={(e) => setNewBlockedDate(e.target.value)} className="px-3 py-2 border rounded" />
-              <input type="text" placeholder="Reason" value={newBlockedReason} onChange={(e) => setNewBlockedReason(e.target.value)} className="px-3 py-2 border rounded flex-1" />
-              <button onClick={addBlockedDate} className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark">Block Date</button>
+              <input 
+                type="date" 
+                value={newBlockedDate} 
+                onChange={(e) => setNewBlockedDate(e.target.value)} 
+                className="px-3 py-2 border rounded" 
+              />
+              <input 
+                type="text" 
+                placeholder="Reason" 
+                value={newBlockedReason} 
+                onChange={(e) => setNewBlockedReason(e.target.value)} 
+                className="px-3 py-2 border rounded flex-1" 
+              />
+              <button 
+                onClick={addBlockedDate} 
+                className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark"
+              >
+                Block Date
+              </button>
             </div>
           </div>
           <div className="space-y-2">
             {blockedDates.map((date) => (
               <div key={date.id} className="flex justify-between items-center border p-3 rounded">
-                <div><span className="font-medium">{date.blocked_date}</span>{date.reason && <span className="text-sm text-muted-foreground ml-3">({date.reason})</span>}</div>
-                <button onClick={() => removeBlockedDate(date.id)} className="text-red-500 hover:text-red-700">Remove</button>
+                <div>
+                  <span className="font-medium">{formatDate(date.blocked_date)}</span>
+                  {date.reason && <span className="text-sm text-muted-foreground ml-3">({date.reason})</span>}
+                </div>
+                <button 
+                  onClick={() => removeBlockedDate(date.id)} 
+                  className="text-red-500 hover:text-red-700"
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>
@@ -263,7 +333,11 @@ export default function Admin() {
           <div className="bg-ocean/5 p-4 rounded-lg mb-6">
             <h3 className="font-heading text-lg mb-3">Add Time Slot</h3>
             <div className="flex gap-3 flex-wrap">
-              <select value={newSlotDay} onChange={(e) => setNewSlotDay(e.target.value)} className="px-3 py-2 border rounded">
+              <select 
+                value={newSlotDay} 
+                onChange={(e) => setNewSlotDay(e.target.value)} 
+                className="px-3 py-2 border rounded"
+              >
                 <option value="">Select Day</option>
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
@@ -273,26 +347,41 @@ export default function Admin() {
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
               </select>
-              <input type="time" value={newSlotTime} onChange={(e) => setNewSlotTime(e.target.value)} className="px-3 py-2 border rounded" />
-              <button onClick={addTimeSlot} className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark">Add Slot</button>
+              <input 
+                type="time" 
+                value={newSlotTime} 
+                onChange={(e) => setNewSlotTime(e.target.value)} 
+                className="px-3 py-2 border rounded" 
+              />
+              <button 
+                onClick={addTimeSlot} 
+                className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark"
+              >
+                Add Slot
+              </button>
             </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full border">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-2">Day</th>
-                  <th className="p-2">Time</th>
-                  <th className="p-2"></th>
+                  <th className="p-2 text-left">Day</th>
+                  <th className="p-2 text-left">Time</th>
+                  <th className="p-2 text-left"></th>
                 </tr>
               </thead>
               <tbody>
                 {weeklySchedule.map((slot) => (
                   <tr key={slot.id} className="border-t">
                     <td className="p-2">{slot.day_of_week}</td>
-                    <td className="p-2">{slot.time_slot}</td>
+                    <td className="p-2">{formatTime(slot.time_slot)}</td>
                     <td className="p-2">
-                      <button onClick={() => removeTimeSlot(slot.id)} className="text-red-500 text-sm">Remove</button>
+                      <button 
+                        onClick={() => removeTimeSlot(slot.id)} 
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -308,10 +397,10 @@ export default function Admin() {
           <table className="w-full border">
             <thead className="bg-gray-100">
               <tr>
-                <th className="p-2">Name</th>
-                <th className="p-2">Email</th>
-                <th className="p-2">Phone</th>
-                <th className="p-2">Bookings</th>
+                <th className="p-2 text-left">Name</th>
+                <th className="p-2 text-left">Email</th>
+                <th className="p-2 text-left">Phone</th>
+                <th className="p-2 text-left">Bookings</th>
               </tr>
             </thead>
             <tbody>
@@ -328,7 +417,7 @@ export default function Admin() {
         </div>
       )}
 
-      {/* ✅ Blog Tab */}
+      {/* Blog Tab */}
       {activeTab === "blog" && <AdminBlogs />}
     </div>
   );
