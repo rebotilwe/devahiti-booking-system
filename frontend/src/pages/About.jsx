@@ -204,19 +204,19 @@ export default function About() {
       </section>
 
       {/* Finding Restorative Bodywork */}
-      <section className="bg-[#F9F9FB] py-20 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <img src={groupImg} alt="Bodywork therapy" className="w-full rounded-lg shadow-lg object-cover h-80" />
-            <div>
-              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
-              <p className="text-gray-700 leading-relaxed">
-                My journey into bodywork began when I discovered Fascia Release Therapy, a gentle technique that helps the body reset and heal itself. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+<section className="bg-[#F9F9FB] py-20 px-6">
+  <div className="mx-auto max-w-6xl">
+    <div className="grid gap-12 md:grid-cols-2 md:items-center">
+      <img src={groupImg} alt="Bodywork therapy" className="w-full rounded-lg shadow-lg object-cover h-80" />
+      <div>
+        <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
+        <p className="text-gray-700 leading-relaxed">
+          Based in Ballito, I specialize in a unique blend of bodywork modalities. My journey into bodywork began with massage training, then moved into the more subtle modality of reiki, which was followed by 5 years of studying Pranic healing, learning how to use the subtlest of all, energetic healing. These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Restorative Packages */}
       <section className="py-20 px-6">
