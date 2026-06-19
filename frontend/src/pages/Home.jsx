@@ -283,7 +283,7 @@ export default function Home() {
         />
         <h2 className="mt-6 sm:mt-8 text-2xl sm:text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
         <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-gray-600">
-          I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+            Based in Ballito, I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
         </p>
         <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-gray-600">
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
