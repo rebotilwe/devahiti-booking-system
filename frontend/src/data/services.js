@@ -15,10 +15,10 @@ import {
 // Import actual images from your assets folder
 import groupImg from "../assets/images/group.jpg";
 import privateImg from "../assets/images/private.jpg";
-import corporateImg from "../assets/images/img1.jpg";
+import corporateImg from "../assets/images/coporate.jpg";
 import soundImg from "../assets/images/img11.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
-import fasciaReleaseImg from "../assets/images/img11.jpg";
+import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import trainingImg from "../assets/images/img5.jpg";
 import educationalWorkshopImg from "../assets/images/img1.jpg";
 import specializedImg from "../assets/images/specialize.jpg";
@@ -66,8 +66,8 @@ export const services = [
   description: "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
   shortDescription: "Wellness sessions for teams at your workplace.",
   duration: "60 minutes",
-  price: "R1500 per session (This covers up to 8 people, thereafter an additional fee of R50pp)", // ✅ UPDATED
-  priceAmount: 1500,
+  price: "R1600 per session (This covers up to 8 people, thereafter an additional fee of R50pp)", // ✅ UPDATED
+  priceAmount: 1600,
   location: "On Location (Office / Venue)",
   capacity: "Unlimited", // ✅ UPDATED
   icon: Briefcase,
@@ -98,8 +98,8 @@ export const services = [
     description: "Experience the therapeutic benefits of sound massage. Using singing bowls placed directly on and around the body, this treatment creates deep vibrational healing, releasing tension and promoting cellular restoration.",
     shortDescription: "Therapeutic sound healing with singing bowls.",
     duration: "60 minutes",
-    price: "R800 per session",
-    priceAmount: 800,
+    price: "R600 per session",
+    priceAmount: 600,
     location: "In Studio / On Location",
     capacity: "1 person",
     icon: Waves,

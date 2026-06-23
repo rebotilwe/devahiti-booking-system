@@ -2,16 +2,16 @@ import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import heroBgImg from "../assets/images/home.jpg";
+import heroBgImg from "../assets/images/homee.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
-import soundImg from "../assets/images/img11.jpg";
-import trainingImg from "../assets/images/img5.jpg";
+import soundImg from "../assets/images/sound.jpg";
+import trainingImg from "../assets/images/img10.jpg";
 import groupImg from "../assets/images/group.jpg";
-import corporateImg from "../assets/images/img1.jpg";
+import corporateImg from "../assets/images/coporate.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
-import fasciaReleaseImg from "../assets/images/img11.jpg";
+import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -294,7 +294,7 @@ export default function Home() {
             Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath – leaving you feeling relaxed and rejuvenated.
           </p>
           <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-gray-600">
-            Sessions are for every BODY, beginners are welcome.
+            Sessions are for everyBODY, beginners are welcome.
           </p>
         </div>
         

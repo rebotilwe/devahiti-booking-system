@@ -189,11 +189,19 @@ export default function Contact() {
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#65AEEA] text-white">
                   <Clock className="h-5 w-5" />
                 </span>
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
-                  <p className="text-lg text-gray-700">Tuesday & Thursday · 8:00 AM</p>
-                  <p className="text-sm text-gray-500">Other times by appointment</p>
-                </div>
+             <div>
+  <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
+  <div className="mt-2 space-y-1">
+    <p className="text-sm text-gray-700"><span className="font-medium">Monday:</span> 7:00 AM – 6:30 PM</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Tuesday:</span> 8:00 – 9:00 AM</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Wednesday:</span> Closed</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Thursday:</span> 7:00 AM – 6:30 PM</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Friday:</span> 8:00 – 9:00 AM</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Saturday:</span> 7:30 – 9:00 AM</p>
+    <p className="text-sm text-gray-700"><span className="font-medium">Sunday:</span> Closed</p>
+  </div>
+  <p className="text-sm text-gray-500 mt-2">Other times by appointment</p>
+</div>
               </div>
             </div>
 
