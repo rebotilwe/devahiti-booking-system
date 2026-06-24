@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Flower2, MapPin, Clock, Users, CheckCircle, ArrowRight, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroRetreatsImg from "../assets/images/img11.jpg";
+import heroRetreatsImg from "../assets/images/retreats.jpg";
 import retreatsImg from "../assets/images/img11.jpg";
 import groupImg from "../assets/images/group.jpg";
 import soundImg from "../assets/images/img11.jpg";
