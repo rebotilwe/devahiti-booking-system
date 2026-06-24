@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/home.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
-import soundImg from "../assets/images/img11.jpg";
+import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/group.jpg";
 import logo from "../assets/devahiti.png";
 
@@ -179,11 +179,13 @@ export default function About() {
           <div className="space-y-5 text-gray-700 leading-relaxed">
             <p>Devahiti, or "Divine Order," was created out of a deep desire to integrate a lifetime of traditional yoga practice with ongoing research on body alignment techniques. Drawing from a rich foundation in Yoga, Somatic Psychology, Fascial Release, and Ayurveda, Devahiti facilitates balance, health, and homeostasis across the body-mind complex—both on and off the mat.</p>
             
-            <p>Founded by Cheryl Lancellas and the late Ena During, Devahiti is the culmination of extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, Reiki, and pranic healing. This unique combination of modalities allows us to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
+            <p>Founded by Cheryl Lancellas and the late Ena During, Devahiti is the culmination of extensive training and diverse expertise in Somatic psychology, contemporary dance, traditional yoga, personal training, meditation, physical therapy, fascial release, massage, polarity therapy, reiki, and pranic healing. This unique combination of modalities allows us to work intuitively with clients, addressing pain, limitations, and emotional blockages in a way that is both holistic and scientifically informed.</p>
             
-            <p>At Devahiti, we believe in the power of scientifically backed intuition—combining ancient wisdom with modern research to achieve lasting transformation.</p>
+            <p>At Devahiti, we believe in scientifically backed methods—combining ancient wisdom with modern research to achieve lasting transformation.</p>
             
-            <p className="font-medium text-[#65AEEA]">Devahiti Yoga isn't just a practice—it's a complete system for well-being. Rooted in traditional disciplines, it embraces the latest advancements in yoga and healing arts. Whether you are looking to heal, deepen your personal practice or train to become a teacher, Devahiti provides a transformative space for growth, healing, and self-discovery.</p>
+            <p className="font-medium text-gray-900">
+  Devahiti Yoga isn't just a practice—it's a complete system for well-being. Rooted in traditional disciplines, it embraces the latest advancements in yoga and healing arts. Whether you are looking to heal, deepen your personal practice or train to become a teacher, Devahiti provides a transformative space for growth, healing, and self-discovery.
+</p>
           </div>
         </div>
       </section>
@@ -195,7 +197,7 @@ export default function About() {
             <div>
               <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Discovering Sound Relaxation</h3>
               <p className="text-gray-700 leading-relaxed">
-                My first sound relaxation session was a revelation. The vibrations of the singing bowls seemed to reach places deep within me that words could not access. I left feeling lighter, calmer, and more connected to myself. Compelled to understand this healing modality more deeply, I trained in Sound Relaxation and Sound Bath facilitation, learning to work with singing bowls, gongs, and other therapeutic instruments. Now, I love sharing this powerful practice with others. When combined with gentle, mindful yoga, the experience becomes a truly immersive journey into deep rest and restoration—allowing the body and mind to release what they no longer need to carry.
+                My first sound relaxation session was a revelation. The Vibration of bowls and gongs seemed to reach places deep within me that words could not access. I left feeling lighter, calmer, and more connected to myself. Compelled to understand this healing modality more deeply, I trained in Sound Relaxation and Sound Bath facilitation, learning to work with bowls, gongs, tuning forks and other therapeutic instruments . Now, I love sharing this powerful practice with others. When combined with gentle, mindful yoga, the experience becomes a truly immersive journey into deep rest and restoration—allowing the body and mind to release what they no longer need to carry.
               </p>
             </div>
             <img src={soundImg} alt="Sound healing" className="w-full rounded-lg shadow-lg object-cover h-80" />
