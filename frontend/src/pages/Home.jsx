@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import heroBgImg from "../assets/images/homee.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
-import privateImg from "../assets/images/private.jpg";
+import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/sound.jpg";
-import trainingImg from "../assets/images/img10.jpg";
+import trainingImg from "../assets/images/teachers.jpg";
 import groupImg from "../assets/images/groups.png";
 import corporateImg from "../assets/images/people.jpg";
 import soundMassageImg from "../assets/images/about.jpg";
-import retreatsImg from "../assets/images/img5.jpg";
+import retreatsImg from "../assets/images/retreats.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import logo from "../assets/devahiti.png";
 
