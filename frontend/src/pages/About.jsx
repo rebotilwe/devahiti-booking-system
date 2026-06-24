@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroBgImg from "../assets/images/home.jpg";
+import heroBgImg from "../assets/images/homme.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
 import soundImg from "../assets/images/relaxation.png";

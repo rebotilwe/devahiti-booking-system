@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import heroBgImg from "../assets/images/homme.jpg";
+import heroBgImg from "../assets/images/homee.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/private.jpg";
 import soundImg from "../assets/images/sound.jpg";
