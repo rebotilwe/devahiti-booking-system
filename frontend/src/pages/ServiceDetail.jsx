@@ -20,12 +20,11 @@ const navLinks = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// ✅ UPDATED TEACHER TRAINING DATA (from client's website)
 // ✅ UPDATED TEACHER TRAINING DATA (matching TeacherTraining.jsx)
 const teacherTrainingData = {
-  startDate: "June 2027", // ✅ Updated from "May 2026"
+  startDate: "June 2027",
   schedule: "One full weekend per month | Saturdays & Sundays 9:30am - 2:30pm",
-  duration: "12 months | 10 Modules", // ✅ Updated from "11 Modules"
+  duration: "12 months | 10 Modules",
   investment: "R2,800 per module (10 modules over 12 weekends)",
   maxStudents: "Maximum 10 participants",
   whyChoose: [
@@ -44,10 +43,11 @@ const teacherTrainingData = {
     { name: "Specialized Training", description: "Yin, prenatal yoga, yoga for children and special needs groups" },
     { name: "The art of retreating", description: "Learn how to plan and host transformative retreats" },
     { name: "Devahiti Hands-On Bodywork", description: "Learn hands-on techniques to supplement your income" },
-    { name: "Advanced Philosophy", description: "Deep dive into yogic philosophy and ancient wisdom" } // ✅ Added 10th module
+    { name: "Advanced Philosophy", description: "Deep dive into yogic philosophy and ancient wisdom" }
   ],
   requirements: "Valid 200-hour yoga teacher training certification required. All workshops need to be attended for certification and all assignments must be completed within the allocated time."
 };
+
 export default function ServiceDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export default function ServiceDetail() {
   };
 
   const handleShoppingBagClick = () => {
-    navigate("/services"); // ✅ FIXED: Now goes to Services page
+    navigate("/services");
   };
 
   const service = services.find((s) => s.slug === slug);
@@ -177,16 +177,16 @@ export default function ServiceDetail() {
         </div>
       )}
 
-      {/* HERO */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+      {/* HERO - ✅ FIXED for wide screens */}
+      <section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
         <img 
           src={service.image || heroBgImg} 
           alt={service.title} 
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0" style={{ backgroundColor: "#65AEEA", opacity: 0.85 }} />
+        <div className="absolute inset-0 bg-[#65AEEA]/85" />
         
-        <div className="relative z-10 text-center px-4 sm:px-6">
+        <div className="relative z-10 text-center px-4 sm:px-6 flex flex-col items-center justify-center h-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -226,7 +226,7 @@ export default function ServiceDetail() {
         </svg>
       </section>
 
-      {/* CONTENT */}
+      {/* CONTENT - Rest of the component remains the same */}
       <section className="py-16 lg:py-24 px-6">
         <div className="max-w-4xl mx-auto">
 

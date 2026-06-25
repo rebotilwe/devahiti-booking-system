@@ -120,9 +120,13 @@ export default function ClassSchedule() {
         </div>
       )}
 
-      {/* Page Hero */}
-      <section className="relative h-[40vh] min-h-[300px] w-full overflow-hidden">
-        <img src={heroBgImg} alt="Class Schedule" className="absolute inset-0 h-full w-full object-cover" />
+      {/* Page Hero - ✅ FIXED for wide screens */}
+      <section className="relative h-[40vh] min-h-[300px] max-h-[600px] w-full overflow-hidden">
+        <img 
+          src={heroBgImg} 
+          alt="Class Schedule" 
+          className="absolute inset-0 h-full w-full object-cover object-center" 
+        />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">

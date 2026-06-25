@@ -97,6 +97,7 @@ function ServiceCard({ img, title, link, navigate }) {
           src={img}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
           loading="lazy"
         />
       </div>
@@ -241,15 +242,17 @@ export default function Home() {
       )}
 
       {/* Banner Section */}
-      <section className="w-full">
-        <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh]">
-          <img 
-            src={heroBgImg} 
-            alt="Devahiti Yoga" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </section>
+   {/* Banner Section - FIXED for wide screens */}
+<section className="w-full">
+  <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh] max-h-[600px]">
+    <img 
+      src={heroBgImg} 
+      alt="Devahiti Yoga" 
+      className="w-full h-full object-cover object-center"
+      style={{ maxWidth: '100%' }}
+    />
+  </div>
+</section>
 
       {/* Hero Title Section */}
       <section className="relative py-12 sm:py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>

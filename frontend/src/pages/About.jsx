@@ -123,18 +123,21 @@ export default function About() {
         </div>
       )}
 
-      {/* Page Hero */}
-      <section className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-        <img src={heroBgImg} alt="Devahiti Yoga" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <h1 className="text-5xl font-light md:text-6xl text-[#65AEEA]">About Devahiti</h1>
-          <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white">
-            "If you can breathe, you can do yoga."
-          </p>
-        </div>
-      </section>
-
+ {/* Page Hero - Optimized for all screen sizes */}
+<section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
+  <img 
+    src={heroBgImg} 
+    alt="Devahiti Yoga" 
+    className="absolute inset-0 h-full w-full object-cover object-center" 
+  />
+  <div className="absolute inset-0 bg-black/40" />
+  <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+    <h1 className="text-5xl font-light md:text-6xl text-[#65AEEA]">About Devahiti</h1>
+    <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white">
+      "If you can breathe, you can do yoga."
+    </p>
+  </div>
+</section>
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">

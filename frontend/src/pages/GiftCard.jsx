@@ -46,8 +46,8 @@ const giftCardOptions = [
     id: "sound-massage",
     title: "Sound Massage",
     description: "Therapeutic sound healing with singing bowls placed directly on and around the body.",
-    price: "R600", // ✅ UPDATED: Changed from R800 to R600
-    priceAmount: 600, // ✅ UPDATED: Changed from 800 to 600
+    price: "R600",
+    priceAmount: 600,
     icon: Waves,
     popular: false,
     serviceId: "sound-massage"
@@ -76,7 +76,7 @@ const giftCardOptions = [
     id: "corporate-group",
     title: "Corporate / Private Group",
     description: "A private group yoga session for up to 8 people. Perfect for corporate wellness or group gatherings.",
-    price: "R1,600", // ✅ NEW: Added Corporate/Private Group option
+    price: "R1,600",
     priceAmount: 1600,
     icon: Users,
     popular: false,
@@ -194,9 +194,13 @@ export default function GiftCard() {
         </div>
       )}
 
-      {/* Page Hero */}
-      <section className="relative h-[45vh] min-h-[350px] w-full overflow-hidden">
-        <img src={heroBgImg} alt="Devahiti Gift Card" className="absolute inset-0 h-full w-full object-cover" />
+      {/* Page Hero - ✅ FIXED for wide screens */}
+      <section className="relative h-[45vh] min-h-[350px] max-h-[600px] w-full overflow-hidden">
+        <img 
+          src={heroBgImg} 
+          alt="Devahiti Gift Card" 
+          className="absolute inset-0 h-full w-full object-cover object-center" 
+        />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">

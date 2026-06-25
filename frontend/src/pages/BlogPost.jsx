@@ -173,32 +173,42 @@ export default function BlogPost() {
         </div>
       )}
 
+      {/* Page Hero - ✅ FIXED for wide screens */}
+      <section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
+        <img 
+          src={post.image_url || heroBgImg} 
+          alt={post.title} 
+          className="absolute inset-0 h-full w-full object-cover object-center" 
+        />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white/80">
+            {post.category || "General"}
+          </span>
+          <h1 className="mt-3 text-4xl md:text-5xl font-light text-white max-w-4xl">
+            {post.title}
+          </h1>
+          <div className="mt-6 flex items-center gap-5 text-sm text-white/80">
+            <span className="inline-flex items-center gap-2">
+              <Calendar className="h-4 w-4" /> {new Date(post.created_at).toLocaleDateString()}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Clock className="h-4 w-4" /> {post.read_time || "5 min read"}
+            </span>
+          </div>
+        </div>
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
+
+      {/* Blog Content */}
       <article className="mx-auto max-w-4xl px-6 py-16">
         <Link to="/blog" className="inline-flex items-center gap-2 text-[#65AEEA] hover:underline mb-8">
           <ArrowLeft className="h-4 w-4" /> Back to all posts
         </Link>
         
-        <div className="overflow-hidden rounded-2xl mb-8">
-          <img 
-            src={post.image_url || heroBgImg} 
-            alt={post.title} 
-            className="h-[400px] w-full object-cover" 
-          />
-        </div>
-        
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{post.category || "General"}</span>
-        <h1 className="mt-4 text-4xl md:text-5xl font-light text-gray-800">{post.title}</h1>
-        
-        <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-          <span className="inline-flex items-center gap-2">
-            <Calendar className="h-4 w-4" /> {new Date(post.created_at).toLocaleDateString()}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <Clock className="h-4 w-4" /> {post.read_time || "5 min read"}
-          </span>
-        </div>
-        
-        <div className="mt-10 prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
 
       <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>

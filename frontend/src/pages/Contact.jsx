@@ -122,9 +122,13 @@ export default function Contact() {
         </div>
       )}
 
-      {/* Page Hero */}
-      <section className="relative h-[40vh] min-h-[350px] w-full overflow-hidden">
-        <img src={heroBgImg} alt="Devahiti Contact" className="absolute inset-0 h-full w-full object-cover" />
+      {/* Page Hero - ✅ FIXED for wide screens */}
+      <section className="relative h-[40vh] min-h-[350px] max-h-[600px] w-full overflow-hidden">
+        <img 
+          src={heroBgImg} 
+          alt="Devahiti Contact" 
+          className="absolute inset-0 h-full w-full object-cover object-center" 
+        />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-white/80">Say hello</p>
@@ -189,19 +193,19 @@ export default function Contact() {
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#65AEEA] text-white">
                   <Clock className="h-5 w-5" />
                 </span>
-             <div>
-  <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
-  <div className="mt-2 space-y-1">
-    <p className="text-sm text-gray-700"><span className="font-medium">Monday:</span> 7:00 AM – 6:30 PM</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Tuesday:</span> 8:00 – 9:00 AM</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Wednesday:</span> Closed</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Thursday:</span> 7:00 AM – 6:30 PM</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Friday:</span> 8:00 – 9:00 AM</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Saturday:</span> 7:30 – 9:00 AM</p>
-    <p className="text-sm text-gray-700"><span className="font-medium">Sunday:</span> Closed</p>
-  </div>
-  <p className="text-sm text-gray-500 mt-2">Other times by appointment</p>
-</div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
+                  <div className="mt-2 space-y-1">
+                    <p className="text-sm text-gray-700"><span className="font-medium">Monday:</span> 7:00 AM – 6:30 PM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Tuesday:</span> 8:00 – 9:00 AM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Wednesday:</span> Closed</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Thursday:</span> 7:00 AM – 6:30 PM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Friday:</span> 8:00 – 9:00 AM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Saturday:</span> 7:30 – 9:00 AM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Sunday:</span> Closed</p>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">Other times by appointment</p>
+                </div>
               </div>
             </div>
 

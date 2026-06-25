@@ -28,29 +28,24 @@ const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 // ✅ Helper function to get price from service
 const getServicePrice = (service) => {
   if (!service) return 650;
-  // Check for priceAmount first
   if (service.priceAmount) return service.priceAmount;
-  // Check for basePrice
   if (service.basePrice) return service.basePrice;
-  // Parse from price string if needed
   if (service.price) {
     const match = service.price.match(/\d+/);
     if (match) return parseInt(match[0]);
   }
-  return 650; // Default fallback
+  return 650;
 };
 
 // ✅ Helper function to get extra person fee
 const getExtraPersonFee = (service) => {
   if (!service) return 150;
-  // Check for explicit extraPersonFee
   if (service.extraPersonFee) return service.extraPersonFee;
-  // Check for price string that includes extra person info
   if (service.price && service.price.includes('+R')) {
     const match = service.price.match(/\+R(\d+)/);
     if (match) return parseInt(match[1]);
   }
-  return 150; // Default fallback
+  return 150;
 };
 
 export default function Schedule() {
@@ -62,11 +57,9 @@ export default function Schedule() {
   
   const serviceId = searchParams.get("service");
   
-  // ✅ Find service from services data or use state from navigation
   const preselectedService = services.find(s => s.id === serviceId);
   const stateService = location.state?.service;
   
-  // ✅ Determine the service with correct pricing
   const resolvedService = preselectedService || stateService;
   
   const initialService = resolvedService ? {
@@ -111,7 +104,6 @@ export default function Schedule() {
     window.location.href = "tel:+27840902083";
   };
 
-  // ✅ FIXED: Shopping bag navigates to services page
   const handleShoppingBagClick = () => {
     navigate("/services");
   };
@@ -250,7 +242,6 @@ export default function Schedule() {
             >
               Our Services
             </button>
-            {/* ✅ FIXED: Mobile menu Book Online now navigates to services */}
             <button onClick={() => { navigate("/services"); setMobileOpen(false); }} className="mt-3 w-full border-2 border-[#65AEEA] text-[#65AEEA] py-3 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#65AEEA] hover:text-white transition">
               Book Online
             </button>
@@ -258,12 +249,15 @@ export default function Schedule() {
         </div>
       )}
 
-      {/* Hero */}
-      <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+      {/* Hero - ✅ FIXED for wide screens */}
+      <section className="relative h-[40vh] min-h-[300px] max-h-[600px] w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[#65AEEA]/20" />
+        </div>
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#65AEEA]/20 to-transparent" />
 
-        <div className="relative z-10 text-center px-4 sm:px-6">
+        <div className="relative z-10 text-center px-4 sm:px-6 flex flex-col items-center justify-center h-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
