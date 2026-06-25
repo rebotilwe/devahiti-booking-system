@@ -3,9 +3,9 @@ import { Phone, ShoppingBag, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/homme.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
-import privateImg from "../assets/images/private.jpg";
+import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import groupImg from "../assets/images/group.jpg";
+import groupImg from "../assets/images/couples.png";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION

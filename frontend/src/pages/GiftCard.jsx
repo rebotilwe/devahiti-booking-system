@@ -30,15 +30,14 @@ const subNav = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// ✅ Gift Card Options - Service Based
-// ✅ Gift Card Options - Service Based with correct prices
+// ✅ Gift Card Options - Updated with correct prices
 const giftCardOptions = [
   {
     id: "private-session",
     title: "Private Yoga Session",
     description: "A personalised 1-on-1 yoga session tailored to the recipient's body and goals.",
-    price: "R550", // ✅ Updated from R650 to R550
-    priceAmount: 550, // ✅ Added explicit price amount
+    price: "R550",
+    priceAmount: 550,
     icon: Heart,
     popular: true,
     serviceId: "private-sessions"
@@ -47,8 +46,8 @@ const giftCardOptions = [
     id: "sound-massage",
     title: "Sound Massage",
     description: "Therapeutic sound healing with singing bowls placed directly on and around the body.",
-    price: "R800",
-    priceAmount: 800,
+    price: "R600", // ✅ UPDATED: Changed from R800 to R600
+    priceAmount: 600, // ✅ UPDATED: Changed from 800 to 600
     icon: Waves,
     popular: false,
     serviceId: "sound-massage"
@@ -72,6 +71,16 @@ const giftCardOptions = [
     icon: Users,
     popular: false,
     serviceId: "group-class"
+  },
+  {
+    id: "corporate-group",
+    title: "Corporate / Private Group",
+    description: "A private group yoga session for up to 8 people. Perfect for corporate wellness or group gatherings.",
+    price: "R1,600", // ✅ NEW: Added Corporate/Private Group option
+    priceAmount: 1600,
+    icon: Users,
+    popular: false,
+    serviceId: "corporate-wellness"
   }
 ];
 
@@ -95,35 +104,34 @@ export default function GiftCard() {
     navigate("/services");
   };
 
-  // ✅ NEW: Handle gift card purchase - goes directly to payment
-// ✅ FIXED: Handle gift card purchase with correct price
-const handlePurchase = (giftOption) => {
-  // Extract the numeric price (remove 'R' and any spaces)
-  const priceAmount = parseInt(giftOption.price.replace('R', '').trim());
-  
-  navigate("/checkout", { 
-    state: { 
-      giftCard: true,
-      service: {
-        id: giftOption.serviceId,
-        title: giftOption.title,
-        price: giftOption.price,
-        priceAmount: priceAmount,
-        description: giftOption.description
-      },
-      booking: {
-        service_type: giftOption.serviceId,
-        total_price: priceAmount, // ✅ Use the correct extracted price
-        participants: 1,
-        customer_name: "",
-        customer_email: "",
-        customer_phone: "",
-        customer_address: "",
-        notes: `Gift Card: ${giftOption.title}`
-      }
-    } 
-  });
-};
+  // ✅ Handle gift card purchase with correct price
+  const handlePurchase = (giftOption) => {
+    // Extract the numeric price (remove 'R' and any spaces/commas)
+    const priceAmount = parseInt(giftOption.price.replace('R', '').replace(',', '').trim());
+    
+    navigate("/checkout", { 
+      state: { 
+        giftCard: true,
+        service: {
+          id: giftOption.serviceId,
+          title: giftOption.title,
+          price: giftOption.price,
+          priceAmount: priceAmount,
+          description: giftOption.description
+        },
+        booking: {
+          service_type: giftOption.serviceId,
+          total_price: priceAmount,
+          participants: 1,
+          customer_name: "",
+          customer_email: "",
+          customer_phone: "",
+          customer_address: "",
+          notes: `Gift Card: ${giftOption.title}`
+        }
+      } 
+    });
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -206,7 +214,7 @@ const handlePurchase = (giftOption) => {
         </svg>
       </section>
 
-      {/* ✅ UPDATED: Gift Card Options - Service Based */}
+      {/* Gift Card Options */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
@@ -217,7 +225,7 @@ const handlePurchase = (giftOption) => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {giftCardOptions.map((option) => (
               <div 
                 key={option.id} 
@@ -237,7 +245,6 @@ const handlePurchase = (giftOption) => {
                 <p className="text-gray-500 text-sm mt-2">{option.price}</p>
                 <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
                 
-                {/* ✅ NEW: Buy Now button - goes directly to payment */}
                 <button 
                   onClick={() => handlePurchase(option)} 
                   className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
@@ -274,7 +281,7 @@ const handlePurchase = (giftOption) => {
         </div>
       </section>
 
-      {/* ✅ UPDATED: CTA Section */}
+      {/* CTA Section */}
       <section className="py-20 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <h2 className="text-3xl font-light md:text-4xl text-white">Give the gift of stillness</h2>
         <p className="text-white/90 text-sm mt-2 max-w-xl mx-auto">
