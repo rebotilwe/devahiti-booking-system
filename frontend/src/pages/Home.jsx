@@ -68,14 +68,14 @@ const testimonials = [
     text: "Cheryl's individualistic and inspiring instructions are what help me connect with my body and mind immediately. She guides from the inside out making her yoga style a sensory experience. Whenever she's offered personal suggestions it's an insight into the depth of her anatomy and movement knowledge.",
     date: "3 months ago"
   },
-{
-  id: 5,
-  name: "Marrion Clarke",
-  location: "Ballito, South Africa",
-  rating: 5,
-  text: "Devahiti Studio has become a home away from home. As their slogan goes: 'not your average studio' – There is certainly nothing average about the owner & founder Cheryl Lancellas & the wildly passionate teachers she surrounds herself with in this space. Not just a studio, it's a community of like-minded humans that encourage & lift each other higher with each gathering.",
-  date: "Google Review"
-},
+  {
+    id: 5,
+    name: "Marrion Clarke",
+    location: "Ballito, South Africa",
+    rating: 5,
+    text: "Devahiti Studio has become a home away from home. As their slogan goes: 'not your average studio' – There is certainly nothing average about the owner & founder Cheryl Lancellas & the wildly passionate teachers she surrounds herself with in this space. Not just a studio, it's a community of like-minded humans that encourage & lift each other higher with each gathering.",
+    date: "Google Review"
+  },
   {
     id: 4,
     name: "Cindy C.",
@@ -241,18 +241,19 @@ export default function Home() {
         </div>
       )}
 
-      {/* Banner Section */}
-   {/* Banner Section - FIXED for wide screens */}
-<section className="w-full">
-  <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh] max-h-[600px]">
-    <img 
-      src={heroBgImg} 
-      alt="Devahiti Yoga" 
-      className="w-full h-full object-cover object-center"
-      style={{ maxWidth: '100%' }}
-    />
-  </div>
-</section>
+      {/* Banner Section - ✅ FIXED for wide screens */}
+      <section className="w-full">
+        <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh] max-h-[600px] overflow-hidden">
+          <img 
+            src={heroBgImg} 
+            alt="Devahiti Yoga" 
+            className="w-full h-full object-cover object-center"
+            style={{ maxWidth: '100%' }}
+          />
+          {/* Optional: Add a gradient overlay for better text readability if needed */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+      </section>
 
       {/* Hero Title Section */}
       <section className="relative py-12 sm:py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
