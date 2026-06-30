@@ -130,8 +130,8 @@ export const services = [
     description: "200hr & 300hr advanced yoga teacher training programs designed to deepen your practice and knowledge. Become a certified instructor and share the gift of yoga.",
     shortDescription: "200hr & 300hr teacher training programs.",
     duration: "Multi-month",
-    price: "From R28,000 (200hr) / R32,000 (300hr)",
-    priceAmount: 28000,
+    price: "From R23,000 (200hr) / R32,000 (300hr)",
+    priceAmount: 23000,
     location: "In Studio (Ballito)",
     capacity: "Enrolling now",
     icon: Award,
@@ -139,7 +139,7 @@ export const services = [
     image: trainingImg,
     trainingDetails: {
       "200 Hour": {
-        price: "R28,000",
+        price: "R23,000",
         duration: "Part-time, weekend modules",
         description: "Foundational training rooted in science and evidence-based movement practices."
       },

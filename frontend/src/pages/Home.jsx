@@ -241,40 +241,40 @@ export default function Home() {
         </div>
       )}
 
-      {/* Banner Section - ✅ FIXED for wide screens */}
+      {/* ========== ✅ UPDATED: Full-Screen Framed Hero with Increased Side Space ========== */}
       <section className="w-full">
-        <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh] max-h-[600px] overflow-hidden">
-          <img 
-            src={heroBgImg} 
-            alt="Devahiti Yoga" 
-            className="w-full h-full object-cover object-center"
-            style={{ maxWidth: '100%' }}
-          />
-          {/* Optional: Add a gradient overlay for better text readability if needed */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={heroBgImg} 
+              alt="Devahiti Yoga" 
+              className="w-full h-full object-cover object-center"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            {/* Gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+            
+            {/* Text overlay - positioned inside the frame */}
+            <div className="absolute bottom-6 sm:bottom-10 md:bottom-14 left-1/2 -translate-x-1/2 text-center px-4 sm:px-6 w-full max-w-3xl">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg">
+                Welcome To Devahiti
+              </h1>
+              <p className="mt-1 sm:mt-2 text-sm sm:text-lg md:text-xl text-white/90 font-light tracking-wider drop-shadow">
+                Educational Yoga Studio
+              </p>
+              <div className="mt-3 sm:mt-4 h-px w-12 sm:w-16 bg-white/50 mx-auto" />
+              <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-white/80 max-w-2xl mx-auto drop-shadow px-2">
+                Devahiti is a Sanskrit word meaning Divine or Natural Order.
+              </p>
+              <Link 
+                to="/services"
+                className="mt-4 sm:mt-6 inline-block rounded-full border-2 border-white px-5 sm:px-8 py-1.5 sm:py-2.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-[#65AEEA] hover:scale-105"
+              >
+                Explore Our Classes
+              </Link>
+            </div>
+          </div>
         </div>
-      </section>
-
-      {/* Hero Title Section */}
-      <section className="relative py-12 sm:py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
-        <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white">
-            Private, Group Yoga &amp; Sound Relaxation
-          </h1>
-          <p className="mt-3 sm:mt-4 text-lg sm:text-xl text-white/90">
-            Your space or ours
-          </p>
-          <Link 
-            to="/services"
-            className="mt-6 sm:mt-8 inline-block rounded-full px-8 sm:px-10 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-widest text-[#65AEEA] bg-white transition-all hover:scale-105"
-          >
-            Booking Menu
-          </Link>
-        </div>
-        
-       <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
-  <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-</svg>
       </section>
 
       {/* Hi I'm Cheryl Section */}
