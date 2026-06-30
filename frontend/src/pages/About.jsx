@@ -5,7 +5,7 @@ import heroBgImg from "../assets/images/homme.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import groupImg from "../assets/images/couples.png";
+import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
