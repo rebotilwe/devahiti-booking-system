@@ -2,6 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/home.jpg";
+import restImg from "../assets/images/rest.jpg"; // ✅ ADDED: Import rest.jpg
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -33,13 +34,13 @@ const API_URL = "https://devahiti-booking-system.onrender.com/api";
 // Categories for filtering
 const categories = ["All", "Philosophy", "Stress Management", "Teacher Training", "Wellness", "Reflections", "Personal"];
 
-// ✅ ADDED: Ageing Strong post at the top
+// ✅ UPDATED: Ageing Strong post with rest.jpg image
 const ageingStrongPost = {
   id: 999,
   title: "Ageing Strong",
   excerpt: "Embracing the wisdom and strength that comes with age. A reflection on growing older with grace, vitality, and purpose.",
   category: "Wellness",
-  image: heroBgImg,
+  image: restImg, // ✅ CHANGED: Now using rest.jpg
   slug: "ageing-strong",
   read_time: "5 min read",
   created_at: new Date().toISOString(),
@@ -142,6 +143,7 @@ export default function Blog() {
 
   const getImage = (post) => {
     if (post.image_url) return post.image_url;
+    if (post.image) return post.image;
     return heroBgImg;
   };
 
@@ -311,7 +313,7 @@ export default function Blog() {
 
       {/* Page Hero */}
       <section className="relative h-[45vh] min-h-[350px] w-full overflow-hidden">
-        <img src={heroBgImg} alt="Devahiti Blog" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={restImg} alt="Devahiti Blog" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-white/80">Journal</p>
@@ -354,13 +356,13 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Featured Post - Ageing Strong */}
+      {/* Featured Post - Ageing Strong with rest.jpg */}
       {featuredPost && (
         <section className="mx-auto max-w-6xl px-6 py-16">
           <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Featured post</p>
           <article className="grid gap-10 md:grid-cols-2 md:items-center">
             <div className="overflow-hidden rounded-2xl shadow-lg">
-              <img src={getImage(featuredPost)} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={restImg} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{featuredPost.category || "General"}</span>
@@ -392,7 +394,12 @@ export default function Blog() {
               {filteredPosts.map((post) => (
                 <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
                   <div className="overflow-hidden h-56">
-                    <img src={getImage(post)} alt={post.title} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
+                    <img 
+                      src={post.id === 999 ? restImg : (post.image_url || post.image || heroBgImg)} 
+                      alt={post.title} 
+                      className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" 
+                      loading="lazy" 
+                    />
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{post.category || "General"}</span>

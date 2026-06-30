@@ -3,7 +3,7 @@ import { Phone, ShoppingBag, Menu, X, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import heroBgImg from "../assets/images/homee.jpg";
-import cherylPortraitImg from "../assets/images/about.jpg";
+import cherylPortraitImg from "../assets/images/about1.jpeg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import trainingImg from "../assets/images/teachers.jpg";
@@ -272,9 +272,9 @@ export default function Home() {
           </Link>
         </div>
         
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
+       <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
+  <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+</svg>
       </section>
 
       {/* Hi I'm Cheryl Section */}

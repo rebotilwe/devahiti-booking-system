@@ -244,29 +244,29 @@ export default function TeacherTraining() {
         </div>
       )}
 
-     {/* Page Hero - Fixed for wide screens */}
-<section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
-  <img 
-    src={heroTrainingImg} 
-    alt="Teacher Training" 
-    className="absolute inset-0 h-full w-full object-cover object-center" 
-  />
-  <div className="absolute inset-0 bg-black/40" />
-  <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-    <div className="flex items-center justify-center gap-2 mb-3">
-      <Award className="h-5 w-5 text-white/80" />
-      <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Turn Your Passion into Your Profession</span>
-      <Award className="h-5 w-5 text-white/80" />
-    </div>
-    <h1 className="text-5xl font-light md:text-6xl text-white">Teacher Training</h1>
-    <p className="mt-4 text-lg text-white/90 max-w-2xl">
-      200hr & 300hr Certified Programs in Ballito
-    </p>
-  </div>
-  <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-  </svg>
-</section>
+      {/* Page Hero - Fixed for wide screens */}
+      <section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
+        <img 
+          src={heroTrainingImg} 
+          alt="Teacher Training" 
+          className="absolute inset-0 h-full w-full object-cover object-center" 
+        />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Award className="h-5 w-5 text-white/80" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Turn Your Passion into Your Profession</span>
+            <Award className="h-5 w-5 text-white/80" />
+          </div>
+          <h1 className="text-5xl font-light md:text-6xl text-white">Teacher Training</h1>
+          <p className="mt-4 text-lg text-white/90 max-w-2xl">
+            200hr & 300hr Certified Programs in Ballito
+          </p>
+        </div>
+        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
 
       {/* Training Options */}
       <section className="py-20 px-6">
@@ -290,6 +290,11 @@ export default function TeacherTraining() {
                 <h3 className="text-2xl font-light text-gray-800">200 Hour Teacher Training</h3>
                 <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts November 2026</p>
                 <p className="text-gray-500 text-sm mt-2">200 Hours Over 10 Months | 4 Modules</p>
+                {/* ✅ ADDED: 200 Hour Price */}
+                <div className="mt-3">
+                  <span className="text-3xl font-bold text-[#65AEEA]">R 23,000</span>
+                  <p className="text-xs text-gray-500">Full course investment</p>
+                </div>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
                     Increase your understanding of the body, mind and Spirit connection, deepen your own practice, turn your PASSION into your PROFESSION and teach Yoga to others.
@@ -319,6 +324,11 @@ export default function TeacherTraining() {
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
                 <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts July 2026</p>
                 <p className="text-gray-500 text-sm mt-2">300 Hours Over 12 Months | 10 Modules</p>
+                {/* ✅ ADDED: 300 Hour Price */}
+                <div className="mt-3">
+                  <span className="text-3xl font-bold text-[#65AEEA]">R 32,000</span>
+                  <p className="text-xs text-gray-500">Full course investment</p>
+                </div>
                 <div className="mt-4 p-4 bg-[#F9F9FB] rounded-lg">
                   <p className="text-sm text-gray-600">
                     Designed for certified 200-hour yoga teachers looking to expand their knowledge and elevate their practice. Students can attend all 10 modules in one year or spread them over 2 years.
@@ -472,7 +482,7 @@ export default function TeacherTraining() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <Award className="h-8 w-8 text-[#65AEEA] mb-3" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Investment</h3>
-              <p className="text-gray-600">Contact for pricing</p>
+              <p className="text-gray-600">200hr: R 23,000 | 300hr: R 32,000</p>
               <p className="text-gray-500 text-sm mt-2">Payment plans available</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm">

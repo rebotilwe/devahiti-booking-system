@@ -223,57 +223,6 @@ export default function About() {
   </div>
 </section>
 
-      {/* Restorative Packages */}
-      <section className="py-20 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex justify-center mb-4">
-            <img src={logo} alt="Devahiti" className="h-12 w-auto" />
-          </div>
-          <div className="w-20 h-px bg-[#65AEEA] mx-auto mb-6"></div>
-          <h2 className="text-center text-3xl font-light md:text-4xl mb-12 text-[#65AEEA]">RESTORATIVE PACKAGES</h2>
-          
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/services")}>
-              <div className="overflow-hidden">
-                <img src={privateImg} alt="Private Yoga Experiences" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-light mb-2 text-white">Private Yoga Experiences</h3>
-                <p className="text-white/90 text-sm mb-4">Group, couples or individual yoga sessions for stress relief.</p>
-                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
-                  BOOK NOW
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/services")}>
-              <div className="overflow-hidden">
-                <img src={soundImg} alt="Yoga & Sound Relaxation" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-light mb-2 text-white">Yoga & Sound Relaxation Sessions</h3>
-                <p className="text-white/90 text-sm mb-4">Gentle hatha yoga and sound relaxation packages.</p>
-                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
-                  BOOK NOW
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-[#65AEEA] rounded-xl shadow-md overflow-hidden group cursor-pointer text-white" onClick={() => navigate("/contact")}>
-              <div className="overflow-hidden">
-                <img src={groupImg} alt="Design Your Own Experience" className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-light mb-2 text-white">Design Your Own Experience</h3>
-                <p className="text-white/90 text-sm mb-4">Work with me to create your own session to enhance your experience.</p>
-                <button className="inline-block bg-white text-[#65AEEA] px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
-                  ENQUIRE
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Testimonial / Client Gratitude */}
       <section className="py-20 px-6" style={{ backgroundColor: "#65AEEA" }}>
