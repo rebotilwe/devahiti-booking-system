@@ -241,7 +241,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* ========== ✅ FIXED: Banner Section with Framed Container ========== */}
+      {/* ========== ✅ UPDATED: Banner Section with Text Overlay ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -251,8 +251,28 @@ export default function Home() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            {/* Gradient overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/40" />
+            
+            {/* Text overlay */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg">
+                Welcome To Devahiti
+              </h1>
+              <p className="mt-2 text-base sm:text-lg md:text-xl text-white/90 font-light tracking-wider drop-shadow">
+                Educational Yoga Studio
+              </p>
+              <div className="mt-4 h-px w-16 bg-white/50 mx-auto" />
+              <p className="mt-4 text-sm sm:text-base text-white/80 max-w-2xl mx-auto drop-shadow">
+                Devahiti is a Sanskrit word meaning Divine or Natural Order.
+              </p>
+              <Link 
+                to="/services"
+                className="mt-6 inline-block rounded-full border-2 border-white px-6 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-[#65AEEA] hover:scale-105"
+              >
+                Explore Our Classes
+              </Link>
+            </div>
           </div>
         </div>
       </section>
