@@ -49,7 +49,7 @@ export default function About() {
   };
 
   const handleShoppingBagClick = () => {
-    navigate("/services"); // ✅ CHANGED: Now goes to Services page
+    navigate("/services");
   };
 
   return (
@@ -123,21 +123,32 @@ export default function About() {
         </div>
       )}
 
- {/* Page Hero - Optimized for all screen sizes */}
-<section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
-  <img 
-    src={heroBgImg} 
-    alt="Devahiti Yoga" 
-    className="absolute inset-0 h-full w-full object-cover object-center" 
-  />
-  <div className="absolute inset-0 bg-black/40" />
-  <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-    <h1 className="text-5xl font-light md:text-6xl text-[#65AEEA]">About Devahiti</h1>
-    <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white">
-      "If you can breathe, you can do yoga."
-    </p>
-  </div>
-</section>
+      {/* ========== ✅ UPDATED: Page Hero with Framed Container ========== */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={heroBgImg} 
+              alt="Devahiti Yoga" 
+              className="w-full h-full object-cover object-center"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/50" />
+            
+            {/* Text overlay */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">
+                About Devahiti
+              </h1>
+              <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white/90 drop-shadow">
+                "If you can breathe, you can do yoga."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
@@ -187,8 +198,8 @@ export default function About() {
             <p>At Devahiti, we believe in scientifically backed methods—combining ancient wisdom with modern research to achieve lasting transformation.</p>
             
             <p className="font-medium text-gray-900">
-  Devahiti Yoga isn't just a practice—it's a complete system for well-being. Rooted in traditional disciplines, it embraces the latest advancements in yoga and healing arts. Whether you are looking to heal, deepen your personal practice or train to become a teacher, Devahiti provides a transformative space for growth, healing, and self-discovery.
-</p>
+              Devahiti Yoga isn't just a practice—it's a complete system for well-being. Rooted in traditional disciplines, it embraces the latest advancements in yoga and healing arts. Whether you are looking to heal, deepen your personal practice or train to become a teacher, Devahiti provides a transformative space for growth, healing, and self-discovery.
+            </p>
           </div>
         </div>
       </section>
@@ -209,20 +220,19 @@ export default function About() {
       </section>
 
       {/* Finding Restorative Bodywork */}
-<section className="bg-[#F9F9FB] py-20 px-6">
-  <div className="mx-auto max-w-6xl">
-    <div className="grid gap-12 md:grid-cols-2 md:items-center">
-      <img src={groupImg} alt="Bodywork therapy" className="w-full rounded-lg shadow-lg object-cover h-80" />
-      <div>
-        <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
-        <p className="text-gray-700 leading-relaxed">
-         My journey into bodywork began with massage training, then moved into the more subtle modality of reiki, which was followed by 5 years of studying Pranic healing, learning how to use the subtlest of all, energetic healing. These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+      <section className="bg-[#F9F9FB] py-20 px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+            <img src={groupImg} alt="Bodywork therapy" className="w-full rounded-lg shadow-lg object-cover h-80" />
+            <div>
+              <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
+              <p className="text-gray-700 leading-relaxed">
+                My journey into bodywork began with massage training, then moved into the more subtle modality of reiki, which was followed by 5 years of studying Pranic healing, learning how to use the subtlest of all, energetic healing. These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Testimonial / Client Gratitude */}
       <section className="py-20 px-6" style={{ backgroundColor: "#65AEEA" }}>
@@ -242,26 +252,26 @@ export default function About() {
         </div>
       </section>
 
-    {/* Footer */}
-<footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
-  <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-  <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-  <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-  <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-    © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-  </p>
-  <p className="mt-4 text-xs text-white/60">
-    Developed by{' '}
-    <a 
-      href="https://afribizconnect.co.za/" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
-    >
-      Afribiz Connect
-    </a>
-  </p>
-</footer>
+      {/* Footer */}
+      <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
+        <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
+        <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
+        <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
+        <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
+          © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
+        </p>
+        <p className="mt-4 text-xs text-white/60">
+          Developed by{' '}
+          <a 
+            href="https://afribizconnect.co.za/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline underline-offset-2"
+          >
+            Afribiz Connect
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

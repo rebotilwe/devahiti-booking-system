@@ -122,25 +122,27 @@ export default function Contact() {
         </div>
       )}
 
-      {/* Page Hero - ✅ FIXED for wide screens */}
-      <section className="relative h-[40vh] min-h-[350px] max-h-[600px] w-full overflow-hidden">
-        <img 
-          src={heroBgImg} 
-          alt="Devahiti Contact" 
-          className="absolute inset-0 h-full w-full object-cover object-center" 
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Say hello</p>
-          <h1 className="text-5xl font-light md:text-6xl text-white">Get in touch</h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-white/90 italic">
-            I'd love to hear from you. Let's craft a session that feels just right.
-          </p>
-        </div>
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
-      </section>
+   {/* Page Hero - ✅ Updated with Framed Container */}
+<section className="w-full">
+  <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+    <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+      <img 
+        src={heroBgImg} 
+        alt="Devahiti Contact" 
+        className="w-full h-full object-cover object-center"
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
+      />
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Say hello</p>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Get in touch</h1>
+        <p className="mx-auto mt-4 max-w-xl text-lg text-white/90 italic drop-shadow">
+          I'd love to hear from you. Let's craft a session that feels just right.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Contact Grid */}
       <section className="mx-auto max-w-6xl px-6 py-20">

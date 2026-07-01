@@ -177,53 +177,54 @@ export default function ServiceDetail() {
         </div>
       )}
 
-      {/* HERO - ✅ FIXED for wide screens */}
-      <section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
-        <img 
-          src={service.image || heroBgImg} 
-          alt={service.title} 
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-[#65AEEA]/85" />
-        
-        <div className="relative z-10 text-center px-4 sm:px-6 flex flex-col items-center justify-center h-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
-          >
-            <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-            <span className="text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/60">
-              {service.category}
-            </span>
-            <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-          </motion.div>
+      {/* ========== ✅ UPDATED: HERO with Framed Container - MATCHES OTHER PAGES ========== */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={service.image || heroBgImg} 
+              alt={service.title} 
+              className="w-full h-full object-cover object-center"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            <div className="absolute inset-0 bg-black/40" />
+            
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
+              >
+                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
+                <span className="text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/60 drop-shadow">
+                  {service.category}
+                </span>
+                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white px-4"
-          >
-            {service.title}
-          </motion.h1>
-          
-          {isTeacherTraining && (
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mt-4 text-xl text-white/90"
-            >
-              Next Training Starts: {teacherTrainingData.startDate}
-            </motion.p>
-          )}
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg px-4"
+              >
+                {service.title}
+              </motion.h1>
+              
+              {isTeacherTraining && (
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-4 text-lg sm:text-xl text-white/90 drop-shadow"
+                >
+                  Next Training Starts: {teacherTrainingData.startDate}
+                </motion.p>
+              )}
+            </div>
+          </div>
         </div>
-        
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
       </section>
 
       {/* CONTENT - Rest of the component remains the same */}

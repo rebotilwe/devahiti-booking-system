@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/home.jpg";
-import restImg from "../assets/images/rest.jpg"; // ✅ ADDED: Import rest.jpg
+import restImg from "../assets/images/rest.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -40,7 +40,7 @@ const ageingStrongPost = {
   title: "Ageing Strong",
   excerpt: "Embracing the wisdom and strength that comes with age. A reflection on growing older with grace, vitality, and purpose.",
   category: "Wellness",
-  image: restImg, // ✅ CHANGED: Now using rest.jpg
+  image: restImg,
   slug: "ageing-strong",
   read_time: "5 min read",
   created_at: new Date().toISOString(),
@@ -77,11 +77,9 @@ export default function Blog() {
       try {
         const response = await fetch(`${API_URL}/blog`);
         const data = await response.json();
-        // ✅ Combine Ageing Strong at the top, then the rest
         setBlogPosts([ageingStrongPost, ...data]);
       } catch (error) {
         console.error("Error fetching blog posts:", error);
-        // Fallback: show Ageing Strong only
         setBlogPosts([ageingStrongPost]);
       } finally {
         setLoading(false);
@@ -105,7 +103,6 @@ export default function Blog() {
   };
 
   const handleReadMore = async (post) => {
-    // If it's the Ageing Strong post, use the local content
     if (post.id === 999) {
       setSelectedPost(post);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -138,7 +135,6 @@ export default function Blog() {
     return matchesCategory && matchesSearch;
   });
 
-  // Featured post is Ageing Strong (always at top)
   const featuredPost = blogPosts[0] || ageingStrongPost;
 
   const getImage = (post) => {
@@ -311,20 +307,26 @@ export default function Blog() {
         </div>
       )}
 
-      {/* Page Hero */}
-      <section className="relative h-[45vh] min-h-[350px] w-full overflow-hidden">
-        <img src={restImg} alt="Devahiti Blog" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Journal</p>
-          <h1 className="text-5xl font-light md:text-6xl text-white">From the mat</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
-            Slow reflections on yoga, sound, breath, and the art of coming home to yourself.
-          </p>
+      {/* ========== ✅ UPDATED: Page Hero with Framed Container ========== */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={restImg} 
+              alt="Devahiti Blog" 
+              className="w-full h-full object-cover object-center"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Journal</p>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">From the mat</h1>
+              <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-white/90 drop-shadow">
+                Slow reflections on yoga, sound, breath, and the art of coming home to yourself.
+              </p>
+            </div>
+          </div>
         </div>
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
       </section>
 
       {/* Categories & Search */}

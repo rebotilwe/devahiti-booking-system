@@ -243,31 +243,31 @@ export default function TeacherTraining() {
           </div>
         </div>
       )}
-
-      {/* Page Hero - Fixed for wide screens */}
-      <section className="relative h-[50vh] min-h-[400px] max-h-[700px] w-full overflow-hidden">
-        <img 
-          src={heroTrainingImg} 
-          alt="Teacher Training" 
-          className="absolute inset-0 h-full w-full object-cover object-center" 
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <Award className="h-5 w-5 text-white/80" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Turn Your Passion into Your Profession</span>
-            <Award className="h-5 w-5 text-white/80" />
-          </div>
-          <h1 className="text-5xl font-light md:text-6xl text-white">Teacher Training</h1>
-          <p className="mt-4 text-lg text-white/90 max-w-2xl">
-            200hr & 300hr Certified Programs in Ballito
-          </p>
+{/* Page Hero - ✅ Updated with Framed Container */}
+<section className="w-full">
+  <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+    <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+      <img 
+        src={heroTrainingImg} 
+        alt="Teacher Training" 
+        className="w-full h-full object-cover object-center"
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
+      />
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <Award className="h-5 w-5 text-white/80" />
+          <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Turn Your Passion into Your Profession</span>
+          <Award className="h-5 w-5 text-white/80" />
         </div>
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
-      </section>
-
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Teacher Training</h1>
+        <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
+          200hr & 300hr Certified Programs in Ballito
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
       {/* Training Options */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
