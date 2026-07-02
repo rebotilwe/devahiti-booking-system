@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Award, Clock, MapPin, CheckCircle, BookOpen, Star, Quote, Users } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroTrainingImg from "../assets/images/teachers.jpg";
+import heroTrainingImg from "../assets/images/new.jpeg";
 import trainingImg from "../assets/images/img5.jpg";
 import logo from "../assets/devahiti.png";
 
@@ -243,31 +243,33 @@ export default function TeacherTraining() {
           </div>
         </div>
       )}
-{/* Page Hero - ✅ Updated with Framed Container */}
-<section className="w-full">
-  <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-    <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
-      <img 
-        src={heroTrainingImg} 
-        alt="Teacher Training" 
-        className="w-full h-full object-cover object-center"
-        style={{ maxWidth: '100%', maxHeight: '100%' }}
-      />
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Award className="h-5 w-5 text-white/80" />
-          <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Turn Your Passion into Your Profession</span>
-          <Award className="h-5 w-5 text-white/80" />
+
+      {/* Page Hero - ✅ FIXED: Shows full image with object-contain */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={heroTrainingImg} 
+              alt="Teacher Training" 
+              className="w-full h-full object-contain bg-[#F5F0E8]"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Award className="h-5 w-5 text-white/80" />
+                <span className="text-[10px] tracking-[0.4em] uppercase text-white/80 drop-shadow">Turn Your Passion into Your Profession</span>
+                <Award className="h-5 w-5 text-white/80" />
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Teacher Training</h1>
+              <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
+                200hr & 300hr Certified Programs in Ballito
+              </p>
+            </div>
+          </div>
         </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Teacher Training</h1>
-        <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
-          200hr & 300hr Certified Programs in Ballito
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+
       {/* Training Options */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-6xl">
@@ -290,7 +292,6 @@ export default function TeacherTraining() {
                 <h3 className="text-2xl font-light text-gray-800">200 Hour Teacher Training</h3>
                 <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts November 2026</p>
                 <p className="text-gray-500 text-sm mt-2">200 Hours Over 10 Months | 4 Modules</p>
-                {/* ✅ ADDED: 200 Hour Price */}
                 <div className="mt-3">
                   <span className="text-3xl font-bold text-[#65AEEA]">R 23,000</span>
                   <p className="text-xs text-gray-500">Full course investment</p>
@@ -324,7 +325,6 @@ export default function TeacherTraining() {
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
                 <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts July 2026</p>
                 <p className="text-gray-500 text-sm mt-2">300 Hours Over 12 Months | 10 Modules</p>
-                {/* ✅ ADDED: 300 Hour Price */}
                 <div className="mt-3">
                   <span className="text-3xl font-bold text-[#65AEEA]">R 32,000</span>
                   <p className="text-xs text-gray-500">Full course investment</p>
@@ -387,7 +387,7 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* ✅ 200 Hour Course Content - All 4 modules displayed */}
+      {/* 200 Hour Course Content */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
@@ -416,7 +416,7 @@ export default function TeacherTraining() {
         </div>
       </section>
 
-      {/* ✅ 300 Hour Course Content - All 10 modules displayed */}
+      {/* 300 Hour Course Content */}
       <section className="bg-[#F9F9FB] py-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
