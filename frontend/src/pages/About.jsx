@@ -7,6 +7,7 @@ import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
+import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
@@ -162,11 +163,28 @@ export default function About() {
               "Here at Devahiti, we believe that if you can breathe, you can do Yoga."
             </p>
             
-            <p>We understand how busy life is, causing tension and stress in both body and mind. Over time, we ignore this and accept the discomfort as the "norm", we forget how to let go and relax fully.</p>
+            {/* ✅ REMOVED: First two paragraphs */}
             
-            <p>I know firsthand how overwhelming life in South Africa can feel, however, I have personally experienced the deeply transformative aspects of Yoga that provide the necessary tools to navigate life with increased grace and ease.</p>
+            {/* ✅ NEW: Devahiti Promise */}
+            <div className="bg-[#F9F9FB] p-6 rounded-xl border-l-4 border-[#65AEEA]">
+              <p className="text-gray-700 leading-relaxed">
+                "In a world full of quick fixes, Devahiti chooses curiosity over certainty, understanding over judgment, and wisdom over noise.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-3">
+                We believe movement is more than exercise. It is education. It is communication. It is one of the ways we come to know ourselves.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-3">
+                Here, ancient yoga meets modern science—not to prove one another right, but to deepen our understanding of what it means to be human.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-3 font-medium text-[#65AEEA]">
+                Every breath, every movement and every moment of stillness is an invitation to learn.
+              </p>
+              <p className="text-gray-600 text-sm mt-4 italic">
+                This is the Devahiti Promise.
+              </p>
+            </div>
             
-            <p>My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
+            <p className="mt-5">My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
             
             <p>My approach, while steeped in science, is also intuitive, gentle, and always ready to meet you exactly where you are in each moment.</p>
           </div>
@@ -228,6 +246,46 @@ export default function About() {
               <h3 className="text-2xl font-light md:text-3xl mb-4 text-[#65AEEA]">Finding Restorative Bodywork</h3>
               <p className="text-gray-700 leading-relaxed">
                 My journey into bodywork began with massage training, then moved into the more subtle modality of reiki, which was followed by 5 years of studying Pranic healing, learning how to use the subtlest of all, energetic healing. These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ NEW: In Memory of Ena During ========== */}
+      <section className="py-20 px-6 bg-[#F9F9FB]">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-light md:text-3xl text-[#65AEEA]">In Loving Memory</h3>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+          </div>
+          
+          <div className="grid gap-10 md:grid-cols-2 md:items-start">
+            <div>
+              <img 
+                src={enaImg} 
+                alt="Ena During" 
+                className="w-full rounded-lg shadow-lg object-cover h-96"
+              />
+            </div>
+            <div className="space-y-5 text-gray-700 leading-relaxed">
+              <p className="text-lg italic text-[#65AEEA] font-medium">
+                In loving memory of Ena During, a dear friend, mentor, co-creator of Devahiti Yoga, and a wonderful human being.
+              </p>
+              
+              <p>The way Ena lived her life was a true embodiment of all the Yogic principles, and she conducted herself in a way the rest of us may only aspire to. Whenever there were spiritual or big life decisions to be made, it was Ena I turned to. She lovingly took the time to hear, ponder, and suggest a way forward, never failing to inspire simply by example.</p>
+              
+              <p>The challenges of this world were made more bearable by your ever-loving presence and my heart aches to contemplate the way forward without your Spirit and kind-hearted guidance. Satsang Sunday's on the West Coast were my breath of fresh air, gently nudged along my true path by the patience and love that was Ena During.</p>
+              
+              <p>It has taken me weeks to accept your loss and to find words to express the heartache, mixed with the pure joy of having shared so much together since our paths crossed. I will endeavour to carry some of your light, your love, and your wisdom, into future yoga teacher trainings, continuing the Devahiti name, and its translation as Divine Order.</p>
+              
+              <p className="font-medium text-gray-900">
+                Thank you for being in my life my dear, sweet friend, may your soul rest where it has always been the most at peace, at the feet of your Spiritual Teacher forevermore.
+              </p>
+              
+              <p className="text-right text-[#65AEEA] font-medium">
+                Deep gratitude<br />
+                Cheryl Lancellas
               </p>
             </div>
           </div>
