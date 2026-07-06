@@ -7,7 +7,7 @@ import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
-import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
+import enaImg from "../assets/images/ena.jpg"; // ✅ ADDED: Import Ena's photo
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
@@ -163,12 +163,10 @@ export default function About() {
               "Here at Devahiti, we believe that if you can breathe, you can do Yoga."
             </p>
             
-            {/* ✅ REMOVED: First two paragraphs */}
-            
-            {/* ✅ NEW: Devahiti Promise */}
+            {/* ✅ NEW: Devahiti Promise - Same font as the paragraph below */}
             <div className="bg-[#F9F9FB] p-6 rounded-xl border-l-4 border-[#65AEEA]">
               <p className="text-gray-700 leading-relaxed">
-                "In a world full of quick fixes, Devahiti chooses curiosity over certainty, understanding over judgment, and wisdom over noise.
+                "In a world full of quick fixes, Devahiti chooses curiosity over certainty, understanding over judgment, and wisdom over noise."
               </p>
               <p className="text-gray-700 leading-relaxed mt-3">
                 We believe movement is more than exercise. It is education. It is communication. It is one of the ways we come to know ourselves.
@@ -184,9 +182,9 @@ export default function About() {
               </p>
             </div>
             
-            <p className="mt-5">My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
+            <p className="mt-5 text-gray-700 leading-relaxed">My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
             
-            <p>My approach, while steeped in science, is also intuitive, gentle, and always ready to meet you exactly where you are in each moment.</p>
+            <p className="text-gray-700 leading-relaxed">My approach, while steeped in science, is also intuitive, gentle, and always ready to meet you exactly where you are in each moment.</p>
           </div>
           
           <div className="text-center mt-8">
