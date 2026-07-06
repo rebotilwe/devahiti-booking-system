@@ -8,7 +8,7 @@ import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import trainingImg from "../assets/images/teachers.jpg";
 import groupImg from "../assets/images/couples.png";
-import corporateImg from "../assets/images/people.jpg";
+import corporateImg from "../assets/images/sound.jpg";
 import soundMassageImg from "../assets/images/specialize.jpg";
 import retreatsImg from "../assets/images/retreats.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";

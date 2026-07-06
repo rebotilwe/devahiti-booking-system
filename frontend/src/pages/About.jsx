@@ -7,7 +7,7 @@ import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
-import enaImg from "../assets/images/ena.jpg"; // ✅ ADDED: Import Ena's photo
+import enaImg from "../assets/images/new.jpeg"; // ✅ ADDED: Import Ena's photo
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
