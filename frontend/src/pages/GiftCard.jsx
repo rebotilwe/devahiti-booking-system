@@ -4,6 +4,16 @@ import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/giftss.jpg";
 import logo from "../assets/devahiti.png";
 
+// ✅ Import the same images used in Our Offerings
+import groupImg from "../assets/images/couples.png";
+import privateImg from "../assets/images/privates.jpg";
+import soundImg from "../assets/images/relaxation.png";
+import trainingImg from "../assets/images/teachers.jpg";
+import corporateImg from "../assets/images/sound.jpg";
+import soundMassageImg from "../assets/images/specialize.jpg";
+import retreatsImg from "../assets/images/retreats.jpg";
+import fasciaReleaseImg from "../assets/images/fascia.jpg";
+
 // ✅ UPDATED NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
@@ -30,7 +40,7 @@ const subNav = [
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// ✅ Gift Card Options - Updated with correct prices
+// ✅ Gift Card Options - Updated with images from Our Offerings
 const giftCardOptions = [
   {
     id: "private-session",
@@ -39,6 +49,7 @@ const giftCardOptions = [
     price: "R550",
     priceAmount: 550,
     icon: Heart,
+    image: privateImg, // ✅ Added image
     popular: true,
     serviceId: "private-sessions"
   },
@@ -49,6 +60,7 @@ const giftCardOptions = [
     price: "R600",
     priceAmount: 600,
     icon: Waves,
+    image: soundMassageImg, // ✅ Added image
     popular: false,
     serviceId: "sound-massage"
   },
@@ -59,6 +71,7 @@ const giftCardOptions = [
     price: "R800",
     priceAmount: 800,
     icon: Music,
+    image: soundImg, // ✅ Added image
     popular: false,
     serviceId: "sound-journey"
   },
@@ -69,6 +82,7 @@ const giftCardOptions = [
     price: "R650",
     priceAmount: 650,
     icon: Users,
+    image: groupImg, // ✅ Added image
     popular: false,
     serviceId: "group-class"
   },
@@ -79,6 +93,7 @@ const giftCardOptions = [
     price: "R1,600",
     priceAmount: 1600,
     icon: Users,
+    image: corporateImg, // ✅ Added image
     popular: false,
     serviceId: "corporate-wellness"
   }
@@ -194,31 +209,31 @@ export default function GiftCard() {
         </div>
       )}
 
-   {/* Page Hero - ✅ Updated with Framed Container */}
-<section className="w-full">
-  <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-    <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
-      <img 
-        src={heroBgImg} 
-        alt="Devahiti Gift Card" 
-        className="w-full h-full object-cover object-center"
-        style={{ maxWidth: '100%', maxHeight: '100%' }}
-      />
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Gift className="h-5 w-5 text-white/80" />
-          <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Give the gift of wellness</span>
-          <Gift className="h-5 w-5 text-white/80" />
+      {/* Page Hero - ✅ Updated with Framed Container */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+            <img 
+              src={heroBgImg} 
+              alt="Devahiti Gift Card" 
+              className="w-full h-full object-cover object-center"
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Gift className="h-5 w-5 text-white/80" />
+                <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Give the gift of wellness</span>
+                <Gift className="h-5 w-5 text-white/80" />
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Gift Cards</h1>
+              <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
+                Share the healing power of yoga, sound, and stillness
+              </p>
+            </div>
+          </div>
         </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Gift Cards</h1>
-        <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
-          Share the healing power of yoga, sound, and stillness
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Gift Card Options */}
       <section className="py-20 px-6">
@@ -235,28 +250,38 @@ export default function GiftCard() {
             {giftCardOptions.map((option) => (
               <div 
                 key={option.id} 
-                className={`bg-white border-2 rounded-2xl p-6 text-center transition-all hover:shadow-xl relative ${
+                className={`bg-white border-2 rounded-2xl overflow-hidden transition-all hover:shadow-xl relative ${
                   option.popular ? 'border-[#65AEEA]' : 'border-gray-100 hover:border-[#65AEEA]/50'
                 }`}
               >
                 {option.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#65AEEA] text-white text-xs font-bold px-4 py-1 rounded-full">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#65AEEA] text-white text-xs font-bold px-4 py-1 rounded-full z-10">
                     Popular
                   </div>
                 )}
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4">
-                  <option.icon className="h-8 w-8 text-[#65AEEA]" />
+                {/* ✅ Added image */}
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={option.image} 
+                    alt={option.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
                 </div>
-                <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
-                <p className="text-gray-500 text-sm mt-2">{option.price}</p>
-                <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
-                
-                <button 
-                  onClick={() => handlePurchase(option)} 
-                  className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-                >
-                  Buy Now
-                </button>
+                <div className="p-6 text-center">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4 -mt-12 relative z-10">
+                    <option.icon className="h-8 w-8 text-[#65AEEA]" />
+                  </div>
+                  <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
+                  <p className="text-gray-500 text-sm mt-2">{option.price}</p>
+                  <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
+                  
+                  <button 
+                    onClick={() => handlePurchase(option)} 
+                    className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
             ))}
           </div>

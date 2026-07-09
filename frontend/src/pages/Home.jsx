@@ -241,7 +241,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Banner Section with Text Overlay ========== */}
+      {/* ========== ✅ UPDATED: Banner Section with Text Lower ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -251,11 +251,11 @@ export default function Home() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/40" />
+            {/* Dark overlay - lighter at top, darker at bottom */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/60" />
             
-            {/* Text overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+            {/* Text overlay - positioned lower (bottom-10 instead of center) */}
+            <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 text-center px-4 sm:px-6 w-full max-w-3xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg">
                 Welcome To Devahiti
               </h1>
@@ -350,16 +350,12 @@ export default function Home() {
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Services</h2>
           <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4 mb-4 sm:mb-6"></div>
-          <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base text-gray-600">
             Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training — find the practice that speaks to you.
           </p>
-          <Link 
-            to="/services"
-            className="inline-block rounded-full px-8 sm:px-10 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-widest text-white transition-all hover:scale-105"
-            style={{ backgroundColor: "#65AEEA" }}
-          >
-            View All Services
-          </Link>
+          <p className="text-sm text-gray-500 mt-4 italic">
+            See below our full range
+          </p>
         </div>
       </section>
 

@@ -198,13 +198,13 @@ export default function Contact() {
                 <div>
                   <p className="text-xs uppercase tracking-widest text-gray-500">Hours</p>
                   <div className="mt-2 space-y-1">
-                    <p className="text-sm text-gray-700"><span className="font-medium">Monday:</span> 7:00 AM – 6:30 PM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Monday:</span> 7:00 AM – 6:00 PM</p>
                     <p className="text-sm text-gray-700"><span className="font-medium">Tuesday:</span> 8:00 – 9:00 AM</p>
                     <p className="text-sm text-gray-700"><span className="font-medium">Wednesday:</span> Closed</p>
                     <p className="text-sm text-gray-700"><span className="font-medium">Thursday:</span> 7:00 AM – 6:30 PM</p>
                     <p className="text-sm text-gray-700"><span className="font-medium">Friday:</span> 8:00 – 9:00 AM</p>
-                    <p className="text-sm text-gray-700"><span className="font-medium">Saturday:</span> 7:30 – 9:00 AM</p>
-                    <p className="text-sm text-gray-700"><span className="font-medium">Sunday:</span> Closed</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Saturday:</span> 7:30 AM – 4:00 PM</p>
+                    <p className="text-sm text-gray-700"><span className="font-medium">Sunday:</span> 7:30 AM – 3:00 PM</p>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">Other times by appointment</p>
                 </div>

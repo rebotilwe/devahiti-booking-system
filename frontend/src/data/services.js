@@ -29,7 +29,7 @@ export const services = [
     description: "Join our group yoga classes in Ballito. Perfect for all levels, these sessions combine breath, movement, and mindfulness in a supportive community setting.",
     shortDescription: "Community yoga classes for all levels.",
     duration: "45 – 90 minutes",
-    price: "R130 per class",
+    price: "R130 per class | R700pm unlimited", // ✅ UPDATED: Added R700pm unlimited
     priceAmount: 130,
     location: "In Studio (Ballito)",
     capacity: "All levels welcome",
