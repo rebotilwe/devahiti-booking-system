@@ -134,11 +134,11 @@ export default function Contact() {
       />
       <div className="absolute inset-0 bg-black/50" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Say hello</p>
+        {/* <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Say hello</p>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Get in touch</h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-white/90 italic drop-shadow">
           I'd love to hear from you. Let's craft a session that feels just right.
-        </p>
+        </p> */}
       </div>
     </div>
   </div>

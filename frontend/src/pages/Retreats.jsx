@@ -167,14 +167,14 @@ export default function Retreats() {
       <div className="absolute inset-0 bg-black/50" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <Flower2 className="h-5 w-5 text-white/80" />
+          {/* <Flower2 className="h-5 w-5 text-white/80" />
           <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Wellness Journeys</span>
-          <Flower2 className="h-5 w-5 text-white/80" />
+          <Flower2 className="h-5 w-5 text-white/80" /> */}
         </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Yoga Retreats</h1>
-        <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
-          Immerse yourself in transformative wellness experiences
-        </p>
+        {/* <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Yoga Retreats</h1>
+        {/* <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow"> */}
+          {/* Immerse yourself in transformative wellness experiences
+        </p> */} 
       </div>
     </div>
   </div>

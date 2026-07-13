@@ -257,14 +257,14 @@ export default function TeacherTraining() {
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <Award className="h-5 w-5 text-white/80" />
+                {/* <Award className="h-5 w-5 text-white/80" />
                 <span className="text-[10px] tracking-[0.4em] uppercase text-white/80 drop-shadow">Turn Your Passion into Your Profession</span>
-                <Award className="h-5 w-5 text-white/80" />
+                <Award className="h-5 w-5 text-white/80" /> */}
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Teacher Training</h1>
-              <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
+              {/* <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Teacher Training</h1> */}
+              {/* <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
                 200hr & 300hr Certified Programs in Ballito
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

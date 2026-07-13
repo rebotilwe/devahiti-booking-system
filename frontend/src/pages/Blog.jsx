@@ -319,11 +319,11 @@ export default function Blog() {
             />
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Journal</p>
+              {/* <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Journal</p>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">From the mat</h1>
               <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-white/90 drop-shadow">
                 Slow reflections on yoga, sound, breath, and the art of coming home to yourself.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

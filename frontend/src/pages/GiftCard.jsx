@@ -222,14 +222,14 @@ export default function GiftCard() {
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <Gift className="h-5 w-5 text-white/80" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Give the gift of wellness</span>
-                <Gift className="h-5 w-5 text-white/80" />
+                {/* <Gift className="h-5 w-5 text-white/80" /> */}
+                {/* <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Give the gift of wellness</span> */}
+                {/* <Gift className="h-5 w-5 text-white/80" /> */}
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Gift Cards</h1>
+              {/* <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Gift Cards</h1>
               <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
                 Share the healing power of yoga, sound, and stillness
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
