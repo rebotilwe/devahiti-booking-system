@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowLeft } from "lucide-react";
-import heroBgImg from "../assets/images/home.jpg";
+import heroBgImg from "../assets/images/yoga.png";
 import logo from "../assets/devahiti.png";
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
