@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Mail, MapPin, Clock, Send } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import heroBgImg from "../assets/images/home.jpg";
+import heroBgImg from "../assets/images/yoga.png";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION (matching other pages)

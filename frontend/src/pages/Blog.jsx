@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroBgImg from "../assets/images/home.jpg";
+import heroBgImg from "../assets/images/yoga.png";
 import restImg from "../assets/images/rest.jpg";
 import logo from "../assets/devahiti.png";
 
