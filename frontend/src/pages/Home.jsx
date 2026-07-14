@@ -9,7 +9,7 @@ import soundImg from "../assets/images/relaxation.png";
 import trainingImg from "../assets/images/teachers.jpg";
 import groupImg from "../assets/images/couples.png";
 import corporateImg from "../assets/images/sound.jpg";
-import soundMassageImg from "../assets/images/specialize.jpg";
+import soundMassageImg from "../assets/images/bobo.png";
 import retreatsImg from "../assets/images/retreats.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import logo from "../assets/devahiti.png";
