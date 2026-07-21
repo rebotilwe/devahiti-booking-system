@@ -6,11 +6,11 @@ import heroBgImg from "../assets/images/homee.jpg";
 import cherylPortraitImg from "../assets/images/about1.jpeg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import trainingImg from "../assets/images/teachers.jpg";
+import trainingImg from "../assets/images/teach.jpg";
 import groupImg from "../assets/images/couples.png";
-import corporateImg from "../assets/images/sound.jpg";
+import corporateImg from "../assets/images/wellness.jpg";
 import soundMassageImg from "../assets/images/bobo.png";
-import retreatsImg from "../assets/images/retreats.jpg";
+import retreatsImg from "../assets/images/bush-to-beach.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import logo from "../assets/devahiti.png";
 
