@@ -120,7 +120,7 @@ export default function ClassSchedule() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Page Hero with Framed Container ========== */}
+      {/* ========== ✅ UPDATED: HERO - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -130,19 +130,26 @@ export default function ClassSchedule() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                {/* <Calendar className="h-5 w-5 text-white/80" /> */}
-                {/* <span className="text-[10px] tracking-[0.4em] uppercase text-white/80 drop-shadow">Find Your Flow</span> */}
-                {/* <Calendar className="h-5 w-5 text-white/80" /> */}
-              </div>
-              {/* <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Class Schedule</h1>
-              <p className="mt-4 text-base sm:text-lg text-white/90 max-w-2xl drop-shadow">
-                Join us on the mat — all levels welcome
-              </p> */}
-            </div>
+            {/* Minimal overlay */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Calendar className="h-5 w-5 text-[#65AEEA]" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#65AEEA]">Find Your Flow</span>
+            <Calendar className="h-5 w-5 text-[#65AEEA]" />
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800 drop-shadow-lg">
+            Class Schedule
+          </h1>
+          <p className="mt-4 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
+            Join us on the mat — all levels welcome
+          </p>
         </div>
       </section>
 
@@ -183,6 +190,9 @@ export default function ClassSchedule() {
           <div className="mt-8 text-center">
             <p className="text-gray-600 text-sm">
               Drop-in classes: <strong>R130 per person</strong>
+            </p>
+            <p className="text-gray-500 text-sm mt-1">
+              Unlimited Monthly Membership: <strong>R700</strong>
             </p>
           </div>
         </div>

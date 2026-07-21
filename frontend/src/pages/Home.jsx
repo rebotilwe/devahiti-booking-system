@@ -169,6 +169,15 @@ export default function Home() {
     navigate("/services");
   };
 
+  // Scroll to Our Services section
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    const servicesSection = document.getElementById("our-services-section");
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Top Navbar */}
@@ -241,7 +250,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Banner Section with Text Lower ========== */}
+      {/* ========== ✅ UPDATED: Banner Section - NO TEXT ON HERO ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -251,33 +260,39 @@ export default function Home() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            {/* Dark overlay - lighter at top, darker at bottom */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/60" />
-            
-            {/* Text overlay - positioned lower (bottom-10 instead of center) */}
-            <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 text-center px-4 sm:px-6 w-full max-w-3xl">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg">
-                Welcome To Devahiti
-              </h1>
-              <p className="mt-2 text-base sm:text-lg md:text-xl text-white/90 font-light tracking-wider drop-shadow">
-                Educational Yoga Studio
-              </p>
-              <div className="mt-4 h-px w-16 bg-white/50 mx-auto" />
-              <p className="mt-4 text-sm sm:text-base text-white/80 max-w-2xl mx-auto drop-shadow">
-                Devahiti is a Sanskrit word meaning Divine or Natural Order.
-              </p>
-              <Link 
-                to="/services"
-                className="mt-6 inline-block rounded-full border-2 border-white px-6 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-[#65AEEA] hover:scale-105"
-              >
-                Explore Our Classes
-              </Link>
-            </div>
+            {/* Minimal overlay - just enough for readability if needed */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
         </div>
       </section>
 
-      {/* Hero Title Section - ✅ KEPT EXACTLY AS IS */}
+      {/* ========== ✅ UPDATED: Hero Text Section - BELOW the image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800">
+            Welcome To Devahiti
+          </h1>
+          <p className="mt-2 text-base sm:text-lg md:text-xl text-gray-600 font-light tracking-wider">
+            Educational Yoga Studio
+          </p>
+          <div className="mt-4 h-px w-16 bg-[#65AEEA] mx-auto" />
+          <p className="mt-4 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+            Devahiti is a Sanskrit word meaning Divine or Natural Order.
+          </p>
+          <button
+            onClick={scrollToServices}
+            className="mt-6 inline-block rounded-full border-2 border-[#65AEEA] px-6 sm:px-8 py-2 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#65AEEA] transition-all hover:bg-[#65AEEA] hover:text-white hover:scale-105"
+          >
+            Explore Our Classes
+          </button>
+        </div>
+        
+        <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
+      </section>
+
+      {/* ========== ✅ UPDATED: Blue Section with "Private, Group Yoga & Sound Relaxation" ========== */}
       <section className="relative py-12 sm:py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white">
@@ -299,7 +314,7 @@ export default function Home() {
         </svg>
       </section>
 
-      {/* Hi I'm Cheryl Section */}
+      {/* Hi I'm Cheryl Section - Improved spacing */}
       <section className="mx-auto max-w-3xl px-6 py-12 sm:py-16 text-center">
         <img 
           src={cherylPortraitImg} 
@@ -309,7 +324,7 @@ export default function Home() {
         />
         <h2 className="mt-6 sm:mt-8 text-2xl sm:text-3xl md:text-4xl font-light">Hi, I'm Cheryl!</h2>
         <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-gray-600">
-            Based in Ballito, I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
+          Based in Ballito, I specialise in private, group, corporate yoga and sound relaxation sessions — in studio or in the comfort of your own accommodation.
         </p>
         <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-gray-600">
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
@@ -345,8 +360,8 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Our Services CTA Section */}
-      <section className="py-12 sm:py-16 px-6 text-center bg-white">
+      {/* ========== ✅ UPDATED: Our Services Section - NO "Our Offerings" heading ========== */}
+      <section id="our-services-section" className="py-12 sm:py-16 px-6 text-center bg-white scroll-mt-28">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Services</h2>
           <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4 mb-4 sm:mb-6"></div>
@@ -362,11 +377,6 @@ export default function Home() {
       {/* Services Grid Section */}
       <section className="bg-[#F9F9FB] py-16 sm:py-20 px-4 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Offerings</h2>
-            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-10">
             {allServices.slice(0, 3).map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />

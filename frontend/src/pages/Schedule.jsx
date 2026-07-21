@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Waves, ArrowRight, Phone, ShoppingBag, Menu, X } from "lucide-react";
+import { Waves, ArrowRight, Phone, ShoppingBag, Menu, X, Clock, MapPin, Users } from "lucide-react";
 import Calendar from "../components/Calendar";
 import TimeSlots from "../components/TimeSlots";
 import ParticipantSelector from "../components/ParticipantSelector";
@@ -180,6 +180,16 @@ export default function Schedule() {
 
   const formatPrice = (price) => `R${price}`;
 
+  // ✅ Handle "View Details" for Group Class - navigate to Class Schedule
+  const handleViewDetails = (service) => {
+    if (service.id === "group-class") {
+      navigate("/class-schedule");
+    } else {
+      // For other services, show the booking flow
+      // This would typically set the selected service and proceed
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Top Navbar */}
@@ -250,7 +260,7 @@ export default function Schedule() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: HERO with Framed Container - MATCHES OTHER PAGES ========== */}
+      {/* ========== ✅ UPDATED: HERO - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -260,36 +270,21 @@ export default function Schedule() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            {/* ✅ Simple dark overlay - same as other pages */}
-            <div className="absolute inset-0 bg-black/40" />
-            
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
-              >
-                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-                <span className="text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/60 drop-shadow">
-                  Schedule Your Session
-                </span>
-                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg px-4"
-              >
-                {selectedService.title}
-              </motion.h1>
-              <p className="text-white/70 text-sm sm:text-base mt-3 drop-shadow">
-                {formatPrice(totalPrice)} • {selectedService.duration || "60 minutes"}
-              </p>
-            </div>
+            {/* Minimal overlay */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800">
+            {selectedService.title}
+          </h1>
+          <p className="mt-2 text-base sm:text-lg text-gray-500">
+            {formatPrice(totalPrice)} • {selectedService.duration || "60 minutes"}
+          </p>
         </div>
       </section>
 

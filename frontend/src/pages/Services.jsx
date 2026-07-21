@@ -125,7 +125,7 @@ export default function Services() {
         </div>
       )}
 
-      {/* HERO with Framed Container */}
+      {/* ========== ✅ UPDATED: HERO - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -135,20 +135,24 @@ export default function Services() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            <div className="absolute inset-0 bg-black/40" />
-            
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/80 drop-shadow">
-                Devahiti Yoga &amp; Sound Studio
-              </p>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-light leading-[1.1] drop-shadow-lg">
-                A practice for<br className="hidden md:block" /> every body, every mood
-              </h1>
-              <p className="text-white/70 mt-4 sm:mt-6 max-w-md mx-auto text-sm sm:text-base md:text-lg leading-relaxed drop-shadow">
-                From breath and movement to sound and stillness — find the offering that meets you where you are.
-              </p>
-            </div>
+            {/* Minimal overlay */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#65AEEA] mb-3">
+            Devahiti Yoga &amp; Sound Studio
+          </p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light leading-[1.1]">
+            A practice for<br className="hidden md:block" /> every body, every mood
+          </h1>
+          <p className="text-gray-500 mt-4 max-w-md mx-auto text-sm sm:text-base md:text-lg leading-relaxed">
+            From breath and movement to sound and stillness — find the offering that meets you where you are.
+          </p>
         </div>
       </section>
 
@@ -186,7 +190,7 @@ export default function Services() {
                         to={link}
                         className="group relative flex flex-col bg-white rounded-xl p-7 ring-1 ring-gray-100 transition-all duration-300 hover:ring-[#65AEEA]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5"
                       >
-                        {/* ✅ FIXED: Changed from object-cover to object-contain to show full image */}
+                        {/* ✅ FIXED: object-contain to show full image */}
                         <div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
                           <img
                             src={service.image}

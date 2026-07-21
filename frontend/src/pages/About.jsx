@@ -8,6 +8,7 @@ import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
 import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
+import trainingImg from "../assets/images/teachers.jpg"; // ✅ ADDED: For consistency
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
@@ -33,6 +34,14 @@ const subNav = [
   { label: "Retreats", path: "/services/retreats" },
 ];
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
+
+// Services data for consistency with homepage
+const services = [
+  { img: groupImg, title: "Group Class", link: "/services/group-class" },
+  { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
+  { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
+  { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
+];
 
 export default function About() {
   const navigate = useNavigate();
@@ -124,30 +133,35 @@ export default function About() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Page Hero with Framed Container ========== */}
+      {/* ========== ✅ UPDATED: Page Hero - NO TEXT ON IMAGE, BRIGHTENED ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
             <img 
               src={heroBgImg} 
               alt="Devahiti Yoga" 
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center brightness-[1.15] contrast-[1.05]"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/50" />
-            
-            {/* Text overlay */}
-            {/* <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">
-                About Devahiti
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-white/90 drop-shadow">
-                "If you can breathe, you can do yoga."
-              </p>
-            </div> */}
+            {/* Minimal overlay - just a subtle darkening for depth */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
         </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
+            About Devahiti
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
+            "If you can breathe, you can do yoga."
+          </p>
+        </div>
+        <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+        </svg>
       </section>
 
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
@@ -163,22 +177,13 @@ export default function About() {
               "Here at Devahiti, we believe that if you can breathe, you can do Yoga."
             </p>
             
-            {/* ✅ UPDATED: Devahiti Promise - No border, no gray background, plain text like other paragraphs */}
-            <p className="text-gray-700 leading-relaxed">
-              "In a world full of quick fixes, Devahiti chooses curiosity over certainty, understanding over judgment, and wisdom over noise."
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              We believe movement is more than exercise. It is education. It is communication. It is one of the ways we come to know ourselves.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Here, ancient yoga meets modern science—not to prove one another right, but to deepen our understanding of what it means to be human.
-            </p>
-            <p className="text-gray-700 leading-relaxed font-medium text-[#65AEEA]">
-              Every breath, every movement and every moment of stillness is an invitation to learn.
-            </p>
-            <p className="text-gray-600 text-sm italic">
-              This is the Devahiti Promise.
-            </p>
+            {/* ✅ UPDATED: Devahiti Promise - Bold heading, one paragraph with quotes */}
+            <div className="mt-6">
+              <h3 className="text-xl font-bold text-[#65AEEA] mb-3">The Devahiti Promise</h3>
+              <p className="text-gray-700 leading-relaxed">
+                "In a world full of quick fixes, Devahiti chooses curiosity over certainty, understanding over judgment, and wisdom over noise. We believe movement is more than exercise. It is education. It is communication. It is one of the ways we come to know ourselves. Here, ancient yoga meets modern science—not to prove one another right, but to deepen our understanding of what it means to be human. Every breath, every movement and every moment of stillness is an invitation to learn."
+              </p>
+            </div>
             
             <p className="mt-5 text-gray-700 leading-relaxed">My passion is to help you reconnect with your body, mind and spirit through gentle, mindful movements, deeply restorative meditative practices, carefully curated to improve your wellbeing. I believe that everybody can benefit from slowing down, and making time for relaxing yoga and sound sessions. I strive to create a safe and supportive space for you to feel comfortable enough to just be.</p>
             
@@ -243,7 +248,6 @@ export default function About() {
               <p className="text-gray-700 leading-relaxed">
                 My journey into bodywork began with massage training, then moved into the more subtle modality of reiki, which was followed by 5 years of studying Pranic healing, learning how to use the subtlest of all, energetic healing.
               </p>
-              {/* ✅ NEW: Added after "energetic healing" */}
               <p className="text-gray-700 leading-relaxed mt-3">
                 After attending an International Fascial Conference in Berlin in 2018, I set upon researching and exploring this fascinating subject more intensively.
               </p>
@@ -251,6 +255,56 @@ export default function About() {
                 These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Services / Booking Section ========== */}
+      <section className="py-20 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Our Services</h2>
+            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+              Explore our range of wellness offerings designed to help you reconnect with your body, mind, and spirit.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {services.map((service, idx) => (
+              <div 
+                key={idx}
+                className="group cursor-pointer bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                onClick={() => navigate(service.link)}
+              >
+                <div className="aspect-square w-full overflow-hidden">
+                  <img
+                    src={service.img}
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <h3 className="text-lg font-light text-gray-800">{service.title}</h3>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); navigate(service.link); }}
+                    className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-[#65AEEA] hover:underline"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link 
+              to="/services"
+              className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+            >
+              View All Services
+            </Link>
           </div>
         </div>
       </section>

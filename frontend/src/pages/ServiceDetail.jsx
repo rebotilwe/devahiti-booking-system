@@ -177,7 +177,7 @@ export default function ServiceDetail() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: HERO with Framed Container - MATCHES OTHER PAGES ========== */}
+      {/* ========== ✅ UPDATED: HERO - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -187,43 +187,30 @@ export default function ServiceDetail() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            <div className="absolute inset-0 bg-black/40" />
-            
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
-              >
-                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-                <span className="text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/60 drop-shadow">
-                  {service.category}
-                </span>
-                <Waves className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white drop-shadow-lg px-4"
-              >
-                {service.title}
-              </motion.h1>
-              
-              {isTeacherTraining && (
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="mt-4 text-lg sm:text-xl text-white/90 drop-shadow"
-                >
-                  Next Training Starts: {teacherTrainingData.startDate}
-                </motion.p>
-              )}
-            </div>
+            {/* Minimal overlay */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Waves className="h-4 w-4 text-[#65AEEA]" />
+            <span className="text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-[#65AEEA]">
+              {service.category}
+            </span>
+            <Waves className="h-4 w-4 text-[#65AEEA]" />
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-800 px-4">
+            {service.title}
+          </h1>
+          {isTeacherTraining && (
+            <p className="mt-3 text-lg sm:text-xl text-gray-500">
+              Next Training Starts: {teacherTrainingData.startDate}
+            </p>
+          )}
         </div>
       </section>
 

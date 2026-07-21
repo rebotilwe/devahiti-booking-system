@@ -49,7 +49,7 @@ const giftCardOptions = [
     price: "R550",
     priceAmount: 550,
     icon: Heart,
-    image: privateImg, // ✅ Added image
+    image: privateImg,
     popular: true,
     serviceId: "private-sessions"
   },
@@ -60,7 +60,7 @@ const giftCardOptions = [
     price: "R600",
     priceAmount: 600,
     icon: Waves,
-    image: soundMassageImg, // ✅ Added image
+    image: soundMassageImg,
     popular: false,
     serviceId: "sound-massage"
   },
@@ -71,7 +71,7 @@ const giftCardOptions = [
     price: "R800",
     priceAmount: 800,
     icon: Music,
-    image: soundImg, // ✅ Added image
+    image: soundImg,
     popular: false,
     serviceId: "sound-journey"
   },
@@ -82,7 +82,7 @@ const giftCardOptions = [
     price: "R650",
     priceAmount: 650,
     icon: Users,
-    image: groupImg, // ✅ Added image
+    image: groupImg,
     popular: false,
     serviceId: "group-class"
   },
@@ -93,7 +93,7 @@ const giftCardOptions = [
     price: "R1,600",
     priceAmount: 1600,
     icon: Users,
-    image: corporateImg, // ✅ Added image
+    image: corporateImg,
     popular: false,
     serviceId: "corporate-wellness"
   }
@@ -209,7 +209,7 @@ export default function GiftCard() {
         </div>
       )}
 
-      {/* Page Hero - ✅ Updated with Framed Container */}
+      {/* ========== ✅ UPDATED: Page Hero - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
@@ -219,19 +219,26 @@ export default function GiftCard() {
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                {/* <Gift className="h-5 w-5 text-white/80" /> */}
-                {/* <span className="text-[10px] tracking-[0.4em] uppercase text-white/80">Give the gift of wellness</span> */}
-                {/* <Gift className="h-5 w-5 text-white/80" /> */}
-              </div>
-              {/* <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">Gift Cards</h1>
-              <p className="mt-4 text-lg text-white/90 max-w-2xl drop-shadow">
-                Share the healing power of yoga, sound, and stillness
-              </p> */}
-            </div>
+            {/* Minimal overlay */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Gift className="h-5 w-5 text-[#65AEEA]" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#65AEEA]">Give the gift of wellness</span>
+            <Gift className="h-5 w-5 text-[#65AEEA]" />
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800 drop-shadow-lg">
+            Gift Cards
+          </h1>
+          <p className="mt-4 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
+            Share the healing power of yoga, sound, and stillness
+          </p>
         </div>
       </section>
 
@@ -259,7 +266,6 @@ export default function GiftCard() {
                     Popular
                   </div>
                 )}
-                {/* ✅ Added image */}
                 <div className="h-48 overflow-hidden">
                   <img 
                     src={option.image} 
