@@ -8,7 +8,7 @@ import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
 import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
-import trainingImg from "../assets/images/teachers.jpg"; // ✅ ADDED: For consistency
+import trainingImg from "../assets/images/teach.jpg"; // ✅ ADDED: For consistency
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
