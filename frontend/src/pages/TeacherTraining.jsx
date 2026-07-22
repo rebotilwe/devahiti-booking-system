@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Award, Clock, MapPin, CheckCircle, BookOpen, Star, Quote, Users } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroTrainingImg from "../assets/images/teach.jpg";
+import heroTrainingImg from "../assets/images/teach.png";
 import trainingImg from "../assets/images/img5.jpg";
 import logo from "../assets/devahiti.png";
 

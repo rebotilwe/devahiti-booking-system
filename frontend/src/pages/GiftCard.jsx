@@ -8,7 +8,7 @@ import logo from "../assets/devahiti.png";
 import groupImg from "../assets/images/couples.png";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import trainingImg from "../assets/images/teach.jpg";
+import trainingImg from "../assets/images/teach.png";
 import corporateImg from "../assets/images/wellness.jpg";
 import soundMassageImg from "../assets/images/specialize.jpg";
 import retreatsImg from "../assets/images/bush-to-beach.jpg";

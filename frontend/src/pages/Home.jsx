@@ -6,7 +6,7 @@ import heroBgImg from "../assets/images/homee.jpg";
 import cherylPortraitImg from "../assets/images/about1.jpeg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import trainingImg from "../assets/images/teach.jpg";
+import trainingImg from "../assets/images/teach.png";
 import groupImg from "../assets/images/couples.png";
 import corporateImg from "../assets/images/wellness.jpg";
 import soundMassageImg from "../assets/images/bobo.png";
@@ -266,8 +266,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== ✅ UPDATED: Hero Text Section - BELOW the image ========== */}
-      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+    {/* ========== ✅ UPDATED: Hero Text Section - BELOW the image ========== */}
+<section className="relative pt-8 sm:pt-12 pb-20 sm:pb-28 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800">
             Welcome To Devahiti

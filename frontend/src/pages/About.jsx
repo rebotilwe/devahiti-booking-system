@@ -8,7 +8,7 @@ import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
 import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
-import trainingImg from "../assets/images/teach.jpg"; // ✅ ADDED: For consistency
+import trainingImg from "../assets/images/teach.png"; // ✅ ADDED: For consistency
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
@@ -149,20 +149,20 @@ export default function About() {
         </div>
       </section>
 
-      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
-            About Devahiti
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
-            "If you can breathe, you can do yoga."
-          </p>
-        </div>
-        <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
-      </section>
+   {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
+<section className="relative pt-8 sm:pt-12 pb-20 sm:pb-28 px-6 text-center bg-white">
+  <div className="mx-auto max-w-3xl">
+    <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
+      About Devahiti
+    </h1>
+    <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
+      "If you can breathe, you can do yoga."
+    </p>
+  </div>
+  <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+  </svg>
+</section>
 
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
       <section className="py-20 px-6">
