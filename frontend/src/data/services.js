@@ -18,7 +18,7 @@ import soundImg from "../assets/images/relaxation.png";
 import soundMassageImg from "../assets/images/bobo.png";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import trainingImg from "../assets/images/teach.png";
-import retreatsImg from "../assets/images/bush-to-beach.jpg";
+import retreatsImg from "../assets/images/bob.jpeg";
 
 export const services = [
   {
