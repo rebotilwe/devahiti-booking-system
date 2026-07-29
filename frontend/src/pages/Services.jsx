@@ -191,13 +191,14 @@ export default function Services() {
                         className="group relative flex flex-col bg-white rounded-xl p-7 ring-1 ring-gray-100 transition-all duration-300 hover:ring-[#65AEEA]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5"
                       >
                         {/* ✅ FIXED: object-contain to show full image */}
-                        <div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
-                          <img
-                            src={service.image}
-                            alt={service.title}
-                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                          />
-                        </div>
+                        {/* Service card thumbnail - fills the card, crops to fit */}
+<div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
+  <img
+    src={service.image}
+    alt={service.title}
+    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+  />
+</div>
                         <h3 className="text-xl text-[#1A1A1A] mb-2.5 group-hover:text-[#65AEEA] transition-colors mt-4">
                           {service.title}
                         </h3>
