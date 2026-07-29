@@ -244,24 +244,30 @@ export default function TeacherTraining() {
         </div>
       )}
 
-      {/* Page Hero - ✅ FIXED: Shows full image with object-contain */}
-   {/* Page Hero - Shows full image, no cropping */}
-{/* Page Hero - Shows full image, no cropping */}
-<section className="w-full">
-  <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-    <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl bg-[#F5F0E8]">
-      <img 
-        src={heroTrainingImg} 
-        alt="Teacher Training" 
-        className="w-full h-auto max-h-[80vh] object-contain mx-auto"
-      />
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        {/* text overlay if needed */}
-      </div>
-    </div>
-  </div>
-</section>
+      {/* Page Hero - Shows full image, no cropping */}
+      <section className="w-full">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl bg-[#F5F0E8]">
+            <img 
+              src={heroTrainingImg} 
+              alt="Teacher Training" 
+              className="w-full h-auto max-h-[80vh] object-contain mx-auto"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
+            Teacher Training
+          </h1>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+            200hr &amp; 300hr Certified Programs in Ballito
+          </p>
+        </div>
+      </section>
 
       {/* Training Options */}
       <section className="py-20 px-6">

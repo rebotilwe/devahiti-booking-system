@@ -136,8 +136,8 @@ export default function ClassSchedule() {
         </div>
       </section>
 
-      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+      {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Calendar className="h-5 w-5 text-[#65AEEA]" />

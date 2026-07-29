@@ -149,28 +149,28 @@ export default function About() {
         </div>
       </section>
 
-   {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-<section className="relative pt-8 sm:pt-12 pb-12 sm:pb-16 px-6 text-center bg-white">
-  <div className="mx-auto max-w-3xl">
-    <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
-      About Devahiti
-    </h1>
-    <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
-      "If you can breathe, you can do yoga."
-    </p>
-  </div>
-  <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
-    <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-  </svg>
-</section>
+      {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
+      <section className="relative pt-10 sm:pt-14 pb-4 sm:pb-6 px-6 text-center bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
+            About Devahiti
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
+            "If you can breathe, you can do yoga."
+          </p>
+        </div>
+      </section>
+      <svg className="block w-full h-6 sm:h-10" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
+      </svg>
 
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
-    <section className="pt-6 sm:pt-8 pb-20 px-6">
+      <section className="pt-2 sm:pt-4 pb-20 px-6">
         <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-10">
+          {/* <div className="text-center mb-10">
             <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">About Devahiti</h2>
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-          </div>
+          </div> */}
           
           <div className="space-y-5 text-gray-700 leading-relaxed">
             <p className="text-lg italic text-[#65AEEA] font-medium">
