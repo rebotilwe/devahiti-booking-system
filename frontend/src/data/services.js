@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 // Import actual images from your assets folder
-import groupImg from "../assets/images/group.jpg";
+import groupImg from "../assets/images/couples.png";
 import privateImg from "../assets/images/privates.jpg";
 import corporateImg from "../assets/images/wellness.jpg";
 import soundImg from "../assets/images/relaxation.png";
