@@ -12,13 +12,13 @@ import {
 
 // Import actual images from your assets folder
 import groupImg from "../assets/images/group.jpg";
-import privateImg from "../assets/images/private.jpg";
-import corporateImg from "../assets/images/coporate.jpg";
-import soundImg from "../assets/images/img11.jpg";
-import soundMassageImg from "../assets/images/about.jpg";
+import privateImg from "../assets/images/privates.jpg";
+import corporateImg from "../assets/images/wellness.jpg";
+import soundImg from "../assets/images/relaxation.png";
+import soundMassageImg from "../assets/images/bobo.png";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
-import trainingImg from "../assets/images/new.jpeg";
-import retreatsImg from "../assets/images/img11.jpg";
+import trainingImg from "../assets/images/teach.png";
+import retreatsImg from "../assets/images/bush-to-beach.jpg";
 
 export const services = [
   {

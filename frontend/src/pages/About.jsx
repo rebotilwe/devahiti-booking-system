@@ -150,7 +150,7 @@ export default function About() {
       </section>
 
    {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-<section className="relative pt-8 sm:pt-12 pb-20 sm:pb-28 px-6 text-center bg-white">
+<section className="relative pt-8 sm:pt-12 pb-12 sm:pb-16 px-6 text-center bg-white">
   <div className="mx-auto max-w-3xl">
     <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
       About Devahiti
@@ -165,7 +165,7 @@ export default function About() {
 </section>
 
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
-      <section className="py-20 px-6">
+    <section className="pt-6 sm:pt-8 pb-20 px-6">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">About Devahiti</h2>
