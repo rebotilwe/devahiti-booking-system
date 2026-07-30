@@ -208,7 +208,13 @@ export default function BlogPost() {
           <ArrowLeft className="h-4 w-4" /> Back to all posts
         </Link>
         
-        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+        {/* ✅ FIXED: Added explicit paragraph/list/heading spacing so content
+            renders correctly whether or not the Tailwind Typography plugin
+            is configured in this project. */}
+        <div 
+          className="prose prose-lg max-w-none text-gray-700 [&_p]:mb-6 [&_p]:leading-relaxed [&_ul]:my-6 [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:list-disc [&_ol]:my-6 [&_ol]:space-y-2 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:leading-relaxed [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-xl [&_strong]:font-semibold [&_strong]:text-gray-800"
+          dangerouslySetInnerHTML={{ __html: post.content }} 
+        />
       </article>
 
       <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>

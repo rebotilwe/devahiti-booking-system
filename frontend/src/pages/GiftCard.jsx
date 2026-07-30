@@ -273,21 +273,21 @@ export default function GiftCard() {
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
-                <div className="p-6 text-center">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4 -mt-12 relative z-10">
-                    <option.icon className="h-8 w-8 text-[#65AEEA]" />
-                  </div>
-                  <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
-                  <p className="text-gray-500 text-sm mt-2">{option.price}</p>
-                  <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
-                  
-                  <button 
-                    onClick={() => handlePurchase(option)} 
-                    className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-                  >
-                    Buy Now
-                  </button>
-                </div>
+              <div className="p-6 text-center">
+  <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4 mt-4">
+    <option.icon className="h-8 w-8 text-[#65AEEA]" />
+  </div>
+  <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
+  <p className="text-gray-500 text-sm mt-2">{option.price}</p>
+  <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
+  
+  <button 
+    onClick={() => handlePurchase(option)} 
+    className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+  >
+    Buy Now
+  </button>
+</div>
               </div>
             ))}
           </div>
