@@ -66,9 +66,9 @@ export default function Services() {
     <div className="min-h-screen bg-white">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-white"}`}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Devahiti Yoga" className="h-12 w-auto" />
+            <img src={logo} alt="Devahiti Yoga" className="h-10 sm:h-12 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -83,12 +83,12 @@ export default function Services() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Call us">
-              <Phone className="h-5 w-5" />
+              <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
             <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Book Online">
-              <ShoppingBag className="h-5 w-5" />
+              <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
             <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors" aria-label="Menu">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -108,10 +108,11 @@ export default function Services() {
         </div>
       </header>
 
-      <div className="h-28" />
+      {/* ✅ FIXED: responsive spacer matching header height on all screen sizes */}
+      <div className="h-16 sm:h-20 md:h-28" />
 
       {mobileOpen && (
-        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+        <div className="fixed top-16 sm:top-20 md:top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
@@ -141,8 +142,8 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+      {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#65AEEA] mb-3">
             Devahiti Yoga &amp; Sound Studio
@@ -190,15 +191,14 @@ export default function Services() {
                         to={link}
                         className="group relative flex flex-col bg-white rounded-xl p-7 ring-1 ring-gray-100 transition-all duration-300 hover:ring-[#65AEEA]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5"
                       >
-                        {/* ✅ FIXED: object-contain to show full image */}
                         {/* Service card thumbnail - fills the card, crops to fit */}
-<div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
-  <img
-    src={service.image}
-    alt={service.title}
-    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-  />
-</div>
+                        <div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
                         <h3 className="text-xl text-[#1A1A1A] mb-2.5 group-hover:text-[#65AEEA] transition-colors mt-4">
                           {service.title}
                         </h3>

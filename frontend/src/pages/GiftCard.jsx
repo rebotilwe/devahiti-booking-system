@@ -152,9 +152,9 @@ export default function GiftCard() {
     <div className="min-h-screen bg-white">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Devahiti Yoga" className="h-14 w-auto" />
+            <img src={logo} alt="Devahiti Yoga" className="h-10 sm:h-14 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -165,12 +165,12 @@ export default function GiftCard() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
-              <Phone className="h-5 w-5" />
+              <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
             <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
-              <ShoppingBag className="h-5 w-5" />
+              <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
             <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors">
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -188,11 +188,12 @@ export default function GiftCard() {
         </div>
       </header>
 
-      <div className="h-28"></div>
+      {/* ✅ FIXED: responsive spacer matching header height on all screen sizes */}
+      <div className="h-16 sm:h-20 md:h-28"></div>
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-112px)] overflow-y-auto">
+        <div className="fixed top-16 sm:top-20 md:top-28 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="px-6 py-4">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className="block py-3 text-sm uppercase tracking-widest text-gray-600 hover:text-[#65AEEA] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
@@ -225,8 +226,8 @@ export default function GiftCard() {
         </div>
       </section>
 
-      {/* ========== ✅ UPDATED: Hero Text Below Image ========== */}
-      <section className="relative py-8 sm:py-12 px-6 text-center bg-white">
+      {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Gift className="h-5 w-5 text-[#65AEEA]" />
@@ -273,21 +274,21 @@ export default function GiftCard() {
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
-              <div className="p-6 text-center">
-  <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4 mt-4">
-    <option.icon className="h-8 w-8 text-[#65AEEA]" />
-  </div>
-  <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
-  <p className="text-gray-500 text-sm mt-2">{option.price}</p>
-  <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
-  
-  <button 
-    onClick={() => handlePurchase(option)} 
-    className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-  >
-    Buy Now
-  </button>
-</div>
+                <div className="p-6 text-center">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-[#65AEEA]/10 flex items-center justify-center mb-4 mt-4">
+                    <option.icon className="h-8 w-8 text-[#65AEEA]" />
+                  </div>
+                  <h3 className="text-xl font-light text-[#65AEEA]">{option.title}</h3>
+                  <p className="text-gray-500 text-sm mt-2">{option.price}</p>
+                  <p className="text-gray-600 text-sm mt-3 leading-relaxed">{option.description}</p>
+                  
+                  <button 
+                    onClick={() => handlePurchase(option)} 
+                    className="mt-6 w-full py-2.5 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
             ))}
           </div>
