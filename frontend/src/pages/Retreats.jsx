@@ -1,10 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Phone, ShoppingBag, Menu, X, Calendar, Flower2, MapPin, Clock, Users, CheckCircle, ArrowRight, Star, Quote } from "lucide-react";
+import { Phone, ShoppingBag, Menu, X, Calendar, Flower2, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroRetreatsImg from "../assets/images/bush-to-beach4.jpg";
-import retreatsImg from "../assets/images/bush-to-beach.jpg";
-import groupImg from "../assets/images/group.jpg";
-import soundImg from "../assets/images/img11.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -20,26 +17,6 @@ const navLinks = [
 ];
 
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
-
-// Upcoming Retreat
-const upcomingRetreat = {
-  id: 1,
-  title: "Rest and Rejuvenate",
-  subtitle: "5 Day Yoga Retreat",
-  date: "24-28th November 2024",
-  location: "Siqalo Lodge, Royal Jozini Nature Reserve, Eswatini (Swaziland)",
-  price: "R6,500 pp",
-  duration: "5 Days",
-  capacity: "Small and Intimate Group",
-  image: retreatsImg,
-  includes: [
-    "Single accommodation",
-    "All vegetarian meals",
-    "Yoga classes and sound meditation",
-    "Cacao ceremony",
-    "Guided bush walk"
-  ]
-};
 
 // Testimonials from past retreat attendees
 const testimonials = [
@@ -91,7 +68,7 @@ export default function Retreats() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -172,7 +149,7 @@ export default function Retreats() {
       </section>
 
       {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
-      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Flower2 className="h-5 w-5 text-[#65AEEA]" />
@@ -188,98 +165,53 @@ export default function Retreats() {
         </div>
       </section>
 
-      {/* Upcoming Retreat - Featured */}
+      {/* ========== Upcoming Retreats 2027 ========== */}
       <section className="py-20 px-6">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Limited Spaces Available</p>
-            <h2 className="text-3xl font-light md:text-4xl text-gray-800 mt-2">Upcoming Retreat</h2>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Save the Date</p>
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800 mt-2">Upcoming Retreats 2027</h2>
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+              Full itinerary and pricing for each retreat below is being finalised and will be added here soon.
+            </p>
           </div>
 
-          {/* Featured Retreat Card */}
-          <div className="bg-white border-2 border-[#65AEEA] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="overflow-hidden h-96 md:h-full">
-                <img src={upcomingRetreat.image} alt={upcomingRetreat.title} className="w-full h-full object-cover" />
+          <div className="space-y-6">
+            <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8">
+              <h3 className="text-2xl font-light text-gray-800">Dolphin and Vitamin Sea</h3>
+              <div className="mt-3 flex items-center gap-2 text-gray-600">
+                <Calendar className="h-5 w-5 text-[#65AEEA]" />
+                <span>March 2027 — Dates to be confirmed</span>
               </div>
-              <div className="p-8 md:p-10">
-                <div className="inline-block px-3 py-1 bg-[#65AEEA]/10 rounded-full mb-4">
-                  <span className="text-xs font-semibold text-[#65AEEA]">Featured Retreat</span>
-                </div>
-                <h3 className="text-3xl font-light text-gray-800">{upcomingRetreat.title}</h3>
-                <p className="text-[#65AEEA] text-lg mt-1">{upcomingRetreat.subtitle}</p>
-                
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <Calendar className="h-5 w-5 text-[#65AEEA]" />
-                    <span>{upcomingRetreat.date}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <MapPin className="h-5 w-5 text-[#65AEEA]" />
-                    <span>{upcomingRetreat.location}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <Clock className="h-5 w-5 text-[#65AEEA]" />
-                    <span>{upcomingRetreat.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <Users className="h-5 w-5 text-[#65AEEA]" />
-                    <span>{upcomingRetreat.capacity}</span>
-                  </div>
-                </div>
+            </div>
 
-                <div className="mt-6">
-                  <p className="text-3xl font-heading text-[#65AEEA]">{upcomingRetreat.price}</p>
-                  <p className="text-xs text-gray-500">per person sharing</p>
-                </div>
-
-                <div className="mt-6">
-                  <h4 className="font-semibold text-gray-800 mb-3">Price includes:</h4>
-                  <ul className="space-y-2">
-                    {upcomingRetreat.includes.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                        <CheckCircle className="h-4 w-4 text-[#65AEEA]" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <button
-                  onClick={handleBookNow}
-                  className="mt-8 w-full py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition flex items-center justify-center gap-2"
-                >
-                  Book Now <ArrowRight className="h-4 w-4" />
-                </button>
-                <p className="text-xs text-gray-400 text-center mt-3">
-                  Spaces are limited. Early booking recommended.
-                </p>
+            <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8">
+              <h3 className="text-2xl font-light text-gray-800">Travel with us through Northern India</h3>
+              <p className="text-[#65AEEA] mt-1">A journey through Faith, Culture and Consciousness</p>
+              <div className="mt-3 flex items-center gap-2 text-gray-600">
+                <Calendar className="h-5 w-5 text-[#65AEEA]" />
+                <span>September 2027 — 21 Days</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* About the Venue */}
-      <section className="bg-[#F9F9FB] py-20 px-6">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA] mb-6">About the Venue</h2>
-          <div className="w-20 h-px bg-[#65AEEA] mx-auto mb-8"></div>
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-light text-gray-800 mb-2">Siqalo Lodge</h3>
-            <p className="text-[#65AEEA] mb-4">Royal Jozini Nature Reserve, Eswatini (Swaziland)</p>
-            <p className="text-gray-600 leading-relaxed">
-              Nestled in the pristine wilderness of Royal Jozini Nature Reserve, Siqalo Lodge offers a serene escape from the everyday. 
-              Surrounded by breathtaking landscapes, diverse wildlife, and the tranquil waters of the Jozini Dam, this is the perfect setting 
-              for deep relaxation and rejuvenation.
+          <div className="text-center mt-10">
+            <p className="text-sm text-gray-500 mb-4">
+              Interested in either retreat? Get in touch to register your interest and be the first to know once dates and pricing are confirmed.
             </p>
+            <Link 
+              to="/contact"
+              className="inline-block px-8 py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+            >
+              Register Interest
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[#F3F8FC]">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <div className="flex justify-center gap-1 mb-4">
@@ -334,47 +266,6 @@ export default function Retreats() {
               {testimonials.map((_, idx) => (
                 <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"}`} />
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sample Itinerary */}
-      <section className="bg-[#F9F9FB] py-20 px-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Sample Itinerary</h2>
-            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4">A taste of what to expect during your retreat</p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#65AEEA]/20 flex items-center justify-center">
-                <span className="text-[#65AEEA] font-bold">Day 1</span>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Arrival & Opening Circle</h4>
-                <p className="text-sm text-gray-500">Welcome ceremony, settling in, gentle evening yoga</p>
-              </div>
-            </div>
-            <div className="bg-white p-4 rounded-lg flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#65AEEA]/20 flex items-center justify-center">
-                <span className="text-[#65AEEA] font-bold">Day 2-4</span>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Daily Yoga & Activities</h4>
-                <p className="text-sm text-gray-500">Morning yoga, sound meditation, cacao ceremony, guided bush walk, free time for relaxation</p>
-              </div>
-            </div>
-            <div className="bg-white p-4 rounded-lg flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#65AEEA]/20 flex items-center justify-center">
-                <span className="text-[#65AEEA] font-bold">Day 5</span>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Closing Circle & Departure</h4>
-                <p className="text-sm text-gray-500">Farewell ceremony, integration, check-out</p>
-              </div>
             </div>
           </div>
         </div>

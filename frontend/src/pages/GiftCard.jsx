@@ -1,17 +1,14 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Phone, ShoppingBag, Menu, X, Gift, Sparkles, Heart, Mail, Waves, Users, Music } from "lucide-react";
+import { Phone, ShoppingBag, Menu, X, Gift, Sparkles, Heart, Waves, Users, Music } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/giftss.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ Import the same images used in Our Offerings
-import groupImg from "../assets/images/couples.png";
+import groupImg from "../assets/images/SmallGroups.jpg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
-import trainingImg from "../assets/images/teach.png";
-import corporateImg from "../assets/images/wellness.jpg";
 import soundMassageImg from "../assets/images/specialize.jpg";
-import retreatsImg from "../assets/images/bush-to-beach.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 
 // ✅ UPDATED NAVIGATION
@@ -77,25 +74,14 @@ const giftCardOptions = [
   },
   {
     id: "group-class",
-    title: "Group Class Package",
-    description: "5 x Group Yoga Classes. Perfect for someone who loves community practice.",
-    price: "R650",
-    priceAmount: 650,
+    title: "Group Class Membership",
+    description: "Unlimited monthly Group Yoga Classes. Perfect for someone who loves community practice.",
+    price: "R700/month",
+    priceAmount: 700,
     icon: Users,
     image: groupImg,
     popular: false,
     serviceId: "group-class"
-  },
-  {
-    id: "corporate-group",
-    title: "Corporate / Private Group",
-    description: "A private group yoga session for up to 8 people. Perfect for corporate wellness or group gatherings.",
-    price: "R1,600",
-    priceAmount: 1600,
-    icon: Users,
-    image: corporateImg,
-    popular: false,
-    serviceId: "corporate-wellness"
   }
 ];
 
@@ -149,7 +135,7 @@ export default function GiftCard() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -227,7 +213,7 @@ export default function GiftCard() {
       </section>
 
       {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
-      <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
+      <section className="relative py-10 sm:py-14 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Gift className="h-5 w-5 text-[#65AEEA]" />

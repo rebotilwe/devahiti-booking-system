@@ -7,10 +7,10 @@ import cherylPortraitImg from "../assets/images/about1.jpeg";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import trainingImg from "../assets/images/teach.png";
-import groupImg from "../assets/images/couples.png";
+import groupImg from "../assets/images/SmallGroups.jpg";
 import corporateImg from "../assets/images/wellness.jpg";
 import soundMassageImg from "../assets/images/bobo.png";
-import retreatsImg from "../assets/images/bush-to-beach.jpg";
+import retreatsImg from "../assets/images/bush-to-beach4.jpg";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
 import logo from "../assets/devahiti.png";
 
@@ -179,7 +179,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
     {/* ========== ✅ UPDATED: Hero Text Section - BELOW the image ========== */}
-<section className="relative pt-8 sm:pt-12 pb-20 sm:pb-28 px-6 text-center bg-white">
+<section className="relative py-10 sm:py-14 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800">
             Welcome To Devahiti
@@ -286,10 +286,6 @@ export default function Home() {
             Explore Our Classes
           </button>
         </div>
-        
-        <svg className="absolute bottom-0 left-0 w-full pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,120 Q720,0 1440,120 Z" fill="white" />
-        </svg>
       </section>
 
       {/* ========== ✅ UPDATED: Blue Section with "Private, Group Yoga & Sound Relaxation" ========== */}
@@ -330,7 +326,7 @@ export default function Home() {
           I know how life can get so full that we forget what it feels like to truly unwind, reconnect and simply breathe again.
         </p>
         
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-3 sm:mt-4">
           <p className="text-sm sm:text-base leading-relaxed text-gray-600">
             Unwind with family and friends, allow gentle movement to reduce stress and tension, followed by a nurturing sound bath – leaving you feeling relaxed and rejuvenated.
           </p>
@@ -361,36 +357,21 @@ export default function Home() {
       </section>
 
       {/* ========== ✅ UPDATED: Our Services Section - NO "Our Offerings" heading ========== */}
-      <section id="our-services-section" className="py-12 sm:py-16 px-6 text-center bg-white scroll-mt-28">
+      <section id="our-services-section" className="py-8 sm:py-10 px-6 text-center bg-[#F3F8FC] scroll-mt-28">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Services</h2>
-          <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4 mb-4 sm:mb-6"></div>
+          <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-3 mb-3 sm:mb-4"></div>
           <p className="text-sm sm:text-base text-gray-600">
             Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training — find the practice that speaks to you.
-          </p>
-          <p className="text-sm text-gray-500 mt-4 italic">
-            See below our full range
           </p>
         </div>
       </section>
 
       {/* Services Grid Section */}
-      <section className="bg-[#F9F9FB] py-16 sm:py-20 px-4 sm:px-6">
+      <section className="bg-[#F9F9FB] py-8 sm:py-10 px-4 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-10">
-            {allServices.slice(0, 3).map((service, idx) => (
-              <ServiceCard key={idx} {...service} navigate={navigate} />
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-10">
-            {allServices.slice(3, 6).map((service, idx) => (
-              <ServiceCard key={idx} {...service} navigate={navigate} />
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-            {allServices.slice(6, 8).map((service, idx) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+            {allServices.map((service, idx) => (
               <ServiceCard key={idx} {...service} navigate={navigate} />
             ))}
           </div>
@@ -398,7 +379,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-white">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-[#F3F8FC]">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-10 sm:mb-12">
             <div className="flex justify-center gap-1 mb-4">

@@ -3,12 +3,10 @@ import { Phone, ShoppingBag, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/homme.jpg";
 import cherylPortraitImg from "../assets/images/about.jpg";
-import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import groupImg from "../assets/images/back.jpeg";
 import logo from "../assets/devahiti.png";
 import enaImg from "../assets/images/friend.jpeg"; // ✅ ADDED: Import Ena's photo
-import trainingImg from "../assets/images/teach.png"; // ✅ ADDED: For consistency
 
 // ✅ UPDATED NAVIGATION
 const navLinks = [
@@ -35,14 +33,6 @@ const subNav = [
 ];
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
-// Services data for consistency with homepage
-const services = [
-  { img: groupImg, title: "Group Class", link: "/services/group-class" },
-  { img: privateImg, title: "Private Sessions", link: "/services/private-sessions" },
-  { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
-  { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
-];
-
 export default function About() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -63,7 +53,7 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -151,7 +141,7 @@ export default function About() {
       </section>
 
       {/* ========== ✅ STANDARDIZED: Hero Text Below Image ========== */}
-      <section className="relative pt-10 sm:pt-14 pb-4 sm:pb-6 px-6 text-center bg-white">
+      <section className="relative pt-10 sm:pt-14 pb-4 sm:pb-6 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
             About Devahiti
@@ -256,56 +246,6 @@ export default function About() {
                 These various modalities culminated into what is now referred to as 'Devahiti' bodywork. Here we use hands on to release fascial adhesion, gently encouraging the body to find homeostasis, releasing discomfort and physical pain. I also incorporate Sound Massage into my offerings, blending gentle therapeutic touch with the soothing vibrations of singing bowls. Whether through yoga, sound, or bodywork, my mission remains the same: to create a safe, nurturing space where you can unwind, reconnect, and restore your natural sense of wellbeing.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== ✅ UPDATED: Services / Booking Section ========== */}
-      <section className="py-20 px-6 bg-white">
-        <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">Our Services</h2>
-            <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-              Explore our range of wellness offerings designed to help you reconnect with your body, mind, and spirit.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {services.map((service, idx) => (
-              <div 
-                key={idx}
-                className="group cursor-pointer bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                onClick={() => navigate(service.link)}
-              >
-                <div className="aspect-square w-full overflow-hidden">
-                  <img
-                    src={service.img}
-                    alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <h3 className="text-lg font-light text-gray-800">{service.title}</h3>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(service.link); }}
-                    className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-[#65AEEA] hover:underline"
-                  >
-                    Read More
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Link 
-              to="/services"
-              className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-            >
-              View All Services
-            </Link>
           </div>
         </div>
       </section>

@@ -1,8 +1,8 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import heroBgImg from "../assets/images/rest.jpg";
-import restImg from "../assets/images/rest.jpg";
+import heroBgImg from "../assets/images/The3rd.jpg";
+import ageingStrongImg from "../assets/images/YogaStress.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -31,16 +31,13 @@ const subNav = [
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
-// Categories for filtering
-const categories = ["All", "Philosophy", "Stress Management", "Teacher Training", "Wellness", "Reflections", "Personal"];
-
 // ✅ UPDATED: Ageing Strong post with rest.jpg image
 const ageingStrongPost = {
   id: 999,
   title: "Ageing Strong",
   excerpt: "Embracing the wisdom and strength that comes with age. A reflection on growing older with grace, vitality, and purpose.",
   category: "Wellness",
-  image: restImg,
+  image: ageingStrongImg,
   slug: "ageing-strong",
   read_time: "5 min read",
   created_at: new Date().toISOString(),
@@ -65,7 +62,6 @@ export default function Blog() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPost, setSelectedPost] = useState(null);
   const [blogPosts, setBlogPosts] = useState([]);
@@ -129,10 +125,9 @@ export default function Blog() {
   };
 
   const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
 
   const featuredPost = blogPosts[0] || ageingStrongPost;
@@ -157,7 +152,7 @@ export default function Blog() {
   // If a post is selected, show the full blog post view
   if (selectedPost) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#F3F8FC]">
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
             <Link to="/" className="flex items-center gap-3">
@@ -250,7 +245,7 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -317,7 +312,7 @@ export default function Blog() {
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
             <img 
-              src={restImg} 
+              src={heroBgImg} 
               alt="Devahiti Blog" 
               className="w-full h-full object-cover object-center"
               style={{ maxWidth: '100%', maxHeight: '100%' }}
@@ -334,29 +329,16 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Categories & Search */}
+      {/* Search */}
       <section className="border-b border-gray-100">
-        <div className="mx-auto flex max-w-6xl flex-col md:flex-row items-center justify-between gap-4 px-6 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition ${
-                  selectedCategory === cat ? "bg-[#65AEEA] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          <div className="relative">
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-6">
+          <div className="relative w-full max-w-md">
             <input
               type="text"
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-[#65AEEA] w-64"
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-[#65AEEA]"
             />
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
           </div>
@@ -369,7 +351,7 @@ export default function Blog() {
           <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Featured post</p>
           <article className="grid gap-10 md:grid-cols-2 md:items-center">
             <div className="overflow-hidden rounded-2xl shadow-lg">
-              <img src={restImg} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={ageingStrongImg} alt={featuredPost.title} className="h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{featuredPost.category || "General"}</span>
@@ -402,7 +384,7 @@ export default function Blog() {
                 <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
                   <div className="overflow-hidden h-56">
                     <img 
-                      src={post.id === 999 ? restImg : (post.image_url || post.image || heroBgImg)} 
+                      src={post.id === 999 ? ageingStrongImg : (post.image_url || post.image || heroBgImg)} 
                       alt={post.title} 
                       className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" 
                       loading="lazy" 
