@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, FileText, User } from "lucide-react";
+import { Mail, Phone, MapPin, FileText, User, X } from "lucide-react";
 
 export default function BookingForm({ onSubmit, initialData = {} }) {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ export default function BookingForm({ onSubmit, initialData = {} }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -162,11 +163,44 @@ export default function BookingForm({ onSubmit, initialData = {} }) {
             className="mt-0.5"
           />
           <label className="text-sm text-muted-foreground">
-            I agree to the <button type="button" className="text-ocean hover:underline">terms and conditions</button> and confirm that my booking is only confirmed after payment.
+            I agree to the{" "}
+            <button type="button" onClick={() => setShowTerms(true)} className="text-ocean hover:underline font-medium">
+              terms and conditions
+            </button>{" "}
+            and confirm that my booking is only confirmed after payment.
           </label>
         </div>
         {errors.termsAccepted && <p className="text-xs text-red-500">{errors.termsAccepted}</p>}
       </div>
+
+      {showTerms && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4" onClick={() => setShowTerms(false)}>
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <h4 className="font-heading text-lg text-foreground">Booking Terms &amp; Conditions</h4>
+              <button type="button" onClick={() => setShowTerms(false)} className="text-muted-foreground hover:text-foreground">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+              <p>Your booking is only confirmed once payment has been received in full.</p>
+              <p>Please arrive a few minutes ahead of your scheduled time so your session can start and finish on time.</p>
+              <p>If you need to reschedule or cancel, please contact us as soon as possible so we can accommodate your request where we can.</p>
+              <p>For any questions about a specific booking, get in touch via the Contact page and we'll be happy to help.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowTerms(false)}
+              className="w-full mt-6 py-2.5 bg-ocean text-white rounded-lg font-medium hover:bg-ocean-dark transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <button
         type="submit"

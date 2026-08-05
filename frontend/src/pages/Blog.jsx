@@ -31,6 +31,16 @@ const subNav = [
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
+// Estimate read time from actual content length instead of a fixed guess,
+// so it stays accurate regardless of how long or short a post is.
+const estimateReadTime = (html) => {
+  if (!html) return "1 min read";
+  const text = html.replace(/<[^>]*>/g, " ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+};
+
 // ✅ UPDATED: Ageing Strong post with rest.jpg image
 const ageingStrongPost = {
   id: 999,
@@ -39,7 +49,6 @@ const ageingStrongPost = {
   category: "Wellness",
   image: ageingStrongImg,
   slug: "ageing-strong",
-  read_time: "5 min read",
   created_at: new Date().toISOString(),
   content: `
     <p><strong>A Reflection on Ageing Strong</strong></p>
@@ -63,7 +72,6 @@ export default function Blog() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPost, setSelectedPost] = useState(null);
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,30 +106,8 @@ export default function Blog() {
     navigate("/services");
   };
 
-  const handleReadMore = async (post) => {
-    if (post.id === 999) {
-      setSelectedPost(post);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    
-    try {
-      const response = await fetch(`${API_URL}/blog/${post.slug}`);
-      if (response.ok) {
-        const fullPost = await response.json();
-        setSelectedPost(fullPost);
-      } else {
-        setSelectedPost(post);
-      }
-    } catch (error) {
-      console.error("Error fetching full post:", error);
-      setSelectedPost(post);
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleBackToPosts = () => {
-    setSelectedPost(null);
+  const handleReadMore = (post) => {
+    navigate(`/blog/${post.slug}`);
   };
 
   const filteredPosts = blogPosts.filter((post) => {
@@ -132,12 +118,6 @@ export default function Blog() {
 
   const featuredPost = blogPosts[0] || ageingStrongPost;
 
-  const getImage = (post) => {
-    if (post.image_url) return post.image_url;
-    if (post.image) return post.image;
-    return heroBgImg;
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -145,101 +125,6 @@ export default function Blog() {
           <div className="w-8 h-8 border-2 border-[#65AEEA] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-500">Loading stories...</p>
         </div>
-      </div>
-    );
-  }
-
-  // If a post is selected, show the full blog post view
-  if (selectedPost) {
-    return (
-      <div className="min-h-screen bg-[#F3F8FC]">
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-            <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="Devahiti Yoga" className="h-10 sm:h-14 w-auto" />
-            </Link>
-            <nav className="hidden items-center gap-8 md:flex">
-              {navLinks.map((link) => (
-                <Link key={link.path} to={link.path} className="text-[11px] font-medium tracking-[0.15em] uppercase text-gray-600 transition-colors hover:text-[#65AEEA]">
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex items-center gap-3 sm:gap-4">
-              <button onClick={handlePhoneClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
-                <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button onClick={handleShoppingBagClick} className="text-gray-500 hover:text-[#65AEEA] transition-colors">
-                <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-gray-500 hover:text-[#65AEEA] transition-colors">
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-            </div>
-          </div>
-          <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
-            <div className="mx-auto max-w-7xl px-6 py-3 text-center">
-              <button onClick={() => navigate("/services")} className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity">
-                Our Services
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* ✅ FIXED: responsive spacer matching header height on all screen sizes */}
-        <div className="h-16 sm:h-20 md:h-28"></div>
-
-        <article className="mx-auto max-w-4xl px-6 py-16">
-          <button onClick={handleBackToPosts} className="mb-8 inline-flex items-center gap-2 text-[#65AEEA] hover:underline">
-            ← Back to all posts
-          </button>
-          
-          {getImage(selectedPost) && (
-            <div className="overflow-hidden rounded-2xl mb-8">
-              <img src={getImage(selectedPost)} alt={selectedPost.title} className="h-[400px] w-full object-cover" />
-            </div>
-          )}
-          
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#65AEEA]">{selectedPost.category || "General"}</span>
-          <h1 className="mt-4 text-4xl md:text-5xl font-light text-gray-800">{selectedPost.title}</h1>
-          
-          <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
-            <span className="inline-flex items-center gap-2">
-              <Calendar className="h-4 w-4" /> 
-              {selectedPost.created_at ? new Date(selectedPost.created_at).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              }) : "Recent"}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Clock className="h-4 w-4" /> {selectedPost.read_time || "5 min read"}
-            </span>
-          </div>
-          
-          {/* ✅ FIXED: Added explicit paragraph/list/heading spacing so content
-              renders correctly whether or not the Tailwind Typography plugin
-              is configured in this project. */}
-          <div 
-            className="mt-10 prose prose-lg max-w-none text-gray-700 [&_p]:mb-6 [&_p]:leading-relaxed [&_ul]:my-6 [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:list-disc [&_ol]:my-6 [&_ol]:space-y-2 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:leading-relaxed [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-xl [&_strong]:font-semibold [&_strong]:text-gray-800"
-            dangerouslySetInnerHTML={{ __html: selectedPost.content || "<p>No content available for this post.</p>" }} 
-          />
-        </article>
-
-        <footer className="px-6 py-12 text-center text-white" style={{ backgroundColor: "#65AEEA" }}>
-          <img src={logo} alt="Devahiti Yoga" className="mx-auto h-20 w-auto" />
-          <p className="mt-4 text-2xl font-light text-white">Devahiti</p>
-          <p className="mt-2 text-sm italic text-white/90">'Day-vah-hee-tee' — Sanskrit for Divine Order</p>
-          <p className="mt-6 text-xs uppercase tracking-widest text-white/80">
-            © {new Date().getFullYear()} Devahiti Yoga · Ballito, South Africa
-          </p>
-          <p className="mt-4 text-xs text-white/60">
-            Developed by{' '}
-            <a href="https://afribizconnect.co.za/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors underline underline-offset-2">
-              Afribiz Connect
-            </a>
-          </p>
-        </footer>
       </div>
     );
   }
@@ -359,7 +244,7 @@ export default function Blog() {
               <p className="mt-5 leading-relaxed text-gray-600 line-clamp-3">{featuredPost.excerpt}</p>
               <div className="mt-6 flex items-center gap-5 text-sm text-gray-500">
                 <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> Recent</span>
-                <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {featuredPost.read_time || "5 min read"}</span>
+                <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" /> {featuredPost.read_time || estimateReadTime(featuredPost.content)}</span>
               </div>
               <button onClick={() => handleReadMore(featuredPost)} className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-[#65AEEA] text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition">
                 Read story <ArrowRight className="h-4 w-4" />
@@ -398,7 +283,7 @@ export default function Blog() {
                       <span className="inline-flex items-center gap-2"><Calendar className="h-3.5 w-3.5" /> 
                         {post.id === 999 ? "Recent" : new Date(post.created_at).toLocaleDateString()}
                       </span>
-                      <span className="inline-flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {post.read_time || "5 min read"}</span>
+                      <span className="inline-flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {post.read_time || estimateReadTime(post.content)}</span>
                     </div>
                     <button onClick={() => handleReadMore(post)} className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#65AEEA] hover:gap-3 transition-all">
                       Read more <ArrowRight className="h-3.5 w-3.5" />

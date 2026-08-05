@@ -14,9 +14,6 @@ const formatTime = (time) => {
   return `${displayHour}:${minute} ${ampm}`;
 };
 
-// Mock time slots for testing (remove when backend is ready)
-const MOCK_TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
-
 export default function TimeSlots({
   selectedDate,
   onTimeSelect,
@@ -25,33 +22,25 @@ export default function TimeSlots({
 }) {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [useMockData, setUseMockData] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     const fetchSlots = async () => {
       if (!selectedDate) return;
 
       setLoading(true);
+      setLoadError(false);
 
       try {
         const dateStr = selectedDate.toISOString().split("T")[0];
         const data = await getAvailability(dateStr);
         
         const slots = data?.slots || (Array.isArray(data) ? data : []);
-        
-        if (slots && slots.length > 0) {
-          setAvailableSlots(slots);
-          setUseMockData(false);
-        } else {
-          // Use mock data for testing
-          setAvailableSlots(MOCK_TIME_SLOTS);
-          setUseMockData(true);
-        }
+        setAvailableSlots(slots || []);
       } catch (err) {
         console.error("Failed to load slots", err);
-        // Use mock data on error
-        setAvailableSlots(MOCK_TIME_SLOTS);
-        setUseMockData(true);
+        setAvailableSlots([]);
+        setLoadError(true);
       }
 
       setLoading(false);
@@ -98,9 +87,9 @@ export default function TimeSlots({
         })}
       </p>
 
-      {useMockData && (
-        <p className="text-xs text-amber-600 mb-3 italic">
-          ⚡ Demo mode - using test time slots
+      {loadError && (
+        <p className="text-xs text-red-500 mb-3">
+          We couldn't load live availability for this date. Please try again, or contact us directly to book.
         </p>
       )}
 

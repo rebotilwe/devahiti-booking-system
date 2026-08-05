@@ -62,13 +62,19 @@ export default function Services() {
     return `/services/${service.slug}`;
   };
 
+  // Consistent short price format for cards — full pricing detail still lives on each service's own page
+  const formatCardPrice = (service) => {
+    if (!service.priceAmount) return "Enquire for pricing";
+    return `From R${service.priceAmount.toLocaleString()}`;
+  };
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-white"}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Devahiti Yoga" className="h-10 sm:h-12 w-auto" />
+            <img src={logo} alt="Devahiti Yoga" className="h-10 sm:h-14 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -97,10 +103,10 @@ export default function Services() {
         </div>
 
         <div className="hidden md:block border-t border-gray-100" style={{ backgroundColor: "#65AEEA" }}>
-          <div className="mx-auto max-w-7xl px-6 py-2.5 text-center">
+          <div className="mx-auto max-w-7xl px-6 py-3 text-center">
             <button
               onClick={() => navigate("/services")}
-              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white hover:opacity-80 transition-opacity"
             >
               Our Services
             </button>
@@ -182,14 +188,14 @@ export default function Services() {
                   <div className="flex-1 h-px bg-gray-200 ml-2" />
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                   {items.map((service) => {
                     const link = getServiceLink(service);
                     return (
                       <Link
                         key={service.id}
                         to={link}
-                        className="group relative flex flex-col bg-white rounded-xl p-7 ring-1 ring-gray-100 transition-all duration-300 hover:ring-[#65AEEA]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5"
+                        className="group relative flex flex-col bg-white rounded-xl p-7 ring-1 ring-gray-100 transition-all duration-300 hover:ring-[#65AEEA]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm"
                       >
                         {/* Service card thumbnail - fills the card, crops to fit */}
                         <div className="w-full h-48 overflow-hidden rounded-lg bg-[#F5F0E8]">
@@ -211,13 +217,13 @@ export default function Services() {
                             <Clock size={13} className="text-[#65AEEA]/70" /> {service.duration}
                           </span>
                           <span className="flex items-center gap-1.5">
-                            <MapPin size={13} className="text-[#65AEEA]/70" /> {service.location.split(" ")[0]}
+                            <MapPin size={13} className="text-[#65AEEA]/70" /> {service.location}
                           </span>
                         </div>
 
                         <div className="flex justify-between items-center pt-5 border-t border-gray-100">
                           <span className="text-[#1A1A1A] font-semibold">
-                            {service.price}
+                            {formatCardPrice(service)}
                           </span>
                           <span className="text-xs font-medium text-[#65AEEA] flex items-center gap-1">
                             View details

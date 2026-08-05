@@ -156,7 +156,7 @@ export default function About() {
       </svg>
 
       {/* ========== ABOUT DEVAHITI SECTION ========== */}
-      <section className="pt-2 sm:pt-4 pb-20 px-6">
+      <section className="pt-2 sm:pt-4 pb-10 sm:pb-12 px-6">
         <div className="mx-auto max-w-4xl">
           {/* <div className="text-center mb-10">
             <h2 className="text-3xl font-light md:text-4xl text-[#65AEEA]">About Devahiti</h2>
@@ -181,7 +181,7 @@ export default function About() {
             <p className="text-gray-700 leading-relaxed">My approach, while steeped in science, is also intuitive, gentle, and always ready to meet you exactly where you are in each moment.</p>
           </div>
           
-          <div className="text-center mt-8">
+          <div className="text-center mt-10 sm:mt-12">
             <Link 
               to="/services"
               className="inline-block bg-[#65AEEA] text-white px-8 py-3 text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"

@@ -2,9 +2,46 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowLeft } from "lucide-react";
 import heroBgImg from "../assets/images/rest.jpg";
+import ageingStrongImg from "../assets/images/YogaStress.jpg";
 import logo from "../assets/devahiti.png";
 
 const API_URL = "https://devahiti-booking-system.onrender.com/api";
+
+// Estimate read time from actual content length instead of a fixed guess,
+// so it stays accurate regardless of how long or short a post is.
+const estimateReadTime = (html) => {
+  if (!html) return "1 min read";
+  const text = html.replace(/<[^>]*>/g, " ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+};
+
+// The "Ageing Strong" post isn't in the backend — it's a static post that
+// lives here so the /blog/ageing-strong route works with real browser history.
+const ageingStrongPost = {
+  id: 999,
+  title: "Ageing Strong",
+  category: "Wellness",
+  image_url: ageingStrongImg,
+  slug: "ageing-strong",
+  created_at: new Date().toISOString(),
+  content: `
+    <p><strong>A Reflection on Ageing Strong</strong></p>
+    <p>Ageing is not a decline—it is an evolution. Each year brings not just more candles on the cake, but more wisdom, more depth, and more clarity about what truly matters.</p>
+    <p>We live in a world that often glorifies youth, but the truth is that some of the most vibrant, powerful, and impactful people are those who have lived long enough to know themselves deeply.</p>
+    <p>Ageing strong means:</p>
+    <ul>
+      <li>Moving your body daily—not to look young, but to feel alive</li>
+      <li>Nourishing yourself with whole, vibrant foods</li>
+      <li>Staying connected to community and purpose</li>
+      <li>Embracing rest as much as activity</li>
+      <li>Letting go of what no longer serves you</li>
+    </ul>
+    <p>The yoga mat is a powerful place to explore this journey. It reminds us that we are not the same person we were a decade ago—and that's a beautiful thing.</p>
+    <p>Whether you are 25 or 75, the invitation is the same: show up for yourself, honour where you are, and keep growing. Because ageing isn't about getting older—it's about getting stronger.</p>
+  `
+};
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -45,6 +82,11 @@ export default function BlogPost() {
 
   useEffect(() => {
     const fetchPost = async () => {
+      if (slug === "ageing-strong") {
+        setPost(ageingStrongPost);
+        setLoading(false);
+        return;
+      }
       try {
         const response = await fetch(`${API_URL}/blog/${slug}`);
         if (response.ok) {
@@ -96,7 +138,7 @@ export default function BlogPost() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           <Link to="/" className="flex items-center gap-3">
@@ -194,7 +236,7 @@ export default function BlogPost() {
               <Calendar className="h-4 w-4" /> {new Date(post.created_at).toLocaleDateString()}
             </span>
             <span className="inline-flex items-center gap-2">
-              <Clock className="h-4 w-4" /> {post.read_time || "5 min read"}
+              <Clock className="h-4 w-4" /> {post.read_time || estimateReadTime(post.content)}
             </span>
           </div>
         </div>
