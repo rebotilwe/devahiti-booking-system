@@ -5,7 +5,7 @@ import heroBgImg from "../assets/images/giftss.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ Import the same images used in Our Offerings
-import groupImg from "../assets/images/SmallGroups.jpg";
+import groupImg from "../assets/images/couples.png";
 import privateImg from "../assets/images/privates.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import soundMassageImg from "../assets/images/specialize.jpg";

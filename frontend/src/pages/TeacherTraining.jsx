@@ -180,7 +180,7 @@ export default function TeacherTraining() {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#F3F8FC] overflow-x-hidden">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -539,7 +539,7 @@ export default function TeacherTraining() {
                   <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
                     <div className="bg-white rounded-2xl p-6 shadow-lg">
                       <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
-                      <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text.substring(0, 200)}..."</p>
+                      <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text}"</p>
                       <div className="border-t border-gray-100 pt-4">
                         <p className="font-semibold text-gray-800">{testimonial.name}</p>
                         <p className="text-xs text-gray-400">{testimonial.title}</p>

@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight, Search } from "lucide-react";
+import { Phone, ShoppingBag, Menu, X, Calendar, Clock, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroBgImg from "../assets/images/The3rd.jpg";
 import ageingStrongImg from "../assets/images/YogaStress.jpg";
@@ -71,7 +71,6 @@ export default function Blog() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -110,13 +109,11 @@ export default function Blog() {
     navigate(`/blog/${post.slug}`);
   };
 
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesSearch;
-  });
-
+  // Ageing Strong (or whatever post comes first) is shown once, big, as the
+  // featured post — the grid below only shows the remaining posts so nothing
+  // is duplicated.
   const featuredPost = blogPosts[0] || ageingStrongPost;
+  const gridPosts = blogPosts.slice(1);
 
   if (loading) {
     return (
@@ -214,22 +211,6 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Search */}
-      <section className="border-b border-gray-100">
-        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-6">
-          <div className="relative w-full max-w-md">
-            <input
-              type="text"
-              placeholder="Search articles..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-[#65AEEA]"
-            />
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-          </div>
-        </div>
-      </section>
-
       {/* Featured Post - Ageing Strong with rest.jpg */}
       {featuredPost && (
         <section className="mx-auto max-w-6xl px-6 py-16">
@@ -259,13 +240,13 @@ export default function Blog() {
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-light md:text-4xl text-gray-800 mb-12">Recent reflections</h2>
           
-          {filteredPosts.length === 0 ? (
+          {gridPosts.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-500">No articles found. Try a different search.</p>
+              <p className="text-gray-500">More stories coming soon.</p>
             </div>
           ) : (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {filteredPosts.map((post) => (
+              {gridPosts.map((post) => (
                 <article key={post.id} className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
                   <div className="overflow-hidden h-56">
                     <img 

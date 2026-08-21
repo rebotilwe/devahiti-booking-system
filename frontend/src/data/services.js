@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 
 // Import actual images from your assets folder
-import groupImg from "../assets/images/couples.png";
+import groupImg from "../assets/images/YogaLockdown.jpg";
 import privateImg from "../assets/images/privates.jpg";
-import corporateImg from "../assets/images/wellness.jpg";
+import corporateImg from "../assets/images/SmallGroups.jpg";
 import soundImg from "../assets/images/relaxation.png";
 import soundMassageImg from "../assets/images/bobo.png";
 import fasciaReleaseImg from "../assets/images/fascia.jpg";
@@ -58,8 +58,8 @@ export const services = [
     slug: "corporate-wellness",
     title: "Corporate Wellness",
     category: "Corporate & Workplace",
-    description: "Bring balance and focus to your team with a guided wellness session at your workplace. Reduce stress, improve focus, and boost productivity. All equipment provided.",
-    shortDescription: "Wellness sessions for teams at your workplace.",
+    description: "Bring balance and focus to your team with a guided wellness session at your workplace or venue of your choice. Reduce stress, improve focus, and boost productivity. All equipment provided.",
+    shortDescription: "Wellness sessions for teams at your workplace or venue of your choice.",
     duration: "60 minutes",
     price: "R1600 per session (This covers up to 8 people, thereafter an additional fee of R50pp)",
     priceAmount: 1600,
