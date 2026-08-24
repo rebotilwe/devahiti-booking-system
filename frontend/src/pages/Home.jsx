@@ -349,7 +349,7 @@ export default function Home() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Services</h2>
           <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-3 mb-3 sm:mb-4"></div>
           <p className="text-sm sm:text-base text-gray-600">
-            Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training — find the practice that speaks to you.
+            Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training, at your workplace or venue of your choice — find the practice that speaks to you.
           </p>
         </div>
       </section>
