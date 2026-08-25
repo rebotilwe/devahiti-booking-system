@@ -77,6 +77,12 @@ router.post('/schedule', async (req, res) => {
     );
     res.json(result.rows[0]);
   } catch (err) {
+    // 23505 = unique_violation — this slot already exists for that day,
+    // once the unique_day_time constraint from the dedupe migration is in
+    // place. Return a clear message instead of a raw Postgres error.
+    if (err.code === '23505') {
+      return res.status(409).json({ error: 'That time slot already exists for this day.' });
+    }
     console.error("Error adding time slot:", err);
     res.status(500).json({ error: err.message });
   }

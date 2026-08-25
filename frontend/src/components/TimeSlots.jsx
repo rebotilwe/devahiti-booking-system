@@ -14,6 +14,18 @@ const formatTime = (time) => {
   return `${displayHour}:${minute} ${ampm}`;
 };
 
+// selectedDate is built as LOCAL midnight (new Date(year, month, day) in
+// Calendar.jsx). Using .toISOString() converts to UTC first, which rolls
+// the date back a day for anyone east of UTC (e.g. South Africa, UTC+2) —
+// the calendar would show "Wednesday" while this sent "Tuesday" to the
+// API. Read the year/month/day directly off the local date instead.
+const toLocalDateStr = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export default function TimeSlots({
   selectedDate,
   onTimeSelect,
@@ -32,28 +44,10 @@ export default function TimeSlots({
       setLoadError(false);
 
       try {
-        const dateStr = selectedDate.toISOString().split("T")[0];
+        const dateStr = toLocalDateStr(selectedDate);
         const data = await getAvailability(dateStr);
         
-        // ✅ FIX: Handle the response properly
-        // The API returns { slots: [...], date: '...' }
-        // But it might also return just an array
-        let slots = [];
-        if (data && data.slots) {
-          slots = data.slots;
-        } else if (Array.isArray(data)) {
-          slots = data;
-        } else if (data && typeof data === 'object') {
-          // Try to find slots in any property
-          for (const key of Object.keys(data)) {
-            if (Array.isArray(data[key])) {
-              slots = data[key];
-              break;
-            }
-          }
-        }
-        
-        console.log('📡 Available slots for', dateStr, ':', slots);
+        const slots = data?.slots || (Array.isArray(data) ? data : []);
         setAvailableSlots(slots || []);
       } catch (err) {
         console.error("Failed to load slots", err);
@@ -93,8 +87,7 @@ export default function TimeSlots({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-ocean/10 p-4 sm:p-6">
-      <h3 className="font-heading text-xl text-foreground mb-4 flex items-center gap-2">
-        <Clock className="h-5 w-5 text-[#65AEEA]" />
+      <h3 className="font-heading text-xl text-foreground mb-4">
         Select a Time
       </h3>
       
@@ -120,8 +113,8 @@ export default function TimeSlots({
         )}
 
         {availableSlots.map((slot, index) => {
+          const disabled = isBooked(slot);
           const timeStr = typeof slot === 'string' ? slot : slot.time || slot;
-          const disabled = isBooked(timeStr);
 
           return (
             <motion.button
@@ -131,10 +124,10 @@ export default function TimeSlots({
               disabled={disabled}
               className={`py-3 px-4 rounded-lg text-sm font-medium transition-all ${
                 selectedTime === timeStr
-                  ? "bg-[#65AEEA] text-white shadow-md"
+                  ? "bg-ocean text-white shadow-md"
                   : disabled
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-[#65AEEA]/10 text-[#65AEEA] hover:bg-[#65AEEA]/20 cursor-pointer"
+                  : "bg-ocean/10 text-ocean hover:bg-ocean/20 cursor-pointer"
               }`}
             >
               {formatTime(timeStr)}
@@ -142,12 +135,6 @@ export default function TimeSlots({
           );
         })}
       </div>
-      
-      {availableSlots.length > 0 && (
-        <p className="text-xs text-gray-400 mt-4 text-center">
-          {availableSlots.length} time{availableSlots.length > 1 ? 's' : ''} available
-        </p>
-      )}
     </div>
   );
 }

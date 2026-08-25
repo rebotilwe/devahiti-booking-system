@@ -12,6 +12,18 @@ import heroBgImg from "../assets/images/homee.jpg"; // ✅ ADDED: Import hero im
 
 const API_BASE_URL = "https://devahiti-booking-system.onrender.com/api";
 
+// selectedDate is built as LOCAL midnight (new Date(year, month, day) in
+// Calendar.jsx). Using .toISOString() converts to UTC first, which rolls
+// the date back a day for anyone east of UTC (e.g. South Africa, UTC+2) —
+// the calendar would show "Wednesday" while the booking got saved as
+// "Tuesday". Read the year/month/day directly off the local date instead.
+const toLocalDateStr = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 // ✅ NAVIGATION
 const navLinks = [
   { label: "Home", path: "/" },
@@ -89,9 +101,6 @@ export default function Schedule() {
   const [participants, setParticipants] = useState(1);
   const [totalPrice, setTotalPrice] = useState(initialService.basePrice || 650);
   const [step, setStep] = useState(1);
-  
-  const [availableSlots, setAvailableSlots] = useState([]);
-  const [loadingSlots, setLoadingSlots] = useState(false);
   const [blockedDates] = useState([]);
   const [weeklySchedule, setWeeklySchedule] = useState({});
 
@@ -122,29 +131,27 @@ export default function Schedule() {
     fetchSchedule();
   }, []);
 
+  // Not responsible for what's displayed (TimeSlots.jsx fetches and renders
+  // its own slots) — this just clears a previously selected time if it's no
+  // longer valid once the date changes (e.g. picked 10am for Monday, then
+  // switched to a date where 10am isn't offered).
   useEffect(() => {
-    if (!selectedDate) return;
+    if (!selectedDate || !selectedTime) return;
 
-    const fetchSlots = async () => {
-      setLoadingSlots(true);
+    const checkStillAvailable = async () => {
       try {
-        const dateStr = selectedDate.toISOString().split('T')[0];
+        const dateStr = toLocalDateStr(selectedDate);
         const response = await fetch(`${API_BASE_URL}/availability/slots?date=${dateStr}`);
         const data = await response.json();
-        setAvailableSlots(data.slots || []);
-        
-        if (selectedTime && !data.slots?.includes(selectedTime)) {
+        if (!data.slots?.includes(selectedTime)) {
           setSelectedTime(null);
         }
       } catch (error) {
-        console.error("Error fetching slots:", error);
-        setAvailableSlots([]);
-      } finally {
-        setLoadingSlots(false);
+        console.error("Error checking slot availability:", error);
       }
     };
 
-    fetchSlots();
+    checkStillAvailable();
   }, [selectedDate, selectedTime]);
 
   const handleDateSelect = (date) => {
@@ -164,7 +171,7 @@ export default function Schedule() {
   const handleFormSubmit = (userData) => {
     const booking = {
       service_type: selectedService.id,
-      booking_date: selectedDate.toISOString().split('T')[0],
+      booking_date: toLocalDateStr(selectedDate),
       booking_time: selectedTime,
       participants: participants,
       total_price: totalPrice,
@@ -191,7 +198,7 @@ export default function Schedule() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F8FC]">
       {/* Top Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
@@ -329,8 +336,6 @@ export default function Schedule() {
               selectedDate={selectedDate}
               selectedTime={selectedTime}
               onTimeSelect={handleTimeSelect}
-              availableSlots={availableSlots}
-              loading={loadingSlots}
             />
           </div>
         </div>

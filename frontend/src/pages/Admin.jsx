@@ -23,6 +23,17 @@ const formatTime = (timeString) => {
   return timeString;
 };
 
+// Converts a local JS Date object (e.g. from date-range arithmetic) to a
+// "YYYY-MM-DD" string using its local components — deliberately not
+// .toISOString(), which converts to UTC first and can roll the date back
+// a day for timezones ahead of UTC (like South Africa).
+const toLocalDateStr = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export default function Admin() {
   const [bookings, setBookings] = useState([]);
   const [blockedDates, setBlockedDates] = useState([]);
@@ -147,10 +158,18 @@ export default function Admin() {
   // Block every day in a range in one go — e.g. a full weekend or a
   // vacation week — instead of adding each date one at a time. Reuses the
   // same single-date endpoint under the hood, so no backend change needed.
+  // Parse "YYYY-MM-DD" from the date input as local components — avoids
+  // .toISOString()'s UTC round-trip, which is fragile the moment date
+  // arithmetic (setDate) mixes with a UTC-anchored starting point.
+  const parseLocalDateInput = (str) => {
+    const [year, month, day] = str.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
   const addBlockedRange = async () => {
     if (!rangeStart || !rangeEnd) return;
-    const start = new Date(rangeStart);
-    const end = new Date(rangeEnd);
+    const start = parseLocalDateInput(rangeStart);
+    const end = parseLocalDateInput(rangeEnd);
     if (end < start) {
       alert("End date must be on or after the start date.");
       return;
@@ -161,7 +180,7 @@ export default function Admin() {
       const newlyBlocked = [];
       const cursor = new Date(start);
       while (cursor <= end) {
-        const dateStr = cursor.toISOString().split("T")[0];
+        const dateStr = toLocalDateStr(cursor);
         const response = await fetch(`${API_URL}/admin/blocked-dates`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -192,11 +211,16 @@ export default function Admin() {
         body: JSON.stringify({ day_of_week: newSlotDay, time_slot: newSlotTime }),
       });
       const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "Failed to add time slot");
+        return;
+      }
       setWeeklySchedule([...weeklySchedule, data]);
       setNewSlotDay("");
       setNewSlotTime("");
     } catch (error) {
       console.error("Error adding time slot:", error);
+      alert("Something went wrong adding that time slot.");
     }
   };
 
