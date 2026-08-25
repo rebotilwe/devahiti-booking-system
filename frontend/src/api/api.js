@@ -63,17 +63,21 @@ export const initiateBooking = async (bookingData) => {
         booking_time: bookingData.booking_time,
         participants: bookingData.participants,
         total_price: bookingData.total_price,
+        original_price: bookingData.original_price,
         customer_name: bookingData.customer_name,
         customer_email: bookingData.customer_email,
         customer_phone: bookingData.customer_phone,
         customer_address: bookingData.customer_address,
         notes: bookingData.notes || "",
+        coupon_code: bookingData.coupon_code,
+        discount_amount: bookingData.discount_amount,
+        discount_percentage: bookingData.discount_percentage,
       }),
     });
     
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Booking failed");
+      throw new Error(errorData.error || errorData.message || "Booking failed");
     }
     
     return await response.json();
