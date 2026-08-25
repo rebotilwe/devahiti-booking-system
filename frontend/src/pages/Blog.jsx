@@ -79,8 +79,14 @@ export default function Blog() {
     const fetchBlogPosts = async () => {
       try {
         const response = await fetch(`${API_URL}/blog`);
+        if (!response.ok) {
+          throw new Error(`Blog API returned ${response.status}`);
+        }
         const data = await response.json();
-        setBlogPosts([ageingStrongPost, ...data]);
+        // The API can return an error object instead of an array (e.g. during
+        // a 500), so guard against spreading something non-iterable.
+        const posts = Array.isArray(data) ? data : [];
+        setBlogPosts([ageingStrongPost, ...posts]);
       } catch (error) {
         console.error("Error fetching blog posts:", error);
         setBlogPosts([ageingStrongPost]);
@@ -189,26 +195,11 @@ export default function Blog() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Page Hero with Framed Container ========== */}
-      <section className="w-full">
-        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
-            <img 
-              src={heroBgImg} 
-              alt="Devahiti Blog" 
-              className="w-full h-full object-cover object-center"
-              style={{ maxWidth: '100%', maxHeight: '100%' }}
-            />
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              {/* <p className="text-xs uppercase tracking-[0.3em] text-white/80 drop-shadow">Journal</p>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white drop-shadow-lg">From the mat</h1>
-              <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-white/90 drop-shadow">
-                Slow reflections on yoga, sound, breath, and the art of coming home to yourself.
-              </p> */}
-            </div>
-          </div>
-        </div>
+      {/* ========== Blog Posts Heading (replaces the old purposeless hero photo) ========== */}
+      <section className="relative pt-12 sm:pt-16 pb-6 px-6 text-center">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
+          Blog Posts
+        </h1>
       </section>
 
       {/* Featured Post - Ageing Strong with rest.jpg */}

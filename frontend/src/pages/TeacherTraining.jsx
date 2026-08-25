@@ -323,7 +323,7 @@ export default function TeacherTraining() {
                   <Award className="h-8 w-8 text-[#65AEEA]" />
                 </div>
                 <h3 className="text-2xl font-light text-gray-800">Advanced 300 Hour Teacher Training</h3>
-                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts July 2026</p>
+                <p className="text-[#65AEEA] font-semibold text-xl mt-2">Next Training Starts November 2026</p>
                 <p className="text-gray-500 text-sm mt-2">300 Hours Over 12 Months | 10 Modules</p>
                 <div className="mt-3">
                   <span className="text-3xl font-bold text-[#65AEEA]">R 32,000</span>
