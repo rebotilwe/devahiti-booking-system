@@ -50,8 +50,27 @@ export const getAvailableSlots = async (req, res) => {
       const time = row.booking_time;
       return time.substring(0, 5);
     });
-    
-    const availableSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+
+    // Recurring group classes (e.g. Monday 7:00-8:00 Therapeutic Movement)
+    // automatically lock out private slots that fall inside their window,
+    // so a private session can never be booked on top of a group class.
+    const groupClassResult = await db.query(
+      "SELECT start_time, end_time FROM group_classes WHERE day_of_week = $1",
+      [dayOfWeek]
+    );
+
+    const groupClassWindows = groupClassResult.rows.map(row => ({
+      start: row.start_time.substring(0, 5),
+      end: row.end_time.substring(0, 5),
+    }));
+
+    const isWithinGroupClass = (slot) => {
+      return groupClassWindows.some(({ start, end }) => slot >= start && slot < end);
+    };
+
+    const availableSlots = allSlots.filter(
+      slot => !bookedSlots.includes(slot) && !isWithinGroupClass(slot)
+    );
 
     res.json({ slots: availableSlots, date });
   } catch (err) {
