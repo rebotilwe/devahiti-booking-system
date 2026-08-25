@@ -44,28 +44,53 @@ export const getAvailableSlots = async (req, res) => {
       return time.substring(0, 5);
     });
 
-    // Recurring group classes (e.g. Monday 7:00-8:00 Therapeutic Movement)
-    // automatically lock out private slots that fall inside their window,
-    // so a private session can never be booked on top of a group class.
+    // ✅ Recurring group classes - lock out private slots
     const groupClassResult = await db.query(
-      "SELECT start_time, end_time FROM group_classes WHERE day_of_week = $1",
+      "SELECT start_time, end_time, class_name FROM group_classes WHERE day_of_week = $1",
       [dayOfWeek]
     );
+
+    // ✅ Log for debugging
+    console.log(`📅 Group classes for ${dayOfWeek}:`, groupClassResult.rows);
 
     const groupClassWindows = groupClassResult.rows.map(row => ({
       start: row.start_time.substring(0, 5),
       end: row.end_time.substring(0, 5),
+      class_name: row.class_name,
     }));
 
+    // ✅ Improved time comparison function
     const isWithinGroupClass = (slot) => {
-      return groupClassWindows.some(({ start, end }) => slot >= start && slot < end);
+      return groupClassWindows.some(({ start, end, class_name }) => {
+        // Compare as strings (works for "HH:MM" format)
+        const isBlocked = slot >= start && slot < end;
+        if (isBlocked) {
+          console.log(`🔒 Slot ${slot} blocked by group class "${class_name}" (${start}-${end})`);
+        }
+        return isBlocked;
+      });
     };
 
+    // ✅ Filter available slots
     const availableSlots = allSlots.filter(
       slot => !bookedSlots.includes(slot) && !isWithinGroupClass(slot)
     );
 
-    res.json({ slots: availableSlots, date });
+    // ✅ Log the results
+    console.log(`✅ Available slots for ${date}:`, availableSlots);
+    console.log(`❌ Blocked by group classes:`, allSlots.filter(s => isWithinGroupClass(s)));
+
+    res.json({ 
+      slots: availableSlots, 
+      date,
+      debug: {
+        dayOfWeek,
+        allSlots,
+        bookedSlots,
+        groupClassWindows,
+        availableSlots
+      }
+    });
   } catch (err) {
     console.error("Error fetching slots:", err);
     res.status(500).json({ message: "Error fetching availability", error: err.message });
@@ -74,7 +99,6 @@ export const getAvailableSlots = async (req, res) => {
 
 // GET WEEKLY SCHEDULE
 export const getWeeklySchedule = async (req, res) => {
-  // PostgreSQL order by using CASE statement (replaces MySQL FIELD)
   const sql = `
     SELECT day_of_week, time_slot 
     FROM weekly_schedule 
@@ -94,7 +118,6 @@ export const getWeeklySchedule = async (req, res) => {
   try {
     const result = await db.query(sql);
     
-    // Group by day
     const schedule = {};
     result.rows.forEach(row => {
       if (!schedule[row.day_of_week]) {
@@ -108,5 +131,47 @@ export const getWeeklySchedule = async (req, res) => {
   } catch (err) {
     console.error("Error fetching schedule:", err);
     res.status(500).json({ message: "Error fetching schedule", error: err.message });
+  }
+};
+
+// ✅ NEW: Get all group classes for admin
+export const getGroupClasses = async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM group_classes ORDER BY day_of_week, start_time"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching group classes:", err);
+    res.status(500).json({ message: "Error fetching group classes", error: err.message });
+  }
+};
+
+// ✅ NEW: Add group class
+export const addGroupClass = async (req, res) => {
+  const { day_of_week, start_time, end_time, class_name } = req.body;
+  
+  try {
+    const result = await db.query(
+      "INSERT INTO group_classes (day_of_week, start_time, end_time, class_name) VALUES ($1, $2, $3, $4) RETURNING *",
+      [day_of_week, start_time, end_time, class_name]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error adding group class:", err);
+    res.status(500).json({ message: "Error adding group class", error: err.message });
+  }
+};
+
+// ✅ NEW: Delete group class
+export const deleteGroupClass = async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    await db.query("DELETE FROM group_classes WHERE id = $1", [id]);
+    res.json({ message: "Group class deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting group class:", err);
+    res.status(500).json({ message: "Error deleting group class", error: err.message });
   }
 };
