@@ -15,6 +15,27 @@ router.post('/', async (req, res) => {
       discount_amount, discount_percentage
     } = req.body;
 
+    // Optional fields (original_price, coupon_code, discount_amount,
+    // discount_percentage) can legitimately be absent — e.g. no coupon was
+    // applied. Postgres needs an explicit null for a missing parameter, not
+    // JS's undefined, so default each one here instead of passing it through.
+    const values = [
+      service_type,
+      booking_date,
+      booking_time,
+      participants,
+      total_price,
+      original_price ?? total_price ?? null,
+      customer_name,
+      customer_email,
+      customer_phone,
+      customer_address,
+      notes ?? "",
+      coupon_code ?? null,
+      discount_amount ?? null,
+      discount_percentage ?? null,
+    ];
+
     // Insert booking
     const result = await db.query(
       `INSERT INTO bookings (
@@ -24,10 +45,7 @@ router.post('/', async (req, res) => {
         discount_amount, discount_percentage, payment_status, created_at
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, 'pending', NOW())
       RETURNING *`,
-      [service_type, booking_date, booking_time, participants,
-       total_price, original_price, customer_name, customer_email,
-       customer_phone, customer_address, notes, coupon_code,
-       discount_amount, discount_percentage]
+      values
     );
 
     const booking = result.rows[0];
@@ -50,7 +68,10 @@ router.post('/', async (req, res) => {
     console.error('❌ Error creating booking:', error);
     res.status(500).json({ 
       success: false, 
-      error: 'Failed to create booking' 
+      error: 'Failed to create booking',
+      // Included so the frontend/console can show what actually went wrong
+      // instead of a dead-end generic message — remove once this is stable.
+      details: error.message
     });
   }
 });
