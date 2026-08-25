@@ -27,12 +27,21 @@ export default function Admin() {
   const [bookings, setBookings] = useState([]);
   const [blockedDates, setBlockedDates] = useState([]);
   const [weeklySchedule, setWeeklySchedule] = useState([]);
+  const [groupClasses, setGroupClasses] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [newBlockedDate, setNewBlockedDate] = useState("");
   const [newBlockedReason, setNewBlockedReason] = useState("");
+  const [rangeStart, setRangeStart] = useState("");
+  const [rangeEnd, setRangeEnd] = useState("");
+  const [rangeReason, setRangeReason] = useState("");
+  const [blockingRange, setBlockingRange] = useState(false);
   const [newSlotDay, setNewSlotDay] = useState("");
   const [newSlotTime, setNewSlotTime] = useState("");
+  const [newClassDay, setNewClassDay] = useState("");
+  const [newClassStart, setNewClassStart] = useState("");
+  const [newClassEnd, setNewClassEnd] = useState("");
+  const [newClassName, setNewClassName] = useState("");
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("bookings");
 
@@ -49,10 +58,11 @@ export default function Admin() {
 
   const fetchAllData = async () => {
     try {
-      const [bookingsRes, blockedRes, scheduleRes, customersRes, revenueRes] = await Promise.all([
+      const [bookingsRes, blockedRes, scheduleRes, groupClassesRes, customersRes, revenueRes] = await Promise.all([
         fetch(`${API_URL}/bookings`),
         fetch(`${API_URL}/admin/blocked-dates`),
         fetch(`${API_URL}/admin/schedule`),
+        fetch(`${API_URL}/admin/group-classes`),
         fetch(`${API_URL}/admin/customers`),
         fetch(`${API_URL}/admin/analytics/revenue`),
       ]);
@@ -60,6 +70,7 @@ export default function Admin() {
       setBookings(await bookingsRes.json());
       setBlockedDates(await blockedRes.json());
       setWeeklySchedule(await scheduleRes.json());
+      setGroupClasses(await groupClassesRes.json());
       setCustomers(await customersRes.json());
       setAnalytics(await revenueRes.json());
     } catch (error) {
@@ -133,6 +144,45 @@ export default function Admin() {
     }
   };
 
+  // Block every day in a range in one go — e.g. a full weekend or a
+  // vacation week — instead of adding each date one at a time. Reuses the
+  // same single-date endpoint under the hood, so no backend change needed.
+  const addBlockedRange = async () => {
+    if (!rangeStart || !rangeEnd) return;
+    const start = new Date(rangeStart);
+    const end = new Date(rangeEnd);
+    if (end < start) {
+      alert("End date must be on or after the start date.");
+      return;
+    }
+
+    setBlockingRange(true);
+    try {
+      const newlyBlocked = [];
+      const cursor = new Date(start);
+      while (cursor <= end) {
+        const dateStr = cursor.toISOString().split("T")[0];
+        const response = await fetch(`${API_URL}/admin/blocked-dates`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blocked_date: dateStr, reason: rangeReason }),
+        });
+        const data = await response.json();
+        newlyBlocked.push(data);
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      setBlockedDates([...blockedDates, ...newlyBlocked]);
+      setRangeStart("");
+      setRangeEnd("");
+      setRangeReason("");
+    } catch (error) {
+      console.error("Error blocking date range:", error);
+      alert("Something went wrong blocking that range — some days may already be blocked.");
+    } finally {
+      setBlockingRange(false);
+    }
+  };
+
   const addTimeSlot = async () => {
     if (!newSlotDay || !newSlotTime) return;
     try {
@@ -156,6 +206,39 @@ export default function Admin() {
       setWeeklySchedule(weeklySchedule.filter(slot => slot.id !== id));
     } catch (error) {
       console.error("Error removing time slot:", error);
+    }
+  };
+
+  const addGroupClass = async () => {
+    if (!newClassDay || !newClassStart || !newClassEnd || !newClassName) return;
+    try {
+      const response = await fetch(`${API_URL}/admin/group-classes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          day_of_week: newClassDay,
+          start_time: newClassStart,
+          end_time: newClassEnd,
+          class_name: newClassName,
+        }),
+      });
+      const data = await response.json();
+      setGroupClasses([...groupClasses, data]);
+      setNewClassDay("");
+      setNewClassStart("");
+      setNewClassEnd("");
+      setNewClassName("");
+    } catch (error) {
+      console.error("Error adding group class:", error);
+    }
+  };
+
+  const removeGroupClass = async (id) => {
+    try {
+      await fetch(`${API_URL}/admin/group-classes/${id}`, { method: "DELETE" });
+      setGroupClasses(groupClasses.filter(cls => cls.id !== id));
+    } catch (error) {
+      console.error("Error removing group class:", error);
     }
   };
 
@@ -206,6 +289,12 @@ export default function Admin() {
           className={`px-4 py-2 ${activeTab === "schedule" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
         >
           Weekly Schedule
+        </button>
+        <button 
+          onClick={() => setActiveTab("group-classes")} 
+          className={`px-4 py-2 ${activeTab === "group-classes" ? "border-b-2 border-ocean text-ocean" : "text-muted-foreground"}`}
+        >
+          Group Classes
         </button>
         <button 
           onClick={() => setActiveTab("customers")} 
@@ -285,7 +374,46 @@ export default function Admin() {
       {activeTab === "blocked-dates" && (
         <div>
           <div className="bg-ocean/5 p-4 rounded-lg mb-6">
-            <h3 className="font-heading text-lg mb-3">Block a Date</h3>
+            <h3 className="font-heading text-lg mb-3">Block a Weekend or Vacation Week</h3>
+            <p className="text-sm text-muted-foreground mb-3">Block every day between two dates in one go.</p>
+            <div className="flex gap-3 flex-wrap items-center">
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">From</label>
+                <input
+                  type="date"
+                  value={rangeStart}
+                  onChange={(e) => setRangeStart(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">To</label>
+                <input
+                  type="date"
+                  value={rangeEnd}
+                  onChange={(e) => setRangeEnd(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="Reason (e.g. Vacation)"
+                value={rangeReason}
+                onChange={(e) => setRangeReason(e.target.value)}
+                className="px-3 py-2 border rounded flex-1 min-w-[160px]"
+              />
+              <button
+                onClick={addBlockedRange}
+                disabled={blockingRange || !rangeStart || !rangeEnd}
+                className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark disabled:opacity-50"
+              >
+                {blockingRange ? "Blocking..." : "Block Range"}
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-ocean/5 p-4 rounded-lg mb-6">
+            <h3 className="font-heading text-lg mb-3">Block a Single Date</h3>
             <div className="flex gap-3 flex-wrap">
               <input 
                 type="date" 
@@ -308,8 +436,12 @@ export default function Admin() {
               </button>
             </div>
           </div>
+
           <div className="space-y-2">
-            {blockedDates.map((date) => (
+            {blockedDates
+              .slice()
+              .sort((a, b) => new Date(a.blocked_date) - new Date(b.blocked_date))
+              .map((date) => (
               <div key={date.id} className="flex justify-between items-center border p-3 rounded">
                 <div>
                   <span className="font-medium">{formatDate(date.blocked_date)}</span>
@@ -378,6 +510,99 @@ export default function Admin() {
                     <td className="p-2">
                       <button 
                         onClick={() => removeTimeSlot(slot.id)} 
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Group Classes Tab — recurring classes that automatically block private-booking slots */}
+      {activeTab === "group-classes" && (
+        <div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Any private-session slot that falls inside one of these windows is automatically hidden from booking — no need to block dates manually for recurring classes.
+          </p>
+          <div className="bg-ocean/5 p-4 rounded-lg mb-6">
+            <h3 className="font-heading text-lg mb-3">Add a Group Class</h3>
+            <div className="flex gap-3 flex-wrap items-end">
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">Day</label>
+                <select
+                  value={newClassDay}
+                  onChange={(e) => setNewClassDay(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                >
+                  <option value="">Select Day</option>
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                  <option value="Thursday">Thursday</option>
+                  <option value="Friday">Friday</option>
+                  <option value="Saturday">Saturday</option>
+                  <option value="Sunday">Sunday</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">Start Time</label>
+                <input
+                  type="time"
+                  value={newClassStart}
+                  onChange={(e) => setNewClassStart(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">End Time</label>
+                <input
+                  type="time"
+                  value={newClassEnd}
+                  onChange={(e) => setNewClassEnd(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="Class name (e.g. Therapeutic Movement)"
+                value={newClassName}
+                onChange={(e) => setNewClassName(e.target.value)}
+                className="px-3 py-2 border rounded flex-1 min-w-[200px]"
+              />
+              <button
+                onClick={addGroupClass}
+                className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark"
+              >
+                Add Class
+              </button>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-2 text-left">Day</th>
+                  <th className="p-2 text-left">Start</th>
+                  <th className="p-2 text-left">End</th>
+                  <th className="p-2 text-left">Class</th>
+                  <th className="p-2 text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupClasses.map((cls) => (
+                  <tr key={cls.id} className="border-t">
+                    <td className="p-2">{cls.day_of_week}</td>
+                    <td className="p-2">{formatTime(cls.start_time)}</td>
+                    <td className="p-2">{formatTime(cls.end_time)}</td>
+                    <td className="p-2">{cls.class_name}</td>
+                    <td className="p-2">
+                      <button
+                        onClick={() => removeGroupClass(cls.id)}
                         className="text-red-500 hover:text-red-700 text-sm"
                       >
                         Remove

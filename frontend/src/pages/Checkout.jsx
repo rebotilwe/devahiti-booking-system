@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Waves, Calendar, Clock, Users, MapPin, 
   User, Mail, Phone, Lock, ArrowLeft, Menu, X, ShoppingBag
@@ -7,6 +7,8 @@ import {
 import { initiateBooking } from "../api/api";
 import CouponInput from "../components/CouponInput";
 import logo from "../assets/devahiti.png";
+
+const API_URL = "https://devahiti-booking-system.onrender.com/api";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -30,6 +32,37 @@ export default function Checkout() {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [discountedTotal, setDiscountedTotal] = useState(booking?.total_price || 0);
   const [originalTotal] = useState(booking?.total_price || 0);
+
+  // The card processing fee the customer covers, so it's never a surprise
+  // at the final "Pay" click — quoted from the same calculation the backend
+  // uses when it actually creates the charge.
+  const [cardFee, setCardFee] = useState(0);
+  const [totalWithFee, setTotalWithFee] = useState(booking?.total_price || 0);
+
+  useEffect(() => {
+    if (!discountedTotal) return;
+    const fetchQuote = async () => {
+      try {
+        const response = await fetch(`${API_URL}/payments/quote`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: discountedTotal }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setCardFee(data.fee);
+          setTotalWithFee(data.total);
+        }
+      } catch (err) {
+        console.error("Failed to fetch fee quote:", err);
+        // Fall back to no visible fee rather than blocking checkout — the
+        // backend still applies the real fee when the charge is created.
+        setCardFee(0);
+        setTotalWithFee(discountedTotal);
+      }
+    };
+    fetchQuote();
+  }, [discountedTotal]);
 
   // Editable customer details — pre-filled from booking if a prior step already
   // collected them, but always editable here so gift card purchases (which skip
@@ -433,17 +466,24 @@ export default function Checkout() {
                     <span>-R{discountAmount}</span>
                   </div>
                 )}
+
+                {cardFee > 0 && (
+                  <div className="flex justify-between text-sm pt-2 border-t border-ocean/10">
+                    <span className="text-muted-foreground">Card processing fee</span>
+                    <span>+R{cardFee}</span>
+                  </div>
+                )}
               </div>
               
               <div className="text-center pt-4 border-t border-ocean/20">
                 <p className="text-xs text-muted-foreground mb-1">Total due</p>
-                <p className="text-3xl font-heading text-ocean">R{discountedTotal}</p>
+                <p className="text-3xl font-heading text-ocean">R{totalWithFee}</p>
                 {appliedCoupon && (
                   <p className="text-xs text-green-600 mt-1">
                     You saved R{discountAmount}!
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground mt-1">Including all fees</p>
+                <p className="text-xs text-muted-foreground mt-1">Card processing fee included above</p>
               </div>
               
               <button
@@ -459,7 +499,7 @@ export default function Checkout() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Pay R{discountedTotal} Securely
+                    Pay R{totalWithFee} Securely
                   </>
                 )}
               </button>

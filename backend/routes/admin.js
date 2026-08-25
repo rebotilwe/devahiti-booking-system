@@ -94,6 +94,61 @@ router.delete('/schedule/:id', async (req, res) => {
   }
 });
 
+// ========== GROUP CLASSES (recurring — automatically block private slots) ==========
+// Get all group classes
+router.get('/group-classes', async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT * FROM group_classes
+      ORDER BY
+        CASE day_of_week
+          WHEN 'Monday' THEN 1
+          WHEN 'Tuesday' THEN 2
+          WHEN 'Wednesday' THEN 3
+          WHEN 'Thursday' THEN 4
+          WHEN 'Friday' THEN 5
+          WHEN 'Saturday' THEN 6
+          WHEN 'Sunday' THEN 7
+        END,
+        start_time
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching group classes:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Add a group class
+router.post('/group-classes', async (req, res) => {
+  const { day_of_week, start_time, end_time, class_name } = req.body;
+  if (!day_of_week || !start_time || !end_time || !class_name) {
+    return res.status(400).json({ error: 'day_of_week, start_time, end_time and class_name are all required' });
+  }
+  try {
+    const result = await db.query(
+      "INSERT INTO group_classes (day_of_week, start_time, end_time, class_name) VALUES ($1, $2, $3, $4) RETURNING *",
+      [day_of_week, start_time, end_time, class_name]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error adding group class:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Remove a group class
+router.delete('/group-classes/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.query("DELETE FROM group_classes WHERE id = $1", [id]);
+    res.json({ message: 'Group class removed' });
+  } catch (err) {
+    console.error("Error removing group class:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ========== CUSTOMER MANAGEMENT ==========
 // Get all customers (unique by email)
 // ========== CUSTOMER MANAGEMENT ==========
