@@ -35,7 +35,25 @@ export default function TimeSlots({
         const dateStr = selectedDate.toISOString().split("T")[0];
         const data = await getAvailability(dateStr);
         
-        const slots = data?.slots || (Array.isArray(data) ? data : []);
+        // ✅ FIX: Handle the response properly
+        // The API returns { slots: [...], date: '...' }
+        // But it might also return just an array
+        let slots = [];
+        if (data && data.slots) {
+          slots = data.slots;
+        } else if (Array.isArray(data)) {
+          slots = data;
+        } else if (data && typeof data === 'object') {
+          // Try to find slots in any property
+          for (const key of Object.keys(data)) {
+            if (Array.isArray(data[key])) {
+              slots = data[key];
+              break;
+            }
+          }
+        }
+        
+        console.log('📡 Available slots for', dateStr, ':', slots);
         setAvailableSlots(slots || []);
       } catch (err) {
         console.error("Failed to load slots", err);
@@ -75,7 +93,8 @@ export default function TimeSlots({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-ocean/10 p-4 sm:p-6">
-      <h3 className="font-heading text-xl text-foreground mb-4">
+      <h3 className="font-heading text-xl text-foreground mb-4 flex items-center gap-2">
+        <Clock className="h-5 w-5 text-[#65AEEA]" />
         Select a Time
       </h3>
       
@@ -101,8 +120,8 @@ export default function TimeSlots({
         )}
 
         {availableSlots.map((slot, index) => {
-          const disabled = isBooked(slot);
           const timeStr = typeof slot === 'string' ? slot : slot.time || slot;
+          const disabled = isBooked(timeStr);
 
           return (
             <motion.button
@@ -112,10 +131,10 @@ export default function TimeSlots({
               disabled={disabled}
               className={`py-3 px-4 rounded-lg text-sm font-medium transition-all ${
                 selectedTime === timeStr
-                  ? "bg-ocean text-white shadow-md"
+                  ? "bg-[#65AEEA] text-white shadow-md"
                   : disabled
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-ocean/10 text-ocean hover:bg-ocean/20 cursor-pointer"
+                  : "bg-[#65AEEA]/10 text-[#65AEEA] hover:bg-[#65AEEA]/20 cursor-pointer"
               }`}
             >
               {formatTime(timeStr)}
@@ -123,6 +142,12 @@ export default function TimeSlots({
           );
         })}
       </div>
+      
+      {availableSlots.length > 0 && (
+        <p className="text-xs text-gray-400 mt-4 text-center">
+          {availableSlots.length} time{availableSlots.length > 1 ? 's' : ''} available
+        </p>
+      )}
     </div>
   );
 }
