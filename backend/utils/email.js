@@ -1,12 +1,17 @@
 import nodemailer from 'nodemailer';
 
 // Configure email transporter (using Gmail as example)
+// family: 4 forces Node to connect over IPv4 — Render (and many cloud hosts)
+// have no outbound IPv6 route, so without this Node was resolving Gmail's
+// SMTP host to an IPv6 address and failing with ENETUNREACH/ETIMEDOUT before
+// ever reaching Gmail.
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER, // Your Gmail address
     pass: process.env.EMAIL_PASS, // Your Gmail app password
   },
+  family: 4,
 });
 
 // Send booking confirmation email

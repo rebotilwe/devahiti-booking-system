@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import dns from 'node:dns';
 import availabilityRoutes from './routes/availability.js';
 import bookingRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
@@ -8,6 +9,13 @@ import paymentRoutes from './routes/payments.js';
 import blogRoutes from './routes/blog.js';
 
 dotenv.config();
+
+// Render (and several other cloud hosts) have no outbound IPv6 route, but
+// Node's DNS resolver can still return an IPv6 address first for dual-stack
+// hosts like Gmail's SMTP servers — that produced the ENETUNREACH/ETIMEDOUT
+// errors on outgoing email. Preferring IPv4 results app-wide avoids the same
+// issue for any other outbound connection, not just nodemailer.
+dns.setDefaultResultOrder('ipv4first');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
