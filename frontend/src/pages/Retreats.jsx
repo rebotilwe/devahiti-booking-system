@@ -1,7 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Phone, ShoppingBag, Menu, X, Calendar, Flower2, Star, Quote } from "lucide-react";
+import { Phone, ShoppingBag, Menu, X, Calendar, Flower2, Star, Quote, MapPin, Clock, CheckCircle, XCircle, Info } from "lucide-react";
 import { useState, useEffect } from "react";
 import heroRetreatsImg from "../assets/images/bush-to-beach4.jpg";
+import dolphinPodImg from "../assets/images/dolphin-pod.jpeg";
+import dolphinSnorkelImg from "../assets/images/dolphin-snorkel.jpg";
 import logo from "../assets/devahiti.png";
 
 // ✅ UPDATED NAVIGATION
@@ -60,10 +62,6 @@ export default function Retreats() {
   };
 
   const handleShoppingBagClick = () => {
-    navigate("/services");
-  };
-
-  const handleBookNow = () => {
     navigate("/services");
   };
 
@@ -165,47 +163,108 @@ export default function Retreats() {
         </div>
       </section>
 
-      {/* ========== Upcoming Retreats 2027 ========== */}
+      {/* ========== Upcoming Yoga Retreat 2027 — Yoga and Dolphin Bliss ========== */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Save the Date</p>
-            <h2 className="text-3xl font-light md:text-4xl text-gray-800 mt-2">Upcoming Retreats 2027</h2>
+          <div className="text-center mb-10">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#65AEEA] font-semibold">Upcoming Yoga Retreat 2027</p>
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800 mt-2">Yoga and Dolphin Bliss</h2>
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-              Full itinerary and pricing for each retreat below is being finalised and will be added here soon.
-            </p>
+            <p className="text-gray-600 mt-4">One full week in Mozambique, Ponta do Ouro</p>
           </div>
 
-          <div className="space-y-6">
-            <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8">
-              <h3 className="text-2xl font-light text-gray-800">Dolphin and Vitamin Sea</h3>
-              <div className="mt-3 flex items-center gap-2 text-gray-600">
-                <Calendar className="h-5 w-5 text-[#65AEEA]" />
-                <span>March 2027 — Dates to be confirmed</span>
+          {/* Dolphin photos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <img 
+              src={dolphinPodImg} 
+              alt="Wild dolphin pod off the coast of Mozambique" 
+              className="w-full h-64 object-cover rounded-2xl shadow-md"
+            />
+            <img 
+              src={dolphinSnorkelImg} 
+              alt="Snorkelling alongside wild dolphins" 
+              className="w-full h-64 object-cover rounded-2xl shadow-md"
+            />
+          </div>
+
+          <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8 md:p-10">
+            <div className="grid sm:grid-cols-3 gap-6 text-center border-b border-gray-100 pb-8 mb-8">
+              <div>
+                <Calendar className="h-6 w-6 text-[#65AEEA] mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Dates</p>
+                <p className="font-semibold text-gray-800">21 – 27 February</p>
+              </div>
+              <div>
+                <MapPin className="h-6 w-6 text-[#65AEEA] mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Location</p>
+                <p className="font-semibold text-gray-800">Ponta do Ouro, Mozambique</p>
+              </div>
+              <div>
+                <Clock className="h-6 w-6 text-[#65AEEA] mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Duration</p>
+                <p className="font-semibold text-gray-800">6 Nights / 7 Days</p>
               </div>
             </div>
 
-            <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8">
-              <h3 className="text-2xl font-light text-gray-800">Travel with us through Northern India</h3>
-              <p className="text-[#65AEEA] mt-1">A journey through Faith, Culture and Consciousness</p>
-              <div className="mt-3 flex items-center gap-2 text-gray-600">
-                <Calendar className="h-5 w-5 text-[#65AEEA]" />
-                <span>September 2027 — 21 Days</span>
+            <div className="text-center mb-10">
+              <p className="text-3xl font-heading text-[#65AEEA]">R13,500 <span className="text-base font-sans text-gray-500 font-normal">pp sharing</span></p>
+              <p className="text-sm text-gray-500 mt-1">R16,500 single supplement</p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-3">Inclusive in price</h3>
+                <ul className="space-y-2">
+                  {[
+                    "6 nights and 7 days accommodation in a Beachfront house",
+                    "Transport to and from King Shaka airport or Ballito",
+                    "1x daily Gentle Hatha yoga",
+                    "1x daily Yin yoga",
+                    "1x sound session",
+                    "2x boat excursions / snorkel with dolphins",
+                    "1x dolphin snorkel introduction to safety protocol",
+                    "All breakfasts and 5 dinners",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                      <CheckCircle className="h-4 w-4 text-[#65AEEA] mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-3">Not included</h3>
+                <ul className="space-y-2">
+                  {[
+                    "Daily lunches",
+                    "One dinner where we dine out together",
+                    "Any other costs not mentioned above",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                      <XCircle className="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
 
-          <div className="text-center mt-10">
-            <p className="text-sm text-gray-500 mb-4">
-              Interested in either retreat? Get in touch to register your interest and be the first to know once dates and pricing are confirmed.
-            </p>
-            <Link 
-              to="/contact"
-              className="inline-block px-8 py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
-            >
-              Register Interest
-            </Link>
+            <div className="mt-8 p-4 bg-[#65AEEA]/10 rounded-xl flex items-start gap-3">
+              <Info className="h-5 w-5 text-[#65AEEA] mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-gray-600">
+                Please note these are wild dolphins — they are free to come or go, as and when they please. Any interactions are on their terms entirely and held with deep respect.
+              </p>
+            </div>
+
+            <div className="text-center mt-10">
+              <Link 
+                to="/contact"
+                className="inline-block px-8 py-3 bg-[#65AEEA] text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-[#4A9FD9] transition"
+              >
+                Register Interest
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -269,20 +328,6 @@ export default function Retreats() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
-        <h2 className="text-3xl font-light md:text-4xl text-white">Ready to Rest and Rejuvenate?</h2>
-        <p className="text-white/90 text-sm mt-2 max-w-xl mx-auto">
-          Join us for this transformative 5-day retreat in the beautiful Eswatini wilderness.
-        </p>
-        <p className="text-white/80 text-sm mt-4">
-          <Link to="/services" className="underline font-semibold hover:text-white/80">Browse all services</Link> to find your perfect experience
-        </p>
-        <button onClick={handleBookNow} className="mt-6 px-8 py-3 bg-white text-[#65AEEA] text-sm font-bold uppercase tracking-wider rounded-full hover:bg-gray-100 transition">
-          Book Now
-        </button>
       </section>
 
       {/* Footer */}
