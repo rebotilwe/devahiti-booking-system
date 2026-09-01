@@ -21,22 +21,7 @@ const navLinks = [
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 // Testimonials from past retreat attendees
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah J.",
-    location: "Durban",
-    text: "The retreat at Siqalo Lodge was absolutely life-changing. Cheryl's guidance and the serene environment allowed me to truly disconnect and recharge. The cacao ceremony was magical!",
-    rating: 5
-  },
-  {
-    id: 2,
-    name: "Michael R.",
-    location: "Johannesburg",
-    text: "A perfect blend of yoga, nature, and relaxation. The guided bush walk and sound meditation were highlights. Highly recommend for anyone needing a reset.",
-    rating: 5
-  }
-];
+const testimonials = [];
 
 export default function Retreats() {
   const navigate = useNavigate();
@@ -173,19 +158,12 @@ export default function Retreats() {
             <p className="text-gray-600 mt-4">One full week in Mozambique, Ponta do Ouro</p>
           </div>
 
-          {/* Dolphin photos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            <img 
-              src={dolphinPodImg} 
-              alt="Wild dolphin pod off the coast of Mozambique" 
-              className="w-full h-64 object-cover rounded-2xl shadow-md"
-            />
-            <img 
-              src={dolphinSnorkelImg} 
-              alt="Snorkelling alongside wild dolphins" 
-              className="w-full h-64 object-cover rounded-2xl shadow-md"
-            />
-          </div>
+          {/* Photo above the details */}
+          <img 
+            src={dolphinPodImg} 
+            alt="Wild dolphin pod off the coast of Mozambique" 
+            className="w-full h-72 object-cover rounded-2xl shadow-md mb-10"
+          />
 
           <div className="bg-white border-2 border-[#65AEEA] rounded-2xl p-8 md:p-10">
             <div className="grid sm:grid-cols-3 gap-6 text-center border-b border-gray-100 pb-8 mb-8">
@@ -266,6 +244,13 @@ export default function Retreats() {
               </Link>
             </div>
           </div>
+
+          {/* Photo below the details */}
+          <img 
+            src={dolphinSnorkelImg} 
+            alt="Snorkelling alongside wild dolphins" 
+            className="w-full h-72 object-cover rounded-2xl shadow-md mt-10"
+          />
         </div>
       </section>
 
@@ -282,51 +267,57 @@ export default function Retreats() {
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 
-          {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-2 gap-6">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-[#F9F9FB] rounded-2xl p-6">
-                <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
-                <p className="text-gray-600 leading-relaxed mb-4">"{testimonial.text}"</p>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                  <div>
-                    <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                    <p className="text-xs text-gray-400">{testimonial.location}</p>
-                  </div>
-                  <div className="flex gap-0.5">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-[#65AEEA] text-[#65AEEA]" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile Carousel */}
-          <div className="md:hidden relative">
-            <div className="overflow-hidden">
-              <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
+          {testimonials.length === 0 ? (
+            <p className="text-center text-gray-500 italic">Reviews from our first dolphin retreat coming soon.</p>
+          ) : (
+            <>
+              {/* Desktop Grid */}
+              <div className="hidden md:grid md:grid-cols-2 gap-6">
                 {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-[#F9F9FB] rounded-2xl p-6">
-                      <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
-                      <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text}"</p>
-                      <div className="border-t border-gray-200 pt-4">
+                  <div key={testimonial.id} className="bg-[#F9F9FB] rounded-2xl p-6">
+                    <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
+                    <p className="text-gray-600 leading-relaxed mb-4">"{testimonial.text}"</p>
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                      <div>
                         <p className="font-semibold text-gray-800">{testimonial.name}</p>
                         <p className="text-xs text-gray-400">{testimonial.location}</p>
+                      </div>
+                      <div className="flex gap-0.5">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-3 w-3 fill-[#65AEEA] text-[#65AEEA]" />
+                        ))}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="flex justify-center gap-2 mt-6">
-              {testimonials.map((_, idx) => (
-                <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"}`} />
-              ))}
-            </div>
-          </div>
+
+              {/* Mobile Carousel */}
+              <div className="md:hidden relative">
+                <div className="overflow-hidden">
+                  <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
+                    {testimonials.map((testimonial) => (
+                      <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
+                        <div className="bg-[#F9F9FB] rounded-2xl p-6">
+                          <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
+                          <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text}"</p>
+                          <div className="border-t border-gray-200 pt-4">
+                            <p className="font-semibold text-gray-800">{testimonial.name}</p>
+                            <p className="text-xs text-gray-400">{testimonial.location}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-center gap-2 mt-6">
+                  {testimonials.map((_, idx) => (
+                    <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"}`} />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
