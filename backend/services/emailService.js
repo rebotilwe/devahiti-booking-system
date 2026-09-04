@@ -1,31 +1,30 @@
-import nodemailer from 'nodemailer';
+import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Configure email transporter - FIXED: createTransport (not createTransporter)
-// family: 4 forces Node to connect over IPv4 — Render (and many cloud hosts)
-// have no outbound IPv6 route, so without this Node was resolving Gmail's
-// SMTP host to an IPv6 address and failing with ENETUNREACH/ETIMEDOUT before
-// ever reaching Gmail. This is the transport that sendAllBookingEmails()
-// actually uses for real bookings — a separate, near-duplicate transport in
-// utils/email.js was patched earlier but that file isn't the one in use.
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  family: 4,
-});
+// Switched from nodemailer/SMTP (Gmail) to Resend's HTTP API. Render blocks
+// outbound SMTP on port 465/587 at the network level for free-tier services
+// — no amount of nodemailer configuration (family: 4, DNS ordering, etc.)
+// gets around an actual network block, since the connection never leaves
+// the container. Resend sends over plain HTTPS, the same kind of request
+// already used for the Yoco integration, so it isn't affected by this at all.
+//
+// RESEND_API_KEY must be set in the environment (get one free at resend.com).
+// RESEND_FROM_EMAIL defaults to Resend's shared test sender, which works
+// immediately with no setup — swap in a real "bookings@devahiti.com" once
+// the devahiti.com domain is verified on the Resend account for a properly
+// branded sender address.
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Devahiti Yoga <onboarding@resend.dev>';
 
-// Verify transporter connection
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email transporter error:', error);
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
+const sendEmail = async ({ to, subject, html }) => {
+  const response = await axios.post(
+    'https://api.resend.com/emails',
+    { from: FROM_EMAIL, to, subject, html },
+    { headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' } }
+  );
+  return response.data;
+};
 
 // Send booking confirmation email to customer
 export const sendBookingConfirmation = async (booking) => {
@@ -36,11 +35,7 @@ export const sendBookingConfirmation = async (booking) => {
     year: 'numeric' 
   });
 
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: booking.customer_email,
-    subject: '✅ Booking Received - Devahiti Yoga',
-    html: `
+  const html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -124,16 +119,15 @@ export const sendBookingConfirmation = async (booking) => {
         </div>
       </body>
       </html>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: booking.customer_email, subject: '✅ Booking Received - Devahiti Yoga', html });
     console.log(`✅ Booking confirmation sent to ${booking.customer_email}`);
     return { success: true, message: 'Email sent successfully' };
   } catch (error) {
-    console.error('❌ Email sending error:', error);
-    return { success: false, error: error.message };
+    console.error('❌ Email sending error:', error.response?.data || error.message);
+    return { success: false, error: error.response?.data?.message || error.message };
   }
 };
 
@@ -146,11 +140,7 @@ export const sendAdminNotification = async (booking) => {
     year: 'numeric' 
   });
 
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: process.env.ADMIN_EMAIL,
-    subject: '🆕 New Booking Received - Devahiti Yoga',
-    html: `
+  const html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -249,26 +239,21 @@ export const sendAdminNotification = async (booking) => {
         </div>
       </body>
       </html>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: process.env.ADMIN_EMAIL, subject: '🆕 New Booking Received - Devahiti Yoga', html });
     console.log(`✅ Admin notification sent to ${process.env.ADMIN_EMAIL}`);
     return { success: true, message: 'Admin notification sent' };
   } catch (error) {
-    console.error('❌ Admin email error:', error);
-    return { success: false, error: error.message };
+    console.error('❌ Admin email error:', error.response?.data || error.message);
+    return { success: false, error: error.response?.data?.message || error.message };
   }
 };
 
 // Send payment confirmation to customer
 export const sendPaymentConfirmation = async (booking, paymentDetails) => {
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: booking.customer_email,
-    subject: '💳 Payment Confirmed - Devahiti Yoga',
-    html: `
+  const html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -336,26 +321,21 @@ export const sendPaymentConfirmation = async (booking, paymentDetails) => {
         </div>
       </body>
       </html>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: booking.customer_email, subject: '💳 Payment Confirmed - Devahiti Yoga', html });
     console.log(`✅ Payment confirmation sent to ${booking.customer_email}`);
     return { success: true, message: 'Payment confirmation sent' };
   } catch (error) {
-    console.error('❌ Payment email error:', error);
-    return { success: false, error: error.message };
+    console.error('❌ Payment email error:', error.response?.data || error.message);
+    return { success: false, error: error.response?.data?.message || error.message };
   }
 };
 
 // Send admin notification for payment
 export const sendAdminPaymentNotification = async (booking, paymentDetails) => {
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: process.env.ADMIN_EMAIL,
-    subject: '💰 Payment Received - Devahiti Yoga',
-    html: `
+  const html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -430,16 +410,15 @@ export const sendAdminPaymentNotification = async (booking, paymentDetails) => {
         </div>
       </body>
       </html>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: process.env.ADMIN_EMAIL, subject: '💰 Payment Received - Devahiti Yoga', html });
     console.log(`✅ Admin payment notification sent`);
     return { success: true, message: 'Admin payment notification sent' };
   } catch (error) {
-    console.error('❌ Admin payment email error:', error);
-    return { success: false, error: error.message };
+    console.error('❌ Admin payment email error:', error.response?.data || error.message);
+    return { success: false, error: error.response?.data?.message || error.message };
   }
 };
 

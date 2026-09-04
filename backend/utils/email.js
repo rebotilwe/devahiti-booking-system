@@ -1,26 +1,26 @@
-import nodemailer from 'nodemailer';
+import axios from 'axios';
 
-// Configure email transporter (using Gmail as example)
-// family: 4 forces Node to connect over IPv4 — Render (and many cloud hosts)
-// have no outbound IPv6 route, so without this Node was resolving Gmail's
-// SMTP host to an IPv6 address and failing with ENETUNREACH/ETIMEDOUT before
-// ever reaching Gmail.
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER, // Your Gmail address
-    pass: process.env.EMAIL_PASS, // Your Gmail app password
-  },
-  family: 4,
-});
+// Switched from nodemailer/SMTP (Gmail) to Resend's HTTP API — same reason
+// as services/emailService.js: Render blocks outbound SMTP at the network
+// level on free-tier services, so no transport configuration fixes it.
+// This file isn't currently wired into any active route (createBooking in
+// controllers/bookingController.js, which uses it, isn't routed anywhere),
+// but kept in sync in case that changes.
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Devahiti Yoga <onboarding@resend.dev>';
+
+const sendEmail = async ({ to, subject, html }) => {
+  const response = await axios.post(
+    'https://api.resend.com/emails',
+    { from: FROM_EMAIL, to, subject, html },
+    { headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' } }
+  );
+  return response.data;
+};
 
 // Send booking confirmation email
 export const sendBookingConfirmation = async (booking) => {
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: booking.customer_email,
-    subject: '✅ Booking Confirmed - Devahiti Yoga',
-    html: `
+  const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #4fb4c2; padding: 20px; text-align: center;">
           <h1 style="color: white; margin: 0;">Devahiti Yoga</h1>
@@ -50,24 +50,19 @@ export const sendBookingConfirmation = async (booking) => {
           <p>"If you can breathe, you can do yoga"</p>
         </div>
       </div>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: booking.customer_email, subject: '✅ Booking Confirmed - Devahiti Yoga', html });
     console.log(`Confirmation email sent to ${booking.customer_email}`);
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('Email error:', error.response?.data || error.message);
   }
 };
 
 // Send admin notification for new booking
 export const sendAdminNotification = async (booking) => {
-  const mailOptions = {
-    from: `"Devahiti Yoga" <${process.env.EMAIL_USER}>`,
-    to: process.env.ADMIN_EMAIL || 'cheryl@devahiti.com',
-    subject: '🆕 New Booking Received - Devahiti Yoga',
-    html: `
+  const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2>New Booking Alert!</h2>
         <div style="background: #f5f5f5; padding: 15px;">
@@ -81,13 +76,12 @@ export const sendAdminNotification = async (booking) => {
         </div>
         <p>Log in to the admin dashboard to view all bookings.</p>
       </div>
-    `,
-  };
+    `;
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sendEmail({ to: process.env.ADMIN_EMAIL || 'cheryl@devahiti.com', subject: '🆕 New Booking Received - Devahiti Yoga', html });
     console.log(`Admin notification sent`);
   } catch (error) {
-    console.error('Admin email error:', error);
+    console.error('Admin email error:', error.response?.data || error.message);
   }
 };
