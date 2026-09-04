@@ -8,7 +8,7 @@ import { initiateBooking } from "../api/api";
 import CouponInput from "../components/CouponInput";
 import logo from "../assets/devahiti.png";
 
-const API_URL = "https://devahiti-booking-system.onrender.com/api";
+const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -175,7 +175,7 @@ export default function Checkout() {
       if (bookingResult.bookingId) {
         setLoadingStep("Preparing secure payment...");
         
-        const checkoutResponse = await fetch('https://devahiti-booking-system.onrender.com/api/payments/create-checkout', {
+        const checkoutResponse = await fetch('https://devahiti-booking-system-4t96.onrender.com/api/payments/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -29,7 +29,7 @@ const subNav = [
   { label: "Retreats", path: "/services/retreats" },
 ];
 
-const API_URL = "https://devahiti-booking-system.onrender.com/api";
+const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
 // Estimate read time from actual content length instead of a fixed guess,
 // so it stays accurate regardless of how long or short a post is.

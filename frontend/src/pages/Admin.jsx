@@ -65,7 +65,7 @@ export default function Admin() {
     }
   }, [navigate]);
 
-  const API_URL = "https://devahiti-booking-system.onrender.com/api";
+  const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
   const fetchAllData = async () => {
     try {

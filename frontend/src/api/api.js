@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://devahiti-booking-system.onrender.com/api";
+const API_BASE_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
 // Get available time slots for a specific date
 export const getAvailability = async (date) => {

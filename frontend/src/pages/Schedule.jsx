@@ -10,7 +10,7 @@ import { services } from "../data/services";
 import logo from "../assets/devahiti.png";
 import heroBgImg from "../assets/images/homee.jpg"; // ✅ ADDED: Import hero image
 
-const API_BASE_URL = "https://devahiti-booking-system.onrender.com/api";
+const API_BASE_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
 // selectedDate is built as LOCAL midnight (new Date(year, month, day) in
 // Calendar.jsx). Using .toISOString() converts to UTC first, which rolls

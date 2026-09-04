@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Pencil, Trash2, Plus, X, Eye, Upload } from "lucide-react";
 
-const API_URL = "https://devahiti-booking-system.onrender.com/api";
+const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
 export default function AdminBlogs() {
   const [posts, setPosts] = useState([]);
