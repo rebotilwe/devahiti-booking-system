@@ -3,12 +3,19 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Configure email transporter - FIXED: createTransport (not createTransporter)
+// family: 4 forces Node to connect over IPv4 — Render (and many cloud hosts)
+// have no outbound IPv6 route, so without this Node was resolving Gmail's
+// SMTP host to an IPv6 address and failing with ENETUNREACH/ETIMEDOUT before
+// ever reaching Gmail. This is the transport that sendAllBookingEmails()
+// actually uses for real bookings — a separate, near-duplicate transport in
+// utils/email.js was patched earlier but that file isn't the one in use.
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  family: 4,
 });
 
 // Verify transporter connection
