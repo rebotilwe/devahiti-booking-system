@@ -21,25 +21,25 @@ const navLinks = [
 const BOOKING_URL = "https://devahitibookingsystem.netlify.app/schedule";
 
 // Testimonials from past retreat attendees
-const testimonials = [];
+const testimonials = [
+  {
+    id: 1,
+    name: "Liz Swerzsky",
+    location: "Llandudno, Cape Town",
+    text: "Cheryl's planning and execution was flawless. Our road journey was comfortable, in her gracious vehicle. She knows the best stops on route! Sugarcane, grasslands and subtropical vegetation cluster alongside the road, with rare glimpses of the Indian Ocean. Layers of civilization recede and the buildings and homes become less formal, and animals may grace your path. The border crossing is seamless and uncomplicated. Our comfortable wooden cabin was perched above the long sweep of golden beach, with spectacular views. Our rooms were comfortable, the showers hot, and the cabin well equipped for our needs. Cheryl seamlessly moved from yoga instructor on the verandah, with primate observers, to kitchen goddess, serving incredible vegetarian breakfasts and memorable dinners. Then on to tour guide, walk leader, driver to adjacent exotic destinations, and fundi of all Mozambiquan! Cheryl knows the locals, can assist with a sim-card swop, take you to an exquisite jewellery shop, show you where to get warm bread or a decadent pasteis de nata, and be a calm, nurturing presence during your visit. If you have an opportunity to join Cheryl to experience this wonder, don't hesitate!",
+    rating: 5
+  }
+];
 
 export default function Retreats() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
-    return () => clearInterval(interval);
   }, []);
 
   const handlePhoneClick = () => {
@@ -270,53 +270,23 @@ export default function Retreats() {
           {testimonials.length === 0 ? (
             <p className="text-center text-gray-500 italic">Reviews from our first dolphin retreat coming soon.</p>
           ) : (
-            <>
-              {/* Desktop Grid */}
-              <div className="hidden md:grid md:grid-cols-2 gap-6">
-                {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="bg-[#F9F9FB] rounded-2xl p-6">
-                    <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
-                    <p className="text-gray-600 leading-relaxed mb-4">"{testimonial.text}"</p>
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                      <div>
-                        <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                        <p className="text-xs text-gray-400">{testimonial.location}</p>
-                      </div>
-                      <div className="flex gap-0.5">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-3 w-3 fill-[#65AEEA] text-[#65AEEA]" />
-                        ))}
-                      </div>
+            <div className="max-w-2xl mx-auto space-y-6">
+              {testimonials.map((testimonial) => (
+                <div key={testimonial.id} className="bg-[#F9F9FB] rounded-2xl p-8">
+                  <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4 mx-auto" />
+                  <p className="text-gray-600 leading-relaxed mb-6 text-center">"{testimonial.text}"</p>
+                  <div className="flex flex-col items-center gap-2 pt-4 border-t border-gray-200">
+                    <div className="flex gap-0.5">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-[#65AEEA] text-[#65AEEA]" />
+                      ))}
                     </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Mobile Carousel */}
-              <div className="md:hidden relative">
-                <div className="overflow-hidden">
-                  <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
-                    {testimonials.map((testimonial) => (
-                      <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
-                        <div className="bg-[#F9F9FB] rounded-2xl p-6">
-                          <Quote className="h-8 w-8 text-[#65AEEA]/30 mb-4" />
-                          <p className="text-gray-600 leading-relaxed mb-4 text-sm">"{testimonial.text}"</p>
-                          <div className="border-t border-gray-200 pt-4">
-                            <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                            <p className="text-xs text-gray-400">{testimonial.location}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                    <p className="font-semibold text-gray-800">{testimonial.name}</p>
+                    <p className="text-xs text-gray-400">{testimonial.location}</p>
                   </div>
                 </div>
-                <div className="flex justify-center gap-2 mt-6">
-                  {testimonials.map((_, idx) => (
-                    <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === idx ? "w-8 bg-[#65AEEA]" : "w-2 bg-gray-300"}`} />
-                  ))}
-                </div>
-              </div>
-            </>
+              ))}
+            </div>
           )}
         </div>
       </section>
