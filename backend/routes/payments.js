@@ -125,13 +125,18 @@ router.post('/webhook', async (req, res) => {
   
   if (status === 'successful' && metadata && metadata.bookingId) {
     try {
-      // Update booking status
+      // Update booking status — the WHERE clause only matches (and returns
+      // a row) if the booking wasn't already 'paid'. This makes the update
+      // idempotent: if Yoco's webhook and the frontend's own status-update
+      // call both fire for the same payment (which can genuinely happen),
+      // only the first one to arrive actually updates anything or sends
+      // emails — the second finds no matching row and does nothing.
       const result = await db.query(
         `UPDATE bookings 
          SET payment_status = $1, 
              payment_id = $2, 
              updated_at = NOW() 
-         WHERE id = $3
+         WHERE id = $3 AND payment_status != 'paid'
          RETURNING *`,
         ['paid', id, metadata.bookingId]
       );
@@ -175,15 +180,23 @@ router.post('/update-booking-status', async (req, res) => {
   }
   
   try {
-    const result = await db.query(
-      `UPDATE bookings 
-       SET payment_status = $1, 
-           payment_id = $2, 
-           updated_at = NOW() 
-       WHERE id = $3
-       RETURNING *`,
-      [paymentStatus, paymentId || null, bookingId]
-    );
+    // The idempotency guard (WHERE payment_status != 'paid') only applies
+    // when we're setting status TO 'paid' — that's the transition that
+    // triggers emails and needs protecting from double-firing (webhook +
+    // this endpoint both marking the same payment paid). Other status
+    // changes (e.g. manually marking something refunded or cancelled later)
+    // shouldn't be blocked by it.
+    const query = paymentStatus === 'paid'
+      ? `UPDATE bookings 
+         SET payment_status = $1, payment_id = $2, updated_at = NOW() 
+         WHERE id = $3 AND payment_status != 'paid'
+         RETURNING *`
+      : `UPDATE bookings 
+         SET payment_status = $1, payment_id = $2, updated_at = NOW() 
+         WHERE id = $3
+         RETURNING *`;
+
+    const result = await db.query(query, [paymentStatus, paymentId || null, bookingId]);
     
     const booking = result.rows[0];
     

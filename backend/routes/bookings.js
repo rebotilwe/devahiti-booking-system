@@ -1,7 +1,6 @@
 import express from 'express';
 import { getBookings, getBookingById, updatePaymentStatus } from '../controllers/bookingController.js';
 import db from '../config/db.js';
-import { sendAllBookingEmails } from '../services/emailService.js';
 
 const router = express.Router();
 
@@ -50,13 +49,10 @@ router.post('/', async (req, res) => {
 
     const booking = result.rows[0];
 
-    // Send emails in background
-    if (booking) {
-      console.log('📧 Sending booking confirmation emails for booking #', booking.id);
-      sendAllBookingEmails(booking).catch(err => {
-        console.error('❌ Background email sending failed:', err);
-      });
-    }
+    // Emails are sent once payment actually succeeds (see routes/payments.js),
+    // not here at creation — sending here as well was firing the customer's
+    // "Booking Received" email twice: once now with the pre-fee amount, and
+    // again after payment with the correct fee-inclusive total.
 
     res.status(201).json({
       success: true,
