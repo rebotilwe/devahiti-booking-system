@@ -178,18 +178,15 @@ export default function ServiceDetail() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: HERO - NO TEXT ON IMAGE ========== */}
+      {/* ========== HERO - full image, no cropping (object-contain, not a fixed aspect box) ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl bg-[#F5F0E8]">
             <img 
               src={service.image || heroBgImg} 
               alt={service.title} 
-              className="w-full h-full object-cover object-center"
-              style={{ maxWidth: '100%', maxHeight: '100%' }}
+              className="w-full h-auto max-h-[80vh] object-contain mx-auto"
             />
-            {/* Minimal overlay */}
-            <div className="absolute inset-0 bg-black/10" />
           </div>
         </div>
       </section>

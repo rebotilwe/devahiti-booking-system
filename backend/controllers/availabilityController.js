@@ -68,8 +68,18 @@ export const getAvailableSlots = async (req, res) => {
       return groupClassWindows.some(({ start, end }) => slot >= start && slot < end);
     };
 
+    // One-off blocked times for this specific date (e.g. "block just 2pm on
+    // 15 September" for a single appointment) — separate from blocked_dates
+    // (whole day) and group_classes (recurring weekly window).
+    const blockedSlotsResult = await db.query(
+      "SELECT blocked_time FROM blocked_slots WHERE blocked_date = $1",
+      [date]
+    );
+
+    const blockedSlotTimes = blockedSlotsResult.rows.map(row => row.blocked_time.substring(0, 5));
+
     const availableSlots = allSlots.filter(
-      slot => !bookedSlots.includes(slot) && !isWithinGroupClass(slot)
+      slot => !bookedSlots.includes(slot) && !isWithinGroupClass(slot) && !blockedSlotTimes.includes(slot)
     );
 
     res.json({ slots: availableSlots, date });

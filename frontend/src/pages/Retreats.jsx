@@ -249,7 +249,7 @@ export default function Retreats() {
           <img 
             src={dolphinSnorkelImg} 
             alt="Snorkelling alongside wild dolphins" 
-            className="w-full h-72 object-cover rounded-2xl shadow-md mt-10"
+            className="w-full h-72 sm:h-96 object-cover object-top rounded-2xl shadow-md mt-10"
           />
         </div>
       </section>

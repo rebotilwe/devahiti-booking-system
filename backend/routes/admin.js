@@ -42,6 +42,51 @@ router.delete('/blocked-dates/:id', async (req, res) => {
   }
 });
 
+// ========== BLOCKED TIME SLOTS (one-off, specific date + time) ==========
+// Get all blocked slots
+router.get('/blocked-slots', async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM blocked_slots ORDER BY blocked_date ASC, blocked_time ASC");
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching blocked slots:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Add a blocked slot
+router.post('/blocked-slots', async (req, res) => {
+  const { blocked_date, blocked_time, reason } = req.body;
+  if (!blocked_date || !blocked_time) {
+    return res.status(400).json({ error: 'blocked_date and blocked_time are both required' });
+  }
+  try {
+    const result = await db.query(
+      "INSERT INTO blocked_slots (blocked_date, blocked_time, reason) VALUES ($1, $2, $3) RETURNING *",
+      [blocked_date, blocked_time, reason || '']
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(409).json({ error: 'That time is already blocked on that date.' });
+    }
+    console.error("Error adding blocked slot:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Remove a blocked slot
+router.delete('/blocked-slots/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.query("DELETE FROM blocked_slots WHERE id = $1", [id]);
+    res.json({ message: 'Blocked slot removed' });
+  } catch (err) {
+    console.error("Error removing blocked slot:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ========== WEEKLY SCHEDULE ==========
 // Get weekly schedule
 router.get('/schedule', async (req, res) => {

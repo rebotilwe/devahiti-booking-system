@@ -37,6 +37,7 @@ const toLocalDateStr = (date) => {
 export default function Admin() {
   const [bookings, setBookings] = useState([]);
   const [blockedDates, setBlockedDates] = useState([]);
+  const [blockedSlots, setBlockedSlots] = useState([]);
   const [weeklySchedule, setWeeklySchedule] = useState([]);
   const [groupClasses, setGroupClasses] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -47,6 +48,9 @@ export default function Admin() {
   const [rangeEnd, setRangeEnd] = useState("");
   const [rangeReason, setRangeReason] = useState("");
   const [blockingRange, setBlockingRange] = useState(false);
+  const [newSlotBlockDate, setNewSlotBlockDate] = useState("");
+  const [newSlotBlockTime, setNewSlotBlockTime] = useState("");
+  const [newSlotBlockReason, setNewSlotBlockReason] = useState("");
   const [newSlotDay, setNewSlotDay] = useState("");
   const [newSlotTime, setNewSlotTime] = useState("");
   const [newClassDay, setNewClassDay] = useState("");
@@ -54,6 +58,8 @@ export default function Admin() {
   const [newClassEnd, setNewClassEnd] = useState("");
   const [newClassName, setNewClassName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [bookingFilterStart, setBookingFilterStart] = useState("");
+  const [bookingFilterEnd, setBookingFilterEnd] = useState("");
   const [activeTab, setActiveTab] = useState("bookings");
 
   const navigate = useNavigate();
@@ -69,9 +75,10 @@ export default function Admin() {
 
   const fetchAllData = async () => {
     try {
-      const [bookingsRes, blockedRes, scheduleRes, groupClassesRes, customersRes, revenueRes] = await Promise.all([
+      const [bookingsRes, blockedRes, blockedSlotsRes, scheduleRes, groupClassesRes, customersRes, revenueRes] = await Promise.all([
         fetch(`${API_URL}/bookings`),
         fetch(`${API_URL}/admin/blocked-dates`),
+        fetch(`${API_URL}/admin/blocked-slots`),
         fetch(`${API_URL}/admin/schedule`),
         fetch(`${API_URL}/admin/group-classes`),
         fetch(`${API_URL}/admin/customers`),
@@ -80,6 +87,7 @@ export default function Admin() {
 
       setBookings(await bookingsRes.json());
       setBlockedDates(await blockedRes.json());
+      setBlockedSlots(await blockedSlotsRes.json());
       setWeeklySchedule(await scheduleRes.json());
       setGroupClasses(await groupClassesRes.json());
       setCustomers(await customersRes.json());
@@ -152,6 +160,45 @@ export default function Admin() {
       setBlockedDates(blockedDates.filter(date => date.id !== id));
     } catch (error) {
       console.error("Error removing blocked date:", error);
+    }
+  };
+
+  // Block a single, specific time on a single, specific date — e.g. "block
+  // just 2pm on 15 September" for a one-off appointment — without blocking
+  // the whole day or creating a fake recurring class.
+  const addBlockedSlot = async () => {
+    if (!newSlotBlockDate || !newSlotBlockTime) return;
+    try {
+      const response = await fetch(`${API_URL}/admin/blocked-slots`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          blocked_date: newSlotBlockDate,
+          blocked_time: newSlotBlockTime,
+          reason: newSlotBlockReason,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "Failed to block that time");
+        return;
+      }
+      setBlockedSlots([...blockedSlots, data]);
+      setNewSlotBlockDate("");
+      setNewSlotBlockTime("");
+      setNewSlotBlockReason("");
+    } catch (error) {
+      console.error("Error adding blocked slot:", error);
+      alert("Something went wrong blocking that time.");
+    }
+  };
+
+  const removeBlockedSlot = async (id) => {
+    try {
+      await fetch(`${API_URL}/admin/blocked-slots/${id}`, { method: "DELETE" });
+      setBlockedSlots(blockedSlots.filter(slot => slot.id !== id));
+    } catch (error) {
+      console.error("Error removing blocked slot:", error);
     }
   };
 
@@ -337,60 +384,108 @@ export default function Admin() {
       {/* Bookings Tab */}
       {activeTab === "bookings" && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-sm text-muted-foreground">Total: {bookings.length} bookings</div>
-            <button 
-              onClick={deleteOldBookings} 
-              className="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600"
-            >
-              Delete Bookings Older Than 30 Days
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full border">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="p-2 text-left">ID</th>
-                  <th className="p-2 text-left">Date</th>
-                  <th className="p-2 text-left">Time</th>
-                  <th className="p-2 text-left">Customer</th>
-                  <th className="p-2 text-left">Service</th>
-                  <th className="p-2 text-left">Amount</th>
-                  <th className="p-2 text-left">Status</th>
-                  <th className="p-2 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr key={booking.id} className="border-t">
-                    <td className="p-2">{booking.id}</td>
-                    <td className="p-2">{formatDate(booking.booking_date)}</td>
-                    <td className="p-2">{formatTime(booking.booking_time)}</td>
-                    <td className="p-2">{booking.customer_name}</td>
-                    <td className="p-2">{booking.service_type}</td>
-                    <td className="p-2">R{booking.total_price || 0}</td>
-                    <td className="p-2">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        booking.payment_status === 'paid' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {booking.payment_status}
-                      </span>
-                    </td>
-                    <td className="p-2">
-                      <button 
-                        onClick={() => deleteBooking(booking.id)} 
-                        className="text-red-500 hover:text-red-700 text-sm"
+          {(() => {
+            const filteredBookings = bookings.filter((b) => {
+              if (!b.booking_date) return true;
+              const d = formatDate(b.booking_date);
+              if (bookingFilterStart && d < bookingFilterStart) return false;
+              if (bookingFilterEnd && d > bookingFilterEnd) return false;
+              return true;
+            });
+
+            return (
+              <>
+                <div className="bg-ocean/5 p-4 rounded-lg mb-4">
+                  <h3 className="font-heading text-sm mb-3 text-muted-foreground">Filter by date range</h3>
+                  <div className="flex gap-3 flex-wrap items-end">
+                    <div>
+                      <label className="block text-xs text-muted-foreground mb-1">From</label>
+                      <input
+                        type="date"
+                        value={bookingFilterStart}
+                        onChange={(e) => setBookingFilterStart(e.target.value)}
+                        className="px-3 py-2 border rounded"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-muted-foreground mb-1">To</label>
+                      <input
+                        type="date"
+                        value={bookingFilterEnd}
+                        onChange={(e) => setBookingFilterEnd(e.target.value)}
+                        className="px-3 py-2 border rounded"
+                      />
+                    </div>
+                    {(bookingFilterStart || bookingFilterEnd) && (
+                      <button
+                        onClick={() => { setBookingFilterStart(""); setBookingFilterEnd(""); }}
+                        className="px-3 py-2 text-sm text-ocean hover:underline"
                       >
-                        Delete
+                        Clear filter
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center mb-4">
+                  <div className="text-sm text-muted-foreground">
+                    Showing: {filteredBookings.length} of {bookings.length} bookings
+                  </div>
+                  <button 
+                    onClick={deleteOldBookings} 
+                    className="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600"
+                  >
+                    Delete Bookings Older Than 30 Days
+                  </button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full border">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="p-2 text-left">ID</th>
+                        <th className="p-2 text-left">Date</th>
+                        <th className="p-2 text-left">Time</th>
+                        <th className="p-2 text-left">Customer</th>
+                        <th className="p-2 text-left">Service</th>
+                        <th className="p-2 text-left">Amount</th>
+                        <th className="p-2 text-left">Status</th>
+                        <th className="p-2 text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredBookings.map((booking) => (
+                        <tr key={booking.id} className="border-t">
+                          <td className="p-2">{booking.id}</td>
+                          <td className="p-2">{formatDate(booking.booking_date)}</td>
+                          <td className="p-2">{formatTime(booking.booking_time)}</td>
+                          <td className="p-2">{booking.customer_name}</td>
+                          <td className="p-2">{booking.service_type}</td>
+                          <td className="p-2">R{booking.total_price || 0}</td>
+                          <td className="p-2">
+                            <span className={`px-2 py-1 rounded text-xs ${
+                              booking.payment_status === 'paid' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-yellow-100 text-yellow-800'
+                            }`}>
+                              {booking.payment_status}
+                            </span>
+                          </td>
+                          <td className="p-2">
+                            <button 
+                              onClick={() => deleteBooking(booking.id)} 
+                              className="text-red-500 hover:text-red-700 text-sm"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            );
+          })()}
         </div>
       )}
 
@@ -459,6 +554,67 @@ export default function Admin() {
                 Block Date
               </button>
             </div>
+          </div>
+
+          <div className="bg-ocean/5 p-4 rounded-lg mb-6">
+            <h3 className="font-heading text-lg mb-3">Block a Specific Time on One Date</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              For a one-off appointment or single change — blocks just that time slot, not the whole day.
+            </p>
+            <div className="flex gap-3 flex-wrap items-end">
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">Date</label>
+                <input
+                  type="date"
+                  value={newSlotBlockDate}
+                  onChange={(e) => setNewSlotBlockDate(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">Time</label>
+                <input
+                  type="time"
+                  value={newSlotBlockTime}
+                  onChange={(e) => setNewSlotBlockTime(e.target.value)}
+                  className="px-3 py-2 border rounded"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="Reason (e.g. Dentist appointment)"
+                value={newSlotBlockReason}
+                onChange={(e) => setNewSlotBlockReason(e.target.value)}
+                className="px-3 py-2 border rounded flex-1 min-w-[160px]"
+              />
+              <button
+                onClick={addBlockedSlot}
+                className="px-4 py-2 bg-ocean text-white rounded hover:bg-ocean-dark"
+              >
+                Block This Time
+              </button>
+            </div>
+            {blockedSlots.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {blockedSlots
+                  .slice()
+                  .sort((a, b) => new Date(a.blocked_date) - new Date(b.blocked_date) || a.blocked_time.localeCompare(b.blocked_time))
+                  .map((slot) => (
+                    <div key={slot.id} className="flex justify-between items-center border p-3 rounded bg-white">
+                      <div>
+                        <span className="font-medium">{formatDate(slot.blocked_date)} at {formatTime(slot.blocked_time)}</span>
+                        {slot.reason && <span className="text-sm text-muted-foreground ml-3">({slot.reason})</span>}
+                      </div>
+                      <button
+                        onClick={() => removeBlockedSlot(slot.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
