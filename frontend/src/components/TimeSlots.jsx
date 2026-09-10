@@ -30,6 +30,7 @@ export default function TimeSlots({
   selectedDate,
   onTimeSelect,
   selectedTime,
+  service,
   bookedSlots = []
 }) {
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -45,7 +46,7 @@ export default function TimeSlots({
 
       try {
         const dateStr = toLocalDateStr(selectedDate);
-        const data = await getAvailability(dateStr);
+        const data = await getAvailability(dateStr, service);
         
         const slots = data?.slots || (Array.isArray(data) ? data : []);
         setAvailableSlots(slots || []);
@@ -59,7 +60,7 @@ export default function TimeSlots({
     };
 
     fetchSlots();
-  }, [selectedDate]);
+  }, [selectedDate, service]);
 
   const isBooked = (time) => {
     return bookedSlots.includes(time);

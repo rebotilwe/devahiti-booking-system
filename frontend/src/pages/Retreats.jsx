@@ -115,10 +115,10 @@ export default function Retreats() {
         </div>
       )}
 
-      {/* ========== ✅ UPDATED: Page Hero - NO TEXT ON IMAGE ========== */}
+      {/* ========== Page Hero — reduced size: was stretching a smaller-resolution photo to nearly full viewport height, which caused the blur, and ate space that should go to the retreat photos below ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '21/9', maxHeight: '320px' }}>
             <img 
               src={heroRetreatsImg} 
               alt="Devahiti Retreats" 
@@ -245,12 +245,18 @@ export default function Retreats() {
             </div>
           </div>
 
-          {/* Photo below the details */}
-          <img 
-            src={dolphinSnorkelImg} 
-            alt="Snorkelling alongside wild dolphins" 
-            className="w-full h-72 sm:h-96 object-cover object-top rounded-2xl shadow-md mt-10"
-          />
+          {/* Photo below the details — switched to object-contain so the
+              whole square photo (dolphins AND the snorkeler) is fully
+              visible; object-cover was always going to crop something out
+              regardless of position, since the source photo is square and
+              this container is wide. */}
+          <div className="w-full bg-[#DCEEF7] rounded-2xl shadow-md mt-10 overflow-hidden flex items-center justify-center">
+            <img 
+              src={dolphinSnorkelImg} 
+              alt="Snorkelling alongside wild dolphins" 
+              className="w-full h-auto max-h-[500px] object-contain"
+            />
+          </div>
         </div>
       </section>
 

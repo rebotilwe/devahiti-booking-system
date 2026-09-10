@@ -336,6 +336,7 @@ export default function Schedule() {
               selectedDate={selectedDate}
               selectedTime={selectedTime}
               onTimeSelect={handleTimeSelect}
+              service={selectedService.id}
             />
           </div>
         </div>

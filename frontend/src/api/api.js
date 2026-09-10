@@ -1,9 +1,14 @@
 const API_BASE_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
 
-// Get available time slots for a specific date
-export const getAvailability = async (date) => {
+// Get available time slots for a specific date. service is the service
+// id/type (e.g. "group-class") — the backend uses it to decide whether to
+// return the day's actual class start times (group class) or the generic
+// private-session slot range.
+export const getAvailability = async (date, service) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/availability/slots?date=${date}`);
+    const params = new URLSearchParams({ date });
+    if (service) params.set('service', service);
+    const response = await fetch(`${API_BASE_URL}/availability/slots?${params.toString()}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

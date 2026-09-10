@@ -1,8 +1,19 @@
 import db from "../config/db.js";
 
+// Days where private/individual sessions shouldn't open until this time,
+// because a group class runs earlier that morning — per the client's
+// explicit instruction, private slots start 9:30 AM on both Friday and
+// Saturday regardless of the exact class end time (Friday's class ends
+// 9:15, Saturday's ends 9:00 — both round up to the same 9:30 start so
+// there's always a clear gap, not just the bare minimum).
+const PRIVATE_SESSION_EARLIEST_START = {
+  Friday: "09:30",
+  Saturday: "09:30",
+};
+
 // GET AVAILABLE TIME SLOTS FOR A SPECIFIC DATE
 export const getAvailableSlots = async (req, res) => {
-  const { date } = req.query;
+  const { date, service } = req.query;
   
   if (!date) {
     return res.status(400).json({ message: "Date is required" });
@@ -18,6 +29,8 @@ export const getAvailableSlots = async (req, res) => {
     timeZone: 'UTC'
   });
 
+  const isGroupClassBooking = service === 'group-class';
+
   try {
     // Check if date is blocked
     const blockedResult = await db.query(
@@ -29,58 +42,64 @@ export const getAvailableSlots = async (req, res) => {
       return res.json({ slots: [], message: "This date is fully booked", date });
     }
 
-    // Get time slots for this day of week
-    const slotsResult = await db.query(
-      "SELECT time_slot FROM weekly_schedule WHERE day_of_week = $1 ORDER BY time_slot",
-      [dayOfWeek]
-    );
-
-    const allSlots = slotsResult.rows.map(row => {
-      const time = row.time_slot;
-      return time.substring(0, 5);
-    });
-
-    // Get already booked slots for this date
+    // Get already booked slots for this date (needed either way)
     const bookedResult = await db.query(
       "SELECT booking_time FROM bookings WHERE booking_date = $1 AND payment_status IN ('paid', 'pending')",
       [date]
     );
+    const bookedSlots = bookedResult.rows.map(row => row.booking_time.substring(0, 5));
 
-    const bookedSlots = bookedResult.rows.map(row => {
-      const time = row.booking_time;
-      return time.substring(0, 5);
-    });
+    // One-off blocked times for this specific date
+    const blockedSlotsResult = await db.query(
+      "SELECT blocked_time FROM blocked_slots WHERE blocked_date = $1",
+      [date]
+    );
+    const blockedSlotTimes = blockedSlotsResult.rows.map(row => row.blocked_time.substring(0, 5));
 
-    // Recurring group classes (e.g. Monday 7:00-8:00 Therapeutic Movement)
-    // automatically lock out private slots that fall inside their window,
-    // so a private session can never be booked on top of a group class.
+    // Recurring group classes for this day of week
     const groupClassResult = await db.query(
-      "SELECT start_time, end_time FROM group_classes WHERE day_of_week = $1",
+      "SELECT start_time, end_time FROM group_classes WHERE day_of_week = $1 ORDER BY start_time",
       [dayOfWeek]
     );
-
     const groupClassWindows = groupClassResult.rows.map(row => ({
       start: row.start_time.substring(0, 5),
       end: row.end_time.substring(0, 5),
     }));
 
-    const isWithinGroupClass = (slot) => {
-      return groupClassWindows.some(({ start, end }) => slot >= start && slot < end);
-    };
+    let availableSlots;
 
-    // One-off blocked times for this specific date (e.g. "block just 2pm on
-    // 15 September" for a single appointment) — separate from blocked_dates
-    // (whole day) and group_classes (recurring weekly window).
-    const blockedSlotsResult = await db.query(
-      "SELECT blocked_time FROM blocked_slots WHERE blocked_date = $1",
-      [date]
-    );
+    if (isGroupClassBooking) {
+      // Booking a group class: the only "slots" that make sense are the
+      // class's own start times on this day — not a generic range of
+      // half-hour options. If there's no class on this day, there's
+      // nothing to book.
+      availableSlots = groupClassWindows
+        .map(({ start }) => start)
+        .filter(start => !bookedSlots.includes(start) && !blockedSlotTimes.includes(start));
+    } else {
+      // Booking a private/individual session: use the generic weekly
+      // schedule, minus anything already booked, minus any group class
+      // window that day, minus one-off blocks, minus (on days with a
+      // morning class) anything before that day's earliest private start.
+      const slotsResult = await db.query(
+        "SELECT time_slot FROM weekly_schedule WHERE day_of_week = $1 ORDER BY time_slot",
+        [dayOfWeek]
+      );
+      const allSlots = slotsResult.rows.map(row => row.time_slot.substring(0, 5));
 
-    const blockedSlotTimes = blockedSlotsResult.rows.map(row => row.blocked_time.substring(0, 5));
+      const isWithinGroupClass = (slot) => {
+        return groupClassWindows.some(({ start, end }) => slot >= start && slot < end);
+      };
 
-    const availableSlots = allSlots.filter(
-      slot => !bookedSlots.includes(slot) && !isWithinGroupClass(slot) && !blockedSlotTimes.includes(slot)
-    );
+      const earliestStart = PRIVATE_SESSION_EARLIEST_START[dayOfWeek];
+
+      availableSlots = allSlots.filter(slot =>
+        !bookedSlots.includes(slot) &&
+        !isWithinGroupClass(slot) &&
+        !blockedSlotTimes.includes(slot) &&
+        (!earliestStart || slot >= earliestStart)
+      );
+    }
 
     res.json({ slots: availableSlots, date });
   } catch (err) {

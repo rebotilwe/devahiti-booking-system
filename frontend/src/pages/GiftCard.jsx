@@ -64,7 +64,7 @@ const giftCardOptions = [
   {
     id: "sound-journey",
     title: "Sound Journey",
-    description: "Immersive sound healing experience using singing bowls and therapeutic sound.",
+    description: "Immersive sound healing experience using singing bowls and therapeutic sound. Covers up to 3 people.",
     price: "R800",
     priceAmount: 800,
     icon: Music,
