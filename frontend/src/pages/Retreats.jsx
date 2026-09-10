@@ -115,10 +115,10 @@ export default function Retreats() {
         </div>
       )}
 
-      {/* ========== Page Hero — reduced size: was stretching a smaller-resolution photo to nearly full viewport height, which caused the blur, and ate space that should go to the retreat photos below ========== */}
+      {/* ========== Page Hero - NO TEXT ON IMAGE ========== */}
       <section className="w-full">
         <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '21/9', maxHeight: '320px' }}>
+          <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
             <img 
               src={heroRetreatsImg} 
               alt="Devahiti Retreats" 
