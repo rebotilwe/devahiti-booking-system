@@ -24,9 +24,9 @@ const subNav = [
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
   { label: "Fascia Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
+  { label: "Teacher Training", path: "/teacher-training" },
   { label: "Educational Workshops", path: "/services/educational-workshops" },
-  { label: "Retreats", path: "/services/retreats" },
+  { label: "Retreats", path: "/retreats" },
 ];
 
 const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";

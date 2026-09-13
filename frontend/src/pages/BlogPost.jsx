@@ -62,8 +62,8 @@ const subNav = [
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
   { label: "Fascial Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Retreats", path: "/services/retreats" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
 ];
 
 export default function BlogPost() {

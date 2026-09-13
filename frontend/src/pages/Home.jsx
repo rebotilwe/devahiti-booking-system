@@ -34,8 +34,8 @@ const subNav = [
   { label: "Sound Journey", path: "/services/sound-journey" },
   { label: "Sound Massage", path: "/services/sound-massage" },
   { label: "Fascial Release", path: "/services/fascia-release" },
-  { label: "Teacher Training", path: "/services/teacher-training" },
-  { label: "Retreats", path: "/services/retreats" },
+  { label: "Teacher Training", path: "/teacher-training" },
+  { label: "Retreats", path: "/retreats" },
 ];
 
 // 8 services - Removed Educational Workshops
@@ -46,8 +46,8 @@ const allServices = [
   { img: soundImg, title: "Sound Journey", link: "/services/sound-journey" },
   { img: soundMassageImg, title: "Sound Massage", link: "/services/sound-massage" },
   { img: fasciaReleaseImg, title: "Fascial Release Therapy", link: "/services/fascia-release" },
-  { img: trainingImg, title: "Teacher Training", link: "/services/teacher-training" },
-  { img: retreatsImg, title: "Retreats / Safaris", link: "/services/retreats" },
+  { img: trainingImg, title: "Teacher Training", link: "/teacher-training" },
+  { img: retreatsImg, title: "Retreats / Safaris", link: "/retreats" },
 ];
 
 // Testimonials data
