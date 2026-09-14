@@ -245,16 +245,16 @@ export default function Retreats() {
             </div>
           </div>
 
-          {/* Photo below the details — switched to object-contain so the
-              whole square photo (dolphins AND the snorkeler) is fully
-              visible; object-cover was always going to crop something out
-              regardless of position, since the source photo is square and
-              this container is wide. */}
-          <div className="w-full bg-[#DCEEF7] rounded-2xl shadow-md mt-10 overflow-hidden flex items-center justify-center">
+          {/* Photo below the details — sized to match the image's own
+              (roughly square) shape rather than stretching a wide,
+              full-width container around it, which left visible background
+              color on either side making it look like an empty placeholder
+              frame around a smaller photo. */}
+          <div className="max-w-md mx-auto rounded-2xl shadow-md mt-10 overflow-hidden">
             <img 
               src={dolphinSnorkelImg} 
               alt="Snorkelling alongside wild dolphins" 
-              className="w-full h-auto max-h-[500px] object-contain"
+              className="w-full h-auto object-contain"
             />
           </div>
         </div>
@@ -269,7 +269,7 @@ export default function Retreats() {
                 <Star key={i} className="h-5 w-5 fill-[#65AEEA] text-[#65AEEA]" />
               ))}
             </div>
-            <h2 className="text-3xl font-light md:text-4xl text-gray-800">What Past Retreaters Say</h2>
+            <h2 className="text-3xl font-light md:text-4xl text-gray-800">What Past Retreatants Say</h2>
             <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-4"></div>
           </div>
 

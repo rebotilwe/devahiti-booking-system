@@ -101,6 +101,23 @@ export const getAvailableSlots = async (req, res) => {
       );
     }
 
+    // If the requested date is today, hide any slot that's already passed —
+    // otherwise someone checking at 11am still sees 7am/8am as "available"
+    // for the rest of the day. Evaluated in South Africa time specifically
+    // (not server local time, which could be UTC on Render), same reasoning
+    // as the earlier date/timezone fixes elsewhere in this file.
+    const now = new Date();
+    const todayInSA = now.toLocaleDateString('en-CA', { timeZone: 'Africa/Johannesburg' });
+    if (date === todayInSA) {
+      const currentTimeInSA = now.toLocaleTimeString('en-GB', {
+        timeZone: 'Africa/Johannesburg',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+      availableSlots = availableSlots.filter(slot => slot > currentTimeInSA);
+    }
+
     res.json({ slots: availableSlots, date });
   } catch (err) {
     console.error("Error fetching slots:", err);
