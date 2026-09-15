@@ -31,6 +31,7 @@ export const services = [
     duration: "45 – 90 minutes",
     price: "R130 per class | R700pm unlimited", // ✅ UPDATED: Added R700pm unlimited
     priceAmount: 130,
+    extraPersonFee: 130, // Flat per-person rate — not a base+extra structure like private sessions
     location: "In Studio (Ballito)",
     capacity: "All levels welcome",
     icon: Users,

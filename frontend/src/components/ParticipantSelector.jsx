@@ -72,7 +72,9 @@ export default function ParticipantSelector({
       </div>
       
       <p className="text-xs text-muted-foreground mt-4">
-        Base price: R{basePrice} for 1 person | +R{extraPersonFee} per extra person
+        {basePrice === extraPersonFee
+          ? `R${basePrice} per person`
+          : `Base price: R${basePrice} for 1 person | +R${extraPersonFee} per extra person`}
       </p>
     </div>
   );
