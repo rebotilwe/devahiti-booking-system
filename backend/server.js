@@ -24,9 +24,14 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// ✅ ONLY THE CORRECT FRONTEND URL
+// ✅ ALLOWED FRONTEND URLS — now that devahiti.com is live, requests from
+// the custom domain need to be allowed too, not just the .netlify.app one.
+// Without this, the site loads fine but every booking/payment API call
+// gets silently blocked by CORS for anyone visiting via devahiti.com.
 const allowedOrigins = [
   'https://devahitibookingsystem.netlify.app',
+  'https://devahiti.com',
+  'https://www.devahiti.com',
   'http://localhost:5173',  // For local development only
 ];
 
