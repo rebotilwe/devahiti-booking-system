@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import dns from 'node:dns';
+import db from './config/db.js';
 import availabilityRoutes from './routes/availability.js';
 import bookingRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
@@ -63,6 +64,21 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     frontend_url: process.env.FRONTEND_URL
   });
+});
+
+// Database health check — point an uptime monitor (e.g. UptimeRobot) at this.
+// It reads a real table, so a paused/unreachable database returns 503 and the
+// monitor can email an alert; the regular check also counts as database
+// activity, which helps stop Supabase's free-tier inactivity pausing.
+// (Deliberately doesn't return the underlying error text.)
+app.get('/api/health/db', async (req, res) => {
+  try {
+    await db.query('SELECT 1 FROM weekly_schedule LIMIT 1');
+    res.json({ status: 'OK', database: 'connected', timestamp: new Date().toISOString() });
+  } catch (error) {
+    console.error('DB health check failed:', error.message);
+    res.status(503).json({ status: 'ERROR', database: 'unreachable', timestamp: new Date().toISOString() });
+  }
 });
 
 app.get('/', (req, res) => {
