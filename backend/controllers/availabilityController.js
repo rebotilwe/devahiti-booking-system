@@ -42,9 +42,17 @@ export const getAvailableSlots = async (req, res) => {
       return res.json({ slots: [], message: "This date is fully booked", date });
     }
 
-    // Get already booked slots for this date (needed either way)
+    // Slots already taken on this date. Paid bookings always hold a slot.
+    // Pending ones only hold it for 30 minutes (long enough to finish
+    // checkout) — otherwise a single abandoned checkout would lock that
+    // time for good, since nothing ever clears a 'pending' booking.
     const bookedResult = await db.query(
-      "SELECT booking_time FROM bookings WHERE booking_date = $1 AND payment_status IN ('paid', 'pending')",
+      `SELECT booking_time FROM bookings
+       WHERE booking_date = $1
+         AND (
+           payment_status = 'paid'
+           OR (payment_status = 'pending' AND created_at > NOW() - INTERVAL '30 minutes')
+         )`,
       [date]
     );
     const bookedSlots = bookedResult.rows.map(row => row.booking_time.substring(0, 5));
@@ -73,9 +81,13 @@ export const getAvailableSlots = async (req, res) => {
       // class's own start times on this day — not a generic range of
       // half-hour options. If there's no class on this day, there's
       // nothing to book.
+      // A group class is shared: other people booking it must NOT remove
+      // it for everyone else. (Previously any booking at that time hid the
+      // class from the next customer, so it vanished after the first
+      // sign-up.) Only deliberate blocks apply here.
       availableSlots = groupClassWindows
         .map(({ start }) => start)
-        .filter(start => !bookedSlots.includes(start) && !blockedSlotTimes.includes(start));
+        .filter(start => !blockedSlotTimes.includes(start));
     } else {
       // Booking a private/individual session: use the generic weekly
       // schedule, minus anything already booked, minus any group class
