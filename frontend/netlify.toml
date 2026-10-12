@@ -3,6 +3,62 @@
   command = "npm run build"
   publish = "dist"
 
+# ---------------------------------------------------------------
+# Old WordPress URLs -> new pages (permanent 301 redirects).
+# These must stay ABOVE the catch-all rule at the bottom.
+# TODO: confirm against the full list of old URLs (Google Search
+# Console / site:devahiti.com / Wayback Machine) and add any missing ones.
+# ---------------------------------------------------------------
+[[redirects]]
+  from = "/contact-us"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about-us"
+  to = "/about"
+  status = 301
+  force = true
+
+# Dated WordPress blog posts, e.g. /2024/02/08/post-name
+[[redirects]]
+  from = "/2022/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/2023/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/2024/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/2025/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/category/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tag/*"
+  to = "/blog"
+  status = 301
+  force = true
+
+# Single-page app fallback: serve the React app for every other route.
 [[redirects]]
   from = "/*"
   to = "/index.html"

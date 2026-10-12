@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /checkout
+Disallow: /payment
+Disallow: /payment-success
+Disallow: /payment-cancelled
+Disallow: /booking-confirmation
+
+Sitemap: https://devahiti.com/sitemap.xml

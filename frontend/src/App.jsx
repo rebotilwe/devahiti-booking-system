@@ -19,6 +19,7 @@ import AdminLogin from './pages/AdminLogin';
 import Blog from './pages/Blog';
 import GiftCard from './pages/GiftCard';
 import ScrollToTop from "./components/ScrollToTop";
+import PageMeta from "./components/PageMeta";
 import BackToTop from "./components/BackToTop"; // ✅ ADD THIS
 import ClassSchedule from './pages/ClassSchedule';
 import BlogPost from './pages/BlogPost';
@@ -29,6 +30,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <PageMeta />
       <BackToTop /> {/* ✅ ADD THIS */}
       <div className="min-h-screen flex flex-col">
         <main className="flex-grow pt-20">
