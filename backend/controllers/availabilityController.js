@@ -1,4 +1,9 @@
 import db from "../config/db.js";
+import { getCalendarBlocksForDate, saTimeMs } from "../services/googleCalendar.js";
+
+// How long a private/individual session is assumed to last when checking it
+// against Google Calendar events.
+const PRIVATE_SESSION_MINUTES = 60;
 
 // Days where private/individual sessions shouldn't open until this time,
 // because a group class runs earlier that morning — per the client's
@@ -80,6 +85,17 @@ export const getAvailableSlots = async (req, res) => {
       end: row.end_time.substring(0, 5),
     }));
 
+    // Events in Cheryl's "Devahiti Availability" Google Calendar. Events marked
+    // "group classes open" block everything except group classes.
+    const calendarBlocks = await getCalendarBlocksForDate(date);
+    const blockedByCalendar = (startMs, endMs) =>
+      calendarBlocks.some(
+        (b) =>
+          b.startMs < endMs &&
+          b.endMs > startMs &&
+          (!isGroupClassBooking || !b.groupsOpen)
+      );
+
     let availableSlots;
 
     if (isGroupClassBooking) {
@@ -92,8 +108,11 @@ export const getAvailableSlots = async (req, res) => {
       // class from the next customer, so it vanished after the first
       // sign-up.) Only deliberate blocks apply here.
       availableSlots = groupClassWindows
-        .map(({ start }) => start)
-        .filter(start => !blockedSlotTimes.includes(start));
+        .filter(({ start, end }) =>
+          !blockedSlotTimes.includes(start) &&
+          !blockedByCalendar(saTimeMs(date, start), saTimeMs(date, end))
+        )
+        .map(({ start }) => start);
     } else {
       // Booking a private/individual session: use the generic weekly
       // schedule, minus anything already booked, minus any group class
@@ -115,6 +134,10 @@ export const getAvailableSlots = async (req, res) => {
         !bookedSlots.includes(slot) &&
         !isWithinGroupClass(slot) &&
         !blockedSlotTimes.includes(slot) &&
+        !blockedByCalendar(
+          saTimeMs(date, slot),
+          saTimeMs(date, slot) + PRIVATE_SESSION_MINUTES * 60 * 1000
+        ) &&
         (!earliestStart || slot >= earliestStart)
       );
     }
