@@ -48,6 +48,8 @@ export default function Admin() {
   const [rangeEnd, setRangeEnd] = useState("");
   const [rangeReason, setRangeReason] = useState("");
   const [blockingRange, setBlockingRange] = useState(false);
+  const [keepGroupRange, setKeepGroupRange] = useState(false);
+  const [keepGroupSingle, setKeepGroupSingle] = useState(false);
   const [newSlotBlockDate, setNewSlotBlockDate] = useState("");
   const [newSlotBlockTime, setNewSlotBlockTime] = useState("");
   const [newSlotBlockReason, setNewSlotBlockReason] = useState("");
@@ -143,12 +145,13 @@ export default function Admin() {
       const response = await fetch(`${API_URL}/admin/blocked-dates`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ blocked_date: newBlockedDate, reason: newBlockedReason }),
+        body: JSON.stringify({ blocked_date: newBlockedDate, reason: newBlockedReason, keep_group_classes: keepGroupSingle }),
       });
       const data = await response.json();
       setBlockedDates([...blockedDates, data]);
       setNewBlockedDate("");
       setNewBlockedReason("");
+      setKeepGroupSingle(false);
     } catch (error) {
       console.error("Error adding blocked date:", error);
     }
@@ -231,7 +234,7 @@ export default function Admin() {
         const response = await fetch(`${API_URL}/admin/blocked-dates`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ blocked_date: dateStr, reason: rangeReason }),
+          body: JSON.stringify({ blocked_date: dateStr, reason: rangeReason, keep_group_classes: keepGroupRange }),
         });
         const data = await response.json();
         newlyBlocked.push(data);
@@ -241,6 +244,7 @@ export default function Admin() {
       setRangeStart("");
       setRangeEnd("");
       setRangeReason("");
+      setKeepGroupRange(false);
     } catch (error) {
       console.error("Error blocking date range:", error);
       alert("Something went wrong blocking that range — some days may already be blocked.");
@@ -529,6 +533,14 @@ export default function Admin() {
                 {blockingRange ? "Blocking..." : "Block Range"}
               </button>
             </div>
+            <label className="flex items-center gap-2 mt-3 text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                checked={keepGroupRange}
+                onChange={(e) => setKeepGroupRange(e.target.checked)}
+              />
+              Keep group classes open (block everything else)
+            </label>
           </div>
 
           <div className="bg-ocean/5 p-4 rounded-lg mb-6">
@@ -554,6 +566,14 @@ export default function Admin() {
                 Block Date
               </button>
             </div>
+            <label className="flex items-center gap-2 mt-3 text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                checked={keepGroupSingle}
+                onChange={(e) => setKeepGroupSingle(e.target.checked)}
+              />
+              Keep group classes open (block everything else)
+            </label>
           </div>
 
           <div className="bg-ocean/5 p-4 rounded-lg mb-6">
@@ -626,6 +646,7 @@ export default function Admin() {
                 <div>
                   <span className="font-medium">{formatDate(date.blocked_date)}</span>
                   {date.reason && <span className="text-sm text-muted-foreground ml-3">({date.reason})</span>}
+                  {date.keep_group_classes && <span className="text-xs bg-green-100 text-green-800 rounded px-2 py-1 ml-3">Group classes open</span>}
                 </div>
                 <button 
                   onClick={() => removeBlockedDate(date.id)} 

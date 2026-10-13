@@ -38,7 +38,13 @@ export const getAvailableSlots = async (req, res) => {
       [date]
     );
     
-    if (blockedResult.rows.length > 0) {
+    // A blocked date normally closes everything. A block flagged
+    // keep_group_classes only closes private/individual offerings (private
+    // sessions, Sound Journey, Corporate, etc.) and leaves group classes open.
+    const blockedRows = blockedResult.rows;
+    const fullyBlocked = blockedRows.some(row => !row.keep_group_classes);
+    const blockedForThisService = isGroupClassBooking ? fullyBlocked : blockedRows.length > 0;
+    if (blockedForThisService) {
       return res.json({ slots: [], message: "This date is fully booked", date });
     }
 

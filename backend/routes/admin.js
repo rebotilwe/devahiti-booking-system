@@ -17,11 +17,11 @@ router.get('/blocked-dates', async (req, res) => {
 
 // Add a blocked date
 router.post('/blocked-dates', async (req, res) => {
-  const { blocked_date, reason } = req.body;
+  const { blocked_date, reason, keep_group_classes } = req.body;
   try {
     const result = await db.query(
-      "INSERT INTO blocked_dates (blocked_date, reason) VALUES ($1, $2) RETURNING *",
-      [blocked_date, reason || 'Holiday']
+      "INSERT INTO blocked_dates (blocked_date, reason, keep_group_classes) VALUES ($1, $2, $3) RETURNING *",
+      [blocked_date, reason || 'Holiday', keep_group_classes === true]
     );
     res.json(result.rows[0]);
   } catch (err) {
