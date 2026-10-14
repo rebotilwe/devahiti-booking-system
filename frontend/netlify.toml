@@ -5,12 +5,20 @@
 
 # ---------------------------------------------------------------
 # Old WordPress URLs -> new pages (permanent 301 redirects).
-# These must stay ABOVE the catch-all rule at the bottom.
-# TODO: confirm against the full list of old URLs (Google Search
-# Console / site:devahiti.com / Wayback Machine) and add any missing ones.
+# The old site used trailing slashes, so each page is listed both ways.
+# Source of the list: Google Analytics landing-page / page reports
+# (15 Sep - 12 Oct 2026 vs 18 Aug - 14 Sep 2026).
+# These MUST stay above the catch-all rule at the bottom.
 # ---------------------------------------------------------------
+
 [[redirects]]
   from = "/contact-us"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us/"
   to = "/contact"
   status = 301
   force = true
@@ -21,7 +29,62 @@
   status = 301
   force = true
 
-# Dated WordPress blog posts, e.g. /2024/02/08/post-name
+[[redirects]]
+  from = "/about-us/"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/events"
+  to = "/class-schedule"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/events/"
+  to = "/class-schedule"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fascial-release-therapy"
+  to = "/services/fascia-release"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fascial-release-therapy/"
+  to = "/services/fascia-release"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/online-teacher-training"
+  to = "/teacher-training"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/online-teacher-training/"
+  to = "/teacher-training"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/teacher-workshops"
+  to = "/teacher-training"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/teacher-workshops/"
+  to = "/teacher-training"
+  status = 301
+  force = true
+
+# Old dated blog posts (/2024/02/08/...), categories and tags -> blog index
+
 [[redirects]]
   from = "/2022/*"
   to = "/blog"
