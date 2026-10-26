@@ -270,10 +270,10 @@ export default function Home() {
 <section className="relative py-10 sm:py-14 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800">
-            Welcome To Devahiti
+            Open-Air Yoga &amp; Sound Healing in Ballito
           </h1>
           <p className="mt-2 text-base sm:text-lg md:text-xl text-gray-600 font-light tracking-wider">
-            Educational Yoga Studio
+            Welcome to Devahiti &middot; Educational Yoga Studio
           </p>
           <div className="mt-4 h-px w-16 bg-[#65AEEA] mx-auto" />
           <p className="mt-4 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
@@ -291,9 +291,9 @@ export default function Home() {
       {/* ========== ✅ UPDATED: Blue Section with "Private, Group Yoga & Sound Relaxation" ========== */}
       <section className="relative py-12 sm:py-16 px-6 text-center" style={{ backgroundColor: "#65AEEA" }}>
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-white">
             Private, Group Yoga &amp; Sound Relaxation
-          </h1>
+          </h2>
           <p className="mt-3 sm:mt-4 text-lg sm:text-xl text-white/90">
             Your space or ours
           </p>

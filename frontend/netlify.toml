@@ -121,10 +121,11 @@
   status = 301
   force = true
 
-# Single-page app fallback: serve the React app for every other route.
+# Single-page app fallback: serve the React app for every route that has no
+# pre-rendered page of its own (blog posts, admin, checkout...).
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/app-shell.html"
   status = 200
 
 [[headers]]
