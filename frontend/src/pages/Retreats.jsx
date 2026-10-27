@@ -140,7 +140,7 @@ export default function Retreats() {
             <Flower2 className="h-5 w-5 text-[#65AEEA]" />
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800 drop-shadow-lg">
-            Yoga Retreats
+            Yoga Retreats at Exciting &amp; Unique Venues
           </h1>
           <p className="mt-4 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
             Immerse yourself in transformative wellness experiences

@@ -202,7 +202,7 @@ export default function ServiceDetail() {
             <Waves className="h-4 w-4 text-[#65AEEA]" />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-800 px-4">
-            {service.title}
+            {service.headline || service.title}
           </h1>
           {isTeacherTraining && (
             <p className="mt-3 text-lg sm:text-xl text-gray-500">

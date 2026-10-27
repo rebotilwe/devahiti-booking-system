@@ -146,7 +146,7 @@ export default function ClassSchedule() {
             <Calendar className="h-5 w-5 text-[#65AEEA]" />
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800 drop-shadow-lg">
-            Class Schedule
+            Group Yoga Class Schedule in Ballito
           </h1>
           <p className="mt-4 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
             Join us on the mat — all levels welcome

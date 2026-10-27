@@ -346,7 +346,7 @@ export default function Home() {
       {/* ========== ✅ UPDATED: Our Services Section - NO "Our Offerings" heading ========== */}
       <section id="our-services-section" className="py-8 sm:py-10 px-6 text-center bg-[#F3F8FC] scroll-mt-28">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Our Services</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-gray-800">Yoga &amp; Sound Healing Services in Ballito</h2>
           <div className="w-20 h-px bg-[#65AEEA] mx-auto mt-3 mb-3 sm:mb-4"></div>
           <p className="text-sm sm:text-base text-gray-600">
             Explore our full range of yoga, sound healing, and wellness offerings. From group classes to private sessions, corporate wellness to teacher training, at your workplace or venue of your choice — find the practice that speaks to you.

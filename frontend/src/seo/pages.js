@@ -22,7 +22,7 @@ export const PAGES = {
     title: "About Cheryl Lancellas | Devahiti Yoga Ballito",
     description:
       "Meet Cheryl Lancellas, founder of Devahiti Yoga in Ballito. Yoga, sound healing and movement for every body, in studio or at your venue.",
-    h1: "About Cheryl Lancellas and Devahiti Yoga",
+    h1: "About Devahiti Yoga in Ballito",
     intro:
       "Cheryl Lancellas is the founder of Devahiti Yoga in Ballito. She offers yoga, sound healing and movement for every body, in the studio or at your venue.",
   },
@@ -54,15 +54,15 @@ export const PAGES = {
     title: "Corporate Wellness Yoga | Devahiti Yoga Ballito",
     description:
       "Yoga and sound relaxation for your team, at your workplace or venue on the North Coast. Reduce stress and boost wellbeing.",
-    h1: "Corporate Wellness Yoga on the North Coast",
+    h1: "Corporate Wellness Yoga in Ballito",
     intro:
       "Yoga and sound relaxation for your team, at your workplace or venue on the North Coast. Reduce stress and boost wellbeing.",
   },
   "/services/sound-journey": {
-    title: "Sound Journey Sound Healing in Ballito | Devahiti",
+    title: "Sound Journey Healing Sessions in Ballito | Devahiti",
     description:
       "A relaxing sound bath for up to three people in Ballito. Release tension and restore calm with a guided sound journey.",
-    h1: "Sound Journey Sound Healing in Ballito",
+    h1: "Sound Journey Healing Sessions in Ballito",
     intro:
       "A relaxing sound bath for up to three people in Ballito. Release tension and restore calm with a guided sound journey.",
   },
@@ -75,34 +75,34 @@ export const PAGES = {
       "Deeply relaxing sound massage using singing bowls and vibration in Ballito. Book a session with Devahiti Yoga.",
   },
   "/services/fascia-release": {
-    title: "Fascial Release Therapy in Ballito | Devahiti Yoga",
+    title: "Fascia Release Therapy in Ballito | Devahiti Yoga",
     description:
       "Fascial release therapy to ease tightness and restore movement, offered at Devahiti Yoga in Ballito.",
-    h1: "Fascial Release Therapy in Ballito",
+    h1: "Fascia Release Therapy in Ballito",
     intro:
       "Fascial release therapy to ease tightness and restore movement, offered at Devahiti Yoga in Ballito.",
   },
   "/teacher-training": {
-    title: "Yoga Teacher Training in South Africa | Devahiti",
+    title: "Yoga Teacher Training in Ballito | Devahiti Yoga",
     description:
       "Yoga teacher training with Cheryl Lancellas at Devahiti Yoga, Ballito. Learn anatomy, movement and teaching skills.",
-    h1: "Yoga Teacher Training in South Africa",
+    h1: "Yoga Teacher Training in Ballito",
     intro:
       "Yoga teacher training with Cheryl Lancellas at Devahiti Yoga, Ballito. Learn anatomy, movement and teaching skills.",
   },
   "/retreats": {
-    title: "Yoga Retreats & Safaris in South Africa | Devahiti",
+    title: "Yoga Retreats at Unique Venues | Devahiti Yoga",
     description:
-      "Yoga retreats and safaris from bush to beach with Devahiti Yoga. See upcoming retreats and what past retreatants say.",
-    h1: "Yoga Retreats & Safaris in South Africa",
+      "Yoga retreats and safaris at exciting and unique venues, from bush to beach, with Devahiti Yoga. See upcoming retreats and what past retreatants say.",
+    h1: "Yoga Retreats at Exciting & Unique Venues",
     intro:
-      "Yoga retreats and safaris from bush to beach with Devahiti Yoga. See upcoming retreats and what past retreatants say.",
+      "Yoga retreats and safaris at exciting and unique venues, from bush to beach, with Devahiti Yoga. See upcoming retreats and what past retreatants say.",
   },
   "/class-schedule": {
-    title: "Yoga Class Schedule Ballito | Devahiti Yoga",
+    title: "Group Yoga Class Schedule Ballito | Devahiti Yoga",
     description:
       "Weekly yoga class timetable at Devahiti Yoga, Ballito: Monday to Saturday group classes and how to book your spot.",
-    h1: "Yoga Class Schedule in Ballito",
+    h1: "Group Yoga Class Schedule in Ballito",
     intro:
       "The weekly yoga class timetable at Devahiti Yoga, Ballito: Monday to Saturday group classes and how to book your spot.",
   },

@@ -155,10 +155,10 @@ export default function Services() {
             Devahiti Yoga &amp; Sound Studio
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light leading-[1.1]">
-            A practice for<br className="hidden md:block" /> every body, every mood
+            Yoga &amp; Sound Healing<br className="hidden md:block" /> Services in Ballito
           </h1>
           <p className="text-gray-500 mt-4 max-w-md mx-auto text-sm sm:text-base md:text-lg leading-relaxed">
-            From breath and movement to sound and stillness — find the offering that meets you where you are.
+            A practice for every body, every mood. From breath and movement to sound and stillness — find the offering that meets you where you are.
           </p>
         </div>
       </section>

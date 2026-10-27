@@ -262,10 +262,10 @@ export default function TeacherTraining() {
       <section className="relative py-10 sm:py-14 px-6 text-center bg-white">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
-            Teacher Training
+            Yoga Teacher Training in Ballito
           </h1>
           <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            200hr &amp; 300hr Certified Programs in Ballito
+            200hr &amp; 300hr Certified Programs
           </p>
         </div>
       </section>

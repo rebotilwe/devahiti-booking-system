@@ -144,7 +144,7 @@ export default function About() {
       <section className="relative pt-10 sm:pt-14 pb-4 sm:pb-6 px-6 text-center bg-[#F3F8FC]">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-gray-800">
-            About Devahiti
+            About Devahiti Yoga in Ballito
           </h1>
           <p className="mt-4 max-w-2xl text-lg italic md:text-xl text-gray-600 mx-auto">
             "If you can breathe, you can do yoga."
