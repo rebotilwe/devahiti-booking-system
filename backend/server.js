@@ -7,6 +7,7 @@ import availabilityRoutes from './routes/availability.js';
 import bookingRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
 import paymentRoutes from './routes/payments.js';
+import { runPaymentChecks } from './services/paymentService.js';
 import blogRoutes from './routes/blog.js';
 
 dotenv.config();
@@ -22,7 +23,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ INCREASE BODY SIZE LIMIT - IMPORTANT FOR IMAGE UPLOADS
-app.use(express.json({ limit: '50mb' }));
+// Keep the raw bytes too: the Yoco webhook signature is computed over them.
+app.use(express.json({ limit: '50mb', verify: (req, res, buf) => { req.rawBody = buf; } }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // ✅ ALLOWED FRONTEND URLS — now that devahiti.com is live, requests from
@@ -47,7 +49,7 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key'],
 }));
 
 // Routes
@@ -129,6 +131,10 @@ app.get('/api/test-email', async (req, res) => {
     });
   }
 });
+
+// Safety net: every 2 minutes re-check recent unpaid bookings with Yoco and
+// email Cheryl about any still unpaid after UNPAID_ALERT_MINUTES (default 30).
+setInterval(runPaymentChecks, 2 * 60 * 1000);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

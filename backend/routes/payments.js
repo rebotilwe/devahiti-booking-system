@@ -1,7 +1,8 @@
 import express from 'express';
 import axios from 'axios';
 import db from '../config/db.js';
-import { sendAllBookingEmails } from '../services/emailService.js';
+import { sendBookingStartedAlert } from '../services/emailService.js';
+import { markBookingPaid, verifyWebhookSignature, handleYocoEvent, verifyBookingWithYoco } from '../services/paymentService.js';
 
 const router = express.Router();
 
@@ -101,6 +102,19 @@ router.post('/create-checkout', async (req, res) => {
     });
 
     console.log("Yoco success! Response:", response.data);
+
+    // Remember Yoco's checkout id so the webhook (and the safety-net checks)
+    // can match a payment back to this booking.
+    try {
+      const saved = await db.query(
+        "UPDATE bookings SET checkout_id = $1, payment_started_at = NOW() WHERE id = $2 RETURNING *",
+        [response.data.id, bookingId]
+      );
+      if (saved.rows[0]) sendBookingStartedAlert(saved.rows[0]);
+    } catch (saveErr) {
+      console.error("Failed to save checkout id on booking:", saveErr.message);
+    }
+
     res.json({ redirectUrl: response.data.redirectUrl, feeAmount, totalCharged: totalWithFee });
     
   } catch (error) {
@@ -116,111 +130,78 @@ router.post('/create-checkout', async (req, res) => {
   }
 });
 
-// Webhook endpoint - Updated to send email notifications
+// Yoco webhook. Authoritative way a booking becomes paid.
+// Needs the RAW request body for signature checking (captured in server.js).
 router.post('/webhook', async (req, res) => {
-  console.log("=== Yoco Webhook Received ===");
-  console.log("Webhook body:", req.body);
-  
-  const { id, status, metadata } = req.body;
-  
-  if (status === 'successful' && metadata && metadata.bookingId) {
-    try {
-      // Update booking status — the WHERE clause only matches (and returns
-      // a row) if the booking wasn't already 'paid'. This makes the update
-      // idempotent: if Yoco's webhook and the frontend's own status-update
-      // call both fire for the same payment (which can genuinely happen),
-      // only the first one to arrive actually updates anything or sends
-      // emails — the second finds no matching row and does nothing.
-      const result = await db.query(
-        `UPDATE bookings 
-         SET payment_status = $1, 
-             payment_id = $2, 
-             updated_at = NOW() 
-         WHERE id = $3 AND payment_status != 'paid'
-         RETURNING *`,
-        ['paid', id, metadata.bookingId]
-      );
-      
-      const booking = result.rows[0];
-      
-      if (booking) {
-        console.log(`✅ Booking ${metadata.bookingId} marked as paid`);
-        
-        // Send payment confirmation emails
-        const paymentDetails = {
-          amount: booking.total_price,
-          method: 'Card',
-          transactionId: id
-        };
-        
-        sendAllBookingEmails(booking, paymentDetails).catch(err => {
-          console.error('Background payment email sending failed:', err);
-        });
-      }
-      
-      res.json({ received: true });
-    } catch (err) {
-      console.error("Webhook database error:", err);
-      res.status(500).json({ error: 'Database update failed' });
-    }
-  } else {
-    console.log("Webhook ignored - not a successful payment or missing bookingId");
+  const secret = process.env.YOCO_WEBHOOK_SECRET;
+  if (!secret) {
+    console.error('Webhook received but YOCO_WEBHOOK_SECRET is not set - rejecting');
+    return res.status(503).json({ error: 'Webhook not configured' });
+  }
+  if (!verifyWebhookSignature(req.rawBody, req.headers, secret)) {
+    console.error('Webhook rejected: bad signature');
+    return res.status(401).json({ error: 'Invalid signature' });
+  }
+  try {
+    const outcome = await handleYocoEvent(req.body);
+    console.log('Webhook handled:', req.body?.type, outcome);
     res.json({ received: true });
+  } catch (err) {
+    console.error('Webhook processing error:', err);
+    // 500 makes Yoco retry later.
+    res.status(500).json({ error: 'Processing failed' });
   }
 });
 
-// Update booking status manually - Updated to send emails
-router.post('/update-booking-status', async (req, res) => {
-  const { bookingId, paymentStatus, paymentId } = req.body;
-  
-  console.log("Updating booking:", { bookingId, paymentStatus, paymentId });
-  
-  if (!bookingId) {
-    return res.status(400).json({ error: 'Booking ID is required' });
-  }
-  
+// Used by the payment-success page. Read-only: reports whether the booking is
+// paid. If it is still pending, it asks Yoco directly (server-side) at most
+// once every few seconds, so the page works even if the webhook is delayed.
+const lastVerify = new Map();
+router.get('/status/:bookingId', async (req, res) => {
   try {
-    // The idempotency guard (WHERE payment_status != 'paid') only applies
-    // when we're setting status TO 'paid' — that's the transition that
-    // triggers emails and needs protecting from double-firing (webhook +
-    // this endpoint both marking the same payment paid). Other status
-    // changes (e.g. manually marking something refunded or cancelled later)
-    // shouldn't be blocked by it.
-    const query = paymentStatus === 'paid'
-      ? `UPDATE bookings 
-         SET payment_status = $1, payment_id = $2, updated_at = NOW() 
-         WHERE id = $3 AND payment_status != 'paid'
-         RETURNING *`
-      : `UPDATE bookings 
-         SET payment_status = $1, payment_id = $2, updated_at = NOW() 
-         WHERE id = $3
-         RETURNING *`;
+    const id = parseInt(req.params.bookingId, 10);
+    if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid booking id' });
+    let row = (await db.query('SELECT id, payment_status, checkout_id FROM bookings WHERE id = $1', [id])).rows[0];
+    if (!row) return res.status(404).json({ error: 'Not found' });
 
-    const result = await db.query(query, [paymentStatus, paymentId || null, bookingId]);
-    
-    const booking = result.rows[0];
-    
-    if (booking && paymentStatus === 'paid') {
-      console.log(`✅ Booking ${bookingId} updated to paid`);
-      
-      // Send payment confirmation emails
-      const paymentDetails = {
-        amount: booking.total_price,
-        method: 'Manual',
-        transactionId: paymentId || 'N/A'
-      };
-      
-      sendAllBookingEmails(booking, paymentDetails).catch(err => {
-        console.error('Background payment email sending failed:', err);
-      });
+    if (row.payment_status !== 'paid' && row.checkout_id) {
+      const last = lastVerify.get(id) || 0;
+      if (Date.now() - last > 5000) {
+        lastVerify.set(id, Date.now());
+        await verifyBookingWithYoco(row);
+        row = (await db.query('SELECT id, payment_status FROM bookings WHERE id = $1', [id])).rows[0];
+      }
     }
-    
-    res.json({ 
-      success: true, 
-      message: `Booking ${bookingId} updated to ${paymentStatus}` 
-    });
+    res.json({ bookingId: id, paid: row.payment_status === 'paid' });
   } catch (err) {
-    console.error("Database error:", err);
+    console.error('Status check error:', err.message);
+    res.status(500).json({ error: 'Status check failed' });
+  }
+});
+
+// Manual override for the developer only (e.g. a cash/EFT payment). Requires
+// the ADMIN_API_KEY header. The public website no longer calls this.
+router.post('/update-booking-status', async (req, res) => {
+  const key = process.env.ADMIN_API_KEY;
+  if (!key || req.headers['x-admin-key'] !== key) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  const { bookingId, paymentStatus, paymentId, sendEmails } = req.body;
+  if (!bookingId || !paymentStatus) {
+    return res.status(400).json({ error: 'bookingId and paymentStatus are required' });
+  }
+  try {
+    if (paymentStatus === 'paid' && sendEmails !== false) {
+      const r = await markBookingPaid({ bookingId, paymentId: paymentId || 'manual', method: 'Manual' });
+      return res.json({ success: true, updated: r.updated });
+    }
+    await db.query(
+      'UPDATE bookings SET payment_status = $1, payment_id = $2, updated_at = NOW() WHERE id = $3',
+      [paymentStatus, paymentId || null, bookingId]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Database error:', err);
     res.status(500).json({ error: 'Failed to update booking status' });
   }
 });

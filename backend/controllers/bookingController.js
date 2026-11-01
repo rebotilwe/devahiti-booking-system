@@ -101,6 +101,12 @@ export const getBookingById = async (req, res) => {
 export const updatePaymentStatus = async (req, res) => {
   const { id } = req.params;
   const { payment_status, payment_id } = req.body;
+
+  // Marking a booking paid from the public internet let anyone fake a payment.
+  // Payments are confirmed by the Yoco webhook; this is developer-only now.
+  if (!process.env.ADMIN_API_KEY || req.headers['x-admin-key'] !== process.env.ADMIN_API_KEY) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
   
   try {
     await db.query(

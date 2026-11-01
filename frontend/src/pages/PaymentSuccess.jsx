@@ -2,39 +2,42 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle, Waves } from "lucide-react";
 
+const API = "https://devahiti-booking-system-4t96.onrender.com/api";
+
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const bookingId = searchParams.get("bookingId");
-  const [loading, setLoading] = useState(true);
-  const [bookingDetails, setBookingDetails] = useState(null);
+  // "checking" | "paid" | "delayed"
+  const [state, setState] = useState(bookingId ? "checking" : "delayed");
 
+  // The browser no longer tells the server the payment worked (anyone could fake
+  // that). We only ask the server whether Yoco has confirmed it, and wait.
   useEffect(() => {
-    const updatePaymentStatus = async () => {
-      if (bookingId) {
-        try {
-          // Update booking status to paid
-          const response = await fetch(`https://devahiti-booking-system-4t96.onrender.com/api/payments/update-booking-status`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              bookingId: bookingId,
-              paymentStatus: 'paid',
-              paymentId: 'yoco_' + Date.now()
-            })
-          });
-          
-          const data = await response.json();
-          console.log("Payment status updated:", data);
-          setBookingDetails({ bookingId });
-        } catch (error) {
-          console.error("Update error:", error);
-        }
+    if (!bookingId) return;
+    let cancelled = false;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 20; // ~1 minute
+
+    const check = async () => {
+      attempts += 1;
+      try {
+        const res = await fetch(`${API}/payments/status/${encodeURIComponent(bookingId)}`);
+        const data = await res.json();
+        if (cancelled) return;
+        if (data.paid) { setState("paid"); return; }
+      } catch (err) {
+        console.error("Status check error:", err);
       }
-      setLoading(false);
+      if (cancelled) return;
+      if (attempts >= MAX_ATTEMPTS) { setState("delayed"); return; }
+      setTimeout(check, 3000);
     };
-    
-    updatePaymentStatus();
+    check();
+    return () => { cancelled = true; };
   }, [bookingId]);
+
+  const loading = state === "checking";
+  const paid = state === "paid";
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,33 +48,48 @@ export default function PaymentSuccess() {
         <div className="relative z-10 text-center px-4 sm:px-6">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Waves className="h-3 w-3 text-white/60" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-white/60">Payment Received</span>
+            <span className="text-[10px] tracking-[0.4em] uppercase text-white/60">{paid ? "Payment Received" : "Confirming Payment"}</span>
             <Waves className="h-3 w-3 text-white/60" />
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-light text-white">Payment Successful!</h1>
+          <h1 className="font-heading text-3xl sm:text-4xl font-light text-white">{paid ? "Payment Successful!" : "Thank You"}</h1>
         </div>
       </section>
 
       <section className="py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-white rounded-lg shadow-sm p-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${paid ? "bg-green-100" : "bg-blue-50"}`}>
+              <CheckCircle className={`h-8 w-8 ${paid ? "text-green-500" : "text-ocean"}`} />
             </div>
-            <h2 className="text-2xl font-heading mb-2">Thank you for your payment!</h2>
-            <p className="text-muted-foreground mb-6">Your booking has been confirmed.</p>
-            
-            {loading ? (
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border-2 border-ocean/30 border-t-ocean rounded-full animate-spin" />
-                <p>Confirming your booking...</p>
-              </div>
-            ) : (
+
+            {loading && (
               <>
+                <h2 className="text-2xl font-heading mb-2">Confirming your payment...</h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-ocean/30 border-t-ocean rounded-full animate-spin" />
+                  <p>Please keep this page open for a moment.</p>
+                </div>
+              </>
+            )}
+
+            {paid && (
+              <>
+                <h2 className="text-2xl font-heading mb-2">Thank you for your payment!</h2>
+                <p className="text-muted-foreground mb-6">Your booking has been confirmed. A confirmation email is on its way.</p>
                 <p className="text-sm text-ocean mb-4">Booking Reference: #{bookingId}</p>
-                <Link to="/" className="inline-block px-6 py-3 bg-ocean text-white rounded-lg">
-                  Return to Home
-                </Link>
+                <Link to="/" className="inline-block px-6 py-3 bg-ocean text-white rounded-lg">Return to Home</Link>
+              </>
+            )}
+
+            {state === "delayed" && (
+              <>
+                <h2 className="text-2xl font-heading mb-2">We're still confirming your payment</h2>
+                <p className="text-muted-foreground mb-4">
+                  If your payment went through, you will receive a confirmation email shortly. Please do not pay again.
+                  If you don't hear from us within the hour, contact us and quote your booking reference.
+                </p>
+                {bookingId && <p className="text-sm text-ocean mb-4">Booking Reference: #{bookingId}</p>}
+                <Link to="/" className="inline-block px-6 py-3 bg-ocean text-white rounded-lg">Return to Home</Link>
               </>
             )}
           </div>

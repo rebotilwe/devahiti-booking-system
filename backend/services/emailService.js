@@ -444,3 +444,63 @@ export const sendAllBookingEmails = async (booking, paymentDetails = null) => {
     return { success: false, error: error.message };
   }
 };
+
+// ---------------------------------------------------------------------------
+// Admin alerts for the payment flow
+// ---------------------------------------------------------------------------
+const alertShell = (colour, title, bodyHtml) => `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="background: ${colour}; padding: 20px; text-align: center;">
+      <h1 style="color: white; margin: 0; font-size: 22px;">${title}</h1>
+    </div>
+    <div style="padding: 24px; color: #333; line-height: 1.6;">${bodyHtml}</div>
+  </div>`;
+
+const bookingSummaryHtml = (b) => {
+  const date = b.booking_date
+    ? new Date(b.booking_date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+    : '—';
+  return `
+    <p><strong>Booking #${b.id}</strong><br>
+    ${b.service_type} &mdash; ${date} at ${String(b.booking_time || '').slice(0, 5)}<br>
+    ${b.participants} participant(s) &middot; R${b.total_price}</p>
+    <p><strong>${b.customer_name}</strong><br>
+    ${b.customer_email}<br>${b.customer_phone || ''}</p>`;
+};
+
+// Sent when a customer reaches the Yoco payment page. Not a confirmed booking.
+export const sendBookingStartedAlert = async (booking) => {
+  try {
+    await sendEmail({
+      to: process.env.ADMIN_EMAIL,
+      subject: `⏳ Booking started, awaiting payment (#${booking.id})`,
+      html: alertShell('#e0a800', '⏳ Booking started',
+        `<p>A customer has just reached the payment page. <strong>This is not a confirmed booking yet.</strong>
+         You will get a separate "Payment Received" email when the payment goes through.</p>${bookingSummaryHtml(booking)}`),
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('❌ Booking-started alert error:', error.response?.data || error.message);
+    return { success: false, error: error.message };
+  }
+};
+
+// Sent if a booking is still unpaid long after the customer reached checkout.
+export const sendUnpaidBookingAlert = async (booking, minutes) => {
+  try {
+    await sendEmail({
+      to: process.env.ADMIN_EMAIL,
+      subject: `⚠️ Booking #${booking.id} still unpaid after ${minutes} min`,
+      html: alertShell('#dc3545', '⚠️ Booking still unpaid',
+        `<p>This customer reached the payment page ${minutes} minutes ago and we have <strong>no payment confirmation</strong>.
+         They may have abandoned the payment, or paid and we missed it.</p>${bookingSummaryHtml(booking)}
+         <p><strong>What to do:</strong> check Yoco (Sales) for a payment from this customer around this time.
+         If it is there, it is paid &mdash; contact us or the developer so it can be marked paid.
+         If not, the customer likely did not complete payment; consider following up with them.</p>`),
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('❌ Unpaid-booking alert error:', error.response?.data || error.message);
+    return { success: false, error: error.message };
+  }
+};
