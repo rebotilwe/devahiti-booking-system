@@ -5,7 +5,6 @@ import {
   User, Mail, Phone, Lock, ArrowLeft, Menu, X, ShoppingBag
 } from "lucide-react";
 import { initiateBooking } from "../api/api";
-import CouponInput from "../components/CouponInput";
 import logo from "../assets/devahiti.png";
 
 const API_URL = "https://devahiti-booking-system-4t96.onrender.com/api";
@@ -454,11 +453,8 @@ export default function Checkout() {
                   <span>R{originalTotal}</span>
                 </div>
                 
-                <CouponInput
-                  onApply={handleApplyCoupon}
-                  onRemove={handleRemoveCoupon}
-                  appliedCoupon={appliedCoupon}
-                />
+                {/* Coupon box removed at the client's request (the FIRST20 15% offer has ended).
+                    To bring a promotion back, re-import ../components/CouponInput and render it here. */}
                 
                 {appliedCoupon && discountAmount > 0 && (
                   <div className="flex justify-between text-sm text-green-600 pt-2 border-t border-ocean/10">
